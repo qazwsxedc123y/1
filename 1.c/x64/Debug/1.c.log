@@ -1,0 +1,9 @@
+﻿D:\vstdio\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: 中间目录(x64\Debug\)包含从另一个项目(1.c.vcxproj)共享的文件。   这会导致错误的清除和重新生成行为。
+  爱心.cpp
+E:\code\爱心代码.c\1.c\爱心.cpp(102,51): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
+E:\code\爱心代码.c\1.c\爱心.cpp(102,24): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
+E:\code\爱心代码.c\1.c\爱心.cpp(127,39): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
+E:\code\爱心代码.c\1.c\爱心.cpp(127,26): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
+E:\code\爱心代码.c\1.c\爱心.cpp(139,12): warning C4244: “参数”: 从“time_t”转换到“unsigned int”，可能丢失数据
+E:\code\爱心代码.c\1.c\爱心.cpp(43): warning C4715: “creat_random”: 不是所有的控件路径都返回值
+  1.c.vcxproj -> E:\code\爱心代码.c\x64\Debug\爱心代码.c.exe
