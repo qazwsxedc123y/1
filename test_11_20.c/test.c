@@ -7,12 +7,7 @@
 #include<time.h>
 #include<assert.h>
 
-int main()
-{
-    int a ;
-    scanf("%d", &a);
 
-}
 
 
 // 递归打印 一个整数（倒序）

@@ -1,2 +1,10 @@
 ﻿  test.c
+  按位异或.c
+  递归汉诺塔.c
+  正在生成代码...
+E:\code\test_11_20.c\test_11_20.c\test.c(13,12): warning C4477: “printf”: 格式字符串“%d”需要类型“int”的参数，但可变参数 1 拥有了类型“size_t”
+  E:\code\test_11_20.c\test_11_20.c\test.c(13,12):
+  请考虑在格式字符串中使用“%zd”
+  
+  LINK : 没有找到 E:\code\test_11_20.c\x64\Debug\test_11_20.c.exe 或上一个增量链接没有生成它；正在执行完全链接
   test_11_20.c.vcxproj -> E:\code\test_11_20.c\x64\Debug\test_11_20.c.exe
