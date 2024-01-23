@@ -3,48 +3,48 @@
 
 #include <stdio.h>
 #include<stdlib.h>
-
-int main() {
-    int n, m;
-    scanf("%d%d", &n, &m);
-    int ar1[100], ar2[100];
-    int i = 0, j = 0, sum1 = 0, sum2 = 0;
-    for (i = 0; i < n; i++)
-    {
-        scanf("%d", &ar1[i]);
-        sum1 += ar1[i];
-    }
-    for (i = 0; i < m; i++)
-    {
-        scanf("%d", &ar2[i]);
-        sum2 += ar2[i];
-    }
-    int min = 1000, x=0, y=0;//x为左边界  y为右边界
-    for (i = 0; i < m; i++)//起始位置
-    {
-        int sum=sum2,t=0;
-        for (t = 0; t < i; t++)
-        {
-            sum -= ar2[t];
-        }
-        for (j = m - 1; j > i; j--)//从后向前
-        {
-            if (min > abs(sum - sum1))
-            {
-                min = abs(sum - sum1);
-                x = i;
-                y = j;
-            }
-            sum -= ar2[j];
-        }
-    }
-    int p = 0;
-    for (p = x; p <= y; p++)
-    {
-        printf("%d ", ar2[p]);
-    }
-    return 0;
-}
+//
+//int main() {
+//    int n, m;
+//    scanf("%d%d", &n, &m);
+//    int ar1[100], ar2[100];
+//    int i = 0, j = 0, sum1 = 0, sum2 = 0;
+//    for (i = 0; i < n; i++)
+//    {
+//        scanf("%d", &ar1[i]);
+//        sum1 += ar1[i];
+//    }
+//    for (i = 0; i < m; i++)
+//    {
+//        scanf("%d", &ar2[i]);
+//        sum2 += ar2[i];
+//    }
+//    int min = 1000, x=0, y=0;//x为左边界  y为右边界
+//    for (i = 0; i < m; i++)//起始位置
+//    {
+//        int sum=sum2,t=0;
+//        for (t = 0; t < i; t++)
+//        {
+//            sum -= ar2[t];
+//        }
+//        for (j = m - 1; j > i; j--)//从后向前
+//        {
+//            if (min > abs(sum - sum1))
+//            {
+//                min = abs(sum - sum1);
+//                x = i;
+//                y = j;
+//            }
+//            sum -= ar2[j];
+//        }
+//    }
+//    int p = 0;
+//    for (p = x; p <= y; p++)
+//    {
+//        printf("%d ", ar2[p]);
+//    }
+//    return 0;
+//}
 
 //int main()
 //{
