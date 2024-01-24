@@ -8,27 +8,27 @@
 #include <stdio.h>
 
 
-int main()
-{
-	int a = 100;
-	if (a > 110)
-	{
-		printf("1\n");
-	}
-	if (a > 20)
-	{
-		printf("2\n");
-	}
-	if (a > 10)
-	{
-		printf("3\n");
-	}
-	else
-	{
-		printf("4\n");
-	}
-	return 0;
-}
+//int main()
+//{
+//	int a = 100;
+//	if (a > 110)
+//	{
+//		printf("1\n");
+//	}
+//	if (a > 20)
+//	{
+//		printf("2\n");
+//	}
+//	if (a > 10)
+//	{
+//		printf("3\n");
+//	}
+//	else
+//	{
+//		printf("4\n");
+//	}
+//	return 0;
+//}
 
 
 //int main()
