@@ -35,35 +35,35 @@
 //bafedc
 //cdefab
 
-void revsrse(char* left, char* right)
-{
-	assert(left != NULL);
-	assert(right != NULL);
-	while (left < right)//left Óë   right  ´æµÄÊÇµØÖ·
-	{
-		char tmp = *left;
-		*left = *right;
-		*right = tmp;
-		left++;
-		right--;
-	}
-}
-void mov(char* arr, int k)
-{
-	assert(arr != NULL);
-	int len = strlen(arr);
-	assert(k <= len);
-	revsrse(arr, arr + k - 1);//ÄæÐò×ó±ß
-	revsrse(arr + k, arr + len - 1);//ÄæÐòÓÒ±ß
-	revsrse(arr, arr + len - 1);//ÄæÐòÈ«²¿	
-}
-int main()
-{
-	char arr[] = "abcdef";
-	mov(arr, 2);
-	printf("%s\n", arr);
-	return 0;
-}
+//void revsrse(char* left, char* right)
+//{
+//	assert(left != NULL);
+//	assert(right != NULL);
+//	while (left < right)//left Óë   right  ´æµÄÊÇµØÖ·
+//	{
+//		char tmp = *left;
+//		*left = *right;
+//		*right = tmp;
+//		left++;
+//		right--;
+//	}
+//}
+//void mov(char* arr, int k)
+//{
+//	assert(arr != NULL);
+//	int len = strlen(arr);
+//	assert(k <= len);
+//	revsrse(arr, arr + k - 1);//ÄæÐò×ó±ß
+//	revsrse(arr + k, arr + len - 1);//ÄæÐòÓÒ±ß
+//	revsrse(arr, arr + len - 1);//ÄæÐòÈ«²¿	
+//}
+//int main()
+//{
+//	char arr[] = "abcdef";
+//	mov(arr, 2);
+//	printf("%s\n", arr);
+//	return 0;
+//}
 
 
 //int main()
