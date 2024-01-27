@@ -267,25 +267,25 @@
 //	printf("%s", ar1);
 //}
 
-int my_strcmp(const char* str1, const char* str2)
-{
-	assert(str1 && str2);
-	while (*str1 == *str2)
-	{
-		if (*str1 == '\0')
-			return 0;
-		str1++, str2++;
-	}
-	if (*str1 > *str2)
-		return 1;
-	else
-		return -1;
-}
-int main()
-{
-	char ar1[] = "adfg";
-	char ar2[] = "adfge";
-	int ret = my_strcmp(ar1, ar2);
-	printf("%d", ret);
-	return 0;
-}
+//int my_strcmp(const char* str1, const char* str2)
+//{
+//	assert(str1 && str2);
+//	while (*str1 == *str2)
+//	{
+//		if (*str1 == '\0')
+//			return 0;
+//		str1++, str2++;
+//	}
+//	if (*str1 > *str2)
+//		return 1;
+//	else
+//		return -1;
+//}
+//int main()
+//{
+//	char ar1[] = "adfg";
+//	char ar2[] = "adfge";
+//	int ret = my_strcmp(ar1, ar2);
+//	printf("%d", ret);
+//	return 0;
+//}
