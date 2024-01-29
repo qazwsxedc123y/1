@@ -37,3 +37,14 @@
 //	//printf("%s\n", ret);
 //	return 0;
 //}
+
+//int a = 20;
+//void print()
+//{
+//	printf("    1%d ", a);
+//}
+//int main()
+//{
+//	print();
+//	return 0;
+//}
