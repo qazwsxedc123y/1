@@ -18,16 +18,16 @@ void Displaymine(char board[ROWS][COLS], int row, int col)
 	int i = 0;
 	for (i = 0; i <= col; i++)
 	{
-		printf("%d ", i);
+		printf("%3d", i);
 	}
 	printf("\n");
 	for (i = 1; i <= row; i++)
 	{
 		int j = 1;
-		printf("%d ", i);
+		printf("%2d", i);
 		for (j = 1; j <= col; j++)
 		{
-			printf("%c ", board[i][j]);
+			printf(" %c ", board[i][j]);
 		}
 		printf("\n");
 	}

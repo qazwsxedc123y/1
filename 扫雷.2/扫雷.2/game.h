@@ -3,7 +3,7 @@
 #define COL 9
 #define ROWS ROW+2
 #define COLS COL+2
-#define counts 80
+#define counts 10
 #include<stdlib.h>
 #include<time.h>
 #include<stdio.h>

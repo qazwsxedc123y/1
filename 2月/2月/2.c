@@ -2,6 +2,10 @@
 
 #include<string.h>
 #include <stdio.h>
+#include"c.h"
+
+
+
 
 //int bin_search(int arr[], int left, int right, int key)//ÉıĞò
 //{

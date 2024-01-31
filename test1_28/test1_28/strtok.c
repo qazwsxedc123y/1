@@ -2,6 +2,8 @@
 
 #include"ku.h"
 
+//	切割字符串，特定的符号位切割
+
 //int main()
 //{
 //	char arr[] = "bisi@sws.5245";
