@@ -116,13 +116,74 @@
 //}
 
 
+//存放内容的另一种方法
+//struct s
+//{
+//	char a;
+//	int c;
+//	double d;
+//};
+//int main()
+//{
+//	struct s a;
+//	a.a = 'w';
+//	a.c = 5;
+//	a.d = 3.14;
+//	return 0;
+//}
+
+
+//函数存放  与打印
+
+//struct s
+//{
+//	char a;
+//	int c;
+//	double d;
+//};
+/*void f(int c)
+{
+	c = 5;
+}*///实参与形参俩&是同一地址才可以修改
+//void init(struct s* p)//结构体指针接收
+//{
+//	p->a = 'w';
+//	p->c = 100;
+//	p->d = 3.14;
+//}
+//void print(struct s a)
+//{
+//	printf("%c %d %lf\n", a.a, a.c, a.d);
+//}
+//void print2(const struct s* p)
+//{
+//	printf("%c %d %lf\n", p->a, p->c, p->d);
+//}//如果为了安全 只打印 不修改  可以加一个const
+//int main()
+//{
+//	struct s a;
+//	init(&a);
+//	print(a);
+//	print2(&a);
+//	//print2比较好，因为2只占4/8个字节是个地址
+//	//但结构体过于大会导致性能下降
+//	
+//	//int a = 0.;
+//	//f(&a);
+//	//a.a = 'w';
+//	//a.c = 5;
+//	//a.d = 3.14;
+//	return 0;
+//}
+
+
 //计算结构体的大小
 
 //struct s
 //{
 //	char a;
-//	char b;
 //	int c;
+//	double d;
 //};
 //struct s2
 //{
@@ -145,7 +206,8 @@
 //	int s2 = sizeof(s);
 //	int s3 = sizeof(m);
 //	printf("%d %d %d", s1,s2,s3);
-//	return 0;
+	//printf("%d ", s1);
+	//return 0;
 //}
 //  提供解释 
 
@@ -168,8 +230,24 @@
 //}
 
 
-int main()
-{
+//宏的使用  offsetof
+//需要引用头文件  stddef.h
+//作用查看该类型所在的偏移量
+//第一个为类型名（不是变量名）
+//第二个是成员名
 
-	return 0;
-}
+//#include<stddef.h>
+//struct s
+//{
+//	char a;
+//	int c;
+//	double d;
+//};
+//int main()
+//{
+//	printf("%d\n", offsetof(struct s, a));
+//	printf("%d\n", offsetof(struct s, c));
+//	printf("%d\n", offsetof(struct s, d));
+//	return 0;
+//}
+
