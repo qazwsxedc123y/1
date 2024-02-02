@@ -1,6 +1,6 @@
 #define  _CRT_SECURE_NO_WARNINGS
 
-#include<stdio.h>
+//#include<stdio.h>
 
 //正常的结构体设置
 
