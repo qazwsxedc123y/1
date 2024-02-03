@@ -2,6 +2,152 @@
 //
 //#include <math.h>
 //#include <stdio.h>
+
+
+#include <math.h>
+#include <stdio.h>
+//µİ¹é
+//int s(int n)
+//{
+//	if (n == 1)
+//	{
+//		return 1;
+//	}
+//	else
+//	{
+//		return n * s(n - 1);
+//	}
+//}
+//int main()
+//{
+//	int n = 0;
+//	scanf("%d", &n);
+//	int ret = s(n);
+//	printf("%d", ret);
+//	return 0;
+//}
+//·Çµİ¹é
+//int main()
+//{
+//	int n = 0;
+//	scanf("%d", &n);
+//	int ret = 1;
+//	while (n)
+//	{
+//		ret *= n;
+//		n--;
+//	}
+//	printf("%d", ret);
+//	return 0;
+//}
+//int Sum(int n)
+//{
+//	if (n == 1)
+//	{
+//		return 1;
+//	}
+//	else
+//	{
+//		return n * Sum(n - 1);
+//	}
+//}
+//int s(int n)
+//{
+//	if (n < 10)
+//	{
+//		printf("%d ", n);
+//		return 1;
+//	}
+//	else
+//	{
+//		printf("%d ", n % 10);
+//		return s(n / 10);
+//	}
+//}
+//int main()
+//{
+//	int n = 0;
+//	scanf("%d", &n);
+//	s(n);
+//	return 0;
+//}
+//void DigitSum(int n)
+//{
+//	if (n < 10)
+//	{
+//		printf("%d ", n);
+//		return ;
+//	}
+//	DigitSum(n / 10);
+//	printf("%d ", n % 10);
+//}
+//int main()
+//{
+//	int n = 0;
+//	scanf("%d", &n);
+//	DigitSum(n);
+//	return 0;
+//}
+//int sum(int n, int k)
+//{
+//	if (k == 0)
+//	{
+//		return 1;
+//	}
+//	else
+//	{
+//		return n * sum(n,k-1);
+//	}
+//}
+//int main()
+//{
+//	int n = 0;
+//	int k = 0;
+//	scanf("%d%d", &n, &k);
+//	int ret=sum(n, k);
+//	printf("%d", ret);
+//	return 0;
+//}
+//int main()
+//{
+//	int n = 0;
+//	int ret = 1;
+//	int a = 1, b = 1,c=2;
+//	scanf("%d", &n);
+//	if (n > 2)
+//	{
+//		while (n - 2)
+//		{
+//			ret = a + b;
+//			a = b;
+//			b = c;
+//			c = a + b;
+//			n--;
+//		}
+//	}	
+//	printf("%d", ret);
+//	return 0;
+//}
+//int f(int n)
+//{
+//	if (n <= 2)
+//	{
+//		return 1;
+//	}
+//	else
+//	{
+//		return f(n - 1) + f(n - 2);
+//	}
+//}
+//int main()
+//{
+//	int n = 0;
+//	scanf("%d", &n);
+//	int ret = f(n);
+//	printf("%d", ret);
+//	return 0;
+//}
+
 //int main()
 //{  
 //    int i = 0;
