@@ -2,16 +2,17 @@
 
 #include<string.h>
 #include <stdio.h>
-//#include"c.h"
-int main()
-{
-	while (1)
-	{
-		Sleep(1000);
-		printf("he");
-	}
-	return 0;
-}
+
+
+//int main()
+//{
+//	while (1)
+//	{
+//		Sleep(1000);
+//		printf("he");
+//	}
+//	return 0;
+//}
 
 
 
