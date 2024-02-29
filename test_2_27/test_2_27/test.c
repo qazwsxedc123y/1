@@ -1,6 +1,91 @@
 #define  _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include<string.h>
+#include<stdlib.h>
+struct stu
+{
+	char name[20];
+	int age;
+	char sex[5];
+};
+int compare(const void* e1, const void* e2)
+{
+	return (*(int*)e1 - *(int*)e2);
+}
+int con_name(const void* e1, const void* e2)
+{
+	return (strcmp(((struct stu*)e1)->name, ((struct stu*)e2)->name));
+}//这里一定要记得强制类型转换
+int main()
+{
+	struct stu s[3] = { {"李四",20,"男"},{"王五",20,"男"} ,{"赵四",20,"男"} };
+	int sz = sizeof(s) / sizeof(s[0]);
+	qsort(s, sz, sizeof(s[0]),compare);
+	int i = 0; 
+	for (i = 0; i < sz; i++)
+	{
+		printf("%s %d %s\n", s[i].name, s[i].age, s[i].sex);
+	}
+	return 0;
+}
+//int add(int x, int y)
+//{
+//	return x + y;
+//}
+//int sub(int x, int y)
+//{
+//	return x - y;
+//}
+//int mul(int x, int y)
+//{
+//	return x * y;
+//}
+//int del(int x, int y)
+//{
+//	return x / y;
+//}
+//void menu()
+//{
+//	printf("*****************************\n");
+//	printf("****  1. add    2. sub   ****\n");
+//	printf("****  3. mul    4. del   ****\n");
+//	printf("****  0. exit            ****\n");
+//	printf("*****************************\n");
+//}
+//void cacl(int (*pf) (int, int))
+//{
+//	int x, y, ret;
+//	printf("请输入两个操作数：");
+//	scanf("%d%d", &x, &y);
+//	ret = pf(x, y);
+//	printf("%d\n", ret);
+//}
+//int main()
+//{
+//	int input;
+//	do {
+//		menu();
+//		scanf("%d", &input);
+//		switch (input)
+//		{
+//		case 1:
+//			cacl(add);
+//			break;
+//		case 2:
+//			cacl(sub);
+//			break;
+//		case 3:
+//			cacl(mul);
+//			break;
+//		case 4:
+//			cacl(del);
+//			break;
+//		}
+//	} while (input);
+//	return 0;
+//}
+
+
 //暴力求解法
 //void mov(char * arr, int k)
 //{
