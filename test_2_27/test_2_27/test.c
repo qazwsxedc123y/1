@@ -1,33 +1,169 @@
 #define  _CRT_SECURE_NO_WARNINGS
-#include <stdio.h>
 #include<string.h>
 #include<stdlib.h>
-struct stu
-{
-	char name[20];
-	int age;
-	char sex[5];
-};
-int compare(const void* e1, const void* e2)
-{
-	return (*(int*)e1 - *(int*)e2);
+#include<stdio.h>
+#include<stdbool.h>
+
+
+bool isValid(char* s) {
+    int len = strlen(s);
+    int i = 0;
+    for (i = 0; i < len - 1; i = i + 2)
+    {
+        if (s[i] != s[i + 1])
+        {
+            return false;
+        }
+    }
+    return true;
 }
-int con_name(const void* e1, const void* e2)
-{
-	return (strcmp(((struct stu*)e1)->name, ((struct stu*)e2)->name));
-}//这里一定要记得强制类型转换
 int main()
 {
-	struct stu s[3] = { {"李四",20,"男"},{"王五",20,"男"} ,{"赵四",20,"男"} };
-	int sz = sizeof(s) / sizeof(s[0]);
-	qsort(s, sz, sizeof(s[0]),compare);
-	int i = 0; 
-	for (i = 0; i < sz; i++)
-	{
-		printf("%s %d %s\n", s[i].name, s[i].age, s[i].sex);
-	}
+	char s[] = "()";
+	int len = strlen(s);
+    isValid(s);
 	return 0;
 }
+
+//int romanToInt(char* s) {
+//    int len = strlen(s);
+//    int i = 0;
+//    int* a = (int*)malloc(sizeof(int*) * len);
+//    int sum = 0;
+//    for (i = 0; i < len; i++)
+//    {
+//        switch (s[i])
+//        {
+//        case 'I':
+//            a[i] = 1;
+//            break;
+//        case 'V':
+//            a[i] = 5;
+//            break;
+//        case 'X':
+//            a[i] = 10;
+//            break;
+//        case 'L':
+//            a[i] = 50;
+//            break;
+//        case 'C':
+//            a[i] = 100;
+//            break;
+//        case 'D':
+//            a[i] = 500;
+//            break;
+//        case 'M':
+//            a[i] = 1000;
+//            break;
+//        defaule:
+//            break;
+//        }
+//    }
+//    for (i = 0; i < len; i = i + 2)
+//    {
+//        if (a[i] >= a[i + 1])
+//        {
+//            sum += a[i];
+//        }
+//        else
+//        {
+//            sum -= a[i];
+//        }
+//    }
+//    return sum;
+//}
+//int main()
+//{
+//    char arr[] = "III";
+//    romanToInt(arr);
+//    return 0;
+//}
+
+//int main()
+//{
+//	char arr[] = {'a','b','c','d'};
+//	char ar[] = "asdfgh";
+//	int c = strlen(ar);
+//	sizeof(arr);//sizeof不是函数
+//	//strlen是c语言的库函数  专门计算字符串长度(\0之前) 不计算\0
+//	return 0;
+//}
+
+//void swap(char* buf1, char* buf2, int width)
+//{
+//	int i = 0;
+//	for (i = 0; i < width; i++)
+//	{
+//		char tmp = *buf1;
+//		*buf1 = *buf2;
+//		*buf2 = tmp;
+//		buf1++, buf2++;
+//	}
+//}
+//int com(const void* e1, const void* e2)
+//{
+//	return *(int*)e1 - *(int*)e2;
+//}
+//void Bubble_sort(void* base,size_t num,size_t width,int (*com)(const void* e1, const void* e2))
+//{
+//	int j, i;
+//	for (i = 0; i < num - 1; i++)
+//	{
+//		int count = 0;
+//		for (j = 0; j < num - 1 - i; j++)
+//		{
+//			if (com((char*)base + j * width, (char*)base + (j + 1) * width)>0)
+//			{
+//					swap((char*)base + j * width, (char*)base + (j + 1) * width, width);
+//			}
+//		}
+//	}
+//}	
+//int main()
+//{
+//	int arr[10] = { 9,8,7,6,5,4,3,2,1,0 };
+//	int i = 0;
+//	int sz = sizeof(arr) / sizeof(arr[0]);
+//	Bubble_sort(arr, sz, sizeof(arr[0]), com);
+//	for (i = 0; i < 10; i++)
+//	{
+//		printf("%d ", arr[i]);
+//	}
+//	return 0;
+//}
+
+
+
+//struct stu
+//{
+//	char name[20];
+//	int age;
+//	char sex[5];
+//};
+//int compare(const void* e1, const void* e2)
+//{
+//	return (*(int*)e1 - *(int*)e2);
+//}
+//int con_name(const void* e1, const void* e2)
+//{
+//	return (strcmp(((struct stu*)e1)->name, ((struct stu*)e2)->name));
+//}//这里一定要记得强制类型转换
+//int main()
+//{
+//	struct stu s[3] = { {"李四",20,"男"},{"王五",20,"男"} ,{"赵四",20,"男"} };
+//	int sz = sizeof(s) / sizeof(s[0]);
+//	qsort(s, sz, sizeof(s[0]),compare);
+//	int i = 0; 
+//	for (i = 0; i < sz; i++)
+//	{
+//		printf("%s %d %s\n", s[i].name, s[i].age, s[i].sex);
+//	}
+//	return 0;
+//}
+
+
+
+
 //int add(int x, int y)
 //{
 //	return x + y;
