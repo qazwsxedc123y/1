@@ -1,29 +1,74 @@
 #define  _CRT_SECURE_NO_WARNINGS
-#include<string.h>
-#include<stdlib.h>
-#include<stdio.h>
-#include<stdbool.h>
-
-
-bool isValid(char* s) {
-    int len = strlen(s);
-    int i = 0;
-    for (i = 0; i < len - 1; i = i + 2)
-    {
-        if (s[i] != s[i + 1])
-        {
-            return false;
-        }
-    }
-    return true;
+//#include<string.h>
+//#include<stdlib.h>
+//#include<stdio.h>
+//#include<stdbool.h>
+#include"sltest.h"
+void meun()
+{
+	printf("***************************\n");
+	printf("******1. SLPushBack  ******\n");//后添加
+	printf("******2. SLPushFront ******\n");//前添加
+	printf("******3. SLPopBack   ******\n");//后删除
+	printf("******4. SLPopFront  ******\n");//前删除
+	printf("******5. SLErase     ******\n");//特定位置删除
+	printf("******6. SLInSert  ******\n");//特定位置添加
+	printf("******7. SLPrintf    ******\n");//打印
+	printf("******    0. exit    ******\n");
+	printf("***************************\n");
 }
+
 int main()
 {
-	char s[] = "()";
-	int len = strlen(s);
-    isValid(s);
+	SL s;
+	SLInit(&s);
+	int input;
+	do{		
+		meun();	
+		scanf("%d", &input);
+		switch (input)
+		{
+		case PushBack://1
+			SLPushBack(&s, 1);
+			break;
+		case PushFront://2
+			SLPushFront(&s, 2);
+			break;
+		case POPBACK://3
+			SLPopBack(&s);
+			break;
+		case SLPRINTF://7
+			SLprintf(&s);
+			break;
+		case EXIT:
+			printf("退出成功\n");
+			SLDestroy(&s);
+			break;
+		}
+	} while (input);
 	return 0;
 }
+
+
+//bool isValid(char* s) {
+//    int len = strlen(s);
+//    int i = 0;
+//    for (i = 0; i < len - 1; i = i + 2)
+//    {
+//        if (s[i] != s[i + 1])
+//        {
+//            return false;
+//        }
+//    }
+//    return true;
+//}
+//int main()
+//{
+//	char s[] = "()";
+//	int len = strlen(s);
+//    isValid(s);
+//	return 0;
+//}
 
 //int romanToInt(char* s) {
 //    int len = strlen(s);
