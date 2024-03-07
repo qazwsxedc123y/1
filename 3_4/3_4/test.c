@@ -1,16 +1,39 @@
 #define  _CRT_SECURE_NO_WARNINGS
-#include <stdio.h>
-#include <string.h>
-void test(int* p)
-{
-	
-}
+#include "SL.h"
+
+
 int main()
 {
-	int* p;
-	test(p);
+	SL* begin=NULL;
+	begin = (SL*)malloc(sizeof(SL));
+	SLPushback(&begin,1);
+	SLPushback(&begin,2);
+	SLPushback(&begin,3);
+	SLPushback(&begin,4);
+	SLPrint(begin);
 	return 0;
 }
+
+//int main()
+//{
+//	int* p = 0x11221122;
+//	int** ps = &p;
+//	int* pr = &p;
+//	*pr = 0x11111133;
+//	return 0;
+//}
+
+
+//void test(int* p)
+//{
+//	
+//}
+//int main()
+//{
+//	int* p;
+//	test(p);
+//	return 0;
+//}
 
 
 //int add(int x, int y)
