@@ -4,13 +4,19 @@
 
 int main()
 {
-	SL* begin=NULL;
-	begin = (SL*)malloc(sizeof(SL));
-	SLPushback(&begin,1);
-	SLPushback(&begin,2);
-	SLPushback(&begin,3);
-	SLPushback(&begin,4);
-	SLPrint(begin);
+	SL* SLList=NULL;
+	SLPushFront(&SLList, 5);
+	SLPushback(&SLList,1);
+	SLPushback(&SLList,2);
+	SLPushback(&SLList,3);
+	SLPushback(&SLList,4);
+	SLPrint(SLList);
+
+	SLPopBack(&SLList);
+	SLPrint(SLList);
+
+	SLPopFront(&SLList);
+	SLPrint(SLList);
 	return 0;
 }
 

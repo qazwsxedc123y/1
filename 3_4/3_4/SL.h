@@ -2,6 +2,9 @@
 
 #include <stdio.h>
 #include <string.h>
+#include<malloc.h>
+#include<stdlib.h>
+#include<assert.h>
 
 typedef int SLDataType;
 
@@ -9,8 +12,14 @@ typedef struct SLList
 {
     SLDataType x;
     struct SLList* next;
-} SL;
+}SL;
 
-void SLPushback(SL** ppage, SLDataType x);
+void SLPushback(SL** pphead, SLDataType x);
 
-void SLPrint(SL* ppage);
+void SLPushFront(SL** pphead, SLDataType x);
+
+void SLPopBack(SL** pphead);
+
+void SLPopFront(SL** pphead);
+
+void SLPrint(SL* pphead);
