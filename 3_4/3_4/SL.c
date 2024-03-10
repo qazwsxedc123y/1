@@ -104,6 +104,85 @@ void SLPopFront(SL** pphead)
 	////tail = NULL;  不需要，因为本来就在栈区上
 }
 
+SL* SLFind(SL* pphead, SLDataType x)
+{
+	assert(pphead);
+	SL* tail = pphead;
+	while (tail->x != x)
+	{
+		tail = tail->next;
+	}
+	return tail;
+}
+
+void SLInsert(SL** pphead, SL* pos, SLDataType x)
+{
+	assert(pphead);
+	assert(pos);
+	SL* tail = *pphead;
+	SL* newcode = (SL*)malloc(sizeof(SL));
+	if (newcode == NULL)
+	{
+		perror("SLInsert fail");
+	}
+	while (tail->next != pos)
+	{
+		tail = tail->next;
+	}
+	newcode->next = tail->next;
+	newcode->x = x;
+	tail->next = newcode;
+}
+
+void SLInsertBack(SL** pphead, SL* pos, SLDataType x)
+{
+	assert(pphead);
+	assert(pos);
+	SL* tail = *pphead;
+	SL* newcode = (SL*)malloc(sizeof(SL));
+	if (newcode == NULL)
+	{
+		perror("SLInsertBack fail");
+	}
+	while (tail != pos)
+	{
+		tail = tail->next;
+	}
+	newcode->next = tail->next;
+	newcode->x = x;
+	tail->next = newcode;
+}
+
+void SLErase(SL** pphead, SL* pos)
+{
+	assert(pphead);
+	assert(pos);
+	SL* tail = *pphead;
+	if (pos == *pphead)
+	{
+		SLPopFront(pphead);
+		return;
+	}
+	while (tail->next != pos)
+	{
+		tail = tail->next;
+	}
+	tail->next = pos->next;
+	free(pos);
+}
+
+void SLModify(SL** pphead, SL* pos, SLDataType x)
+{
+	assert(pphead);
+	assert(pos);
+	SL* tail = *pphead;
+	while (tail != pos)
+	{
+		tail = tail->next;
+	}
+	tail->x = x;
+}
+
 void SLPrint(SL* pphead)
 {
 	SL* tail = pphead;
@@ -113,4 +192,19 @@ void SLPrint(SL* pphead)
 		tail = tail->next;
 	}
 	printf("NULL\n");
+}
+
+void SLList_free(SL** pphead)
+{
+	//定义一个指针变量保存头结点的地址
+	SL* pb = *pphead;
+	while (*pphead != NULL)
+	{
+		//先保存p_head指向的结点的地址
+		pb = *pphead;
+		//p_head保存下一个结点地址
+		*pphead = (*pphead)->next;
+		free(pb);
+		pb = NULL;
+	}
 }

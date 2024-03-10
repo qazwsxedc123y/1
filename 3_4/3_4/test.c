@@ -1,11 +1,11 @@
 #define  _CRT_SECURE_NO_WARNINGS
 #include "SL.h"
 
-
 int main()
 {
 	SL* SLList=NULL;
 	SLPushFront(&SLList, 5);
+
 	SLPushback(&SLList,1);
 	SLPushback(&SLList,2);
 	SLPushback(&SLList,3);
@@ -17,6 +17,21 @@ int main()
 
 	SLPopFront(&SLList);
 	SLPrint(SLList);
+
+	SL* pos = SLFind(SLList,2);
+	SLInsert(&SLList,pos,20);//Ç°²å
+	SLPrint(SLList);
+
+	SLInsertBack(&SLList, pos, 30);//ºó²å
+	SLPrint(SLList);
+
+	SLErase(&SLList, pos);
+	SLPrint(SLList);
+
+	pos= SLFind(SLList, 3);
+	SLModify(&SLList, pos, 50);
+	SLPrint(SLList);
+	SLList_free(&SLList);
 	return 0;
 }
 
