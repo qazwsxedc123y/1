@@ -4,6 +4,52 @@
 #include<string.h>
 
 
+int main()
+{
+	char arr1[] = "this is an apple";
+	char arr2[] = "is";
+	char* ret = strstr(arr1, arr2);
+	printf("%s\n", ret);
+	printf("%s\n", arr1);
+	return 0;
+}
+
+
+//typedef struct SLList
+//{
+//    int x;
+//    int y;
+//} SL;
+//
+//int main()
+//{
+//    SL s = { 10, 20 };
+//    SL* p = &s;
+//    p->x = s.x;
+//    p->y = s.y;
+//
+//    SL* pr = p;
+//    pr->x = 30; // 通过间接访问修改p指向的内容
+//
+//    printf("s.x: %d, s.y: %d\n", s.x, s.y);
+//    return 0;
+//}
+
+//typedef struct SLList
+//{
+//	int x;
+//	int y;
+//}SL;
+//int main()
+//{
+//	SL s = { 10,20 };
+//	SL* p = &s;
+//	p->x = s.x;
+//	p->y = s.y;
+//	SL* pr = &p;
+//	pr->x = 30;
+//	return 0;
+//}
 
 //char* my_strcat(char* strDestination, const char* strSource)
 //{
