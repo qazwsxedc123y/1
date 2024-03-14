@@ -2,10 +2,340 @@
 
 #include<stdio.h>
 #include<string.h>
+#include<assert.h>
 
 
 
 
+
+
+
+int main()
+{
+	int a = 10;
+	int* p = &a;
+	int** ps = &p;
+	*ps = 50;
+	return 0;
+}
+
+
+//int main()
+//{
+//	int arr[][2] = { 0 };
+//	scanf("%d",arr);
+//	printf("%d", arr[0][0]);
+//	return 0;
+//}
+
+
+//int main()
+//{
+//	int a = 1;
+//	int* p = &a;
+//	*p = 2;
+//	printf("%d", a);
+//	return 0;
+//}
+
+
+
+
+//int check_sys()
+//{
+//	int i = 1;
+//	return (*(char*)&i);
+//}
+//int main()
+//{
+//	int ret = check_sys();
+//	if (ret == 1)
+//	{
+//		printf("小端\n");
+//	}
+//	else
+//	{
+//		printf("大端\n");
+//	}
+//	return 0;
+//}
+
+//int Ckeck()
+//{
+//	int n = 1;
+//	char* p = &n;
+//	return (*p);
+//}
+//int main()
+//{
+//	int a = 1;
+//	int ret=Ckeck();
+//	//0->大端  1小端
+//	if (ret == 1)
+//	{
+//		printf("小端");
+//	}
+//	else
+//	{
+//		printf("大端");
+//	}
+//	return 0;
+//}
+
+//int main()
+//{
+//	unsigned char a = 200;
+//	unsigned char b = 100;
+//	unsigned char c = 0;
+//	c = a + b;
+//	printf(" %d %d", a + b, c);
+//	return 0;
+//}
+
+//int main()
+//{
+//    int a = 0x11223344;
+//    char* pc = (char*)&a;
+//    *pc = 0;
+//    printf("%x\n", a);
+//    return 0;
+//}
+
+
+//void* my_memmove(void* dest,const void* str, size_t count)
+//{
+//	assert(dest);
+//	assert(str);
+//	void* ret = dest;
+//	char* s1 = (char*)dest;
+//	char* s2 = (char*)str;
+//	if (dest < str)//从前 -》 后
+//	{
+//		while (count--)
+//		{
+//			*s1++ = *s2++;
+//		}
+//	}
+//	else//后 -》 前
+//	{
+//		s1 = s1 + count;
+//		s2 = s2 + count;
+//		while (count--)
+//		{
+//			*s1-- = *s2--;
+//		}
+//	}
+//	return ret;
+//}
+//
+//int main()
+//{
+//	char arr1[150] = "iissssiii";
+//	char arr2[] = "ssssss";
+//	my_memmove(arr1, arr1+2,5);
+//	printf("%s", arr1);
+//	return 0;
+//}
+
+
+//void* my_memcpy(void *dest,void* str,size_t count)
+//{
+//	assert(dest);
+//	assert(str);
+//	void* ret = dest;
+//	while (count--)
+//	{
+//		*(char*)dest = *(char*)str;
+//		dest = (char*)dest+1;
+//		str = (char*)str+1;
+//	}
+//
+//	return ret;
+//}
+//int main()
+//{
+//	char arr1[150] = "iiiiiiiii";
+//	char arr2[] = "ssssss";
+//	my_memcpy(arr1, arr2,5);
+//	printf("%s", arr1);
+//	return 0;
+//}
+
+
+//char* my_strncat(char* str1, const char* str2)
+//{
+//	assert(str1 && str2);
+//	char* ret = str1;//保存头
+//	while (*str1)//一直到\0
+//	{
+//		str1++;
+//	}
+//	while (*str2)
+//	{
+//		*str1 = *(char*)str2;
+//		str1++;
+//		str2++;
+//	}
+//
+//	//添加\0
+//	*str1='\0';
+//	return ret;
+//}
+//int main()
+//{
+//	char arr1[150] = "asdfg";
+//	char arr2[] = "sss";
+//	char* ret=my_strncat(arr1,arr2);
+//	printf("%s", ret);
+//	return 0;
+//}
+
+//char* my_strncpy(char* str1, const char* str2, int n)
+//{
+//	assert(str1 && str2);
+//	int i = 0;
+//	for (i = 0; str2 != '\0' && i < n; i++)
+//	{
+//		str1[i] = str2[i];
+//	}
+//	if (i < n)//符合库函数给的标准
+//	{
+//		str1[i] = '\0';
+//	}
+//	return str1;
+//}
+//int main()
+//{
+//	char arr1[150] = "asdfgh";
+//	char arr2[] = "asd";
+//	char* ret=my_strncpy(arr1,arr2,3);
+//	//char* ret=strncpy(arr1,arr2,3);
+//	printf("%s", ret);
+//	return 0;
+//}
+
+
+//char* my_strstr(const char* string, const char* str)
+//{
+//	assert(string);
+//	assert(str);
+//	char* cur = (char*)string;
+//	char* s2 = (char*)str;
+//	if (*str=='\0')
+//	{
+//		return (char*)string;
+//	}
+//	while (*cur)
+//	{
+//		string = cur;
+//		s2 = str;
+//		while (*s2 == *string && *string && *s2)
+//		{
+//			s2++;
+//			string++;
+//		}
+//		if (!*s2)
+//			return cur;
+//		cur++;
+//	}
+//	return NULL;
+//}
+//int main()
+//{
+//	char arr1[] = "asdasds";
+//	char arr2[] = "sds";
+//	char* ret=my_strstr(arr1, arr2);
+//	printf("%s", ret);
+//	return 0;
+//}
+
+
+//int my_strcmp(const char* str1, const char* str2)
+//{
+//	assert(str1 && str2);
+//	while (*str1 && *str2)
+//	{
+//		if (*str1 == *str2)
+//		{
+//			str1++, str2++;
+//		}
+//		else
+//		{
+//			return *str1 - *str2;
+//		}
+//	}
+//	if (*str1 )
+//	{
+//		return 1;
+//	}
+//	else if(*str1==*str2&&*str1=='\0')
+//	{
+//		return 0;
+//	}
+//	else
+//	{
+//		return -1;
+//	}
+//}
+//int main()
+//{
+//	char arr1[] = "abcdef";
+//	char arr2[] = "abcedf";
+//	int ret=my_strcmp(arr1, arr2);
+//	if (ret > 0)
+//	{
+//		printf("arr1>arr2");
+//	}
+//	else if (ret == 0)
+//	{
+//		printf("arr1=arr2");
+//	}
+//	else
+//	{
+//		printf("arr1<arr2");
+//	}
+//	return 0;
+//}
+
+
+
+//int main()
+//{
+//	char a = 128;
+//	printf("%u", a);
+//	return 0;
+//}
+
+//int main()
+//{
+//	char a = -1;
+//	signed char b = -1;
+//	unsigned char c = -1;
+//	printf("a=%d,b=%d,c=%d", a, b, c);
+//	return 0;
+//}
+
+//int main()
+//{
+//	int n = 1;
+//	if (*(char*)&n == 1)//(char)n不行
+//	{
+//		printf("大端\n");
+//	}
+//	else
+//	{
+//		printf("小端\n");
+//	}
+//	return 0;
+//}
+
+//int main()
+//{
+//	int arr[10][10] = { 0 };
+//	scanf("%d", arr);
+//	printf("%d", arr[0][0]);
+//	return 0;
+//}
 
 
 ///**
