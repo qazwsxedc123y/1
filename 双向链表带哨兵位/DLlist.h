@@ -26,4 +26,15 @@ void SLPopFrpnt(DL* pphead);
 
 void SLPopBack(DL* pphead);
 
+DL* SLFind(DL* pphead, SLdatatype x);
+
+void SLInsertBack(DL* pphead, DL* pos, SLdatatype x);
+
+void SLInsertFront(DL* pphead, DL* pos, SLdatatype x);
+
+
+void SLErase(DL* pphead, DL* pos);
+
 void SLprint(DL* pphead);
+
+void DListDestory(DL* pphead);

@@ -16,7 +16,16 @@ int main()
 
 	SLPopFrpnt(DLList);
 	SLPopBack(DLList);
-	SLprint(DLList);//5->8
-	SLInsert();
+	SLPushBack(DLList, 7);
+	SLprint(DLList);//5->8->7
+	DL* pos=SLFind(DLList,8);
+	SLInsertBack(DLList,pos,9);//ºó²å    5->8->9->7
+	SLprint(DLList);
+	pos = SLFind(DLList, 8);
+	SLInsertFront(DLList, pos, 10);  //Ç°²å  5->10->8->9->7
+	SLprint(DLList);
+	SLErase(DLList,pos);//É¾³ý  5->10->9->7
+	SLprint(DLList);
+	DListDestory(DLList);
 	return 0;
 }

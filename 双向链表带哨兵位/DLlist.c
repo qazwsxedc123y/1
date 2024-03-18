@@ -61,6 +61,74 @@ void SLPopBack(DL* pphead)
 	end_second->next = pphead;
 }
 
+DL* SLFind(DL* pphead, SLdatatype x)
+{
+	assert(pphead);
+	DL* tail = pphead->next;
+	while (tail->val != x)
+	{
+		tail = tail->next;
+		if (tail == pphead)
+		{
+			printf("该链表内不存在该数据\n");
+			return NULL;
+		}
+	}
+	return tail;
+}
+
+void SLInsertBack(DL* pphead, DL* pos, SLdatatype x)
+{
+	assert(pphead);
+	assert(pos);
+	DL* tail = pphead->next;
+	while (tail != pos)//tail找到对应的节点   后插
+	{
+		tail = tail->next;
+	}
+	DL* newcode = BuyDLNode();
+	newcode->val = x;
+	newcode->next = tail->next;
+	newcode->prev = tail;
+	DL* Back = tail->next;
+	Back->prev = newcode;
+	tail->next = newcode;
+}
+
+void SLInsertFront(DL* pphead, DL* pos, SLdatatype x)
+{
+	assert(pphead);
+	assert(pos);
+	DL* tail = pphead->next;
+	while (tail != pos)//tail找到对应的节点   前插
+	{
+		tail = tail->next;
+	}
+	DL* newcode = BuyDLNode();
+	newcode->val = x;
+	newcode->next = tail;
+	newcode->prev = tail->prev;
+	DL* Front = tail->prev;
+	Front->next = newcode;
+	tail->prev = newcode;
+}
+
+void SLErase(DL* pphead, DL* pos)
+{
+	assert(pphead);
+	assert(pos);
+	DL* tail = pphead->next;
+	while (tail != pos)//tail找到对应的节点  要删除的节点
+	{
+		tail = tail->next;
+	}
+	DL* Front = tail->prev;
+	DL* Back = tail->next;
+	free(tail);
+	Front->next = Back;
+	Back->prev = Front;
+}
+
 void SLprint(DL* pphead)
 {
 	DL* tail = pphead->next;
@@ -71,4 +139,18 @@ void SLprint(DL* pphead)
 		tail = tail->next;
 	}
 	printf("NULL\n");
+}
+
+void DListDestory(DL* pphead)
+{
+	assert(pphead);
+	DL* tail = pphead->next;
+	while (tail != pphead)
+	{
+		//先保存
+		DL* tmp = tail->next;
+		free(tail);
+		tail = tmp;
+	}
+	free(pphead);
 }
