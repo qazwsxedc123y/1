@@ -6,6 +6,247 @@
 #include<errno.h>
 #include<assert.h>
 
+int main()
+{
+	printf("%d ", -1 / 2);
+	return 0;
+}
+//int main()
+//{
+//    unsigned char puc[4];
+//    struct tagPIM
+//    {
+//        unsigned char ucPim1;
+//        unsigned char ucData0 : 1;
+//        unsigned char ucData1 : 2;
+//        unsigned char ucData2 : 3;
+//    }*pstPimData;//2字节
+//    printf("%d\n", sizeof(*pstPimData));
+//    pstPimData = (struct tagPIM*)puc;
+//    memset(puc, 0, 4);
+//    pstPimData->ucPim1 = 2;
+//    pstPimData->ucData0 = 3;
+//    pstPimData->ucData1 = 4;
+//    pstPimData->ucData2 = 5;
+//    printf("%02x %02x %02x %02x\n", puc[0], puc[1], puc[2], puc[3]);
+//    return 0;
+//}
+//struct ListNode 
+//{
+//    int val;
+//    struct ListNode* next;
+//};
+//struct ListNode* insertionSortList(struct ListNode* head) {
+//    if (head == NULL || head->next == NULL) {
+//        return head;
+//    }
+//    struct ListNode* sortedHead = head, * sortedTail = head;//尾
+//    head = head->next;
+//    sortedTail->next = NULL;
+//
+//    while (head) {
+//        struct ListNode* current = head;
+//        // 移动head指针到下一个节点
+//        head = head->next;
+//
+//        // 插入节点到新链表
+//        if (current->val <= sortedHead->val) {
+//            // 插入到头部  换头
+//            current->next = sortedHead;
+//            sortedHead = current;
+//        }
+//        else {
+//            // 插入到已排序部分或尾部
+//            struct ListNode* temp = sortedHead;
+//            //将改节点放到sorted的正确位置
+//            while (temp != sortedTail && temp->next->val < current->val) {
+//                temp = temp->next;
+//            }
+//            //插入
+//            current->next = temp->next;
+//            temp->next = current;
+//            if (temp == sortedTail) {
+//                sortedTail = current; // 如果是插入到尾部，更新sortedTail
+//            }
+//        }
+//    }
+//    return sortedHead;
+//}
+//struct ListNode* insertionSortList(struct ListNode* head) {
+//    if (head == NULL || head->next == NULL) {
+//        return head;
+//    }
+//    struct ListNode* sortedHead = head, * sortedTail = head;//尾
+//    head = head->next;
+//    //最后一个
+//    sortedTail->next = NULL;
+//
+//    while (head) {
+//        struct ListNode* cur = head;
+//        // 移动head指针到下一个节点
+//        head = head->next;
+//
+//        //给sortedHead换头，直到合适
+//        if (cur->val <= sortedHead->val)//头插，更换头
+//        {
+//            cur->next = sortedHead;
+//            sortedHead = cur;
+//        }
+//        //sorthead的next没改
+//
+//        //不是头查
+//        //弹药挨个比较找到对应的位置
+//        else
+//        {
+//            struct ListNode* tmp = sortedHead;
+//            //找到了对应位置
+//            while ((tmp != sortedTail) && (tmp->next->val <= cur->val))
+//            {
+//                tmp = tmp->next;
+//            }
+//            cur->next = tmp->next;//等价于 sortedTail->next=NULL;
+//            tmp->next = cur;
+//            //但如果对应位置为尾节点
+//            //更新Tail
+//            if (tmp == sortedTail)
+//            {
+//                sortedTail = cur;
+//                //此时的tmp为最后一个的下一个  NULL
+//            }
+//        }
+//    }
+//    return sortedHead;
+//}
+
+ //else
+ //{
+ //    k = cur->val;
+ //    //ptr为cur前一个
+ //    cur_prev = head;
+ //    while (cur_prev->next != cur)
+ //    {
+ //        cur_prev = cur_prev->next;
+ //    }
+ //    ptr = cur_prev;
+ //    while ((k < ptr->val) && (ptr != head))
+ //    {
+ //        ptr->next->val = ptr->val;//arr[j+1] = arr[j];
+ //        //j--
+ //        //存放ptr前一个
+ //        tmp = head;
+
+ //        while (tmp->next != ptr)
+ //        {
+ //            tmp = tmp->next;
+ //        }
+ //        ptr = tmp;//--完成
+
+ //        ptr->next->val = k;
+ //    }
+ //    cur = cur->next;
+ //       }
+
+ 
+//struct ListNode* insertionSortList(struct ListNode* head) {
+//    if (head == NULL || head->next == NULL) {
+//        return head; // 处理链表为空或只有一个节点的情况
+//    }
+//    struct ListNode* dummy = (struct ListNode*)malloc(sizeof(struct ListNode));
+//    dummy->next = head;
+//    struct ListNode* cur = dummy->next->next, * ptr = head;
+//    // struct ListNode* cur = head->next->next, * ptr = head->next;
+//    struct ListNode* tmp = head;
+//    struct ListNode* cur_prev = head;
+//    int k = 0;
+//
+//    while (cur)
+//    {
+//        //ptr为cur前一个
+//        k = cur->val;
+//        cur_prev = head;
+//        while (cur_prev->next != cur)
+//        {
+//            cur_prev = cur_prev->next;
+//        }
+//        ptr = cur_prev;
+//        if (cur->val >= ptr->val)
+//        {
+//            ptr = ptr->next;
+//            cur = cur->next;
+//        }
+//        else
+//        {
+//            while ((k < ptr->val) && (ptr != dummy))
+//            {
+//                ptr->next->val = ptr->val;//arr[j+1] = arr[j];
+//                //j--
+//                //存放ptr前一个
+//                tmp = dummy;
+//                while (tmp->next != ptr)
+//                {
+//                    tmp = tmp->next;
+//                }
+//                ptr = tmp;//--完成
+//                ptr->next->val = k;
+//            }
+//            cur = cur->next;
+//        }
+//    }
+//    free(dummy);
+//    return head;
+//}
+//void print(struct ListNode* head)
+//{
+//    while (head)
+//    {
+//        printf("%d ", head->val);
+//        head = head->next;
+//    }
+//    printf("\n");
+//}
+//int main()
+//{
+//    struct ListNode* SL;
+//    struct ListNode* Phead= (struct ListNode*)malloc(sizeof(struct ListNode));
+//    SL=(struct ListNode*)malloc(sizeof(struct ListNode));
+//    struct ListNode* head = Phead;
+//
+//    struct ListNode* newcode=(struct ListNode*)malloc(sizeof(struct ListNode));
+//    newcode->val = 4;
+//    Phead->next = newcode;
+//    Phead = Phead->next;
+//
+//    newcode = (struct ListNode*)malloc(sizeof(struct ListNode));
+//    newcode->val = 2;
+//    Phead->next = newcode;
+//    Phead = Phead->next;
+//    newcode = (struct ListNode*)malloc(sizeof(struct ListNode));
+//    newcode->val = 1;
+//    Phead->next = newcode;
+//    Phead = Phead->next;
+//    newcode = (struct ListNode*)malloc(sizeof(struct ListNode));
+//    newcode->val = 3;
+//    Phead->next = newcode;
+//    Phead = Phead->next;
+//    newcode = (struct ListNode*)malloc(sizeof(struct ListNode));
+//    newcode->val = 6;
+//    Phead->next = newcode;
+//    Phead = Phead->next;
+//    newcode = (struct ListNode*)malloc(sizeof(struct ListNode));
+//    newcode->val = 0;
+//    Phead->next = newcode;
+//    Phead = Phead->next;
+//        [4, 2, 1, 3]
+//    Phead->next = NULL;
+//    struct ListNode* tmp = head;
+//    head = head->next;
+//    free(tmp);
+//    print(head);
+//    insertionSortList(head);
+//    print(head);
+//    return 0;
+//}
+
 //  void insertion_sort(int arr[], int len){
 //         int i,j,key;
 //         for (i=1;i<len;i++){
@@ -19,51 +260,51 @@
 //         }
 // }
 
-struct ListNode* insertionSortList(struct ListNode* head) {
-    struct ListNode* cur = head->next, * ptr = head;
-    struct ListNode* tmp = head;
-    struct ListNode* cur_prev = head;
-    int k = 0;
-    while (cur)
-    {
-        k = cur->val;
-        //ptr为cur前一个
-        cur_prev = head;
-        while (cur_prev->next != cur)
-        {
-            cur_prev = cur_prev->next;
-        }
-        ptr = cur_prev;
-        while ((k < ptr->val) && ptr != head)
-        {
-            ptr->next->val = ptr->val;//arr[j+1] = arr[j];
-
-            //j--
-
-            //存放ptr前一个
-            tmp = head;
-            if (ptr == head)//j=0
-            {
-                //不需要减减
-                ptr->val = k;
-            }
-            else
-            {
-                while (tmp->next != ptr)
-                {
-                    tmp = tmp->next;
-
-                }
-                ptr = tmp;//--完成
-
-                ptr->next->val = k;
-            }
-
-        }
-        cur = cur->next;
-    }
-    return head;
-}
+//struct ListNode* insertionSortList(struct ListNode* head) {
+//    struct ListNode* cur = head->next, * ptr = head;
+//    struct ListNode* tmp = head;
+//    struct ListNode* cur_prev = head;
+//    int k = 0;
+//    while (cur)
+//    {
+//        k = cur->val;
+//        //ptr为cur前一个
+//        cur_prev = head;
+//        while (cur_prev->next != cur)
+//        {
+//            cur_prev = cur_prev->next;
+//        }
+//        ptr = cur_prev;
+//        while ((k < ptr->val) && ptr != head)
+//        {
+//            ptr->next->val = ptr->val;//arr[j+1] = arr[j];
+//
+//            //j--
+//
+//            //存放ptr前一个
+//            tmp = head;
+//            if (ptr == head)//j=0
+//            {
+//                //不需要减减
+//                ptr->val = k;
+//            }
+//            else
+//            {
+//                while (tmp->next != ptr)
+//                {
+//                    tmp = tmp->next;
+//
+//                }
+//                ptr = tmp;//--完成
+//
+//                ptr->next->val = k;
+//            }
+//
+//        }
+//        cur = cur->next;
+//    }
+//    return head;
+//}
 
 
 //void insertion_sort(int arr[], int len)
