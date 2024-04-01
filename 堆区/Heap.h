@@ -4,6 +4,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include<errno.h>
+#include<time.h>
 
 typedef int HpDataType;
 typedef struct heap
@@ -28,7 +29,7 @@ HpDataType HeapTop(Hp* php);
 
 void HeapPop(Hp* php);
 
-void adjustment_down(Hp* php, int n, int parent);
+void adjustment_down(HpDataType* a, int n, int parent);
 void adjustment_prev(Hp* php,  int child);
 void swap(HpDataType* p1, HpDataType* p2);
 
@@ -37,3 +38,7 @@ void HeapSort(Hp* php, int n);
 //排降序  建立小堆
 //调整完后  首尾交换  最后一个就是最小的  然后size--
 //重复如此  就会得到第二小的
+
+
+void CreateNdata();
+void Top_k(int k);

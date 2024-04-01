@@ -108,18 +108,18 @@ HpDataType HeapTop(Hp* php)
 	return php->a[0];
 }
 
-void adjustment_down(Hp* php,int n,int parent )
+void adjustment_down(HpDataType* a,int n,int parent )
 {
 	int child = parent * 2 + 1;
 	while (child < n)
 	{
-		if ((child + 1 < php->_size) && (php->a[child] > php->a[child + 1]))
+		if ((child + 1 < n) && (a[child] > a[child + 1]))
 		{
 			child++;
 		}
-		if (php->a[child] < php->a[parent])
+		if (a[child] < a[parent])
 		{
-			swap(&php->a[child], &php->a[parent]);
+			swap(&a[child], &a[parent]);
 			parent = child;
 			child = parent * 2 + 1;
 		}
@@ -135,7 +135,7 @@ void HeapPop(Hp* php)//删去头节点
 	// 先将头与尾交换，然后删去尾，在调整
 	swap(&php->a[0], &php->a[php->_size - 1]);
 	php->_size--;
-	adjustment_down(php,php->_size,0);
+	adjustment_down(php->a,php->_size,0);
 }
 //o(n*logN)
 void HeapSort(Hp* php, int n)
@@ -145,16 +145,80 @@ void HeapSort(Hp* php, int n)
 
 	//此为降序
 	//小堆  先向上调整
-	for (int i = 0; i < n; i++)
+	for (int i = (n-1-1)/2; i >=0; i--)
 	{
-		adjustment_prev(php, i);
+		adjustment_down(php->a,n, i);
 	}
 	int end = n - 1;
 	while (end>0)
 	{
 		swap(&php->a[0], &php->a[end]);
 		end--;
-		adjustment_down(php, end, 0);
+		adjustment_down(php->a, end, 0);
 
 	}
+}
+
+void CreateNdata()
+{
+	int n = 100000;//十万以内的数
+	srand(time(0));
+	FILE* fin = fopen("data.txt", "w");
+	if (fin == NULL)
+	{
+		perror("fopne fail");
+		return;
+	}
+	for (size_t i = 0; i < 1000; i++)
+	{
+		int x = rand() % n;
+		fprintf(fin, "%d\n", x);
+	}
+	fclose(fin);
+}
+
+//取出最大的前k个数，以小堆的形式打印
+void Top_k(int k)
+{
+	//打开文件
+	FILE* fout = fopen("data.txt", "r");
+	if (fout == NULL)
+	{
+		perror("fopne fail");
+		return;
+	}
+	int* kimheap = (int*)malloc(sizeof(int) * k);
+	if (kimheap == NULL)
+	{
+		perror("malloc fail");
+		return;
+	}
+	//先读取前k个数据
+	int tmp;
+	for (size_t i = 0; i < k; i++)
+	{
+		fscanf(fout, "%d", &kimheap[i]);
+
+	}
+	//向下调整，形成小堆
+	for (int i = (k - 1 - 1) / 2; i >= 0; --i)
+	{
+		adjustment_down(kimheap, k, 0);
+	}
+	//挨个读取，并于头比较
+	while (!feof(fout))
+	{
+		fscanf(fout, "%d", &tmp);
+		if (tmp > kimheap[0])
+		{
+			kimheap[0] = tmp;
+			adjustment_down(kimheap, k, 0);
+		}
+	}
+	for (size_t i = 0; i < k; i++)
+	{
+		printf("%d ", kimheap[i]);
+	}
+	printf("\n");
+	fclose(fout);
 }

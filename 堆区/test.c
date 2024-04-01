@@ -5,12 +5,12 @@
 void test(Hp* php)
 {
 	HeapInit(php);
-	Heappush(php, 50);
-	Heappush(php, 60);
 	Heappush(php, 20);
-	Heappush(php, 30);
-	Heappush(php, 40);
-	Heappush(php, 45);
+	Heappush(php, 10);
+	Heappush(php, 15);
+	//Heappush(php, 30);
+	//Heappush(php, 40);
+	//Heappush(php, 45);
 	Heapprint(php);
 	HeapPop(php);
 	HeapPop(php);
@@ -29,10 +29,17 @@ void test1(Hp* php)
 	HeapSort(php, php->_size);
 	Heapprint(php);
 }
+
+void test_top_k()
+{
+	CreateNdata();
+	Top_k(5);
+}
 int main()
 {
 	Hp hp;
-	test1(&hp);
+	//test1(&hp);
 	//test(&hp);
+	test_top_k();
 	return 0;
 }
