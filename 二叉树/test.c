@@ -37,6 +37,9 @@ int main()
 
 	//求第k层的结点个数
 	printf("BT_Size_Levre_k:%d\n", BT_Size_Levre_k(root, 3));
+
+	//寻找值为k的结点
+	printf("%p\n", BTFind_Data_k(root, 5));
 	return 0;
 }
 

@@ -98,3 +98,26 @@ int BT_Size_Levre_k(BTNode* root, int k)
 	return BT_Size_Levre_k(root->left, k - 1) +
 		BT_Size_Levre_k(root->right, k - 1);
 }
+
+BTNode* BTFind_Data_k(BTNode* root,int k)
+{
+	if (root == NULL)
+	{
+		return NULL;
+	}
+	if (root->val == k)
+	{
+		return root;
+	}
+	BTNode* ret1 = BTFind_Data_k(root->left, k);
+	if (ret1)
+	{
+		return ret1;
+	}
+	BTNode* ret2 = BTFind_Data_k(root->right, k);
+	if (ret2)
+	{
+		return ret2;
+	}
+	return NULL;
+}

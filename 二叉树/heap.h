@@ -27,3 +27,5 @@ int BT_Leaf_Size(BTNode* root);
 int BT_Depth_Size(BTNode* root);
 
 int BT_Size_Levre_k(BTNode* root, int k);
+
+BTNode* BTFind_Data_k(BTNode* root,int k);
