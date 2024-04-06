@@ -52,6 +52,31 @@ void Post_Order(BTNode* root)
 	printf("%d ", root->val);
 }
 
+void Lever_Order(BTNode* root)
+{
+	Queue q;
+	QueueInit(&q);
+	if (root)
+	{
+		QueuePush(&q, root);
+	}
+	while (!QueueEmpty(&q))
+	{
+		BTNode* front = QueueFront(&q);
+		QueuePop(&q);
+		printf("%d ", front->val);
+		if (front->left)
+		{
+			QueuePush(&q, front->left);
+		}
+		if (front->right)
+		{
+			QueuePush(&q, front->right);
+		}
+	}
+	printf("\n");
+}
+
 int BT_Size(BTNode* root)
 {
 	return root == NULL ? 0 : BT_Size(root->left) +
@@ -120,4 +145,57 @@ BTNode* BTFind_Data_k(BTNode* root,int k)
 		return ret2;
 	}
 	return NULL;
+}
+
+// 判断二叉树是否是完全二叉树  
+bool BinaryTreeComplete(BTNode* root)
+{
+	//层序遍历，从第一个为空开始，向后看是否为空
+	Queue q;
+	QueueInit(&q);
+	if (root)
+	{
+		QueuePush(&q, root);
+	}
+	while (!QueueEmpty(&q))
+	{
+		BTNode* front = QueueFront(&q);
+		QueuePop(&q);
+		if (front == NULL)
+		{
+			break;
+		}
+			QueuePush(&q, front->left);
+			QueuePush(&q, front->right);
+	}
+	//检查后面是否为空  ，有非空即不是完全二叉树
+	while (!QueueEmpty(&q))
+	{
+		BTNode* front = QueueFront(&q);
+		QueuePop(&q);
+		if (front != NULL)
+		{
+			return false;
+		}
+		if (front->left)
+		{
+			QueuePush(&q, front->left);
+		}
+		if (front->right)
+		{
+			QueuePush(&q, front->right);
+		}
+	}
+	return true;
+}
+
+void BinaryTreeDestory(BTNode* root)//后序顺序释放
+{
+	if (root == NULL)
+	{
+		return;
+	}
+	BinaryTreeDestory(root->left);
+	BinaryTreeDestory(root->right);
+	free(root);
 }
