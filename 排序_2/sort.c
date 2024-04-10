@@ -349,6 +349,63 @@ void Quick_sort_stack(int* a, int begin, int end)
 	}
 }
 
+void _MergeSort(int* a,int left,int right,int* tmp)
+{
+	if (left >= right)
+	{
+		return;
+	}
+	int mid = (left + right) / 2;//(begin+end)>>1;
+	//[left,mid],[mid+1,right]
+	_MergeSort(a, left, mid, tmp);
+	_MergeSort(a, mid + 1, right, tmp);
+
+	//排完序了
+	int i = left;
+	//进行拷贝
+
+	int begin1 = left, begin2 = mid + 1;
+	int end1 = mid, end2 = right;
+	while (begin1<=end1&&begin2<=end2)
+	{
+		if (a[begin1] < a[begin2])//选1进
+		{
+			tmp[i++] = a[begin1++];
+		}
+		else
+		{
+			tmp[i++] = a[begin2++];
+		}
+	}
+
+	//不管谁先结束，再将剩下的拷贝进去
+
+	if (begin1 > end1)//1先结束  2没结束
+	{
+		while (begin2 <= end2)
+		{
+			tmp[i++] = a[begin2++];
+		}
+	}
+	else
+	{
+		while (begin1 <= end1)
+		{
+			tmp[i++] = a[begin1++];
+		}
+	}
+
+	//再最后拷贝回去
+
+	memcpy(a+left, tmp+left, sizeof(int)*(right-left+1));
+}
+
+void MergeSort(int* a, int n)
+{
+	int* tmp = malloc(sizeof(int) * n);
+	_MergeSort(a, 0, n-1,tmp);
+
+}
 
 void print_(int* a, int len)
 {
@@ -370,6 +427,7 @@ void TestOP()
 	int* a5 = (int*)malloc(sizeof(int) * N);
 	int* a6 = (int*)malloc(sizeof(int) * N);
 	int* a7 = (int*)malloc(sizeof(int) * N);
+	int* a8 = (int*)malloc(sizeof(int) * N);
 
 	for (int i = 0; i < N; ++i)
 	{
@@ -380,6 +438,7 @@ void TestOP()
 		a5[i] = a1[i];
 		a6[i] = a1[i];
 		a7[i] = a1[i];
+		a8[i] = a1[i];
 	}
 
 	int begin1 = clock();
@@ -410,6 +469,10 @@ void TestOP()
 	Quick_sort_Hole(a7, 0, N - 1);
 	int end7 = clock();
 
+	int begin8 = clock();
+	MergeSort(a7, N);
+	int end8 = clock();
+
 	printf("Insertion_sort:%d\n", end1 - begin1);
 	printf("Bubble_sort:%d\n", end2 - begin2);
 	printf("Select_sort:%d\n", end3 - begin3);
@@ -417,6 +480,7 @@ void TestOP()
 	printf("Heap_sort:%d\n", end5 - begin5);
 	printf("Quick_sort_Hoare:%d\n", end6 - begin6);
 	printf("Quick_sort_Hole:%d\n", end7 - begin7);
+	printf("MergeSort:%d\n", end8 - begin8);
 
 	free(a1);
 	free(a2);
@@ -425,6 +489,7 @@ void TestOP()
 	free(a5);
 	free(a6);
 	free(a7);
+	free(a8);
 }
 
 int main()
@@ -452,7 +517,7 @@ int main()
 	//快速排序--hoare版
 	//int mid=Get_key_Index(a, 0, len - 1);
 	
-	Quick_sort_Hoare(a, 0, len - 1);
+	//Quick_sort_Hoare(a, 0, len - 1);
 
 	//快速排序--挖坑版
 	//Quick_sort_Hole(a, 0, len - 1);
@@ -465,9 +530,13 @@ int main()
 
 	//Quick_sort_stack(a, 0, len - 1);
 
-	print_(a, len);
+	//归并排序
+
+	//MergeSort(a, len);
+
+	//print_(a, len);
 
 	//测试效率
-	//TestOP();
+	TestOP();
 	return 0;
 }
