@@ -407,6 +407,107 @@ void MergeSort(int* a, int n)
 
 }
 
+//归并排序--非递归实现
+
+void _MergeSort_non(int* a, int left, int right, int* tmp)
+{
+	int gap = 1;//每组的大小
+	int n = right + 1;
+	while (gap < n)
+	{
+		for (int i = 0; i <= right; i += gap * 2)
+		{
+			int j = i;
+			int begin1 = i,begin2= i + gap;
+			int end1 = i + gap - 1, end2 = i + 2 * gap - 1;
+
+			//printf("[%d,%d][%d,%d]\n", begin1, endl, begin2, end2);
+
+			//修正区间--防止越界
+			if (begin2 >= n)
+			{
+				break;
+			}
+			if (end2 >= n)
+			{
+				end2 = n - 1;
+			}
+
+			//进行区间排序--两个组合并排序，先排好序进去到tmp中，再拷贝回去
+			while (begin1 <= end1 && begin2 <= end2)
+			{
+				if (a[begin1] > a[begin2])//2进去
+				{
+					tmp[j++] = a[begin2++];
+				}
+				else
+				{
+					tmp[j++] = a[begin1++];
+				}
+			}
+			//不管谁先结束，再将剩下的拷贝进去
+
+			if (begin1 > end1)//1先结束  2没结束
+			{
+				while (begin2 <= end2)
+				{
+					tmp[j++] = a[begin2++];
+				}
+			}
+			else
+			{
+				while (begin1 <= end1)
+				{
+					tmp[j++] = a[begin1++];
+				}
+			}
+
+			//再从tmp拷回去
+
+			memcpy(a + i, tmp + i, sizeof(int) * (end2 - i + 1));
+		}
+		gap *= 2;
+	}
+}
+void MergeSort_non(int* a, int n)
+{
+	int* tmp = malloc(sizeof(int) * n);
+	_MergeSort_non(a, 0, n - 1, tmp);
+}
+
+//计数排序
+
+void Count_Sort(int* a, int n)
+{
+	int min = a[0], max = a[0];
+	for (int i = 0; i < n; i++)
+	{
+		if (a[i] < min) 
+		{
+			min = a[i];
+		}
+		if (a[i] > max)
+		{
+			max = a[i];
+		}
+	}
+	int range = max - min + 1;
+	int* count = (int* )malloc(sizeof(int) * range);
+	memset(count, 0, sizeof(int) * range);
+	for (int i = 0; i < n; i++)
+	{
+		count[a[i] - min] ++;//存的值大小为a[i]
+	}
+	int i = 0;
+	for (int j = 0; j < range; j++)
+	{
+		while (count[j]--)
+		{
+			a[i++] = j + min;
+		}
+	}
+}
+
 void print_(int* a, int len)
 {
 	for (int i = 0; i < len; i++)
@@ -428,6 +529,8 @@ void TestOP()
 	int* a6 = (int*)malloc(sizeof(int) * N);
 	int* a7 = (int*)malloc(sizeof(int) * N);
 	int* a8 = (int*)malloc(sizeof(int) * N);
+	int* a9 = (int*)malloc(sizeof(int) * N);
+	int* a10 = (int*)malloc(sizeof(int) * N);
 
 	for (int i = 0; i < N; ++i)
 	{
@@ -439,6 +542,8 @@ void TestOP()
 		a6[i] = a1[i];
 		a7[i] = a1[i];
 		a8[i] = a1[i];
+		a9[i] = a1[i];
+		a10[i] = a1[i];
 	}
 
 	int begin1 = clock();
@@ -470,8 +575,16 @@ void TestOP()
 	int end7 = clock();
 
 	int begin8 = clock();
-	MergeSort(a7, N);
+	MergeSort(a8, N);
 	int end8 = clock();
+
+	int begin9 = clock();
+	MergeSort_non(a9, N);
+	int end9 = clock();
+	
+	int begin10 = clock();
+	Count_Sort(a10, N);
+	int end10 = clock();
 
 	printf("Insertion_sort:%d\n", end1 - begin1);
 	printf("Bubble_sort:%d\n", end2 - begin2);
@@ -481,6 +594,8 @@ void TestOP()
 	printf("Quick_sort_Hoare:%d\n", end6 - begin6);
 	printf("Quick_sort_Hole:%d\n", end7 - begin7);
 	printf("MergeSort:%d\n", end8 - begin8);
+	printf("MergeSort_non:%d\n", end9 - begin9);
+	printf("Count_Sort:%d\n", end10 - begin10);
 
 	free(a1);
 	free(a2);
@@ -490,11 +605,13 @@ void TestOP()
 	free(a6);
 	free(a7);
 	free(a8);
+	free(a9);
+	free(a10);
 }
 
 int main()
 {
-	int a[] = { 9,0,1,3,7,6,4,10,2,4 };
+	int a[] = { 9,0,1,3,7,6,4,10,2,5 };
 	int len = sizeof(a) / sizeof(a[0]);
 	//插入排序
 	//Insertion_sort(a, len); 
@@ -533,6 +650,12 @@ int main()
 	//归并排序
 
 	//MergeSort(a, len);
+
+	//归并排序--非递归
+	//MergeSort_non(a, len);
+
+	//计数排序
+	//Count_Sort(a, len);
 
 	//print_(a, len);
 
