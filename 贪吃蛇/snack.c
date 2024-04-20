@@ -92,13 +92,16 @@ void CreateSnack(pSnack ps)
 			cur->next = ps->_psnack;
 			ps->_psnack = cur;
 		}
-		while (cur)
-		{
-			SetPos(cur->x, cur->y);
-			wprintf(L"%lc", Body);
-			cur = cur->next;
-		}
+
 	}
+	while (cur)
+	{
+		SetPos(cur->x, cur->y);
+		wprintf(L"%lc", Body);
+		cur = cur->next;
+	}
+	cur= ps->_psnack;
+
 	//设置蛇的相关信息
 	ps->_dir = RIGHT;
 	ps->_food_weight = 10;
@@ -192,9 +195,116 @@ void PrintHelpInfo()
 	//	system("pause");
 }
 
+bool Next_Is_Food(pSnackNode pn, pSnack ps)
+{
+	return (ps->_pfood->x == pn->x && ps->_pfood->y == pn->y);
+}
+
+void Eat_Food(pSnackNode pn, pSnack ps)
+{
+	ps->_pfood->next = ps->_psnack;
+	ps->_psnack = ps->_pfood;
+	free(pn);
+	pn = NULL;
+	pSnackNode cur = ps->_psnack;
+	while (cur)
+	{
+		SetPos(cur->x, cur->y);
+		wprintf(L"%lc", Body);
+		cur = cur->next;
+	}
+	ps->_sum_score += ps->_food_weight;
+	//在重新生成食物
+	CreateFood(ps);
+}
+
+void No_Food(pSnackNode pn, pSnack ps)
+{
+	pn->next = ps->_psnack;
+	ps->_psnack = pn;
+	pSnackNode cur = ps->_psnack;
+	//打印出来五个了
+	while (cur->next->next != NULL)
+	{
+		SetPos(cur->x, cur->y);
+		wprintf(L"%lc", Body);
+		cur = cur->next;
+	}
+	//将第六个位置打印为空格
+    //释放第六个
+	SetPos(cur->next->x, cur->next->y);
+	printf("  ");
+	
+	free(cur->next);
+	//再将倒数第二个的next为NULL
+	cur->next = NULL;
+}
+
+void Kill_By_Wall(pSnack ps)
+{
+	if(ps->_psnack->x == 0 || ps->_psnack->x == 56 ||
+		ps->_psnack->y == 0 || ps->_psnack->y == 26)
+	{
+		ps->_status = KILL_BY_WALL;
+	}
+}
+
+void Kill_By_Self(pSnack ps)
+{
+	pSnackNode cur = ps->_psnack -> next;
+	while (cur)
+	{
+		if (cur->x == ps->_psnack->x && cur->y == ps->_psnack->y)
+		{
+			ps->_status = KILL_BY_SELF;
+			break;
+		}
+		cur = cur->next;
+	}
+}
+
 void SnackMove(pSnack ps)
 {
+	pSnackNode pNextNode = (pSnackNode)malloc(sizeof(SnackNode));
+	if (pNextNode == NULL)
+	{
+		perror("SnackMove::malloc fail");
+		return;
+	}
+	switch (ps->_dir)
+	{
+	case UP:
+		pNextNode->x = ps->_psnack->x;
+		pNextNode->y = ps->_psnack->y - 1;
+		break;
+	case DOWN:
+		pNextNode->x = ps->_psnack->x;
+		pNextNode->y = ps->_psnack->y + 1;
+		break;
+	case LEFT:
+		pNextNode->x = ps->_psnack->x - 2;
+		pNextNode->y = ps->_psnack->y;
+		break;
+	case RIGHT:
+		pNextNode->x = ps->_psnack->x + 2;
+		pNextNode->y = ps->_psnack->y;
+		break;
+	}
+	//下一个位置是食物
+	if (Next_Is_Food(pNextNode, ps))
+	{
+		Eat_Food(pNextNode,ps);
+	}
+	else
+	{
+		No_Food(pNextNode, ps);
+	}
 
+	//检测是否被撞墙死
+	Kill_By_Wall(ps);
+
+	//检测是否被撞自己死
+	Kill_By_Self(ps);
 }
 
 void GameRun(pSnack ps)
@@ -255,12 +365,14 @@ void GameRun(pSnack ps)
 		}
 
 		//实现蛇的移动
-		//SnackMove(ps);
-		//sleep(ps->_sleep_time);
+		SnackMove(ps);
+		Sleep(ps->_sleep_time);
 	} while (ps->_status==OK);
 	//移动
 	//实施打印情况
 }
+
+
 
 void GameEnd(pSnack ps)
 {

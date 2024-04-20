@@ -6,6 +6,8 @@
 #include<stdlib.h>
 #include <locale.h>
 #include<time.h>
+#include<errno.h>
+#include<assert.h>
 
 #define Wall L'□'
 #define Body L'●'
@@ -17,13 +19,7 @@
 //检查某个按键是否被按了
 #define KEY_PRESS(VK) ( (GetAsyncKeyState(VK) & 0x1) ? 1 : 0 )
 
-typedef struct SnackNode
-{
-	int x;
-	int y;
-	//指向下一个结点
-	struct snack* next;
-}SnackNode,*pSnackNode;
+
 
 //蛇的方向
 enum DIRECTION
@@ -43,17 +39,28 @@ enum GAME_STATUS
 	END_OK,
 };
 
+typedef struct SnackNode
+{
+	int x;
+	int y;
+	//指向下一个结点
+	struct SnackNode* next;
+}SnackNode, * pSnackNode;
+
 typedef struct Snack
 {
 	//蛇的头
-	pSnackNode* _psnack;
-	pSnackNode* _pfood;
+	pSnackNode _psnack;
+	pSnackNode _pfood;
 	enum DIRECTION _dir;
 	enum GAME_STATUS _status;
 	int _food_weight;//一个食物的分数
 	int _sum_score;//总成绩
 	int _sleep_time;//蛇的速度，越小越快
 }Snack,*pSnack;
+
+//定位光标
+void SetPos(int x, int y);
 
 //游戏开始
 void GameStart(pSnack ps);
@@ -82,6 +89,20 @@ void GameRun(pSnack ps);
 //贪吃蛇的移动
 void SnackMove(pSnack ps);
 
+//检查下一个坐标位置是否为食物
+bool Next_Is_Food(pSnackNode pn,pSnack ps);
+
+//吃食物
+void Eat_Food(pSnackNode pn, pSnack ps);
+
+//下一个位置不是食物，进行移动
+void No_Food(pSnackNode pn, pSnack ps);
+
+//检测是否被撞墙死
+void Kill_By_Wall(pSnack ps);
+
+//检测是否被撞自己死
+void Kill_By_Self(pSnack ps);
 
 //正常的游戏结束
-void GameEend(pSnack ps);
+void GameEnd(pSnack ps);
