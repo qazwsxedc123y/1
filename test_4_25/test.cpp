@@ -72,101 +72,127 @@ using namespace std;
 //	return 0;
 //}
 
-class stack
-{
-public:
-	void Init()
-	{
-		a = nullptr;
-		top = capacity = 0;
-	}
-	void push(int x)
-	{
-		if (top == capacity)
-		{
-			int newcapacity = capacity == 0 ? 4 : capacity * 2;
-			int *tmp=(int* )realloc(a, sizeof(int) * newcapacity);
-			if (tmp == NULL)
-			{
-				perror("push fail");
-				return;
-			}
-			a = tmp;
-			capacity = newcapacity;
-		}
-		a[top++] = x;
-	}
-	void StackPop()
-	{
-		top--;
-	}
-	int StackTop()
-	{
-		return a[top - 1];
-	}
-	int StackEmpty()//空返回1，非空返回0
-	{
-		return top == 0;
-	}
-	void destroy()
-	{
-		a = NULL;
-		top = capacity = 0;
-	}
-private:
-	int* a;
-	int top;
-	int capacity;
-};
-class Date
-{
-public:
-	void Init()
-	{
-		a = 'b';
-	}
-private:
-	char a;
-};
-class Data
-{
-public:
-	void Init()
-	{
-	}
-private:
-};
-class Dats
-{
-public:
-	void Init()
-	{
-	}
-private:
-	int a;
-	int b;
-	int c;
-};
+//class stack
+//{
+//public:
+//	void Init()
+//	{
+//		a = nullptr;
+//		top = capacity = 0;
+//	}
+//	void push(int x)
+//	{
+//		if (top == capacity)
+//		{
+//			int newcapacity = capacity == 0 ? 4 : capacity * 2;
+//			int *tmp=(int* )realloc(a, sizeof(int) * newcapacity);
+//			if (tmp == NULL)
+//			{
+//				perror("push fail");
+//				return;
+//			}
+//			a = tmp;
+//			capacity = newcapacity;
+//		}
+//		a[top++] = x;
+//	}
+//	void StackPop()
+//	{
+//		top--;
+//	}
+//	int StackTop()
+//	{
+//		return a[top - 1];
+//	}
+//	int StackEmpty()//空返回1，非空返回0
+//	{
+//		return top == 0;
+//	}
+//	void destroy()
+//	{
+//		a = NULL;
+//		top = capacity = 0;
+//	}
+//private:
+//	int* a;
+//	int top;
+//	int capacity;
+//};
+//class Date
+//{
+//public:
+//	void Init()
+//	{
+//		a = 'b';
+//	}
+//private:
+//	char a;
+//};
+//class Data
+//{
+//public:
+//	void Init()
+//	{
+//	}
+//private:
+//};
+//class Dats
+//{
+//public:
+//	void Init()
+//	{
+//	}
+//private:
+//	int a;
+//	int b;
+//	int c;
+//};
+//
+//
+//int main()
+//{
+//	stack st;
+//	st.Init();
+//	st.push(1);
+//	st.push(2);
+//	st.push(3);
+//	st.push(4);
+//	while (!st.StackEmpty())
+//	{
+//		cout << st.StackTop() << " ";
+//		st.StackPop();
+//	}
+//	st.destroy();
+//	cout << endl;
+//	cout <<  sizeof(Date) << endl;
+//	cout <<  sizeof(Data) << endl;
+//	cout <<  sizeof(stack) << endl;
+//	cout <<  sizeof(Dats) << endl;
+//	return 0;
+//}
 
-
+class date
+{
+public:
+	//date()
+	date(int year, int month = 2, int day = 2)	
+	{
+		_year = year;
+		_month = month;
+		_day = day;
+	}
+	void print()
+	{
+		cout << _year << "/" << _month << "/" << _day <<  endl;
+	}
+private:
+	int _year;
+	int _month;
+	int _day;
+};
 int main()
 {
-	stack st;
-	st.Init();
-	st.push(1);
-	st.push(2);
-	st.push(3);
-	st.push(4);
-	while (!st.StackEmpty())
-	{
-		cout << st.StackTop() << " ";
-		st.StackPop();
-	}
-	st.destroy();
-	cout << endl;
-	cout <<  sizeof(Date) << endl;
-	cout <<  sizeof(Data) << endl;
-	cout <<  sizeof(stack) << endl;
-	cout <<  sizeof(Dats) << endl;
+	date d1(;
+	d1.print();
 	return 0;
 }
