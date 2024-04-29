@@ -1,9 +1,8 @@
 #define  _CRT_SECURE_NO_WARNINGS
-#include<iostream>
-#include<stdlib.h>
-#include<assert.h>
 #include"test.h"
 using namespace std;
+
+
 //namespace _name
 //{
 //	int rand = 1;
@@ -72,52 +71,67 @@ using namespace std;
 //	return 0;
 //}
 
-//class stack
-//{
-//public:
-//	void Init()
-//	{
-//		a = nullptr;
-//		top = capacity = 0;
-//	}
-//	void push(int x)
-//	{
-//		if (top == capacity)
-//		{
-//			int newcapacity = capacity == 0 ? 4 : capacity * 2;
-//			int *tmp=(int* )realloc(a, sizeof(int) * newcapacity);
-//			if (tmp == NULL)
-//			{
-//				perror("push fail");
-//				return;
-//			}
-//			a = tmp;
-//			capacity = newcapacity;
-//		}
-//		a[top++] = x;
-//	}
-//	void StackPop()
-//	{
-//		top--;
-//	}
-//	int StackTop()
-//	{
-//		return a[top - 1];
-//	}
-//	int StackEmpty()//空返回1，非空返回0
-//	{
-//		return top == 0;
-//	}
-//	void destroy()
-//	{
-//		a = NULL;
-//		top = capacity = 0;
-//	}
-//private:
-//	int* a;
-//	int top;
-//	int capacity;
-//};
+class stack
+{
+public:
+	stack()
+	{
+		a = nullptr;
+		top = capacity = 0;
+	}
+	stack(const stack& ps)
+	{
+		cout << "stack(const stack& ps)" << endl;
+		a=(int*)malloc(sizeof(int)*(ps.capacity));
+		if (a == NULL)
+		{
+			perror("malloc fail");
+			return;
+		}
+		memcpy(a, ps.a, sizeof(int) * (ps.top));
+		top = ps.top;
+		capacity = ps.capacity;
+	}
+	void push(int x)
+	{
+		if (top == capacity)
+		{
+			int newcapacity = capacity == 0 ? 4 : capacity * 2;
+			int *tmp=(int* )realloc(a, sizeof(int) * newcapacity);
+			if (tmp == NULL)
+			{
+				perror("push fail");
+				return;
+			}
+			a = tmp;
+			capacity = newcapacity;
+		}
+		a[top++] = x;
+	}
+	void StackPop()
+	{
+		top--;
+	}
+	int StackTop()
+	{
+		return a[top - 1];
+	}
+	int StackEmpty()//空返回1，非空返回0
+	{
+		return top == 0;
+	}
+	~stack()
+	{
+		a = NULL;
+		top = capacity = 0;
+	}
+private:
+	int* a;
+	int top;
+	int capacity;
+};
+
+
 //class Date
 //{
 //public:
@@ -170,29 +184,199 @@ using namespace std;
 //	cout <<  sizeof(Dats) << endl;
 //	return 0;
 //}
+ 
+	//void ::print()
+	//{
+	//	cout << _year << "/" << _month << "/" << _day <<  endl;
+	//}
 
-class date
+
+date::date(int year, int month, int day)
 {
-public:
-	//date()
-	date(int year, int month = 2, int day = 2)	
-	{
-		_year = year;
-		_month = month;
-		_day = day;
-	}
-	void print()
-	{
-		cout << _year << "/" << _month << "/" << _day <<  endl;
-	}
-private:
-	int _year;
-	int _month;
-	int _day;
-};
-int main()
-{
-	date d1(;
-	d1.print();
-	return 0;
+	_year = year;
+	_month = month;
+	_day = day;
 }
+date::date(const date& d)
+{
+	//cout << "date(date& d)" << endl;
+	_year = d._year;
+	_month = d._month;
+	_day = d._day;
+}
+bool date::operator<(date& d)
+{
+	return _year < d._year ||
+		((_year == d._year) && (_month < d._month)) ||
+		((_year == d._year) && (_month == d._month) && (_day < d._day));
+}
+bool date::operator==(date& d)
+{
+	return _year == d._year && _month == d._month && _day == d._day;
+}
+
+bool date::operator!=(date& d)
+{
+	return !(*this == d);
+}
+
+bool date::operator<=(date& d)
+{
+	return *this == d || *this < d;
+}
+
+int date::Get_month_day(int year, int month)
+{
+	int month_day[13] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
+	if (month == 2 && ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)))
+	{
+		return 29;
+	}
+	return month_day[month];
+}
+
+date date::operator += (int day)
+{
+	if (day < 0)
+	{
+		return *this -= (-day);
+	}
+	_day += day;
+	while (_day > Get_month_day(_year, _month))
+	{
+		_day -= Get_month_day(_year, _month);
+		++_month;
+		if (_month == 13)
+		{
+			_year++;
+			_month = 1;
+		}
+	}
+	return *this;
+}
+
+date date::operator + (int day)
+{
+	if (day < 0)
+	{
+		return *this - (-day);
+	}
+	date tmp(*this);
+	tmp += 50;
+	return tmp;
+
+	//date tmp(*this);
+	//tmp._day += day;
+	//while (tmp._day > Get_month_day(tmp._year, tmp._month))
+	//{
+	//	tmp._day -= Get_month_day(tmp._year, tmp._month);
+	//	++tmp._month;
+	//	if (tmp._month == 13)
+	//	{
+	//		tmp._year++;
+	//		tmp._month = 1;
+	//	}
+	//}
+	//return tmp;
+}
+date date::operator-=(int day)
+{
+	if (day < 0)
+	{
+		return *this += (-day);
+	}
+	_day -= day;
+	while (_day < 0)
+	{
+		--_month;
+		_day += Get_month_day(_year, _month);
+		if (_month == 0)
+		{
+			--_year;
+			_month = 12;
+		}
+	}
+	return *this;
+}
+date date::operator-(int day)
+{
+	if (day < 0)
+	{
+		return *this + (-day);
+	}
+	date tmp(*this);
+	tmp -= day;
+	return tmp;
+}
+
+//日期 减 日期
+
+int date::operator-(const date& d)
+{
+	date max = *this;
+	date min = d;
+	int flag = 1;
+	if (max < min)
+	{
+		flag = -1;
+		max = d;
+		min = *this;
+	}
+	int n = 0;
+	while (max != min)
+	{
+		++min;
+		++n;
+	}
+	return n * flag;
+}
+
+date date::operator++()//前置
+{
+	*this += 1;
+	return *this;
+}
+date date::operator++(int)//后置
+{
+	date tmp(*this);
+	*this += 1;
+	return tmp;
+}
+
+//赋值
+date& date::operator=(const date& d)
+{
+	if (this != &d)//1
+	{
+		_year = d._year;
+		_month = d._month;
+		_day = d._day;
+	}
+	return *this;
+}
+date date::operator--()
+{
+	//this->operator-=(1);
+	*this -= 1;//this为什么有时候加*，有时候不加？//2
+	return *this;
+}
+date date::operator--(int)
+{
+	date tmp(*this);
+	*this -= 1;
+	return tmp;
+}
+void date::print()
+{
+	cout << _year << "/" << _month << "/" << _day << endl;
+}
+
+//date()
+//{		
+//}
+
+//date(int year)
+//{
+//	_year = year;
+//}
+
