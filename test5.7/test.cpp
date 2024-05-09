@@ -45,41 +45,90 @@ using namespace std;
 //	int _size;
 //	int _capacity;
 //};
-//class Date
+class Date
+{
+	friend ostream& operator<<(ostream& out, const Date& d);
+	friend istream& operator>>(istream& in, Date& d);
+public:
+
+	Date(int year, int month, int day)
+		:_year(year)
+		, _month(month)
+		, _day(day)
+		//, _x(5)
+		//, a(1)
+	{
+	}
+	void print()const
+	{
+		cout << _year << "/" << _month << "/" << _day << endl;
+	}
+private:
+	int _year;
+	int _month;
+	int _day;
+};
+ostream& operator<<(ostream& out, const Date& d)
+{
+	cout << d._year << "/" << d._month << "/" << d._day << endl;
+	return out;
+}
+istream& operator>>(istream& cin, Date& d)
+{
+	cin >> d._year >> d._month >> d._day;
+	return cin;
+}
+
+
+
+class A
+{
+public:
+	A(int i)
+		:_a(i)
+	{
+	}
+private:
+	int _a;
+};
+
+//int main()
 //{
-//	friend ostream& operator<<(ostream& out, const Date& d);
-//	friend istream& operator>>(istream& in, Date& d);
-//public:
-//
-//	Date(int year, int month, int day)
-//		:_year(year)
-//		, _month(month)
-//		, _day(day)
-//		, _x(5)
-//		, a(1)
-//	{
-//	}
-//	void print()const
-//	{
-//		cout << _year << "/" << _month << "/" << _day << endl;
-//	}
-//private:
-//	int _year;
-//	int _month;
-//	int _day;
-//	const int _x;
-//	SLqust a;
-//};
-//ostream& operator<<(ostream& out, const Date& d)
-//{
-//	cout << d._year << "/" << d._month << "/" << d._day << endl;
-//	return out;
+//	A aa1(A(1));
+//	A aa2 = 2;
+//	//用2调用A的函数构造，生成一个临时变量，在用这个对象去拷贝构造函数
+//	//A& ref = 2;
+//	const A& ref = 2;
+//	return 0;
 //}
-//istream& operator>>(istream& cin, Date& d)
-//{
-//	cin >> d._year >> d._month >> d._day;
-//	return cin;
-//}
+
+
+
+
+class Solution {
+	class sum {
+	public:
+		sum() {
+			_ret += _i;
+			_i++;
+		}
+		static int getret() {
+			return _ret;
+		}
+	};
+public:
+	int Sum_Solution(int n) {
+		//sum a[n];
+		return _ret;
+	}
+private:
+	static int _i;
+	static int _ret;
+};
+int Solution::_i = 1;
+int Solution::_ret = 0;
+
+
 //int main()
 //{
 //	//SLqust d1(6);
@@ -100,24 +149,65 @@ using namespace std;
 //	return 0;
 //}
 
-
-class A
+class B
 {
 public:
-	A(int i)
-		:_a(i)
+	B()//生成一次加1
 	{
+		++_count;
+	}
+	B(const B& t)
+	{
+		++_count;
+	}
+	static int getret()
+	{
+		return _count;
+	}
+	~B()
+	{
+		--_count;
 	}
 private:
-	int _a;
+	static int _count;
 };
+int B::_count = 0;
 
+//int main()
+//{
+//	B b1;
+//	B b2;
+//	B b3(b1);
+//	cout << B::getret() << endl;
+//	cout << "---------------"  << endl;
+//	const B();
+//	cout << B::getret() << endl;
+//	return 0;
+//}
+
+
+struct ListNode
+{
+	struct ListNode* next;
+	int _val;
+	ListNode(int val=0)
+		:_val(val)
+		,next(nullptr)
+	{
+	}
+};
 int main()
 {
-	A aa1(1);
-	A aa2 = 2;
-	//用2调用A的函数构造，生成一个临时变量，在用这个对象去拷贝构造函数
-	//A& ref = 2;
-	const A& ref = 2;
+	ListNode* n1 = new ListNode(1);
+	ListNode* n2 = new ListNode(2);
+	ListNode* n3 = new ListNode(3);
+	ListNode* n4 = new ListNode(4);
+	ListNode* n5 = new ListNode(5);
+	ListNode* n6 = new ListNode(6);
+	n1->next = n2;
+	n2->next = n3;
+	n3->next = n4;
+	n4->next = n5;
+	n5->next = n6;
 	return 0;
 }
