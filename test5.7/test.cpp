@@ -2,6 +2,8 @@
 #include<iostream>
 #include<stdlib.h>
 #include<stdio.h>
+#include<string>
+#include<list>
 using namespace std;
 
 
@@ -81,16 +83,16 @@ istream& operator>>(istream& cin, Date& d)
 
 
 
-class A
-{
-public:
-	A(int i)
-		:_a(i)
-	{
-	}
-private:
-	int _a;
-};
+//class A
+//{
+//public:
+//	A(int i)
+//		:_a(i)
+//	{
+//	}
+//private:
+//	int _a;
+//};
 
 //int main()
 //{
@@ -196,18 +198,130 @@ struct ListNode
 	{
 	}
 };
+//int main()
+//{
+//	ListNode* n1 = new ListNode(1);
+//	ListNode* n2 = new ListNode(2);
+//	ListNode* n3 = new ListNode(3);
+//	ListNode* n4 = new ListNode(4);
+//	ListNode* n5 = new ListNode(5);
+//	ListNode* n6 = new ListNode(6);
+//	n1->next = n2;
+//	n2->next = n3;
+//	n3->next = n4;
+//	n4->next = n5;
+//	n5->next = n6;
+//	return 0;
+//}
+
+template<class T>
+T add(T a, T b)
+{
+	return a + b;
+}
+template<class T>
+T* func(int n)
+{
+	return new T[n];
+}
+template <class T>
+class A
+{
+public:
+	A(T a)
+		:_a(a)
+	{
+	}
+	~A();
+private:
+	T _a;
+};
+template <class T>
+A<T>::~A()
+{
+	//delete _a;
+}
 int main()
 {
-	ListNode* n1 = new ListNode(1);
-	ListNode* n2 = new ListNode(2);
-	ListNode* n3 = new ListNode(3);
-	ListNode* n4 = new ListNode(4);
-	ListNode* n5 = new ListNode(5);
-	ListNode* n6 = new ListNode(6);
-	n1->next = n2;
-	n2->next = n3;
-	n3->next = n4;
-	n4->next = n5;
-	n5->next = n6;
+	//string s1;
+	//cin >> s1;
+	//cout << s1 << endl;
+	//cin >> s1;
+	//cout << s1 << endl;
+	string s2 = ("asasasas");
+	string s3 = "hello world";
+	string ret = s2 + s3 + "我来了";
+	cout << s2 << endl;
+	cout << s3 << endl;
+	cout << ret << endl;
+	string::iterator it = s3.begin();
+	//auto it = s3.begin();
+	auto end = s3.rbegin();
+	while (it != s3.end())
+	{
+		cout << *it << " ";
+		++it;
+	}
+	cout << endl;
+	for (auto ch : s3)
+	{
+		cout << ch << " ";
+	}
+	cout << endl;
+	while (end != s3.rend())
+	{
+		cout << *end << " ";
+		++end;
+	}
+	cout << endl;
+
+	string s1(s3, 6);
+	for (auto ch : s1)
+	{
+		cout << ch << " ";
+	}
+	cout << endl;
+	for (auto& end : s3)
+	{
+		++end;
+	}
+	for (auto ch : s3)
+	{
+		cout << ch << " ";
+	}
+	cout << endl;
+
+
+	//char arr[] = "asdasd";//字符串数组
+	//char arr[] = { 'a','b','c' };//字符数组，不带‘/0’
+
+
+	//cout << add(1, 1) << endl;
+	//cout << add((double)1, 1.2) << endl;
+	//cout << add<double>(1, 1.21) << endl;
+
+	//int* p1=func<int>(5);//必须要进行显示实例化
+
+	//A <int> a1(5);
+	//A <double> a2(5.5);
+
+	//char s2[] = "hello world";
+	//string s1 = ("hello world");
+	//int a1=sizeof(s1);
+	//int a2=sizeof(s2);
+
+	//内存栈
+	//B* b1 = (B*)operator new(sizeof(B));
+	//new(b1)B();
+
+	//b1->~B();
+	//operator delete(b1);
+	string s;
+	cin >> s;
+	//sort(s);
+	for (auto ch : s)
+	{
+		cout << ch << " ";
+	}
 	return 0;
 }
