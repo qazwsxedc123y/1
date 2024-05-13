@@ -241,87 +241,208 @@ A<T>::~A()
 {
 	//delete _a;
 }
+void func(const string& s)
+{
+	//只可以读，不可以写
+	auto it = s.begin();
+	while (it != s.end())
+	{
+		//(*it)++;//写
+		cout << *it << " ";//读
+		++it;
+	}
+	cout << endl;
+	auto rit = s.rbegin();
+	while (rit != s.rend())
+	{
+		cout << *rit << " ";
+		rit++;
+	}
+	cout << endl;
+}
+void test1()
+{
+	string s1("hello worldxxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyy");
+	func(s1);
+	string s2(s1);
+	cout << s2 << endl;
+	string s3(s1, 6, 5);//从第六个开始，拷贝5个
+	cout << s3 << endl;
+	cout << s3.size() << endl;
+	cout << s3.capacity() << endl;
+	s3.resize(7);
+	s3.reserve(100);
+	cout << s3.size() << endl;
+	cout << s3.capacity() << endl;
+	//s3.clear();//只会清空size与str，capacity不会变
+	cout << s3.empty() << endl;//空是1  非空是0
+	s3.shrink_to_fit();//减小capacity
+	cout << s3.at(2) << endl;
+	s3.push_back('a');
+
+	s3.insert(0, 1, 'x');
+	//s2.assign(s3);
+	//cout << s2 << endl;
+	//s3.append(s2);
+	cout << s3 << endl;
+	s3.erase(1, 5);
+	cout << s3 << endl;
+	string str("hello world5");
+	str.back() = '!';//指向最后一个
+	cout << str << endl;
+
+	//string s4(s1, 6, s1.size() - 4);
+	//cout << s4 << endl;
+	//cout << s3.capacity() << endl;
+	//cout << s3.max_size() << endl;
+}
+void test2()
+{
+	string s1("hello world");
+	s1.replace(5, 1, "20%");
+	cout << s1 << endl;
+	string s2("The quick brown fox jumps over a lazy dog.");
+	string s3;
+	for (auto ch : s2)
+	{
+		if (ch != ' ')
+		{
+			s3 += ch;
+		}
+		else
+		{
+			s3 += "20%";
+		}
+	}
+	cout << s3 << endl;
+	swap(s2, s3);
+	cout << s3 << endl;
+	cout << s2 << endl;
+}
+void test3()
+{
+	string s1("test.cpp.tar.zip");
+	size_t i = s1.rfind(".");
+	string s2 = s1.substr(i);
+	cout << s2 << endl;
+	string s3("https://legacy.cplusplus.com/reference/string/string/rfind/");
+	// 协议
+    // 域名
+    // 资源名
+	string sub1, sub2, sub3;
+	size_t i1 = s3.find(':');//返回的是下标
+	//size_t i4 = s3.find('h');//返回的是下标
+	if (i1 != string::npos)
+	{
+		sub1 = s3.substr(0, i1);//第二个参数是个数，不是下标
+	}
+	else
+	{
+		cout << "没有找到i1" << endl;
+	}
+	size_t i2 = s3.find('/', i1 + 3);
+	sub2 = s3.substr(i1 + 3, i2 - (i1 + 3));
+	sub3 = s3.substr(i2 + 1);
+	cout << sub1 << endl;
+	cout << sub2 << endl;
+	cout << sub3 << endl;
+}
+void test4()
+{
+	string str("Please, replace the vowels in this sentence by asterisks.");
+	size_t found = str.find_first_of("abcd");
+	while (found != string::npos)
+	{
+		str[found] = '*';
+		found = str.find_first_of("abcd", found + 1);
+	}
+	cout << str << '\n';
+}
 int main()
 {
+
+
+	test4();
+
 	//string s1;
 	//cin >> s1;
 	//cout << s1 << endl;
 	//cin >> s1;
 	//cout << s1 << endl;
-	string s2 = ("asasasas");
-	string s3 = "hello world";
-	string ret = s2 + s3 + "我来了";
-	cout << s2 << endl;
-	cout << s3 << endl;
-	cout << ret << endl;
-	string::iterator it = s3.begin();
-	//auto it = s3.begin();
-	auto end = s3.rbegin();
-	while (it != s3.end())
-	{
-		cout << *it << " ";
-		++it;
-	}
-	cout << endl;
-	for (auto ch : s3)
-	{
-		cout << ch << " ";
-	}
-	cout << endl;
-	while (end != s3.rend())
-	{
-		cout << *end << " ";
-		++end;
-	}
-	cout << endl;
+	//string s2 = ("asasasas");
+	//string s3 = "hello world";
+	//string ret = s2 + s3 + "我来了";
+	//cout << s2 << endl;
+	//cout << s3 << endl;
+	//cout << ret << endl;
+	//string::iterator it = s3.begin();
+	////auto it = s3.begin();
+	//auto end = s3.rbegin();
+	//while (it != s3.end())
+	//{
+	//	cout << *it << " ";
+	//	++it;
+	//}
+	//cout << endl;
+	//for (auto ch : s3)
+	//{
+	//	cout << ch << " ";
+	//}
+	//cout << endl;
+	//while (end != s3.rend())
+	//{
+	//	cout << *end << " ";
+	//	++end;
+	//}
+	//cout << endl;
 
-	string s1(s3, 6);
-	for (auto ch : s1)
-	{
-		cout << ch << " ";
-	}
-	cout << endl;
-	for (auto& end : s3)
-	{
-		++end;
-	}
-	for (auto ch : s3)
-	{
-		cout << ch << " ";
-	}
-	cout << endl;
-
-
-	//char arr[] = "asdasd";//字符串数组
-	//char arr[] = { 'a','b','c' };//字符数组，不带‘/0’
+	//string s1(s3, 6);
+	//for (auto ch : s1)
+	//{
+	//	cout << ch << " ";
+	//}
+	//cout << endl;
+	//for (auto& end : s3)
+	//{
+	//	++end;
+	//}
+	//for (auto ch : s3)
+	//{
+	//	cout << ch << " ";
+	//}
+	//cout << endl;
 
 
-	//cout << add(1, 1) << endl;
-	//cout << add((double)1, 1.2) << endl;
-	//cout << add<double>(1, 1.21) << endl;
+	////char arr[] = "asdasd";//字符串数组
+	////char arr[] = { 'a','b','c' };//字符数组，不带‘/0’
 
-	//int* p1=func<int>(5);//必须要进行显示实例化
 
-	//A <int> a1(5);
-	//A <double> a2(5.5);
+	////cout << add(1, 1) << endl;
+	////cout << add((double)1, 1.2) << endl;
+	////cout << add<double>(1, 1.21) << endl;
 
-	//char s2[] = "hello world";
-	//string s1 = ("hello world");
-	//int a1=sizeof(s1);
-	//int a2=sizeof(s2);
+	////int* p1=func<int>(5);//必须要进行显示实例化
 
-	//内存栈
-	//B* b1 = (B*)operator new(sizeof(B));
-	//new(b1)B();
+	////A <int> a1(5);
+	////A <double> a2(5.5);
 
-	//b1->~B();
-	//operator delete(b1);
-	string s;
-	cin >> s;
-	//sort(s);
-	for (auto ch : s)
-	{
-		cout << ch << " ";
-	}
+	////char s2[] = "hello world";
+	////string s1 = ("hello world");
+	////int a1=sizeof(s1);
+	////int a2=sizeof(s2);
+
+	////内存栈
+	////B* b1 = (B*)operator new(sizeof(B));
+	////new(b1)B();
+
+	////b1->~B();
+	////operator delete(b1);
+	//string s;
+	//cin >> s;
+	////sort(s);
+	//for (auto ch : s)
+	//{
+	//	cout << ch << " ";
+	//}
 	return 0;
 }
