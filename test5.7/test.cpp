@@ -350,6 +350,7 @@ void test3()
 void test4()
 {
 	string str("Please, replace the vowels in this sentence by asterisks.");
+	string s1("P");
 	size_t found = str.find_first_of("abcd");
 	while (found != string::npos)
 	{
