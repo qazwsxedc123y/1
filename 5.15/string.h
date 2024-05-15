@@ -62,13 +62,17 @@ namespace A
 		{
 			return _size;
 		}
-		//void resize(size_t n)
-		//{
-		//	if (_size < n)
-		//	{
-		//		//char* tmp = new char[]
-		//	}
-		//}
+		void resize(size_t n)
+		{
+			if (_size >= n)
+			{
+				erase(n);
+			}
+			else
+			{
+				append(n, '\0');
+			}
+		}
 		void reserve(size_t n = 0)
 		{
 			if (n > _capacity)
@@ -99,6 +103,20 @@ namespace A
 			_str[_size] = c;
 			++_size;
 			_str[_size] = '\0';
+		}
+		string& append(size_t n, char c)
+		{
+			if (_size + n > _capacity)
+			{
+				reserve(_size + n);
+			}
+			size_t begin = _size;
+			_size += n;
+			for (size_t i = begin; i < _size; i++)
+			{
+				_str[i] = c;
+			}
+			return *this;
 		}
 		void append(const char* str)
 		{
@@ -214,7 +232,7 @@ namespace A
 		char* _str;
 		size_t _size;
 		size_t _capacity;
-		const static size_t npos;
+		const static size_t npos = -1;;
 	};
 	ostream& operator<<(ostream& out, const string& s)
 	{
@@ -323,17 +341,20 @@ namespace A
 	}
 	void test_string4()
 	{
-		string s1("hello world");
+		string s1("hello");
 		string s2("hello world");
-
-		cout << (s1 >= s2) << endl;
-
-		s1[0] = 'z';
-		cout << (s1 >= s2) << endl;
-
+		s1.append(5, 'x');
+		s1.resize(7);
 		cout << s1 << endl;
-		cin >> s1;
-		cout << s1 << endl;
+
+		//cout << (s1 >= s2) << endl;
+
+		//s1[0] = 'z';
+		//cout << (s1 >= s2) << endl;
+
+		//cout << s1 << endl;
+		//cin >> s1;
+		//cout << s1 << endl;
 
 		/*char ch1, ch2;
 		cin >> ch1 >> ch2;*/
