@@ -48,7 +48,8 @@ void test2()
 }
 int main()
 {
-	A::test_string4();
+	A::test1_string();
+	//A::test_string4();
 	//A::test1_string();
 
 	//test2();

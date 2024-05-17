@@ -70,7 +70,20 @@ namespace A
 			}
 			else
 			{
-				append(n, '\0');
+				append(n - _size, '\0');
+				_str[_size] = '\0';
+			}
+		}
+		void resize(size_t n, char c)
+		{
+			if (_size >= n)
+			{
+				erase(n);
+			}
+			else
+			{
+				append(n - _size, c);
+				_str[_size] = '\0';
 			}
 		}
 		void reserve(size_t n = 0)
@@ -83,6 +96,30 @@ namespace A
 				_str = tmp;
 				_capacity = n;
 			}
+		}
+		size_t find(char ch, size_t pos = 0)
+		{
+			for (size_t i = pos; i < _size; i++)
+			{
+				if (_str[i] == ch)
+				{
+					return i;
+				}
+			}
+			return npos;
+		}
+		size_t find(const char* sub, size_t pos = 0)
+		{
+			const char* p = strstr(_str + pos, sub);
+			if (p)
+			{
+				return p - _str;
+			}
+			else
+			{
+				return npos;
+			}
+			return npos;
 		}
 		char& operator[] (size_t pos)
 		{
@@ -145,7 +182,7 @@ namespace A
 		}
 		string& insert(size_t pos, char ch)
 		{
-			assert(pos <= _size);
+			assert(pos <  _size);
 			if (_size == _capacity)
 			{
 				reserve(_capacity == 0 ? 4 : _capacity * 2);
@@ -162,7 +199,7 @@ namespace A
 		}
 		string& insert(size_t pos, const char* str)
 		{
-			assert(pos <= _size);
+			assert(pos < _size);
 			size_t len = strlen(str);
 			if (_size + len > _capacity)
 			{
@@ -177,27 +214,30 @@ namespace A
 				end1--;
 			}
 			_str[_size + len] = '\0';
-			for (int i = 0; i < len; i++)
-			{
-				_str[i] = str[i];
-			}
+			strncpy(_str + pos, str, len);
+			//for (int i = 0; i < len; i++)
+			//{
+			//	_str[i] = str[i];
+			//}
 			_size+=len;
 			return *this;
 		}
 		void erase(size_t pos, size_t len = npos)//lenµÄÎ»ÖÃ²»É¾³ý
 		{
-			if (len == _size)
+			assert(pos < _size);
+			if (len == _size || len + pos >= _size) 
 			{
 				_str[pos] = '\0';
+				_size = pos;
+				return;
 			}
-			size_t end = len;
-			size_t begin = pos;
-			for (size_t i = end; i < _size; i++)
+			size_t begin = pos + len;
+			while (begin <= _size)
 			{
-				_str[begin++] = _str[end++];
+				_str[begin - len] = _str[begin];
+				begin++;
 			}
-			_str[begin] = '\0';
-			_size = begin;
+			_size -= len;
 		}
 		bool operator<(const string& s) const
 		{
@@ -269,8 +309,13 @@ namespace A
 		string s1("hello");
 		string s3("hello world");
 		char s2[] = "meme";
-		s1.insert(0, s2);
-		s1.erase(0, 2);
+		size_t i = 5;
+		size_t j = 6;
+		size_t ret = i - j;
+		s1.resize(12,'c');
+		//s1.insert(0, s2);
+		//s1.erase(4, 0);
+		cout << s1 << endl;
 		//s1.append(s2);
 		//cout << s1 << endl;
 		//s1.reserve(25);		
