@@ -48,8 +48,9 @@ void test2()
 }
 int main()
 {
-	A::test1_string();
-	//A::test_string4();
+	//A::test_string6();
+	//A::test_string5();
+	A::test_string4();
 	//A::test1_string();
 
 	//test2();

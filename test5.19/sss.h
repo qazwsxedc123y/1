@@ -18,10 +18,33 @@ namespace A
 			_str = new char[_capacity + 1];
 			strcpy(_str, str);
 		}
+		//拷贝构造
+		//传统写法
+		//string(const string& s)
+		//{
+		//	_str = new char[s._capacity + 1];
+		//	strcpy(_str, s._str);
+		//	_size = s._size;
+		//	_capacity = s._capacity;
+		//}
+		void swap(string& s)
+		{
+			std::swap(_str, s._str);
+			std::swap(_size, s._size);
+			std::swap(_capacity, s._capacity);
+		}
+		string(const string& s)
+			:_str(nullptr)
+			, _size(0)
+			, _capacity(0)
+		{
+			string tmp(s._str);
+			swap(tmp);
+		}
 		~string()
 		{
 			delete[]_str;
-			_str = nullptr;
+			//_str = nullptr;
 			_size = _capacity = 0;
 		}
 		const char* c_str() const
@@ -63,30 +86,7 @@ namespace A
 		{
 			return _size;
 		}
-		void resize(size_t n)
-		{
-			if (_size >= n)
-			{
-				erase(n);
-			}
-			else
-			{
-				append(n - _size, '\0');
-				_str[_size] = '\0';
-			}
-		}
-		void resize(size_t n, char c)
-		{
-			if (_size >= n)
-			{
-				erase(n);
-			}
-			else
-			{
-				append(n - _size, c);
-				_str[_size] = '\0';
-			}
-		}
+
 		void reserve(size_t n = 0)
 		{
 			if (n > _capacity)
@@ -109,34 +109,7 @@ namespace A
 			}
 			return npos;
 		}
-		size_t find(const char* sub, size_t pos = 0)
-		{
-			const char* p = strstr(_str + pos, sub);
-			if (p)
-			{
-				return p - _str;
-			}
-			else
-			{
-				return npos;
-			}
-			return npos;
-		}
-		string substr(size_t pos = 0, size_t len = npos) const
-		{
-			assert(pos < _size);
-			string s;
-			if (len == npos || pos + len >= _size)
-			{
-				len = _size - pos;
-				s.reserve(len);
-			}
-			for (size_t i = pos; i < pos + len; i++)
-			{
-				s += _str[i];
-			}
-			return s;
-		}
+
 		char& operator[] (size_t pos)
 		{
 			assert(pos < _size);
@@ -198,7 +171,7 @@ namespace A
 		}
 		string& insert(size_t pos, char ch)
 		{
-			assert(pos <  _size);
+			assert(pos < _size);
 			if (_size == _capacity)
 			{
 				reserve(_capacity == 0 ? 4 : _capacity * 2);
@@ -235,13 +208,13 @@ namespace A
 			//{
 			//	_str[i] = str[i];
 			//}
-			_size+=len;
+			_size += len;
 			return *this;
 		}
 		void erase(size_t pos, size_t len = npos)//len的位置不删除
 		{
 			assert(pos < _size);
-			if (len == _size || len + pos >= _size) 
+			if (len == _size || len + pos >= _size)
 			{
 				_str[pos] = '\0';
 				_size = pos;
@@ -255,11 +228,102 @@ namespace A
 			}
 			_size -= len;
 		}
+		void resize(size_t n, char ch = '\0')
+		{
+			if (n > _size)
+			{
+				reserve(n);
+				for (size_t i = _size; i < n; i++)
+				{
+					_str[i] = ch;
+				}
+				_str[n] = '\0';
+				_size = n;
+			}
+			else
+			{
+				_str[n] = '\0';
+				_size = n;
+			}
+		}
+		/*void resize(size_t n)
+		{
+			if (_size >= n)
+			{
+				erase(n);
+			}
+			else
+			{
+				append(n - _size, '\0');
+				_str[_size] = '\0';
+			}
+		}
+		void resize(size_t n, char c)
+		{
+			if (_size >= n)
+			{
+				erase(n);
+			}
+			else
+			{
+				append(n - _size, c);
+				_str[_size] = '\0';
+			}
+		}*/
+		size_t find(const char* sub, size_t pos = 0)
+		{
+			const char* p = strstr(_str + pos, sub);
+			if (p)
+			{
+				return p - _str;
+			}
+			else
+			{
+				return npos;
+			}
+		}
+		string substr(size_t pos, size_t len = npos)
+		{
+			string s;
+			size_t end = pos + len;
+			if (len == npos || pos + len >= _size) // 有多少取多少
+			{
+				len = _size - pos;
+				end = _size;
+			}
+
+			s.reserve(len);
+			for (size_t i = pos; i < end; i++)
+			{
+				s += _str[i];
+			}
+
+			return s;
+		}
+		//string substr(size_t pos = 0, size_t len = npos) const
+		//{
+		//	assert(pos < _size);
+		//	string s;
+		//	//if (len == npos || pos + len >= _size)
+		//	//{
+		//	//	len = _size - pos;				
+		//	//}
+		//	s.reserve(len);
+		//	for (size_t i = pos; i < pos + len; i++)
+		//	{
+		//		s += _str[i];
+		//	}
+		//	return s;
+		//}
 		bool operator<(const string& s) const
 		{
 			return strcmp(_str, s._str) < 0;
 		}
-
+		string& operator=(string tmp)
+		{
+			swap(tmp);
+			return *this;
+		}
 		bool operator==(const string& s) const
 		{
 			return strcmp(_str, s._str) == 0;
@@ -328,7 +392,7 @@ namespace A
 		size_t i = 5;
 		size_t j = 6;
 		size_t ret = i - j;
-		s1.resize(12,'c');
+		s1.resize(12, 'c');
 		//s1.insert(0, s2);
 		//s1.erase(4, 0);
 		cout << s1 << endl;
@@ -422,13 +486,6 @@ namespace A
 	}
 	void test_string5()
 	{
-		string s1("test.cpp.tar.zip");
-		//size_t i = s1.find('.');
-		//size_t i = s1.rfind('.');
-
-		//string s2 = s1.substr(i);
-		//cout << s2 << endl;
-
 		string s3("https://legacy.cplusplus.com/reference/string/string/rfind/");
 		//string s3("ftp://www.baidu.com/?tn=65081411_1_oem_dg");
 		// 协议
