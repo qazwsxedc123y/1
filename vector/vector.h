@@ -23,7 +23,7 @@ namespace test
 		{
 			return _start;
 		}
-		const_iterator end() const 
+		const_iterator end() const
 		{
 			return _finish;
 		}
@@ -34,7 +34,7 @@ namespace test
 		{}
 		vector(const vector<T>& v)
 		{
-			reserve(v.(capacity));
+			reserve(v.capacity());
 			for (auto& e : v)
 			{
 				push_back(e);
@@ -61,7 +61,7 @@ namespace test
 				{
 					for (size_t i = 0; i < sz; i++)
 					{
-						tmp[i] = _start[i];
+						tmp[i] = _start[i];//防止存放数据为特殊；例如string
 					}
 					delete[]_start;
 				}
@@ -116,17 +116,10 @@ namespace test
 			if (_finish == _endofstorage)
 			{
 				//扩容
-				size_t sz = size();
+				size_t len = pos - _start;
 				size_t cp = capacity() == 0 ? 4 : capacity() * 2;
-				T* tmp = new T[cp];
-				if (_start)
-				{
-					memcpy(tmp, _start, sizeof(T) * sz);
-					delete[]_start;
-				}
-				_start = tmp;
-				_finish = _start + sz;
-				_endofstorage = _start + cp;
+				reserve(cp);
+				pos = _start + len;
 			}
 			T* end = _finish - 1;
 			while (end >= pos)
@@ -141,11 +134,11 @@ namespace test
 		{
 			assert(pos >= _start);
 			assert(pos <= _finish);
-			T* end = _finish - 1;
-			while (pos < end)
+			iterator it = pos + 1;
+			while (it < _finish)
 			{
-				*pos = *(pos + 1);
-				++pos;
+				*it = *(it + 1);
+				++it;
 			}
 			--_finish;
 			return pos;
@@ -177,12 +170,17 @@ namespace test
 	};
 	void test_vector1()
 	{
+		cout << 1 << endl;
+
 		vector<int> v;
 		v.push_back(1);
 		v.push_back(2);
 		v.push_back(3);
 		v.push_back(4);
 		v.push_back(5);
+		v.push_back(6);
+		v.push_back(7);
+		v.push_back(8);
 
 		for (size_t i = 0; i < v.size(); i++)
 		{
