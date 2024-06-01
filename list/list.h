@@ -1,5 +1,5 @@
 #pragma once
-#include<iostream>
+
 using namespace std;
 namespace test
 {
@@ -15,11 +15,11 @@ namespace test
 			, _next(nullptr)
 		{}
 	};
-	template<class T>
+	template<class T, class Ref, class Ptr>
 	struct __list_iterator 
 	{
 		typedef list_node<T> Node;
-		typedef __list_iterator<T> self;
+		typedef __list_iterator<T, Ref, Ptr> self;
 
 		Node* _node;
 
@@ -53,11 +53,11 @@ namespace test
 			return tmp;
 		}
 
-		T& operator*()
+		Ref operator*()
 		{
 			return _node->_data;
 		}
-		T* operator->()
+		Ptr operator->()
 		{
 			return &_node->_data;
 		}
@@ -75,7 +75,16 @@ namespace test
 	{
 		typedef list_node<T> Node;
 	public:
-		typedef __list_iterator<T> iterator;
+		typedef __list_iterator<T, T&, T*> iterator;
+		typedef __list_iterator<T,const T&,const T*> const_iterator;
+		const_iterator begin() const
+		{
+			return const_iterator(_head->_next);
+		}
+		const_iterator end() const
+		{
+			return const_iterator(_head);
+		}
 		iterator begin()
 		{
 			return _head->_next;
@@ -179,6 +188,36 @@ namespace test
 		Node* _head;
 		size_t _size;
 	};
+
+	//template <class T>
+	//template <typename T>
+	//void print_list(const list<T>& lt)
+	//{
+	//// list<T>未实例化的类模板，编译器不能去他里面去找
+	//// 编译器就无法list<T>::const_iterator是内嵌类型，还是静态成员变量
+	//// 前面加一个typename就是告诉编译器，这里是一个类型，等list<T>实例化
+	//// 再去类里面去取
+	//	typename list<T>::const_iterator it = lt.begin();
+	//	while (it != lt.end())
+	//	{
+	//		cout << *it << " ";
+	//		++it;
+	//	}
+	//	cout << endl;
+	//}
+
+
+	template <typename Container>
+	void print_container(const Container& con)
+	{
+		typename Container::const_iterator it = con.begin();
+		while (it != con.end())
+		{
+			cout << *it << " ";
+			++it;
+		}
+		cout << endl;
+	}
 	void test_list1()
 	{
 		list<int> lt;
@@ -190,18 +229,37 @@ namespace test
 
 		// 封装屏蔽底层差异和实现细节
 		// 提供统一的访问修改遍历方式
-		list<int>::iterator it = lt.begin();
-		int n = 5;
-		while (n--)
-		{
-			//*it += 20;
+			
+		print_container(lt);
 
-			cout << *it << " ";
-			++it;
-		}
-		cout << endl;
+		vector<string> v;
+		v.push_back("222222222222222222222");
+		v.push_back("222222222222222222222");
+		v.push_back("222222222222222222222");
+		v.push_back("222222222222222222222");
+		print_container(v);
+
+		list<string> lt1;
+		lt1.push_back("ssssss");
+		lt1.push_back("ssssss");
+		lt1.push_back("ssssss");
+		lt1.push_back("ssssss");
+
+		print_container(lt1);
+
+
+		//list<int>::iterator it = lt.begin();
+		//int n = 5;
+		//while (n--)
+		//{
+		//	//*it += 20;
+
+		//	cout << *it << " ";
+		//	++it;
+		//}
+		//cout << endl;
 		list<int> s(lt);
-		n = 5;
+		size_t n = 5;
 		list<int>::iterator t = s.begin();
 		while (n--)
 		{
