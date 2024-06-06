@@ -8,11 +8,11 @@ private:
     int _month;
     int _day;
 };
-class Data
-{
-private:
-	int a;
-};
+//class Data
+//{
+//private:
+//	int a;
+//};
 template<class T1, class T2>
 class Data
 {
@@ -33,5 +33,6 @@ public:
 int main()
 {
 	//test::test_1();
+    cout << -1 % 9 << endl;
 	return 0;
 }
