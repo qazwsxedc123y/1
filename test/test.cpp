@@ -67,6 +67,91 @@ using namespace std;
                 return[]
             }
         };
+        class Solution {
+            int ans = 0;
+        public:
+            int dfs(TreeNode* root)
+            {
+                if (root == nullptr)
+                {
+                    return 0;
+                }
+                int sum_L = dfs(root->left);
+                int sum_R = dfs(root->right);
+                ans += abs(sum_L - sum_R);
+                return sum_L + sum_R + root->val;
+            }
+            int findTilt(TreeNode* root) {
+                dfs(root);
+                return ans;
+            }
+        };
+        class Solution {
+            int ans;
+        public:
+            int depth(TreeNode* root)
+            {
+                if (root == nullptr)
+                {
+                    return 0;
+                }
+                int left_r = depth(root->left);
+                int right_r = depth(root->right);
+                ans = max(ans, left_r + right_r + 1);
+                return max(left_r, right_r) + 1;
+            }
+            int diameterOfBinaryTree(TreeNode* root) {
+                ans = 1;
+                depth(root);
+                return ans - 1;
+            }
+            class Solution {
+            public:
+                vector<int> findDisappearedNumbers(vector<int>& nums) {
+                    vector<int> v;
+                    for (int i = 1; i <= nums.size(); i++)
+                    {
+                        v.push_back(i);
+                    }
+                    for (int i = 0; i < nums.size(); i++)
+                    {
+                        //cout<<v[nums[i]-1];
+                        if (v[nums[i] - 1] > 0)
+                            v[nums[i] - 1] *= -1;
+                    }
+                    vector<int> v1;
+                    for (int i = 0; i < v.size(); i++)
+                    {
+                        if (v[i] > 0)
+                            v1.push_back(v[i]);
+                    }
+                    return v1;
+                }
+            }; class Solution {
+            public:
+                int thirdMax(vector<int>& nums) {
+                    long a = LONG_MIN, b = LONG_MIN, c = LONG_MIN;
+                    for (auto& num : nums)
+                    {
+                        if (num > a)
+                        {
+                            c = b;
+                            b = a;
+                            a = num;
+                        }
+                        else if (num<a && num>b)
+                        {
+                            c = b;
+                            b = num;
+                        }
+                        else if (num<b && num>c)
+                        {
+                            c = num;
+                        }
+                    }
+                    return c == LONG_MIN ? a : c;
+                }
+            };
 int main()
 {
     Solution a;
