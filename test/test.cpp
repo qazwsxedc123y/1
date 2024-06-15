@@ -28,7 +28,8 @@ public:
 };
 int main()
 {
-    Solution c;
-    c.findComplement(5);
+    double s = 2.2;
+    const int& t = s;
+    double& r = s;
 	return 0;
 }
