@@ -52,11 +52,42 @@ void func(Person& p)
 //	return 0;
 //}
 
+//int main()
+//{
+//	Person* p = new Person();
+//	delete p;
+//	p = new Student();
+//	delete p;
+//	return 0;
+//}
+
+
+class A
+{
+	virtual void func()
+	{
+
+	}
+	virtual void funca()
+	{
+
+	}
+	virtual void funcaa()
+	{
+
+	}
+private:
+	int a;
+};
 int main()
 {
-	Person* p = new Person();
-	delete p;
-	p = new Student();
-	delete p;
+	//a0 ce d2 77 
+	//f6 7f 00 00
+	//5a 15 d2 77
+	A a;
+	cout << sizeof(A) << endl;
+	int b;
+	int* aa = &b;
+	cout << sizeof(aa) << endl;
 	return 0;
 }
