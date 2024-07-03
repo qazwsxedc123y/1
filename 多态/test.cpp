@@ -252,3 +252,202 @@ class Bax :public car
 
 // 如果子类不重写虚函数，父类和子类对象的虚表是否一样？
 // 因为重写其实是先进行拷贝，所以是一样的
+
+
+
+//检测虚表存在哪里
+
+//class Base {
+//public:
+//	virtual void func1() { cout << "Base::func1" << endl; }
+//	virtual void func2() { cout << "Base::func2" << endl; }
+//private:
+//	int a;
+//};
+//
+//void func()
+//{
+//	cout << "void func()" << endl;
+//}
+//int main()
+//{
+//	Base b1;
+//
+//	static int a = 0;//静态区
+//	int b = 0;//栈区
+//	int* p1 = new int;//堆区
+//	const char* p = "hello world";//代码段（常量区）
+//	printf("静态区:%p\n", &a);
+//	printf("栈区:%p\n", &b);
+//	printf("堆区:%p\n", p1);
+//	printf("代码段:%p\n", p);
+//	printf("虚表:%p\n", *((int*) & b1));
+//	printf("虚函数的地址:%p\n", &Base::func1);
+//	printf("普通函数的地址:%p\n", func);
+//	return 0;
+//}
+
+// 虚函数的地址一定会被放进类的虚函数表吗？是的
+
+//打印虚表
+
+typedef void(*VF)();//函数指针
+
+////class Base {
+////public:
+////	virtual void func1() { cout << "Base::func1" << endl; }
+////	virtual void func2() { cout << "Base::func2" << endl; }
+////private:
+////	int a;
+////};
+////
+////class Derive :public Base {
+////public:
+////	virtual void func1() { cout << "Derive::func1" << endl; }
+////	virtual void func3() { cout << "Derive::func3" << endl; }
+////	virtual void func4() { cout << "Derive::func4" << endl; }
+////	void func5() { cout << "Derive::func5" << endl; }
+////private:
+////	int b;
+////};
+////
+////class X :public Derive {
+////public:
+////	virtual void func3() { cout << "X::func3" << endl; }
+////};
+void printfVF(VF* a)
+{
+	for (size_t i = 0; a[i] != 0; i++)
+	{
+		printf("[%d]:%p->", i, a[i]);
+		VF f = a[i];
+		f();
+	}
+	printf("\n");
+}
+////int main()
+////{
+////	Base b;
+////	Derive d;
+////	X x;
+////	printfVF((VF*)(*((long long*)&b)));
+////	printfVF((VF*)(*((long long*)&d)));
+////	printfVF((VF*)(*((long long*)&x)));
+////	return 0;
+////}
+
+
+
+//class Base1 {
+//public:
+//	virtual void func1() { cout << "Base1::func1" << endl; }
+//	virtual void func2() { cout << "Base1::func2" << endl; }
+//private:
+//	int b1;
+//};
+//
+//class Base2 {
+//public:
+//	virtual void func1() { cout << "Base2::func1" << endl; }
+//	virtual void func2() { cout << "Base2::func2" << endl; }
+//private:
+//	int b2;
+//};
+//
+//class Derive : public Base1, public Base2 {
+//public:
+//	virtual void func1() 
+//	{ 
+//		cout << "Derive::func1" << endl;
+//	}
+//
+//	virtual void func3() { cout << "Derive::func3" << endl; }
+//private:
+//	int d1;
+//};
+//
+//int main()
+//{
+//	//Base2* ptr = &d;
+//	//PrintVFT((VFUNC*)(*(int*)ptr));
+//
+//	Derive d;
+//	printfVF((VF*)*((int*)&d));
+//	printfVF((VF*)*((int*)((char*) &d+sizeof(Base1))));
+//	//[0] :006C1235->Derive::func1//不一样
+//	//[1] : 006C14C4->Base1::func2
+//	//[2] : 006C1226->Derive::func3
+//
+//	//[0] : 006C14C9->Derive::func1//是因为里面有一步骤使其，第二个要修改this指针指向Derive
+//	//[1] : 006C14B5->Base2::func2
+//	Base2* p1 = &d;
+//	printfVF((VF*)(*(int*)p1));
+//	return 0;
+//}
+
+
+
+
+class A
+{
+public:
+	virtual void func1() 
+	{ 
+		cout << "A::func1" << endl;
+	}
+public:
+	int _a;
+};
+
+//class B : public A
+class B : virtual public A
+{
+public:
+	virtual void func1()
+	{
+		cout << "B::func1" << endl;
+	}
+
+public:
+	int _b;
+};
+
+//class C : public A
+class C : virtual public A
+{
+public:
+	virtual void func1()
+	{
+		cout << "C::func1" << endl;
+	}
+public:
+	int _c;
+};
+
+class D : public B, public C
+{
+public:
+	virtual void func1()
+	{
+		cout << "D::func1" << endl;
+	}
+
+	virtual void func2()
+	{
+		cout << "D::func2" << endl;
+	}
+public:
+	int _d = 1;
+};
+
+int main()
+{
+	D d;//一共有2个虚表
+	d.B::_a = 1;
+	d.C::_a = 2;
+	d._b = 3;
+	d._c = 4;
+	d._d = 5;
+
+	return 0;
+}
