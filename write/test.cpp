@@ -6,6 +6,59 @@
 using namespace std;
 
 
+
+
+//#define swap_bits(num) (((num&0x55555555)<<1)|((num&0xAAAAAAAA)>>1))
+////第一个是奇位  ，第二个为偶位
+//int main()
+//{
+//	int num = 123;  // 0111 1011    10110111  183
+//	printf("交换前: %d\n", num);
+//	printf("预计答案:183\n");
+//	int ret = swap_bits(num);
+//	printf("交换后: %d\n", ret);
+//	return 0;
+//}
+
+//默认对齐数的修改
+
+//#pragma pack(4)//设置默认对齐数为4  此时这个结构体大小为12
+////#pragma pack()//中不写数字的话，表示取消之前的指定对齐数，改为默认的值
+////默认对齐数为1的话下面大小就是9
+//struct s
+//{
+//	char a;
+//	double d;
+//};
+//int main()
+//{
+//	printf("%d", sizeof(s));
+//	return 0;
+//}
+
+
+//宏的使用  offsetof
+//需要引用头文件  stddef.h
+//作用查看该类型所在的偏移量
+//第一个为类型名（不是变量名）
+//第二个是成员名
+
+//#define my_offsetof(type,member) (size_t)(&(((type*)0)->member))
+////先将结构体地址手动置为0，此时member也会改变，然后将其指向member
+////此时member的地址对应的就是偏移量
+//struct s
+//{
+//	char a;
+//	int c;
+//	double d;
+//};
+//int main()
+//{
+//	printf("%d\n", my_offsetof(struct s, a));
+//	printf("%d\n", offsetof(struct s, a));
+//	return 0;
+//}
+
 //int main()
 //{
 //	int* p = new int[10];
@@ -24,43 +77,56 @@ using namespace std;
 //new  
 //          placement new
 
-class A 
-{
-public:
-	A(int a = 0)
-		: _a(a)
-	{
-		cout << "A():" << this << endl;
-	}
-	~A()
-	{
-		cout << "~A()" << endl;
-	}
-private:
-	int _a;
-};
-class B
-{
-public:
-	B(int b = 0)
-		: _b(b)
-	{
-		cout << "B():" << this << endl;
-	}
-	~B()
-	{
-		cout << "~B()" << endl;
-	}
-private:
-	int _b;
-};
-A a(2);
-int main()
-{
-	//A a(2);
-	B b(4);
-	return 0;
-}
+//class A 
+//{
+//public:
+//	A(int a = 0)
+//		: _a(a)
+//	{
+//		cout << "A():" << this << endl;
+//	}
+//	~A()
+//	{
+//		cout << "~A()" << endl;
+//	}
+//private:
+//	int _a;
+//};
+//class B
+//{
+//public:
+//	B(int b = 0)
+//		: _b(b)
+//	{
+//		cout << "B():" << this << endl;
+//	}
+//	~B()
+//	{
+//		cout << "~B()" << endl;
+//	}
+//private:
+//	int _b;
+//};
+//A a(2);
+//
+//int main()
+//{
+//	int tmp = 8;
+//	int n = 1;
+//	for (int i = 0; i < 31; i++)
+//	{
+//		if (tmp % 2 == 1)
+//			break;
+//		else
+//		{
+//
+//
+//				n *= 2;
+//		}
+//		tmp >>= 1;
+//	}
+//	return 0;
+//}
 
 //int main()
 //{
