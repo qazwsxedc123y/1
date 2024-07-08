@@ -1,30 +1,590 @@
-#define  _CRT_SECURE_NO_WARNINGS
+ï»¿#define  _CRT_SECURE_NO_WARNINGS
 #include<string>
 #include<stack>
 #include<iostream>
 #include<vector>
 using namespace std;
 
+class Date
+{
+public:
+	// è·å–æŸå¹´æŸæœˆçš„å¤©æ•°
+	int GetMonthDay(int year, int month)
+	{
+		int month_day[13] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
+		if (month == 2 && ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)))
+		{
+			return 29;
+		}
+		else
+			return month_day[month];
+	}
 
 
 
-//#define swap_bits(num) (((num&0x55555555)<<1)|((num&0xAAAAAAAA)>>1))
-////µÚÒ»¸öÊÇÆæÎ»  £¬µÚ¶ş¸öÎªÅ¼Î»
+	// å…¨ç¼ºçœçš„æ„é€ å‡½æ•°
+
+	Date(int year = 1900, int month = 1, int day = 1)
+		:_year(year)
+		,_month(month)
+		,_day(day)
+	{}
+
+
+
+	// æ‹·è´æ„é€ å‡½æ•°
+
+  // d2(d1)
+
+	Date(const Date& d)
+	{
+		_year = d._year;
+		_month = d._month;
+		_day = d._day;
+	}
+
+
+
+	// èµ‹å€¼è¿ç®—ç¬¦é‡è½½
+
+  // d2 = d3 -> d2.operator=(&d2, d3)
+
+	Date& operator=(const Date& d)
+	{
+		if (&d != this)
+		{
+			this->_year = d._year;
+			this->_month = d._month;
+			this->_day = d._day;
+		}
+		return *this;
+	}
+
+
+
+	// ææ„å‡½æ•°
+
+	~Date()
+	{
+		_year = 0;
+		_month = 0;
+		_day = 0;
+	}
+
+
+
+	// æ—¥æœŸ+=å¤©æ•°
+
+	Date& operator+=(int day)
+	{
+		if (day < 0)
+		{
+			return *this -= day;
+		}
+		_day += day;
+		while (_day > GetMonthDay(_year, _month))
+		{
+			_day -= GetMonthDay(_year, _month);
+			++_month;
+			if (_month == 13)
+			{
+				++_year;
+				_month = 1;
+			}
+		}
+		return *this;
+	}
+
+
+
+	// æ—¥æœŸ+å¤©æ•°
+
+	Date operator+(int day)
+	{
+		if (day < 0)
+		{
+			return *this - (-day);
+		}
+		Date tmp(*this);
+		tmp += day;
+		return tmp;
+	}
+
+
+
+	// æ—¥æœŸ-å¤©æ•°
+
+	Date operator-(int day)
+	{
+		if (day < 0)
+		{
+			return *this + (-day);
+		}
+		Date tmp(*this);
+		tmp += -day;
+		return tmp;
+	}
+
+
+
+	// æ—¥æœŸ-=å¤©æ•°
+
+	Date& operator-=(int day)
+	{
+		if (day < 0)
+		{
+			return *this += (-day);
+		}
+		_day -= day;
+		while (_day < 0)
+		{
+			--_month;
+			_day += GetMonthDay(_year, _month);			
+			if (_month == 0)
+			{
+				--_year;
+				_month = 12;
+			}
+		}
+		return *this;
+	}
+
+
+
+	// å‰ç½®++
+
+	Date& operator++()
+	{
+		return *this += 1;
+	}
+
+
+
+	// åç½®++
+
+	Date operator++(int)
+	{
+		Date tmp(*this);
+		*this += 1;
+		return tmp;
+	}
+
+
+
+	// åç½®--
+
+	Date operator--(int)
+	{
+		Date tmp(*this);
+		*this -= 1;
+		return tmp;
+	}
+
+
+
+	// å‰ç½®--
+
+	Date& operator--()
+	{
+		return *this -= 1;
+	}
+
+
+
+	// >è¿ç®—ç¬¦é‡è½½
+
+	bool operator>(const Date& d)
+	{
+		if (_year > d._year)
+		{
+			return true;
+		}
+		else if (_year == d._year && _month > d._month)
+		{
+			return true;
+		}
+		else if (_year == d._year && _month == d._month && _day > d._day)
+		{
+			return true;
+		}
+		else
+		    return false;
+	}
+
+
+
+	// ==è¿ç®—ç¬¦é‡è½½
+
+	bool operator==(const Date& d)
+	{
+		return _year == d._year
+			&& _month == d._month
+			&& _day == d._day;
+	}
+
+
+
+	// >=è¿ç®—ç¬¦é‡è½½
+
+	bool operator >= (const Date& d)
+	{
+		return ((*this > d) || (*this == d));
+	}
+
+
+
+	// <è¿ç®—ç¬¦é‡è½½
+
+	bool operator < (const Date& d)
+	{
+		return !(*this >= d);
+	}
+
+
+
+	// <=è¿ç®—ç¬¦é‡è½½
+
+	bool operator <= (const Date& d)
+	{
+		return !(*this > d);
+	}
+
+
+
+	// !=è¿ç®—ç¬¦é‡è½½
+
+	bool operator != (const Date& d)
+	{
+		return !(*this == d);
+	}
+
+
+
+	// æ—¥æœŸ-æ—¥æœŸ è¿”å›å¤©æ•°
+
+	int operator-(const Date& d)
+	{
+		Date left = *this;
+		Date right = d;
+		int flag = 1;
+		if (left < right)
+		{
+			left = d;
+			right = *this;
+			flag = -1;
+		}
+		int n = 0;
+		while (left != right)
+		{
+			++n;
+			++right;
+		}
+		return n * flag;
+	}
+	void print()
+	{
+		cout << _year << "-" << _month << "-" << _day << endl;
+	}
+
+private:
+	int _year;
+	int _month;
+	int _day;
+};
+
+int main() {
+	int n = 0;
+	cin >> n;
+	for (int i = 0; i < n; i++)
+	{
+		int year = 0, month = 0, day = 0, m = 0;
+		cin >> year >> month >> day >> m;
+		Date d(year, month, day);
+		d += m;
+		cout << d._year << "-" << d._month << "-" << d._day;
+	}
+	return 0;
+}
+
+//
+//class A
+//
+//{
+//
+//public:
+//
+//	A(int a)
+//
+//		:_a1(a)
+//
+//		, _a2(_a1)
+//
+//	{}
+//
+//
+//
+//	void Print()
+//
+//	{
+//
+//		cout << _a1 << " " << _a2 << endl;
+//
+//	}
+//
+//private:
+//
+//	int _a2;
+//
+//	int _a1;
+//
+//};
+//
 //int main()
 //{
-//	int num = 123;  // 0111 1011    10110111  183
-//	printf("½»»»Ç°: %d\n", num);
-//	printf("Ô¤¼Æ´ğ°¸:183\n");
-//	int ret = swap_bits(num);
-//	printf("½»»»ºó: %d\n", ret);
+//	A aa(1);
+//	aa.Print();
+//}
+//int main()
+//{
+//	Date d1(2024, 7, 8);//7æœˆæœ‰31å¤©
+//	cout << "2024å¹´7æœˆæœ‰" << d1.GetMonthDay(2024, 7) << "å¤©" << endl;
+//	Date d2(d1);
+//	cout << "æ‹·è´æ„é€ ï¼š";
+//	d2.print();
+//	Date d3;
+//	cout << "èµ‹å€¼è¿ç®—ç¬¦é‡è½½å‰ï¼š";
+//	d3.print();
+//	cout << "èµ‹å€¼è¿ç®—ç¬¦é‡è½½åï¼š";
+//	d3 = d1;
+//	d3.print();
+//	cout << "d1,æ—¥æœŸ += å¤©æ•°ï¼š";
+//	d1 += 1;
+//	d1.print();
+//	cout << "d1,æ—¥æœŸ + å¤©æ•°ï¼š";
+//	Date d4=d1 + 1;
+//	d4.print();
+//	cout << "d1,æ—¥æœŸ - å¤©æ•°ï¼š";
+//	d4 = d1 - 1;
+//	d4.print();
+//	cout << "d1,æ—¥æœŸ -= å¤©æ•°ï¼š";
+//	d1 -= 1;
+//	d1.print();
+//	cout << "d1,å‰ç½®++ï¼š";
+//	++d1;
+//	d1.print();
+//	cout << "d1,åç½®++ï¼š";
+//	d4 = d1++;
+//	d4.print();
+//	cout << "d1,åç½®--ï¼š";
+//	d4 = d1--;
+//	d4.print();
+//	cout << "d1,å‰ç½®--ï¼š";
+//	--d1;
+//	d1.print();
+//	cout << "d1,æ—¥æœŸ - æ—¥æœŸï¼š";
+//	cout << d1 - d4 << endl;
 //	return 0;
 //}
 
-//Ä¬ÈÏ¶ÔÆëÊıµÄĞŞ¸Ä
+//class A
+//{
+//public:
+//	A(int a)
+//		:_a(a)
+//	{}
+//	class B // Bå¤©ç”Ÿå°±æ˜¯Açš„å‹å…ƒ
+//	{
+//	public:
+//		void foo(const A& a)
+//		{
+//			cout << a._a << endl;
+//		}
+//	};
+//private:
+//	int _a;
+//};
+//int main()
+//{
+//	A::B b;
+//	b.foo(A(1));
+//	return 0;
+//}
 
-//#pragma pack(4)//ÉèÖÃÄ¬ÈÏ¶ÔÆëÊıÎª4  ´ËÊ±Õâ¸ö½á¹¹Ìå´óĞ¡Îª12
-////#pragma pack()//ÖĞ²»Ğ´Êı×ÖµÄ»°£¬±íÊ¾È¡ÏûÖ®Ç°µÄÖ¸¶¨¶ÔÆëÊı£¬¸ÄÎªÄ¬ÈÏµÄÖµ
-////Ä¬ÈÏ¶ÔÆëÊıÎª1µÄ»°ÏÂÃæ´óĞ¡¾ÍÊÇ9
+
+//class Time
+//{
+//	friend class Date; // å£°æ˜æ—¥æœŸç±»ä¸ºæ—¶é—´ç±»çš„å‹å…ƒç±»ï¼Œåˆ™åœ¨æ—¥æœŸç±»ä¸­å°±ç›´æ¥è®¿é—®Timeç±»ä¸­çš„ç§æœ‰æˆ
+//	//å‘˜å˜é‡
+//public:
+//	Time(int hour = 0, int minute = 0, int second = 0)
+//		: _hour(hour)
+//		, _minute(minute)
+//		, _second(second)
+//	{}
+//
+//private:
+//	int _hour;
+//	int _minute;
+//	int _second;
+//};
+//
+//class Date
+//{
+//public:
+//	Date(int year = 1900, int month = 1, int day = 1)
+//		: _year(year)
+//		, _month(month)
+//		, _day(day)
+//	{}
+//
+//	void SetTimeOfDate(int hour, int minute, int second)
+//	{
+//		// ç›´æ¥è®¿é—®æ—¶é—´ç±»ç§æœ‰çš„æˆå‘˜å˜é‡
+//		_t._hour = hour;
+//		_t._minute = minute;
+//		_t._second = second;
+//	}
+//
+//private:
+//	int _year;
+//	int _month;
+//	int _day;
+//	Time _t;
+//}
+
+//class Date
+//{
+//	friend ostream& operator<<(ostream& _cout, const Date& d);
+//	friend istream& operator>>(istream& _cin, Date& d);
+//public:
+//	Date(int year = 1900, int month = 1, int day = 1)
+//		: _year(year)
+//		, _month(month)
+//		, _day(day)
+//	{}
+//
+//private:
+//	int _year;
+//	int _month;
+//	int _day;
+//};
+//
+//ostream& operator<<(ostream& _cout, const Date& d)
+//{
+//	_cout << d._year << "-" << d._month << "-" << d._day;
+//	return _cout;
+//}
+//
+//istream& operator>>(istream& _cin, Date& d)
+//{
+//	_cin >> d._year;
+//	_cin >> d._month;
+//	_cin >> d._day;
+//	return _cin;
+//}
+//
+//int main()
+//{
+//	Date d;
+//	cin >> d;
+//	cout << d << endl;
+//	return 0;
+//}
+//class A
+//{
+//public:
+//	A() { A::GetACount(); }//æˆ–è€…GetACount();éƒ½å¯ä»¥
+//	A(const A& t)
+//	{ 
+//		A::GetACount();
+//	}
+//	~A() { --_scount; }
+//	static int GetACount() 
+//	{ 
+//		++_scount;
+//		return _scount; 
+//	}
+//private:
+//	static int _scount;
+//};
+//
+//int A::_scount = 0;
+////æˆ–è€…int MyClass::count = 0; // åœ¨ç±»å¤–å®šä¹‰é™æ€æˆå‘˜å˜é‡ï¼Œä¸æ·»åŠ  static å…³é”®å­—
+//
+//void TestA()
+//{
+//	cout << A::GetACount() << endl;
+//	A a1, a2;
+//	A a3(a1);
+//	cout << A::GetACount() << endl;
+//}
+//int main()
+//{
+//	TestA();
+//	return 0;
+//}
+
+
+//class Date
+//{
+//public:
+//
+//	
+//	//  è™½ç„¶æœ‰å¤šä¸ªå‚æ•°ï¼Œä½†æ˜¯åˆ›å»ºå¯¹è±¡æ—¶åä¸¤ä¸ªå‚æ•°å¯ä»¥ä¸ä¼ é€’ï¼Œæ²¡æœ‰ä½¿ç”¨explicitä¿®é¥°ï¼Œå…·æœ‰ç±»å‹è½¬
+//   //æ¢ä½œç”¨
+//	// explicitä¿®é¥°æ„é€ å‡½æ•°ï¼Œç¦æ­¢ç±»å‹è½¬æ¢
+//	explicit Date(int year = 1, int month = 1, int day = 1)
+//	: _year(year)
+//	, _month(month)
+//	, _day(day)
+//	{}
+//	
+//
+//	Date& operator=(const Date& d)
+//	{
+//		if (this != &d)
+//		{
+//			_year = d._year;
+//			_month = d._month;
+//			_day = d._day;
+//		}
+//
+//		return *this;
+//	}
+//private:
+//	int _year;
+//	int _month;
+//	int _day;
+//};
+//
+//void Test()
+//{
+//	Date d1();
+//}
+//int main()
+//{
+//	Test();
+//	return 0;
+//}
+
+
+//#define swap_bits(num) (((num&0x55555555)<<1)|((num&0xAAAAAAAA)>>1))
+////ç¬¬ä¸€ä¸ªæ˜¯å¥‡ä½  ï¼Œç¬¬äºŒä¸ªä¸ºå¶ä½
+//int main()
+//{
+//	int num = 123;  // 0111 1011    10110111  183
+//	printf("äº¤æ¢å‰: %d\n", num);
+//	printf("é¢„è®¡ç­”æ¡ˆ:183\n");
+//	int ret = swap_bits(num);
+//	printf("äº¤æ¢å: %d\n", ret);
+//	return 0;
+//}
+
+//é»˜è®¤å¯¹é½æ•°çš„ä¿®æ”¹
+
+//#pragma pack(4)//è®¾ç½®é»˜è®¤å¯¹é½æ•°ä¸º4  æ­¤æ—¶è¿™ä¸ªç»“æ„ä½“å¤§å°ä¸º12
+////#pragma pack()//ä¸­ä¸å†™æ•°å­—çš„è¯ï¼Œè¡¨ç¤ºå–æ¶ˆä¹‹å‰çš„æŒ‡å®šå¯¹é½æ•°ï¼Œæ”¹ä¸ºé»˜è®¤çš„å€¼
+////é»˜è®¤å¯¹é½æ•°ä¸º1çš„è¯ä¸‹é¢å¤§å°å°±æ˜¯9
 //struct s
 //{
 //	char a;
@@ -37,15 +597,15 @@ using namespace std;
 //}
 
 
-//ºêµÄÊ¹ÓÃ  offsetof
-//ĞèÒªÒıÓÃÍ·ÎÄ¼ş  stddef.h
-//×÷ÓÃ²é¿´¸ÃÀàĞÍËùÔÚµÄÆ«ÒÆÁ¿
-//µÚÒ»¸öÎªÀàĞÍÃû£¨²»ÊÇ±äÁ¿Ãû£©
-//µÚ¶ş¸öÊÇ³ÉÔ±Ãû
+//å®çš„ä½¿ç”¨  offsetof
+//éœ€è¦å¼•ç”¨å¤´æ–‡ä»¶  stddef.h
+//ä½œç”¨æŸ¥çœ‹è¯¥ç±»å‹æ‰€åœ¨çš„åç§»é‡
+//ç¬¬ä¸€ä¸ªä¸ºç±»å‹åï¼ˆä¸æ˜¯å˜é‡åï¼‰
+//ç¬¬äºŒä¸ªæ˜¯æˆå‘˜å
 
 //#define my_offsetof(type,member) (size_t)(&(((type*)0)->member))
-////ÏÈ½«½á¹¹ÌåµØÖ·ÊÖ¶¯ÖÃÎª0£¬´ËÊ±memberÒ²»á¸Ä±ä£¬È»ºó½«ÆäÖ¸Ïòmember
-////´ËÊ±memberµÄµØÖ·¶ÔÓ¦µÄ¾ÍÊÇÆ«ÒÆÁ¿
+////å…ˆå°†ç»“æ„ä½“åœ°å€æ‰‹åŠ¨ç½®ä¸º0ï¼Œæ­¤æ—¶memberä¹Ÿä¼šæ”¹å˜ï¼Œç„¶åå°†å…¶æŒ‡å‘member
+////æ­¤æ—¶memberçš„åœ°å€å¯¹åº”çš„å°±æ˜¯åç§»é‡
 //struct s
 //{
 //	char a;
@@ -63,15 +623,15 @@ using namespace std;
 //{
 //	int* p = new int[10];
 //
-//	// ½«¸Ãº¯Êı·ÅÔÚmainº¯ÊıÖ®ºó£¬Ã¿´Î³ÌĞòÍË³öµÄÊ±ºò¾Í»á¼ì²âÊÇ·ñ´æÔÚÄÚ´æĞ¹Â©
+//	// å°†è¯¥å‡½æ•°æ”¾åœ¨mainå‡½æ•°ä¹‹åï¼Œæ¯æ¬¡ç¨‹åºé€€å‡ºçš„æ—¶å€™å°±ä¼šæ£€æµ‹æ˜¯å¦å­˜åœ¨å†…å­˜æ³„æ¼
 //	_CrtDumpMemoryLeaks();
 //	return 0;
 //}
 
 //
-//                  ÏÈ×ßÎö¹¹º¯Êı
+//                  å…ˆèµ°ææ„å‡½æ•°
 //delete 
-//                  ºó½øĞĞµ÷ÓÃoperator  delete(ÓëcÓïÑÔµÄfree²î²»¶à)
+//                  åè¿›è¡Œè°ƒç”¨operator  delete(ä¸cè¯­è¨€çš„freeå·®ä¸å¤š)
 
 //          operator new
 //new  
@@ -130,8 +690,8 @@ using namespace std;
 
 //int main()
 //{
-//	// new/delete ºÍ malloc/free×î´óÇø±ğÊÇ new/delete¶ÔÓÚ¡¾×Ô¶¨ÒåÀàĞÍ¡¿³ıÁË¿ª¿Õ¼ä»¹»áµ÷ÓÃ¹¹
-//	//Ôìº¯ÊıºÍÎö¹¹º¯Êı
+//	// new/delete å’Œ malloc/freeæœ€å¤§åŒºåˆ«æ˜¯ new/deleteå¯¹äºã€è‡ªå®šä¹‰ç±»å‹ã€‘é™¤äº†å¼€ç©ºé—´è¿˜ä¼šè°ƒç”¨æ„
+//	//é€ å‡½æ•°å’Œææ„å‡½æ•°
 //	A* a1 = new A(2);
 //	A* a2 = (A*)malloc(sizeof(A));
 //
@@ -142,17 +702,17 @@ using namespace std;
 
 //int main()
 //{
-//	//¶¯Ì¬¿ª±ÙÒ»¸öintÀàĞÍµÄ¶ÔÏó
+//	//åŠ¨æ€å¼€è¾Ÿä¸€ä¸ªintç±»å‹çš„å¯¹è±¡
 //	int* p1 = new int;
-//	//¶¯Ì¬¿ª±ÙÒ»¸öintÀàĞÍµÄ¿Õ¼ä²¢³õÊ¼»¯Îª10
+//	//åŠ¨æ€å¼€è¾Ÿä¸€ä¸ªintç±»å‹çš„ç©ºé—´å¹¶åˆå§‹åŒ–ä¸º10
 //	int* p2 = new int(10);
-//	//¶¯Ì¬ÉêÇë10¸öintÀàĞÍµÄ¿Õ¼ä
+//	//åŠ¨æ€ç”³è¯·10ä¸ªintç±»å‹çš„ç©ºé—´
 //	int* p3 = new int[10];
 //
-//	//ÔÚcÓïÑÔÖĞÎÒÃÇ¶¯Ì¬¿ª±ÙºóÓÖfree£¬Í¬ÑùÔÚc++ÖĞÒ²ÓĞ²Ù×÷·ûdelete
+//	//åœ¨cè¯­è¨€ä¸­æˆ‘ä»¬åŠ¨æ€å¼€è¾Ÿååˆfreeï¼ŒåŒæ ·åœ¨c++ä¸­ä¹Ÿæœ‰æ“ä½œç¬¦delete
 //	delete p1;
 //	delete p2;
-//	delete []p3;//×¢ÒâÊı×éµÄÒª¼Ó[]
+//	delete []p3;//æ³¨æ„æ•°ç»„çš„è¦åŠ []
 //	return 0;
 //}
 
@@ -222,19 +782,19 @@ using namespace std;
 //int main()
 //{
 //	int aa = 0;
-//	printf("Õ»ÇøµÄµØÖ·£º%p\n", &aa);
+//	printf("æ ˆåŒºçš„åœ°å€ï¼š%p\n", &aa);
 //	int* pl = new int;
-//	printf("¶ÑÇøµÄµØÖ·£º%p\n", pl);
+//	printf("å †åŒºçš„åœ°å€ï¼š%p\n", pl);
 //	string a("abcddddddddddddddddddddddddd", 16);
-//	printf("aµÄµØÖ·:    %p\n", &a);
-//	printf("a[0]µÄµØÖ·: %p\n", &a[0]);
+//	printf("açš„åœ°å€:    %p\n", &a);
+//	printf("a[0]çš„åœ°å€: %p\n", &a[0]);
 //	a[1] = 'X';
 //	cout << a << endl;
-//	printf("aµÄµØÖ·:    %p\n", &a);
-//	printf("a[0]µÄµØÖ·: %p\n", &a[0]);
+//	printf("açš„åœ°å€:    %p\n", &a);
+//	printf("a[0]çš„åœ°å€: %p\n", &a[0]);
 //	string b("abc");
-//	printf("bµÄµØÖ·:    %p\n", &b);
-//	printf("b[0]µÄµØÖ·: %p\n", &b[0]);
+//	printf("bçš„åœ°å€:    %p\n", &b);
+//	printf("b[0]çš„åœ°å€: %p\n", &b[0]);
 //	return 0;
 //}
 
@@ -247,8 +807,8 @@ using namespace std;
 //}
 //int main()
 //{
-//	string b("abcd",3);//ÕâÖÖ¹¹Ôì·½·¨ÊÇÍ¨¹ı×Ö·û´®abcd£¬È»ºóÖ»È¡Ç°3¸ö×Ö·û½øĞĞ¹¹Ôìstring
-//	//µ«ÊÇÕâ¸ö×Ö·û´®´æ·ÅµÄÆäÊµÊÇ abcd\0
+//	string b("abcd",3);//è¿™ç§æ„é€ æ–¹æ³•æ˜¯é€šè¿‡å­—ç¬¦ä¸²abcdï¼Œç„¶ååªå–å‰3ä¸ªå­—ç¬¦è¿›è¡Œæ„é€ string
+//	//ä½†æ˜¯è¿™ä¸ªå­—ç¬¦ä¸²å­˜æ”¾çš„å…¶å®æ˜¯ abcd\0
 //	cout << b.capacity() << endl;
 //	cout << b.size() << endl;
 //
