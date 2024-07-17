@@ -6,6 +6,33 @@
 #include<stack>
 using namespace std;
 
+int main()
+{
+    int ar[] = { 1,2,3,4,5,6,7,8,9,10 };
+
+    int n = sizeof(ar) / sizeof(int);
+
+    vector<int> v(ar, ar + n);
+
+    cout << v.size() << ":" << v.capacity() << endl;
+
+    v.reserve(100);
+
+    v.resize(20);
+
+    cout << v.size() << ":" << v.capacity() << endl;
+
+    v.reserve(50);
+
+    v.resize(5);
+
+    cout << v.size() << ":" << v.capacity() << endl;
+}
+
+
+
+
+
 
 namespace bite
 {
@@ -104,27 +131,65 @@ namespace bite
                 tmp->_pPre = cur;
 
             }
-
         }
         template <class Iterator>
         list(Iterator first, Iterator last);
-        list(const list<T>& l);
-        list<T>& operator=(const list<T> l);
-        ~list();
+        list(const list<T>& l)
+        {
+            list<T> tmp = l;
+            swap(*this, tmp);
+        }
+
+        list<T>& operator=(const list<T> l)
+        {
+            swap(l);
+            return *this;
+        }
+        ~list()
+        {
+            clear();
+            delete _pHead;
+            _pHead = nullptr;
+        }
 
 
         ///////////////////////////////////////////////////////////////
         // List Iterator
-        iterator begin();
-        iterator end();
-        const_iterator begin();
-        const_iterator end();
+        iterator begin()
+        {
+            return _pHead->_pNext;
+        }
+        iterator end()
+        {
+            return _pHead;
+        }
+        const_iterator begin()
+        {
+            return const_iterator(_pHead->_pNext);
+        }
+        const_iterator end()
+        {
+            return const_iterator(_pHead);
+        }
 
 
         ///////////////////////////////////////////////////////////////
         // List Capacity
-        size_t size()const;
-        bool empty()const;
+        size_t size()const
+        {
+            size_t sz = 0;
+            PNode _head = _pHead;
+            PNode cur = _pHead->_pNext;
+            while (cur != _head)
+            {
+                ++sz;
+            }
+            return sz;
+        }
+        bool empty()const
+        {
+            return _pHead == _pHead->_pPre;
+        }
 
 
         ////////////////////////////////////////////////////////////
@@ -144,12 +209,41 @@ namespace bite
         // 在pos位置前插入值为val的节点
         iterator insert(iterator pos, const T& val)
         {
-            PNode* cur = pos.PNode;
+            PNode cur = pos.PNode;
+            PNode newNode = new Node(val);
+            PNode prev = cur->_pPre;//_pNext
+            cur->_pPre = newNode;
+            prev->_pNext = newNode;
+
+            newNode->_pNext = cur;
+            newNode->_pPre = prev;
+            return iterator(newNode);
         }
         // 删除pos位置的节点，返回该节点的下一个位置
-        iterator erase(iterator pos);
-        void clear();
-        void swap(list<T>& l);
+        iterator erase(iterator pos)
+        {
+            PNode cur = pos.PNode;
+            PNode prev = cur->_pPre;
+            PNode next = cur->_pNext;//_pNext
+
+            delete cur;
+            prev->_pNext = next;
+            next->_pPre = prev;
+
+            return iterator(next);
+        }
+        void clear()
+        {
+            iterator it = begin();
+            while (it != end())
+            {
+                it = erase(it);
+            }
+        }
+        void swap(list<T>& l)
+        {
+            std::swap(_pHead, l._pHead);
+        }
     private:
         void CreateHead()
         {
@@ -160,11 +254,43 @@ namespace bite
         PNode _pHead;
     };
 };
-int main()
+void test_list1()
 {
+    list<int> lt;
+    lt.push_back(1);
+    lt.push_back(2);
+    lt.push_back(3);
+    lt.push_back(4);
+    lt.push_back(5);
 
-    return 0;
+    list<int> s(lt);
+    size_t n = 5;
+    list<int>::iterator t = s.begin();
+    while (n--)
+    {
+        //*it += 20;
+
+        cout << *t << " ";
+        ++t;
+    }
+    cout << endl;
+
+    list<int>::iterator r = s.begin();
+    s.erase(r);
+    list<int>::iterator q = s.begin();
+    while (q!=s.end())
+    {
+
+        cout << *q << " ";
+        ++q;
+    }
+    cout << endl;
 }
+//int main()
+//{
+//    test_list1();
+//    return 0;
+//}
 
 
 //class Solution {
