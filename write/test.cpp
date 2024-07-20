@@ -1,4 +1,4 @@
-#define  _CRT_SECURE_NO_WARNINGS
+ï»¿#define  _CRT_SECURE_NO_WARNINGS
 //#include<string>
 #include<iostream>
 #include<string.h>
@@ -6,77 +6,269 @@
 #include<assert.h>
 #include<queue>
 #include<stack>
+#include<functional>
 #include<deque>
-using namespace std;
 
-int main()
 
+template<class Type>
+Type Max(const Type& a, const Type& b)
 {
+    cout << "This is Max<Type>" << endl;
+    return a > b ? a : b;
+}
 
-    priority_queue<int> a;
+template<>
+int Max<int>(const int& a, const int& b)
+{
+    cout << "This is Max<int>" << endl;
+    return a > b ? a : b;
+}
 
-    priority_queue<int, vector<int>, greater<int> > c;
+template<>
+char Max<char>(const char& a, const char& b)
+{
+    cout << "This is Max<char>" << endl;
+    return a > b ? a : b;
+}
+int Max(const int& a, const int& b)
+{
+    cout << "This is Max" << endl;
+    return a > b ? a : b;
+}
+int main()
+{
+    Max(10, 20);
 
-    priority_queue<string> b;
+    Max(12.34, 23.45);
 
-    for (int i = 0; i < 5; i++)
+    Max('A', 'B');
 
-    {
-
-        a.push(i);
-
-        c.push(i);
-
-    }
-
-    while (!a.empty())
-
-    {
-
-        cout << a.top() << ' ';
-
-        a.pop();
-
-    }
-
-    cout << endl;
-
-    while (!c.empty())
-
-    {
-
-        cout << c.top() << ' ';
-
-        c.pop();
-
-    }
-
-    cout << endl;
-
-    b.push("abc");
-
-    b.push("abcd");
-
-    b.push("cbd");
-
-    while (!b.empty())
-
-    {
-
-        cout << b.top() << ' ';
-
-        b.pop();
-
-    }
-
-    cout << endl;
+    Max<int>(20, 30);
 
     return 0;
 
 }
 
 
+//Add.h
+//#include<iostream>
+//using namespace std;
+//å‡½æ•°æ¨¡æ¿çš„å£°æ˜
+//template<class T>
+//T Add(const T& x, const T& y);
+//
+//Add.c
+//å‡½æ•°æ¨¡æ¿çš„å®šä¹‰
+//template<class T>
+//T Add(const T& x, const T& y)
+//{
+//    return x + y;
+//}
+//template<class T>
+//T Add(const int& x, const int& y);
+//
+//test.c
+//#include<Add.h>
+//è°ƒç”¨å‡½æ•°æ¨¡æ¿è¿›è¡Œå®ä¾‹åŒ–
+//int main()
+//{
+//    cout << Add(2, 3) << endl;
+//    return 0;
+//}
+//
+//æ™®é€šçš„ç±»æ¨¡æ¿
+//template<class T1,class T2>
+//class D
+//{
+//public:
+//    D()
+//    {
+//        cout << "D<T1,T2>" << endl;
+//    }
+//private:
+//    T1 a;
+//    T2 b;
+//};
+//
+//
+//ä¸¤ä¸ªå‚æ•°åç‰¹åŒ–ä¸ºæŒ‡é’ˆç±»å‹
+//template<class T1,class T2>
+//class D<T1*, T2*>
+//{
+//public:
+//    D()
+//    {
+//        cout << "D<T1*,T2*>" << endl;
+//    }
+//private:
+//    T1 a;
+//    T2 b;
+//};
+//ä¸¤ä¸ªå‚æ•°åç‰¹åŒ–ä¸ºå¼•ç”¨ç±»å‹
+//template<class T1, class T2>
+//class D<T1&, T2&>
+//{
+//public:
+//    D()
+//    {
+//        cout << "D<T1&, T2&>" << endl;
+//    }
+//private:
+//    T1 a;
+//    T2 b;
+//};
+//int main()
+//{
+//    D<int*, int*>d1;
+//    D<int*, char*>d2;
+//    D<int&, char&>d3;
+//    return 0;
+//}
 
+//template<class T>
+//bool Less(T left, T right)
+//{
+//    return left > right;
+//}
+//template<class T>
+//bool Less(T* left, T* right)
+//{
+//    return *left > *right;   
+//}
+//bool Less(int* left, int* right)
+//{
+//    return *left > *right;
+//}
+//int main()
+//{
+//    cout << Less(1, 2) << endl; // å¯ä»¥æ¯”è¾ƒï¼Œç»“æœæ­£ç¡®
+//    int a = 10;
+//    int b = 5;
+//    int* p1 = &a, *p2 = &b;
+//    cout << Less(p1, p2) << endl; // å¯ä»¥æ¯”è¾ƒï¼Œç»“æœæ­£ç¡®
+//    return 0;
+//}
+
+namespace bit
+{
+    template <class T, class Container = vector<T>, class Compare = less<T> >
+    class priority_queue
+    {
+    public:
+        priority_queue()
+        {}
+
+        template <class InputIterator>
+
+        priority_queue(InputIterator first, InputIterator last)
+            :c(first, last)
+        {
+            for (int i = (c.size() - 2) / 2; i >= 0; --i)
+            {
+                adjust_down(i);
+            }
+        }
+        bool empty() const
+        {
+            return c.empty();
+        }
+
+        size_t size() const
+        {
+            return c.size();
+        }
+
+        const T& top() const
+        {
+            return c[0];
+        }
+        void adjust_down(size_t parent)
+        {
+            size_t child = parent * 2 + 1;
+            while (child < c.size())
+            {        
+                if (child + 1 < c.size()
+                    && c[child] < c[child + 1])
+                {
+                    ++child;
+                }
+                if (comp(c[parent], c[child]))
+                {
+                    swap(c[parent], c[child]);
+                    parent = child;
+                    child = parent * 2 + 1;
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+        void adjust_up(size_t child)
+        {
+            size_t parent = (child - 1) / 2;
+            while (child > 0)
+            {
+                if (comp(c[parent], c[child]))
+                {
+                    swap(c[child], c[parent]);
+                    child = parent;
+                    parent = (child - 1) / 2;
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+        void push(const T& x)
+        {
+            c.push_back(x);
+            adjust_up(c.size() - 1);
+        }
+
+        void pop()
+        {
+            swap(c[0], c[c.size() - 1]);
+            c.pop_back();
+            adjust_down(0);
+        }
+
+    private:
+
+        Container c;
+
+        Compare comp;
+
+    };
+    void test_1()
+    {
+        priority_queue <int> s;
+        s.push(3);
+        s.push(1);
+        s.push(5);
+        s.push(4);
+        int arr[10] = { 12,3,4,5,6,8,92 };
+        priority_queue <int> a(arr, arr + 6);
+        while (!s.empty())
+        {
+            cout << s.top() << " ";
+            s.pop();
+        }
+        cout << endl;
+        while (!a.empty())
+        {
+            cout << a.top() << " ";
+            a.pop();
+        }
+        cout << endl;
+    }
+};
+//int main()
+//{
+//    bit::test_1();
+//    return 0;
+//}
 
 namespace st
 {
@@ -90,7 +282,7 @@ namespace st
         stack_node* next;
         T val;
     };
-    /* »ùÓÚÁ´±íÊµÏÖµÄÕ» */
+    /* åŸºäºé“¾è¡¨å®ç°çš„æ ˆ */
     template<class T>
     class stack
     {
@@ -108,19 +300,19 @@ namespace st
             stkSize = 0;
         }
 
-        /* »ñÈ¡Õ»µÄ³¤¶È */
+        /* è·å–æ ˆçš„é•¿åº¦ */
         int size()
         {
             return stkSize;
         }
 
-        /* ÅĞ¶ÏÕ»ÊÇ·ñÎª¿Õ */
+        /* åˆ¤æ–­æ ˆæ˜¯å¦ä¸ºç©º */
         bool isMmpty()
         {
             return size() == 0;
         }
 
-        /* ÈëÕ» */
+        /* å…¥æ ˆ */
         void push(int num)
         {
             stack_node<T>* node = new stack_node<T>(num);
@@ -129,20 +321,20 @@ namespace st
             stkSize++;
         }
 
-        /* ³öÕ» */
+        /* å‡ºæ ˆ */
         int pop()
         {
             assert(!isMmpty());
             int num = top();
             stack_node<T>* tmp = stackTop;
             stackTop = stackTop->next;
-            // ÊÍ·ÅÄÚ´æ
+            // é‡Šæ”¾å†…å­˜
             delete tmp;
             stkSize--;
             return num;
         }
 
-        /* ·ÃÎÊÕ»¶¥ÔªËØ */
+        /* è®¿é—®æ ˆé¡¶å…ƒç´  */
         int top()
         {
             assert(!isMmpty());
@@ -150,30 +342,30 @@ namespace st
         }
 
     private:
-        stack_node<T>* stackTop; // ½«Í·½Úµã×÷ÎªÕ»¶¥
-        int stkSize;        // Õ»µÄ³¤¶È
+        stack_node<T>* stackTop; // å°†å¤´èŠ‚ç‚¹ä½œä¸ºæ ˆé¡¶
+        int stkSize;        // æ ˆçš„é•¿åº¦
     };
     void test_1()
     {
         stack<int> st;
 
-        // ÔªËØÈëÕ»
+        // å…ƒç´ å…¥æ ˆ
         st.push(1);
         st.push(3);
         st.push(2);
         st.push(5);
         st.push(4);
 
-        //·ÃÎÊÕ»¶¥ÔªËØ 
+        //è®¿é—®æ ˆé¡¶å…ƒç´  
         int top = st.top();
 
-        // ÔªËØ³öÕ» 
-        st.pop(); // ÎŞ·µ»ØÖµ
+        // å…ƒç´ å‡ºæ ˆ 
+        st.pop(); // æ— è¿”å›å€¼
 
-        // »ñÈ¡Õ»µÄ³¤¶È 
+        // è·å–æ ˆçš„é•¿åº¦ 
         cout << st.size() << endl;
 
-        // ÅĞ¶ÏÊÇ·ñÎª¿Õ 
+        // åˆ¤æ–­æ˜¯å¦ä¸ºç©º 
         cout << st.isMmpty() << endl;
                                    
     }
@@ -283,23 +475,23 @@ namespace st
 //    {
 //        stack<int> st;
 //
-//        // ÔªËØÈëÕ»
+//        // å…ƒç´ å…¥æ ˆ
 //        st.push(1);
 //        st.push(3);
 //        st.push(2);
 //        st.push(5);
 //        st.push(4);
 //
-//        //·ÃÎÊÕ»¶¥ÔªËØ 
+//        //è®¿é—®æ ˆé¡¶å…ƒç´  
 //        int top = st.top();
 //
-//        // ÔªËØ³öÕ» 
-//        st.pop(); // ÎŞ·µ»ØÖµ
+//        // å…ƒç´ å‡ºæ ˆ 
+//        st.pop(); // æ— è¿”å›å€¼
 //
-//        // »ñÈ¡Õ»µÄ³¤¶È 
+//        // è·å–æ ˆçš„é•¿åº¦ 
 //        cout << st.size() << endl;
 //
-//        // ÅĞ¶ÏÊÇ·ñÎª¿Õ 
+//        // åˆ¤æ–­æ˜¯å¦ä¸ºç©º 
 //        cout << st.empty() << endl;
 //    }
 //    template<class T, class Con = deque<T>>
@@ -360,23 +552,23 @@ namespace st
 //    {
 //        stack<int> q;
 //
-//        // ÔªËØÈëÕ»
+//        // å…ƒç´ å…¥æ ˆ
 //        q.push(1);
 //        q.push(3);
 //        q.push(2);
 //        q.push(5);
 //        q.push(4);
 //
-//        //·ÃÎÊÕ»¶¥ÔªËØ 
+//        //è®¿é—®æ ˆé¡¶å…ƒç´  
 //        int top = q.top();
 //
-//        // ÔªËØ³öÕ» 
-//        q.pop(); // ÎŞ·µ»ØÖµ
+//        // å…ƒç´ å‡ºæ ˆ 
+//        q.pop(); // æ— è¿”å›å€¼
 //
-//        // »ñÈ¡¶ÓÁĞµÄ³¤¶È 
+//        // è·å–é˜Ÿåˆ—çš„é•¿åº¦ 
 //        cout << q.size() << endl;
 //
-//        // ÅĞ¶ÏÊÇ·ñÎª¿Õ 
+//        // åˆ¤æ–­æ˜¯å¦ä¸ºç©º 
 //        cout << q.empty() << endl;
 //    }
 //}
@@ -423,7 +615,7 @@ namespace bit
     class vector
     {
     public:
-        // VectorµÄµü´úÆ÷ÊÇÒ»¸öÔ­ÉúÖ¸Õë
+        // Vectorçš„è¿­ä»£å™¨æ˜¯ä¸€ä¸ªåŸç”ŸæŒ‡é’ˆ
         typedef T* iterator;
         typedef const T* const_iterator;
         iterator begin()
@@ -626,11 +818,11 @@ namespace bit
         }
 
     private:
-        iterator _start; // Ö¸ÏòÊı¾İ¿éµÄ¿ªÊ¼
-        iterator _finish; // Ö¸ÏòÓĞĞ§Êı¾İµÄÎ²
-        iterator _endOfStorage; // Ö¸Ïò´æ´¢ÈİÁ¿µÄÎ²
+        iterator _start; // æŒ‡å‘æ•°æ®å—çš„å¼€å§‹
+        iterator _finish; // æŒ‡å‘æœ‰æ•ˆæ•°æ®çš„å°¾
+        iterator _endOfStorage; // æŒ‡å‘å­˜å‚¨å®¹é‡çš„å°¾
     };
-    void test_1()
+    void test_1_5()
     {
         vector<int> v;
         v.push_back(1);
@@ -839,7 +1031,7 @@ namespace bit
 //        {
 //            if (n > _capacity)
 //            {
-//                char* tmp = new char[n + 1];//µÚn+1¸öÎ»ÖÃ´æµÄÊÇ'/0'
+//                char* tmp = new char[n + 1];//ç¬¬n+1ä¸ªä½ç½®å­˜çš„æ˜¯'/0'
 //
 //                strcpy(tmp, _str);
 //                _capacity = n;
@@ -900,7 +1092,7 @@ namespace bit
 //
 //
 //
-//        // ·µ»ØcÔÚstringÖĞµÚÒ»´Î³öÏÖµÄÎ»ÖÃ
+//        // è¿”å›cåœ¨stringä¸­ç¬¬ä¸€æ¬¡å‡ºç°çš„ä½ç½®
 //
 //        size_t find(char c, size_t pos = 0) const
 //        {
@@ -914,7 +1106,7 @@ namespace bit
 //            return -1;
 //        }
 //
-//        // ·µ»Ø×Ó´®sÔÚstringÖĞµÚÒ»´Î³öÏÖµÄÎ»ÖÃ
+//        // è¿”å›å­ä¸²såœ¨stringä¸­ç¬¬ä¸€æ¬¡å‡ºç°çš„ä½ç½®
 //
 //        size_t find(const char* s, size_t pos = 0) const
 //        {
@@ -929,7 +1121,7 @@ namespace bit
 //            }
 //        }
 //
-//        // ÔÚposÎ»ÖÃÉÏ²åÈë×Ö·ûc/×Ö·û´®str£¬²¢·µ»Ø¸Ã×Ö·ûµÄÎ»ÖÃ
+//        // åœ¨posä½ç½®ä¸Šæ’å…¥å­—ç¬¦c/å­—ç¬¦ä¸²strï¼Œå¹¶è¿”å›è¯¥å­—ç¬¦çš„ä½ç½®
 //
 //        string& insert(size_t pos, char c)
 //        {
@@ -971,7 +1163,7 @@ namespace bit
 //
 //
 //
-//        // É¾³ıposÎ»ÖÃÉÏµÄÔªËØ£¬²¢·µ»Ø¸ÃÔªËØµÄÏÂÒ»¸öÎ»ÖÃ
+//        // åˆ é™¤posä½ç½®ä¸Šçš„å…ƒç´ ï¼Œå¹¶è¿”å›è¯¥å…ƒç´ çš„ä¸‹ä¸€ä¸ªä½ç½®
 //
 //        string& erase(size_t pos, size_t len)
 //        {
