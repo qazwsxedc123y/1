@@ -83,8 +83,7 @@ public:
 			//parent在左
 			if (parent == grandfather->_left)
 			{
-				Node* uncle = grandfather->_right;
-				//Node* uncle = parent->_right;//错误二
+				Node* uncle = parent->_right;
 				if (uncle && uncle->_col == RED)
 				{
 				//情景一：cur->红，parent->红，grandfather->黑，uncle存在且为红
@@ -130,8 +129,7 @@ public:
 			else//情景大概反着来
 			{
 				//1  uncle
-				Node* uncle = grandfather->_left;//错误一
-				//Node* uncle = parent->_right;//错误一
+				Node* uncle = parent->_right;
 				if (uncle && uncle->_col == RED)
 				{
 					parent->_col = uncle->_col = BLACK;
@@ -139,7 +137,6 @@ public:
 					cur = grandfather;
 					parent = cur->_parent;
 				}
-
 				else
 				{
 					if (cur == parent->_right)//2

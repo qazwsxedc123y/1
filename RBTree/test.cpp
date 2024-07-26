@@ -6,7 +6,7 @@ using namespace std;
 #include"RBTree.h"
 int main()
 {
-	const int N = 10000;
+	const int N = 100;
 	vector<int> v;
 	v.reserve(N);
 	//srand(time(0));
@@ -18,12 +18,12 @@ int main()
 	RBTree<int, int> t;
 	for (auto e : v)
 	{
-		if (e == 26500)
+		if (e == 6334)
 		{
 			int m = 0;
 		}
 		t.Insert(make_pair(e, e));
-		//cout << "Insert:" << e << "->" << t.IsBalance() << endl;
+		cout << "Insert:" << e << "->" << t.IsBalance() << endl;
 	}
 	size_t end2 = clock();
 	cout << t.IsBalance() << endl;
