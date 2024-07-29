@@ -1,71 +1,141 @@
 #pragma once
-#include<map>
-#include<set>
-
+#include<iostream>
+#include<vector>
+#include<string>
+using namespace std;
 enum Colour
 {
 	RED,
 	BLACK,
 };
 
-template<class K, class V>
+template<class T>
 struct RBTreeNode
 {
-	RBTreeNode<K, V>* _left;
-	RBTreeNode<K, V>* _right;
-	RBTreeNode<K, V>* _parent;
-	pair<K, V> _kv;
+	RBTreeNode<T>* _left;
+	RBTreeNode<T>* _right;
+	RBTreeNode<T>* _parent;
+	T _data;
 	Colour _col;
 
-	RBTreeNode(const pair<K,V>& kv)
+	RBTreeNode(const T& data)
 		: _left(nullptr)
 		, _right(nullptr)
 		, _parent(nullptr)
-		, _kv(kv)
+		, _data(data)
 		, _col(RED)
 	{}
 };
 
-template<class K, class V>
+template<class T, class Ref, class Ptr>
+struct __TreeIterator
+{
+	typedef RBTreeNode<T> Node;
+	typedef __TreeIterator<T, Ref, Ptr> Self;
+	Node* _node;
+
+	__TreeIterator(Node* node)
+		:_node(node)
+	{}
+	Ref operator*()
+	{
+		return _node->_data;
+	}
+	Ptr operator->()
+	{
+		return &_node->_data;
+	}
+	Self& operator--()
+	{
+		
+	}
+	Self& operator++()
+	{
+		
+	}
+	bool operator!=(const Self& s)
+	{
+		return _node != s._node;
+	}
+	bool operator==(const Self& s)
+	{
+		return _node == s._node;
+	}
+};
+
+
+template<class K,class T, class KeyOfT>
 class RBTree
 {
-	typedef RBTreeNode<K, V> Node;
+	typedef RBTreeNode<T> Node;
 public:
-	bool Insert(const pair<K, V>& kv)
+	typedef __TreeIterator <T, T&, T*> iterator;
+	typedef __TreeIterator <T,const T&,const T*> const_iterator;
+	iterator begin()
+	{
+		Node* cur = _root;
+		while (cur && cur->_left)
+		{
+			cur = cur->_left;
+		}
+
+		return iterator(cur);
+	}	
+	iterator end()
+	{
+		return iterator(nullptr);
+	}
+	const_iterator begin() const
+	{
+		Node* cur = _root;
+		while (cur && cur->_left)
+		{
+			cur = cur->_left;
+		}
+
+		return const_iterator(cur);
+	}
+	const_iterator end() const
+	{
+		return const_iterator(nullptr);
+	}
+	pair<iterator, bool> Insert(const T& data)
 	{
 		if (_root == nullptr)
 		{
-			_root = new Node(kv);
+			_root = new Node(data);
 
 			_root->_col = BLACK;
-			return true;
+			return make_pair(iterator(_root), true);;
 		}
 
 		Node* parent = nullptr;
 		Node* cur = _root;
+		KeyOfT kot;
 
 		while (cur)
 		{
-			if (cur->_kv.first < kv.first)
+			if (kot(cur->_data) < kot(data))
 			{
 				parent = cur;
 				cur = cur->_right;
 			}
-			else if (cur->_kv.first > kv.first)
+			else if (kot(cur->_data) > kot(data))
 			{
 				parent = cur;
 				cur = cur->_left;
 			}
 			else
 			{
-				return false;
+				return make_pair(iterator(cur), false);;
 			}
 		}
 
-		cur = new Node(kv);
+		cur = new Node(data);
+		Node* newnode = cur;
 		//默认结点颜色为红色
 
-		if (parent->_kv.first < kv.first)
+		if (kot(parent->_data) < kot(data))
 		{
 			parent->_right = cur;
 			cur->_parent = parent;
@@ -87,43 +157,43 @@ public:
 				//Node* uncle = parent->_right;//错误二
 				if (uncle && uncle->_col == RED)
 				{
-				//情景一：cur->红，parent->红，grandfather->黑，uncle存在且为红
-					//     g
-					//   p   u
-					// c
-					// 
-					//解决：p，u改为黑，g改为红，最后g为红所以，要继续向上调整
+					//情景一：cur->红，parent->红，grandfather->黑，uncle存在且为红
+						//     g
+						//   p   u
+						// c
+						// 
+						//解决：p，u改为黑，g改为红，最后g为红所以，要继续向上调整
 					parent->_col = uncle->_col = BLACK;
 					grandfather->_col = RED;
 					cur = grandfather;
 					parent = cur->_parent;
 				}
 				else
-				{					
+				{
 					if (cur == parent->_left)
 					{
-					//情景二：cur->红，parent->红，grandfather->黑，uncle不存在/为黑
-					    //     g
-					    //   p   u
-					    // c
-					    // 
-					// 解决：对g右单旋，p改为黑，g改为红，最后g为黑所以，直接break
+						//情景二：cur->红，parent->红，grandfather->黑，uncle不存在/为黑
+							//     g
+							//   p   u
+							// c
+							// 
+						// 解决：对g右单旋，p改为黑，g改为红，最后g为黑所以，直接break
 						RotateR(grandfather);
 						parent->_col = BLACK;
 						grandfather->_col = RED;
 					}
 					else
 					{
-					//情景三：cur->红，parent->红，grandfather->黑，uncle不存在/为黑
-					    //       g
-				        //   p      u
-					    //     c
-				    // 解决：对p左单旋，后变为情景二。
+						//情景三：cur->红，parent->红，grandfather->黑，uncle不存在/为黑
+							//       g
+							//   p      u
+							//     c
+						// 解决：对p左单旋，后变为情景二。
 						RotateL(parent);
 						RotateR(grandfather);
 						cur->_col = BLACK;
 						grandfather->_col = RED;
-					}				
+					}
 					break;
 				}
 			}
@@ -157,12 +227,12 @@ public:
 					}
 					break;
 				}
-			}			
+			}
 		}
 		//最后
 		_root->_col = BLACK;
 
-		return true;
+		return make_pair(iterator(newnode), true);;
 	}
 	void RotateL(Node* parent)
 	{
@@ -231,6 +301,28 @@ public:
 			subL->_parent = parentParent;
 		}
 	}
+
+	iterator Find(const K& key)
+	{
+		Node* cur = _root;
+		KeyOfT kot;
+		while (cur)
+		{
+			if (kot(cur->_data) < key)
+			{
+				cur = cur->_right;
+			}
+			else if (kot(cur->_data) > key)
+			{
+				cur = cur->_left;
+			}
+			else
+			{
+				return iterator(cur);
+			}
+		}
+		return end();
+	}
 	void InOrder()
 	{
 		_InOrder(_root);
@@ -241,7 +333,7 @@ public:
 		if (root == nullptr)
 			return;
 		_InOrder(root->_left);
-		cout << root->_kv.first << " ";
+		cout << kof(root->_data) << " ";
 		_InOrder(root->_right);
 	}
 	bool Check(Node* root, int blacknum, const int refVal)
@@ -273,10 +365,10 @@ public:
 	}
 	bool IsBalance()
 	{
-		 //1:是否存在 红-红 
-		//每条路径黑色结点是否相同个数
-		//最长的不超过最短的二倍
-		//根，叶子为黑
+		//1:是否存在 红-红 
+	   //每条路径黑色结点是否相同个数
+	   //最长的不超过最短的二倍
+	   //根，叶子为黑
 		if (_root == nullptr)
 			return true;
 		if (_root->_col == RED)
