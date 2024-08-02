@@ -47,11 +47,63 @@ struct __TreeIterator
 	}
 	Self& operator--()
 	{
-		
+		//走的是中序  左 根 右
+		if (_node->_left)
+		{
+			//左不为空，下一个就是左子树的最右
+			Node* cur = _node->_left;
+			while (cur->_right)
+			{
+				cur = cur->_right;
+			}
+			_node = cur;
+		}
+
+		else
+		{
+			//左为空，没根找孩子是父亲右的那个祖先
+			Node* cur = _node;
+			Node* parent = cur->_parent;
+			while (parent && cur == parent->_left)
+			{
+				cur = parent;
+				parent = parent->_parent;
+			}
+			_node = parent;
+		}
+
+		return *this;
 	}
 	Self& operator++()
 	{
+		//走的是中序  左 根 右
+		if (_node->_right)
+		{
+			//右子树不为空，下一个就是右子树的最左结点
+			Node* cur = _node->_right;
+			while (cur->_left)
+			{
+				cur = cur->_left;
+			}
+
+			_node = cur;
+		}
 		
+		else
+		{
+			//右子树为空，it所在全已访问完，下一个就是往上找左（孩子是父亲左的那个祖先）
+			Node* cur = _node;
+			Node* parent = cur->_parent;
+			while (parent && cur == parent->_right)
+			{
+				cur = parent;
+				parent = parent->_parent;
+			}
+
+			_node = parent;
+		}
+
+		return *this;
 	}
 	bool operator!=(const Self& s)
 	{
@@ -99,14 +151,14 @@ public:
 	{
 		return const_iterator(nullptr);
 	}
-	pair<iterator, bool> Insert(const T& data)
+	pair<Node*, bool> Insert(const T& data)
 	{
 		if (_root == nullptr)
 		{
 			_root = new Node(data);
 
 			_root->_col = BLACK;
-			return make_pair(iterator(_root), true);;
+			return make_pair(_root, true);;
 		}
 
 		Node* parent = nullptr;
@@ -127,7 +179,7 @@ public:
 			}
 			else
 			{
-				return make_pair(iterator(cur), false);;
+				return make_pair(cur, false);;
 			}
 		}
 
@@ -232,7 +284,7 @@ public:
 		//最后
 		_root->_col = BLACK;
 
-		return make_pair(iterator(newnode), true);;
+		return make_pair(newnode, true);;
 	}
 	void RotateL(Node* parent)
 	{

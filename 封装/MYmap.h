@@ -17,6 +17,14 @@ namespace bit
 		// 对类模板取内嵌类型，加typename告诉编译器这里是类型
 		typedef typename RBTree<K, pair<const K, V>, MapKeyOfT>::iterator iterator;
 		typedef typename RBTree<K, pair<const K, V>, MapKeyOfT>::const_iterator const_iterator;
+		iterator begin() const
+		{
+			return _t.begin();
+		}
+		iterator end() const
+		{
+			return _t.end();
+		}
 		pair<iterator, bool> insert(const pair<K, V>& kv)
 		{
 			return _t.Insert(kv);
@@ -36,6 +44,6 @@ namespace bit
 			return _t.IsBalance();
 		}
 	private:
-		RBTree<K, pair<K, V>, MapKeyOfT> _t;
+		RBTree<K, pair<const K, V>, MapKeyOfT> _t;
 	};
 }

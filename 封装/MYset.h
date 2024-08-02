@@ -17,6 +17,14 @@ namespace bit
 		};
 		typedef typename RBTree<K, K, SetKeyOfT>::const_iterator iterator;
 		typedef typename RBTree<K, K, SetKeyOfT>::const_iterator const_iterator;
+		iterator begin() const
+		{
+			return _t.begin();
+		}
+		iterator end() const
+		{
+			return _t.end();
+		}
 		pair<iterator, bool> insert(const K& key)
 		{
 			return _t.Insert(key);
