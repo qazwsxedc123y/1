@@ -356,12 +356,13 @@ namespace hash_bucket
 				_tables[i] = nullptr;
 			}
 		}
-		bool Insert(const T& data)
+		pair<iterator, bool> Insert(const T& data)
 		{
 			Hash hf;
 			KeyOfT kot;
-			if (Find(kot(data)))
-				return false;
+			iterator it = Find(kot(data));
+			if (it != end())
+				return make_pair(it, false);
 			// 负载因子最大到1
 			if (_n == _tables.size())
 			{
@@ -392,9 +393,9 @@ namespace hash_bucket
 			_tables[hashi] = newnode;
 			++_n;
 
-			return true;
+			return make_pair(iterator(newnode, this, hashi), true);
 		}
-		Node* Find(const K& key)
+		iterator Find(const K& key)
 		{
 			Hash hf;
 			KeyOfT kot;
@@ -404,11 +405,11 @@ namespace hash_bucket
 			{
 				if (kot(cur->_data) == key)
 				{
-					return cur;
+					return iterator(cur, this, hashi);
 				}
 				cur = cur->_next;
 			}
-			return nullptr;
+			return end();
 		}
 		bool Erase(const K& key)
 		{

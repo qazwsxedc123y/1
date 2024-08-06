@@ -38,9 +38,10 @@ namespace test
 			return _ht.end();
 		}
 
-		bool insert(const K& key)
+		pair<iterator, bool> insert(const K& key)
 		{
-			return _ht.Insert(key);
+			auto ret = _ht.Insert(key);
+			return pair<iterator, bool>(iterator(ret.first._node, ret.first._pht, ret.first._hashi), ret.second);
 		}
 
 	private:
