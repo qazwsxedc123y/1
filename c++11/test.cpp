@@ -180,19 +180,121 @@ private:
 //}
 
 
-void Fun(int& x) { cout << "左值引用" << endl; }
-void Fun(const int& x) { cout << "const 左值引用" << endl; }
-void Fun(int&& x) { cout << "右值引用" << endl; }
-void Fun(const int&& x) { cout << "const 右值引用" << endl; }
-template<class T>
-void PerfectForward(T&& t)
-{
-	// 期望保持实参的属性呢！
-    // 完美转发
-	Fun(forward<T>(t));
-}
+//函数模板：万能引用
+
+//void Fun(int& x) { cout << "左值引用" << endl; }
+//void Fun(const int& x) { cout << "const 左值引用" << endl; }
+//void Fun(int&& x) { cout << "右值引用" << endl; }
+//void Fun(const int&& x) { cout << "const 右值引用" << endl; }
+//template<class T>
+//void PerfectForward(T&& t)
+//{
+//	// 期望保持实参的属性呢！
+//    // 完美转发
+//	Fun(forward<T>(t));
+//}
+//int main()
+//{
+//	PerfectForward(10);// 右值
+//
+//	int a = 11;
+//	PerfectForward(a);//左值
+//	PerfectForward(std::move(a)); // 右值
+//
+//	const int b = 8;
+//	PerfectForward(b);//左值 const
+//	PerfectForward(std::move(b)); //右值 const
+//	return 0;
+//}
+
+
+// 可变参数
+
+// Args是一个模板参数包，args是一个函数形参参数包
+//template<class ...Args>
+//void showList(Args...args)
+//{
+//	cout << sizeof...(args) << endl;
+//	//注意不是sizeof(args) 
+//	 
+//	// 不支持这么玩
+//	for (size_t i = 0; i < sizeof...(args); i++)
+//	{
+//		cout << args[i] << " ";
+//	}
+//	cout << endl;
+//}
+//int main()
+//{
+//	showList(1);               // 1
+//	showList(1, 2);            // 2
+//	showList(1, 2, 'x');       // 3
+//	showList(1, 2, 'x', 2.2);  // 4
+//	return 0;
+//}
+
+
+////编译时的递归推演
+//void _showList()//当全部打印完才走这个  无参
+//{
+//	cout << endl;
+//}
+//template<class T,class...Args>
+//void _showList(const T& val, Args...args)
+//{
+//	cout << val << " ";
+//	_showList(args...);//会推断下一个val的属性
+//	//第一个模板参数一次解析获取参数值
+//}
+//template<class...Args>
+//void _showList(Args...args)//先走这个
+//{
+//	_showList(args...);
+//}
+//int main()
+//{
+//	_showList(1, 2, 'x', 2.2);
+//	return 0;
+//}
+
+
+//template<class T>
+//int printArgs(T&& t)
+//{
+//	cout << t << " ";
+//	return 0;
+//}
+//template<class...Args>
+//void showList(Args...args)
+//{
+//	int arr[] = { printArgs(args)... };
+//	// 它通过调用 PrintArg 来初始化一个数组 arr，
+//	// 该数组的初始化强制解析参数包中的每个参数，从而打印出所有传递给 ShowList 的参数。
+//
+//	// 但是，arr并没有进行初始化，它的主要目的是为了强制展开参数包，以便调用 PrintArg 函数
+//	cout << endl;
+//}
+//int main()
+//{
+//	showList(1, 'A');
+//	return 0;
+//}
+
+
 int main()
 {
+	list<string> lt;
+	string s1("1111");
+	lt.push_back(s1);
+	lt.push_back(move(s1));
+
+	string s2("1111");
+	lt.emplace_back(s2);
+	lt.emplace_back(move(s2));
+
+	cout << endl;
+	lt.push_back("xxxx");
+	lt.emplace_back("xxxx");
 
 	return 0;
 }
