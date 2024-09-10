@@ -6,6 +6,8 @@
 #include<string>
 #include<map>
 #include<array>
+#include<functional>
+#include<algorithm>
 using namespace std;
 
 #include<assert.h>
@@ -281,20 +283,204 @@ private:
 //}
 
 
+//int main()
+//{
+//	list<string> lt;
+//	string s1("1111");
+//	lt.push_back(s1);
+//	lt.push_back(move(s1));
+//
+//	string s2("1111");
+//	lt.emplace_back(s2);
+//	lt.emplace_back(move(s2));
+//
+//	cout << endl;
+//	lt.push_back("xxxx");
+//	lt.emplace_back("xxxx");
+//
+//	return 0;
+//}
+
+
+//仿函数
+
+//template<class T>
+//class Swap
+//{
+//public:
+//	void operator()(T& x, T& y)
+//	{
+//		T tmp = x;
+//		x = y;
+//		y = tmp;
+//	}
+//};
+//int main()
+//{
+//	Swap<int> s;
+//	int a = 5, b = 10;
+//	s(a, b);
+//	cout << a << "  " << b;
+//	return 0;
+//}
+
+
+// lambda 表达式书写表
+
+struct Goods
+{
+	string _name;  // 名字
+	double _price; // 价格
+	int _evaluate; // 评价
+	//...
+
+	Goods(const char* str, double price, int evaluate)
+		:_name(str)
+		, _price(price)
+		, _evaluate(evaluate)
+	{}
+};
+struct ComparePriceLess
+{
+	bool operator()(const Goods& g1, const Goods& g2)
+	{
+		return g1._price < g2._price;
+	}
+};
+struct ComparePriceGreater
+{
+	bool operator()(const Goods& g1, const Goods& g2)
+	{
+		return g1._price > g2._price;
+	}
+};
+//int main()
+//{
+//	vector<Goods> v = { { "苹果", 2.1, 5 }, { "香蕉", 3, 4 }, { "橙子", 2.2, 3 }, { "菠萝", 1.5, 4 } };
+//	sort(v.begin(), v.end(), ComparePriceLess());
+//	sort(v.begin(), v.end(), ComparePriceGreater());
+//
+//	// 就这样就可以代替再次创建书写仿函数
+//	// 降序
+//	sort(v.begin(), v.end(), [](const Goods& g1, const Goods& g2) {return g1._price < g2._price; });
+//	// 升序
+//	sort(v.begin(), v.end(), [](const Goods& g1, const Goods& g2) {return g1._price > g2._price; });
+//
+//	// 通常返回值（bool可以不写，其细节可以推到出来）                 bool
+//	//sort(v.begin(), v.end(), [](const Goods& g1, const Goods& g2)->bool {return g1._price < g2._price; });
+//
+//	//sort(v.begin(), v.end(), [](const Goods& g1, const Goods& g2) {return g1._price < g2._price; });
+//	//sort(v.begin(), v.end(), [](const Goods& g1, const Goods& g2) {return g1._price > g2._price; });
+//	//sort(v.begin(), v.end(), [](const Goods& g1, const Goods& g2) {return g1._evaluate < g2._evaluate; });
+//	//sort(v.begin(), v.end(), [](const Goods& g1, const Goods& g2) {return g1._evaluate > g2._evaluate; });
+//
+//	return 0;
+//}
+
+
+//int main()
+//{
+//	// 匿名函数对象
+//	// 使用 typeid 来获取 lambda 表达式的类型时，
+//	// 确实可以得到一个类型名称，但这个名称通常是编译器生成的内部名称，而不是我们通常所理解的“函数名称”。
+//	auto f1 = [](int x)->int {cout << x << endl; return 0; };
+//	f1(1); 
+//	cout << typeid(f1).name() << endl;
+//	// class `int __cdecl main(void)'::`2'::<lambda_1>
+//
+//	auto f2 = [](int x)
+//		{
+//			cout << x << endl;
+//			return 0;
+//		};
+//	f2(2);
+//	cout << typeid(f2).name() << endl;
+//	// class `int __cdecl main(void)'::`2'::<lambda_2>
+//
+//	ComparePriceGreater f3;
+//	cout << typeid(f3).name() << endl;
+//	// struct ComparePriceGreater
+//	return 0;
+//}
+
+
+//int main()
+//{
+//	// 改变其值
+//	int a = 5, b = 10;
+//	//cout << &a << ":" << &b << endl;
+//	auto f1 = [](int& x, int& y) {
+//		int tmp = x;
+//		x = y;
+//		y = tmp;
+//		};
+//	f1(a, b);
+//	cout << a << "  " << b << endl;
+//	cout << &a << ":" << &b << endl;
+//
+//	// 捕捉作用域内的变量
+//	// 必须是本作用域的对象
+//	//   但是一定要加   mutable
+//	//        在此处传需要捕捉的对象
+//	//   传值捕捉
+//	auto f2 = [a,b]()mutable {
+//		cout << &a << ":" << &b << endl;
+//		int tmp = a;//希望在 lambda 内部修改这个变量的副本，如果不加mutable
+//		a = b;// 那么编译就不通过
+//		b = tmp;
+//		};
+//	f2();//这时候就不需要进行传参了
+//	cout << a << " " << b << endl;
+//
+//	auto f3 = [&a, &b]()mutable {
+//		cout << &a << ":" << &b << endl;
+//		int tmp = a;
+//		a = b;
+//		b = tmp;
+//		};
+//	f3();
+//	cout << a << " " << b << endl;
+//	return 0;
+//}
+
+
+class AA
+{
+public:
+	void func()
+	{
+		/*auto f1 = [this]() {
+			cout << a1 << endl;
+			cout << a2 << endl;
+		};*/
+		// 会捕捉父作用域内所有变量包含this
+		// 这里的父作用域就是类中
+
+		// 内部作用域就是lambda
+		auto f1 = [=]() {
+			cout << a1 << endl;
+			cout << a2 << endl;
+		};
+
+		f1();
+	}
+private:
+	int a1 = 1;//父作用域
+	int a2 = 1;
+};
 int main()
 {
-	list<string> lt;
-	string s1("1111");
-	lt.push_back(s1);
-	lt.push_back(move(s1));
+	int x = 0, y = 1, z = 2;
+	auto f1 = [=, &z]() {
+		z++;
 
-	string s2("1111");
-	lt.emplace_back(s2);
-	lt.emplace_back(move(s2));
+		cout << x << endl;
+		cout << y << endl;
+		cout << z << endl;
+	};
 
-	cout << endl;
-	lt.push_back("xxxx");
-	lt.emplace_back("xxxx");
-
+	f1();
+	AA a;
+	a.func();
 	return 0;
 }
