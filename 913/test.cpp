@@ -4,39 +4,64 @@
 #include<vector>
 #include<map>
 using namespace std;
-class Solution {
-public:
-    vector<string> findRelativeRanks(vector<int>& score) {
-        int sz = score.size();
-        string desc[3] = { "Gold Medal", "Silver Medal", "Bronze Medal" };
-        vector<string> v;
-        map<int, int> m;
-        int i = 0;
-        for (int i = 0; i < sz; i++)
+int Min(int a[], int n)
+{
+    int min = a[0];
+    for (int i = 1; i < n; i++)
+    {
+        if (a[i] < min)
         {
-            m[score[i]] = i;
+            min = a[i];
         }
-        vector<string> ans(sz);
-        for (int i = 0; i < sz; i++)
-        {
-            int a = m[score[i]];
-            if (a <= 3)
-                ans[i] = desc[a];
-            else
-                ans[i] = to_string(a + 1);
-        }
-        return ans;
     }
-};
+    return min;
+}
 int main()
 {
-    Solution s;
-    int arr[] = { 10,3,8,9,4 };
-    vector<int> v(begin(arr),end(arr));
-    vector<string> vv(5);
-    s.findRelativeRanks(v);
-	return 0;
+    int n;
+    cin >> n;
+    vector<int> a(n);
+    for (int i = 0; i < n; i++)
+    {
+        cin >> a[i];
+    }
+    int ret = Min(a, n);
+    cout << ret;
+    return 0;
 }
+//class Solution {
+//public:
+//    vector<string> findRelativeRanks(vector<int>& score) {
+//        int sz = score.size();
+//        string desc[3] = { "Gold Medal", "Silver Medal", "Bronze Medal" };
+//        vector<string> v;
+//        map<int, int> m;
+//        int i = 0;
+//        for (int i = 0; i < sz; i++)
+//        {
+//            m[score[i]] = i;
+//        }
+//        vector<string> ans(sz);
+//        for (int i = 0; i < sz; i++)
+//        {
+//            int a = m[score[i]];
+//            if (a <= 3)
+//                ans[i] = desc[a];
+//            else
+//                ans[i] = to_string(a + 1);
+//        }
+//        return ans;
+//    }
+//};
+//int main()
+//{
+//    Solution s;
+//    int arr[] = { 10,3,8,9,4 };
+//    vector<int> v(begin(arr),end(arr));
+//    vector<string> vv(5);
+//    s.findRelativeRanks(v);
+//	return 0;
+//}
 
 //enum Colour
 //{
