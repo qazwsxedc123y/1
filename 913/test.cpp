@@ -2,33 +2,66 @@
 #include<iostream>
 #include<string>
 #include<vector>
+#include<algorithm>
 #include<map>
 using namespace std;
-int Min(int a[], int n)
-{
-    int min = a[0];
-    for (int i = 1; i < n; i++)
-    {
-        if (a[i] < min)
+
+class Solution {
+public:
+    double findMaxAverage(vector<int>& nums, int k) {
+        double sum = 0;
+        double max = 0;
+        for (int first = 0; first < nums.size()-k; ++first)
         {
-            min = a[i];
+            for (int i = first; i < first + k; i++)
+            {
+                if (i == nums.size())
+                    break;
+                sum += nums[i];
+            }
+            if (sum > max)
+                max = sum;
+            sum = 0;
         }
+        return max / k;
     }
-    return min;
-}
+};
 int main()
 {
-    int n;
-    cin >> n;
-    vector<int> a(n);
-    for (int i = 0; i < n; i++)
-    {
-        cin >> a[i];
-    }
-    int ret = Min(a, n);
-    cout << ret;
+    Solution s;
+    int arr[] = { 1,12,-5,-6,50,3 };
+    vector<int> v(begin(arr), end(arr));
+    cout<<s.findMaxAverage(v,4);
     return 0;
 }
+
+
+
+//int Min(int a[], int n)
+//{
+//    int min = a[0];
+//    for (int i = 1; i < n; i++)
+//    {
+//        if (a[i] < min)
+//        {
+//            min = a[i];
+//        }
+//    }
+//    return min;
+//}
+//int main()
+//{
+//    int n;
+//    cin >> n;
+//    vector<int> a(n);
+//    for (int i = 0; i < n; i++)
+//    {
+//        cin >> a[i];
+//    }
+//    int ret = Min(a, n);
+//    cout << ret;
+//    return 0;
+//}
 //class Solution {
 //public:
 //    vector<string> findRelativeRanks(vector<int>& score) {
