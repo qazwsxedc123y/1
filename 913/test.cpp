@@ -6,34 +6,108 @@
 #include<map>
 using namespace std;
 
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
 class Solution {
 public:
-    double findMaxAverage(vector<int>& nums, int k) {
-        double sum = 0;
-        double max = 0;
-        for (int first = 0; first < nums.size()-k; ++first)
+    void dfs(TreeNode* root, set<int>& s)
+    {
+        if (root == nullptr)
         {
-            for (int i = first; i < first + k; i++)
-            {
-                if (i == nums.size())
-                    break;
-                sum += nums[i];
-            }
-            if (sum > max)
-                max = sum;
-            sum = 0;
+            return;
         }
-        return max / k;
+        s.insert(root->val);
+        dfs(root->left, s);
+        dfs(root->right, s);
+    }
+    int findSecondMinimumValue(TreeNode* root) {
+        set<int> s;
+        dfs(root, s);
+        int sz = s.size();
+        if (sz == 1)
+        {
+            return -1;
+        }
+        auto it = s.begin();
+        ++it;
+        return *it;
     }
 };
-int main()
-{
-    Solution s;
-    int arr[] = { 1,12,-5,-6,50,3 };
-    vector<int> v(begin(arr), end(arr));
-    cout<<s.findMaxAverage(v,4);
-    return 0;
-}
+//class Solution {
+//public:
+//    vector<vector<int>> imageSmoother(vector<vector<int>>& img) {
+//        int m = img.size(), n = img[0].size();
+//        vector<vector<int>> vv(m, vector<int>(n));
+//        for (int i = 0; i < m; i++)
+//        {
+//
+//            for (int j = 0; j < n; j++)
+//            {
+//                int num = 0, sum = 0;
+//                for (int x = i - 1; x <= i + 1; x++)
+//                {
+//                    for (int y = j - 1; y <= j + 1; y++)
+//                    {
+//                        if (x >= 0 && x < m && y >= 0 && y < n)
+//                        {
+//                            ++num;
+//                            sum += img[x][y];
+//                        }
+//                    }
+//                }
+//                int tmp = sum / num;
+//                cout << sum << " ";
+//                cout << num << "  ";
+//                vv[i][j] = tmp;
+//            }
+//        }
+//        return vv;
+//    }
+//};
+
+//class Solution {
+//public:
+//    vector<vector<int>> imageSmoother(vector<vector<int>>& img) {
+//        int m = img.size(), n = img[0].size();
+//        vector<vector<int>> vv(m, vector<int>(n));
+//        for (int i = 0; i < m; i++)
+//        {
+//            int num = 0, sum = 0;
+//            for (int j = 0; j < n; j++)
+//            {
+//                for (int x = i - 1; x <= i + 1; x++)
+//                {
+//                    for (int y = j - 1; y <= j + 1; y++)
+//                    {
+//                        if (x >= 0 && x < m && y >= 0 && y < n)
+//                        {
+//                            ++num;
+//                            sum += img[x][y];
+//                        }
+//                    }
+//                }
+//                vv[i][j] = sum / num;
+//            }
+//        }
+//        return vv;
+//    }
+//};
+
+//class Solution {
+//public:
+//    bool judgeCircle(string moves) {
+//        return count(moves.begin(), moves.end(), 'L') == count(moves.begin(), moves.end(), 'R') && count(moves.begin(), moves.end(), 'U') == count(moves.begin(), moves.end(), 'D');
+//    }
+//};
 
 
 
