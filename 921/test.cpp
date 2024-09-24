@@ -4,39 +4,64 @@
 #include<vector>
 #include<map>
 #include<set>
+#include <algorithm> 
 using namespace std;
-
-
 class Solution {
 public:
-    int dominantIndex(vector<int>& nums) {
-        map<int, int> mp;
-        int n = nums.size();
-        for (int i = 0; i < n; i++)
+    int numJewelsInStones(string jewels, string stones) {
+        sort(begin(jewels), end(jewels));
+        sort(begin(stones), end(stones));
+        int n1 = jewels.size();
+        int n2 = stones.size();
+        int p1 = 0;
+        int ans = 0;
+        for (int i = 0; i < n2 && p1<n1 ; i++)
         {
-            mp[nums[i]] = i;
+            if (stones[i] == jewels[p1])
+            {
+                ans++;
+            }
+            else if(stones[i] > jewels[p1])
+            {
+                i--;
+                p1++;
+            }
         }
-        auto it = mp.end();
-        --it;
-        int last = it->first;
-        --it;
-        int last_2 = it->first;
-        cout << last << " " << last_2;
-        mp[last] = 5;
-        if (last_2 * 2 <= last)
-            return mp[last];
-
-        return -1;
+        return ans;
     }
 };
 int main()
 {
     Solution s;
-    int arr[] = { 3,6,1,0 };
-    vector<int> v(begin(arr), end(arr));
-    s.dominantIndex(v);
-	return 0;
+    string s1{ "aA" };
+    string s2{ "aAAbbbb" };
+    s.numJewelsInStones(s1, s2);
+    return 0;
 }
+
+//class Solution {
+//public:
+//    int dominantIndex(vector<int>& nums) {
+//        map<int, int> mp;
+//        int n = nums.size();
+//        for (int i = 0; i < n; i++)
+//        {
+//            mp[nums[i]] = i;
+//        }
+//        auto it = mp.end();
+//        --it;
+//        int last = it->first;
+//        --it;
+//        int last_2 = it->first;
+//        cout << last << " " << last_2;
+//        mp[last] = 5;
+//        if (last_2 * 2 <= last)
+//            return mp[last];
+//
+//        return -1;
+//    }
+//};
+
 
 
 //class Solution {
