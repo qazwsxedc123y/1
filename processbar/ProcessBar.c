@@ -1,24 +1,44 @@
 #define  _CRT_SECURE_NO_WARNINGS
+
+
 #include"ProcessBar.h"
 #include<string.h>
-#include <windows.h> 
+#include<unistd.h>
 
-#define body '#'
-#define NUM 102
+const char* lable = "|/-\\";
+char bar[NUM];
 
-void processbar()
+
+void Init()
 {
-	char bar[NUM];
-	memset(bar, '\0', sizeof(bar));
-	int cnt = 0;
-	while (cnt <= 100)
-	{
-		printf("[%s][%d%%]\r", bar, cnt);
-		bar[cnt++] = body;
-		Sleep(10);
-	}
-	printf("\n");
+    memset(bar, '\0', sizeof(bar));
 }
+
+void processbar(int rate)
+{
+    if (rate < 0 || rate>100) return;
+
+    int len = strlen(lable);
+    printf("[%-100s][%d%%][%c]\r", bar, rate, lable[rate % len]);
+    fflush(stdout);
+    bar[rate++] = body;
+    if (rate < TOP) bar[rate] = RIGHT;
+}
+
+
+//void processbar()
+//{
+//	char bar[NUM];
+//	memset(bar, '\0', sizeof(bar));
+//	int cnt = 0;
+//	while (cnt <= 100)
+//	{
+//		printf("[%s][%d%%]\r", bar, cnt);
+//		bar[cnt++] = body;
+//		Sleep(10);
+//	}
+//	printf("\n");
+//}
 
 // v1
 

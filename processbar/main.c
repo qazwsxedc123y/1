@@ -1,12 +1,35 @@
 #define  _CRT_SECURE_NO_WARNINGS
 #include"ProcessBar.h"
 
+#include"ProcessBar.h"
+
+typedef void (*callback_t)(int);
+
+void download(callback_t cb)
+{
+    int total = 1000;
+    int curr = 0;
+    while (curr <= total)
+    {
+        int rate = curr * 100 / total;
+        cb(rate);
+        curr += 10;
+        usleep(5000);
+    }
+    printf("\n");
+    Init();
+    return;
+}
+
 int main()
 {
-	//processbar();
-	printf("%d", 100 / 1000);
-	return 0;
+    printf("第一次下载：\n");
+    download(processbar);
+    printf("第二次下载：\n");
+    download(processbar);
+    return 0;
 }
+
 
  /*#include"ProcessBar.h"
  #include<string.h>

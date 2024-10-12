@@ -2,4 +2,10 @@
 
 #include<stdio.h>
 
-extern void processbar();
+#define body '#'
+#define RIGHT '>'
+#define NUM 102
+#define TOP 100
+
+extern void processbar(int rate);
+extern void Init(); ();
