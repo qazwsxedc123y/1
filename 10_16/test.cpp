@@ -8,58 +8,165 @@
 #include<unordered_map>
 
 using namespace std;
+#pragma once
+#include"RBTree.h"
 
-class Solution {
-public:
-    bool lemonadeChange(vector<int>& bills) {
-        if (bills.empty() || bills[0] != 5) {
-            return false;
-        }
-        map<int, int> mp;
-        if (bills[0] != 5)
-        {
-            return false;
-        }
-        int n = bills.size();
-        mp[bills[0]]++;
-        for (int i = 1; i < n; i++)
-        {
-            mp[bills[i]]++;
-            int give = bills[i] - 5;
-            if (give != 0)
-            {
-                if (give == 5)
-                {
-                    if (mp[5] > 0)
-                    {
-                        mp[give]--;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-                else if (give == 15)
-                {
-                    if (mp[5] > 0 && mp[10] > 0)
-                    {
-                        mp[5]--;
-                        mp[10]--;
-                    }
-                    else if (mp[5] >= 3)
-                    {
-                        mp[5] -= 3;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-            }
-        }
-        return true;
-    }
-};
+namespace myset
+{
+	template<class K>
+	class set
+	{
+	public:
+		//仿函数
+		struct SetKeyOfT
+		{
+			const K& operator()(const K& key)
+			{
+				return key;
+			}
+		};
+		typedef typename RBTree<K, K, SetKeyOfT>::const_iterator iterator;
+		typedef typename RBTree<K, K, SetKeyOfT>::const_iterator const_iterator;
+		iterator begin() const
+		{
+			return _t.begin();
+		}
+		iterator end() const
+		{
+			return _t.end();
+		}
+		pair<iterator, bool> insert(const K& key)
+		{
+			return _t.Insert(key);
+		}
+		bool IsBalance()
+		{
+			return _t.IsBalance();
+		}
+	private:
+		RBTree<K, K, SetKeyOfT> _t;
+	};
+}
+namespace xxx   // 为了防止重复,请同学们自己重取命名空间的名字，否则博客中全部是一样的，面试时会尴尬
+{
+	template<class K, class V>
+	class map
+	{
+		typedef pair<K, V> ValueType;
+		struct KeyOfValue
+		{
+			const K& operator()(const ValueType& data)
+			{
+				return data.first;
+			}
+		};
+
+		typedef RBTree<ValueType, KeyOfValue> RBTree;
+		typename typedef RBTree::iterator iterator;
+	public:
+		map() : t() {}
+
+		/////////////////////////////
+		// iterator：beign和end
+		iterator begin()
+		{
+			return t.begin();
+		}
+		iterator end()
+		{
+			return t, end();
+		}
+
+		///////////////////////////////
+		// capacity
+		bool empty()const
+		{
+			return t.empty();
+		}
+		size_t size()const
+		{
+			return t.size();
+		}
+
+		///////////////////////////////
+		// access
+		V& operator[](const K& key)
+		{
+			pair < iterator, bool> ret = insert(make_pair(key, V()));
+
+			return ret.first->second;
+		}
+
+		///////////////////////////////
+		// modify
+		pair<iterator, bool> insert(const ValueType& data)
+		{
+			return t.Insert(data);
+		}
+		void clear()
+		{
+			return t.clear();
+		}
+		iterator find(const K& key)
+		{
+			return t.Find();
+		}
+	private:
+		RBTree<K, pair<const K, V>, MapKeyOfT> t;
+	};
+}
+
+//class Solution {
+//public:
+//    bool lemonadeChange(vector<int>& bills) {
+//        if (bills.empty() || bills[0] != 5) {
+//            return false;
+//        }
+//        map<int, int> mp;
+//        if (bills[0] != 5)
+//        {
+//            return false;
+//        }
+//        int n = bills.size();
+//        mp[bills[0]]++;
+//        for (int i = 1; i < n; i++)
+//        {
+//            mp[bills[i]]++;
+//            int give = bills[i] - 5;
+//            if (give != 0)
+//            {
+//                if (give == 5)
+//                {
+//                    if (mp[5] > 0)
+//                    {
+//                        mp[give]--;
+//                    }
+//                    else
+//                    {
+//                        return false;
+//                    }
+//                }
+//                else if (give == 15)
+//                {
+//                    if (mp[5] > 0 && mp[10] > 0)
+//                    {
+//                        mp[5]--;
+//                        mp[10]--;
+//                    }
+//                    else if (mp[5] >= 3)
+//                    {
+//                        mp[5] -= 3;
+//                    }
+//                    else
+//                    {
+//                        return false;
+//                    }
+//                }
+//            }
+//        }
+//        return true;
+//    }
+//};
 
 int main()
 {
