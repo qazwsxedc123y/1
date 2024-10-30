@@ -232,12 +232,22 @@ public:
         return s;
     }
 };
+//int main()
+//{
+//    Solution s;
+//    vector<int> a{ -1,0,-5,-2,-2,-4,0,1,-2 };
+//    string b{ "45320"};
+//    //s.fourSum(a, -9);
+//    s.getSmallestString(b);
+//	return 0;
+//}
+
 int main()
 {
     Solution s;
     vector<int> a{ -1,0,-5,-2,-2,-4,0,1,-2 };
-    string b{ "45320"};
+    string b{ "45320" };
     //s.fourSum(a, -9);
     s.getSmallestString(b);
-	return 0;
+    return 0;
 }
