@@ -1,6 +1,9 @@
 #define  _CRT_SECURE_NO_WARNINGS
 #include<iostream>
 #include<vector>
+#include<string>
+#include<algorithm>
+
 
 using namespace std;
 //class Solution {
@@ -116,11 +119,125 @@ using namespace std;
 //        return { -1,-1 };
 //    }
 //};
+//class Solution {
+//public:
+//    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+//        int n = nums.size();
+//        sort(nums.begin(), nums.end());
+//        vector<vector<int>> ret;
+//        for (int first = 0; first < n; first++)
+//        {
+//            if (first > 0 && nums[first] == nums[first - 1])
+//            {
+//                continue;
+//            }
+//            for (int second = first + 1; second < n; second++)
+//            {
+//                if (second > first + 1 && nums[second] == nums[second - 1])
+//                {
+//                    continue;
+//                }
+//                int fourth = n - 1;
+//                int ans = target - nums[first] - nums[second];
+//                for (int third = second + 1; third < n; third++)
+//                {
+//                    if (third > second + 1 && nums[third] == nums[third - 1])
+//                    {
+//                        continue;
+//                    }
+//                    while (fourth > third && nums[third] + nums[fourth] > ans)
+//                    {
+//                        fourth--;
+//                    }
+//                    if (third >= fourth) break;
+//                    if (nums[third] + nums[fourth] == ans)
+//                    {
+//                        ret.push_back({ nums[first],nums[second],nums[third],nums[fourth] });
+//                    }
+//                }
+//            }
+//        }
+//        return ret;
+//    }
+//};
 
+//
+//class Solution {
+//public:
+//    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+//        int n = nums.size();
+//        sort(nums.begin(), nums.end());
+//        vector<vector<int>> ret;
+//        for (int first = 0; first < n; first++)
+//        {
+//            if (first > 0 && nums[first] == nums[first - 1])
+//            {
+//                continue;
+//            }
+//            for (int second = first + 1; second < n; second++)
+//            {
+//                if (second > first + 1 && nums[second] == nums[second - 1])
+//                {
+//                    continue;
+//                }
+//                int fourth = n - 1;
+//                int third = second + 1;
+//                long long ans = (long long)target - nums[first] - nums[second];
+//                while (third < fourth)
+//                {
+//                    if (nums[third] + nums[fourth] > ans)
+//                    {
+//                        fourth--;
+//                    }
+//                    else if (nums[third] + nums[fourth] < ans)
+//                    {
+//                        third++;
+//                    }
+//                    else
+//                    {
+//                        ret.push_back({ nums[first],nums[second],nums[third],nums[fourth] });
+//                        third++, fourth--;
+//                        while (third < fourth && nums[third] == nums[third - 1]) third++;
+//                        while (third < fourth && nums[fourth] == nums[fourth - 1]) fourth--;
+//                    }
+//                }
+//            }
+//        }
+//        return ret;
+//    }
+//};
+
+class Solution {
+public:
+    bool isodd_or_even(int t)// Å¼·µ»Øtrue Ææ·µ»Øfalse
+    {
+        int r = t - '0';
+        return r % 2 == 0;
+    }
+    string getSmallestString(string s) {
+        int cur = 0, dest = 1;
+        int n = s.size();
+        while (dest < n)
+        {
+            if (isodd_or_even(s[cur]) == isodd_or_even(s[dest]))
+            {
+                if (s[cur] > s[dest])
+                {
+                    swap(s[cur], s[dest]);
+                    break;
+                }
+            }
+            cur++, dest++;
+        }
+        return s;
+    }
+};
 int main()
 {
     Solution s;
-    vector<int> a{ 1,0,2,3,0,4 };
-    //s.duplicateZeros(a);
+    vector<int> a{ -1,0,-5,-2,-2,-4,0,1,-2 };
+    string b{ "45320"};
+    //s.fourSum(a, -9);
+    s.getSmallestString(b);
 	return 0;
 }
