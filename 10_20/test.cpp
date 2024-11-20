@@ -127,11 +127,54 @@ using namespace std;
 //        return res;
 //    }
 //};
+//
+//class Solution {
+//public:
+//    int maxScore(vector<int>& cardPoints, int k) {
+//        // 逆向思维
+//        int n = cardPoints.size();
+//        // 拿n-k个，使得和最小
+//        int ret = INT_MAX;
+//        int sum = 0;
+//        for (auto& e : cardPoints) sum += e;
+//        if (n == k) return sum;
+//        for (int left = 0, right = 0, sum1 = 0; right < n; right++)
+//        {
+//            sum1 += cardPoints[right];
+//            if (right - left + 1 >= n - k)
+//            {
+//                ret = min(ret, sum1);
+//                sum1 -= cardPoints[left++];
+//            }
+//        }
+//        return sum - ret;
+//    }
+//};
+
+class Solution {
+public:
+    int maxFreq(string s, int maxLetters, int minSize, int maxSize) {
+        int ret = 0;
+        int n = s.size();
+        unordered_map<string, int> hash1;
+        for (int right = 0; right < n; right++)
+        {
+            string _str = s.substr(right, minSize);
+            unordered_set<char> hash2(_str.begin(), _str.end());
+            if (hash2.size() <= maxLetters)
+            {
+                hash1[_str]++;
+                ret = max(ret, hash1[_str]);
+            }
+        }
+        return ret;
+    }
+};
 
 int main()
 {
     Solution s;
     vector<int> v{ 1,2,1,2,1,2,1 };
-    s.maxSum(v, 3, 3);
+    //s.maxSum(v, 3, 3);
 	return 0;
 }
