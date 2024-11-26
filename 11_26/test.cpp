@@ -54,32 +54,58 @@ using namespace std;
 //    }
 //};
 
+//class Solution {
+//public:
+//    int maxConsecutiveAnswers(string answerKey, int k) {
+//        int n = answerKey.size();
+//        int ret = 0;
+//        // 先统计最长的T
+//        for (int left = 0, right = 0, change = 0; right < n; right++)
+//        {
+//            if (answerKey[right] == 'F') change++;
+//            while (change > k)
+//            {
+//                char ou = answerKey[left++];
+//                if (ou == 'F') change--;
+//            }
+//            ret = max(ret, right - left + 1);
+//        }
+//        for (int left = 0, right = 0, change = 0; right < n; right++)
+//        {
+//            if (answerKey[right] == 'T') change++;
+//            while (change > k)
+//            {
+//                char ou = answerKey[left++];
+//                if (ou == 'T') change--;
+//            }
+//            ret = max(ret, right - left + 1);
+//        }
+//        return ret;
+//    }
+//};
+
 class Solution {
 public:
-    int maxConsecutiveAnswers(string answerKey, int k) {
-        int n = answerKey.size();
+    int maximumCount(vector<int>& nums) {
+        int left = 0, n = nums.size();
+        int right = n - 1;
         int ret = 0;
-        // 先统计最长的T
-        for (int left = 0, right = 0, change = 0; right < n; right++)
+        while (left < right)
         {
-            if (answerKey[right] == 'F') change++;
-            while (change > k)
-            {
-                char ou = answerKey[left++];
-                if (ou == 'F') change--;
-            }
-            ret = max(ret, right - left + 1);
+            int mid = left + (right - left+1) / 2;
+            if (nums[mid] < 0) left = mid;
+            else right = mid - 1;
         }
-        for (int left = 0, right = 0, change = 0; right < n; right++)
+        ret = left + 1;
+        left = 0, right = n - 1;
+        while (left < right)
         {
-            if (answerKey[right] == 'T') change++;
-            while (change > k)
-            {
-                char ou = answerKey[left++];
-                if (ou == 'T') change--;
-            }
-            ret = max(ret, right - left + 1);
+            int mid = left + (right - left) / 2;
+            if (nums[mid] > 0) right = mid;
+            else left = mid + 1;
         }
+        if (nums[left] != 0)
+        ret = max(ret, n - left);
         return ret;
     }
 };
@@ -88,6 +114,7 @@ int main()
 {
     Solution s;
     string s1{ "TFFT" };
-    s.maxConsecutiveAnswers(s1, 1);
+    vector<int> v{ -2,-1,-1,0,0,0 };
+    s.maximumCount(v);
     return 0;
 }
