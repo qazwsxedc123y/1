@@ -54,10 +54,40 @@ using namespace std;
 //    }
 //};
 
-
+class Solution {
+public:
+    int maxConsecutiveAnswers(string answerKey, int k) {
+        int n = answerKey.size();
+        int ret = 0;
+        // 先统计最长的T
+        for (int left = 0, right = 0, change = 0; right < n; right++)
+        {
+            if (answerKey[right] == 'F') change++;
+            while (change > k)
+            {
+                char ou = answerKey[left++];
+                if (ou == 'F') change--;
+            }
+            ret = max(ret, right - left + 1);
+        }
+        for (int left = 0, right = 0, change = 0; right < n; right++)
+        {
+            if (answerKey[right] == 'T') change++;
+            while (change > k)
+            {
+                char ou = answerKey[left++];
+                if (ou == 'T') change--;
+            }
+            ret = max(ret, right - left + 1);
+        }
+        return ret;
+    }
+};
 
 int main()
 {
-
+    Solution s;
+    string s1{ "TFFT" };
+    s.maxConsecutiveAnswers(s1, 1);
     return 0;
 }
