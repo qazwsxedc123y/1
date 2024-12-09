@@ -241,10 +241,144 @@ using namespace std;
 //    }
 //};
 
+//class Solution {
+//public:
+//    string modifyString(string s) {
+//        int n = s.size();
+//        for (int i = 0; i < n; i++)
+//        {
+//            if (s[i] == '?')
+//            {
+//                for (char ch = 'a'; ch <= 'z'; ch++)
+//                {
+//                    if ((i == 0 || ch != s[i - 1]) && (i == n - 1 || ch != s[i + 1]))
+//                    {
+//                        s[i] = ch;
+//                    }
+//                }
+//            }
+//        }
+//        return s;
+//    }
+//};
+
+//class Solution {
+//public:
+//    int findPoisonedDuration(vector<int>& timeSeries, int duration) {
+//        int ret = 0;
+//        int x = 0;
+//        for (int i = 0; i < timeSeries.size() - 1; i++)
+//        {
+//            x = timeSeries[i + 1] - timeSeries[i];
+//            if (x >= duration) {
+//                ret += duration;
+//            }
+//            else {
+//                ret += x;
+//            }
+//        }
+//        return ret + duration;
+//    }
+//};
+
+
+////int main()
+////{
+////    Solution s;
+////    vector<int> v{ 2,2,2,-1,-1,-1,8,-7,0,-7,0,-7,0 };
+////    s.singleNumber(v);
+////    int n = 5, x = 1;
+////    n &= (~(1 << x));
+////
+////	return 0;
+////}
+
+
+//class Solution {
+//public:
+//    string countAndSay(int n) {
+//        string ret = "1";
+//        for (int i = 2; i <= n; i++)
+//        {
+//            int right = 0, left = 0, count = 0;
+//            // push 个数+left指向的数
+//            string t;
+//            int n = ret.size();
+//            while (right < n)
+//            {
+//                while (right < n && ret[right] == ret[left])
+//                {
+//                    right++;
+//                }
+//                count = right - left;
+//                t += to_string(count);
+//                t += ret[left];
+//                left = right;
+//            }
+//            ret = t;
+//        }
+//        return ret;
+//    }
+//};
+
+//class Solution {
+//public:
+//    int minNumberOfFrogs(string croakOfFrogs) {
+//        int ret = 0;
+//        string t = "croak";
+//        int n = t.size();
+//        vector<int> hash(n);// 用数组模拟哈希表
+//        for (auto ch : croakOfFrogs)
+//        {
+//            if (ch == 'c')
+//            {
+//                if (hash[n - 1] != 0) hash[n - 1]--;
+//                hash[0]++;
+//            }
+//            else if (ch == 'r')
+//            {
+//                if (hash[0] == 0) return -1;
+//                else {
+//                    hash[0]--;
+//                    hash[1]++;
+//                }
+//            }
+//            else if (ch == 'o')
+//            {
+//                if (hash[1] == 0) return -1;
+//                else {
+//                    hash[1]--;
+//                    hash[2]++;
+//                }
+//            }
+//            else if (ch == 'a')
+//            {
+//                if (hash[2] == 0) return -1;
+//                else {
+//                    hash[2]--;
+//                    hash[3]++;
+//                }
+//            }
+//            else
+//            {
+//                if (hash[3] == 0) return -1;
+//                else {
+//                    hash[3]--;
+//                    hash[4]++;
+//                }
+//            }
+//        }
+//        for (int i = 0; i < n - 1; i++) {
+//            if (hash[i] != 0) return -1;
+//        }
+//        return hash[n - 1];
+//    }
+//};
+
 int main()
 {
     Solution s;
-    vector<int> v{ 2,2,2,-1,-1,-1,8,-7,0,-7,0,-7,0 };
-    s.singleNumber(v);
-	return 0;
+    string s1;
+    s.minNumberOfFrogs(s1);
+    return 0;
 }
