@@ -1,5 +1,18 @@
 #define  _CRT_SECURE_NO_WARNINGS
+#include<iostream>
+#include<string>
+#include<vector>
+#include <algorithm> 
+#include<set>
+#include<map>
+#include<unordered_set>
+#include<unordered_map>
+#include <ranges>
+#include <algorithm>
+#include <queue>       // 用于 priority_queue
+#include <functional>  // 用于 greater less 比较器
 
+using namespace std;
 
 //#include <stdio.h>                                                                                                                         
 //#include <string.h>
@@ -105,3 +118,76 @@
 //    }
 //    return 0;
 //}
+
+//class Solution {
+//public:
+//    bool isletter(char ch)
+//    {
+//        return ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z'));
+//    }
+//    bool isPalindrome(string s) {
+//        int n = s.size();
+//        int r = n - 1, l = 0;
+//        while (l < r)
+//        {
+//            while (l < r && !isletter(s[l])) l++;
+//            while (l < r && !isletter(s[r])) r--;
+//            if (tolower(s[l]) != tolower(s[r])) return false;
+//            l++, r--;
+//        }
+//        return true;
+//    }
+//};
+
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        int n = s.size();
+        if (n == 1)
+        {
+            return s;
+        }
+        int maxLen = 1;
+        int begin = 0;
+        vector<vector<int>> dp(n, vector<int>(n));
+        for (int i = 0; i < n; i++) {
+            dp[i][i] = true;
+        }
+        for (int i = 2; i <= n; i++)//长度
+        {
+            for (int l = 0; l < n; l++)//起始位置
+            {
+                int r = l + i - 1;
+                if (r >= n)
+                {
+                    break;
+                }
+                if (s[l] != s[r])
+                {
+                    dp[l][r] = false;
+                }
+                else
+                {
+                    if (r - l < 3)
+                        dp[l][r] = true;
+                    else
+                        dp[l][r] = dp[l + 1][r - 1];
+                }
+                if (dp[l][r] && i > maxLen)
+                {
+                    maxLen = i;
+                    begin = l;
+                }
+            }
+        }
+        return s.substr(begin, maxLen);
+    }
+};
+
+int main()
+{
+    Solution s;
+    string s1{ "0P" };
+    s.isPalindrome(s1);
+	return 0;
+}
