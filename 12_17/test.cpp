@@ -53,31 +53,72 @@
 //    return 0;
 //}
 
+//#include <iostream>
+//
+//using namespace std;
+//
+//const int x = 123456;
+//int n, k;
+//int dp[505][505];
+//int mod(int a)
+//{
+//	return a % x;
+//}
+//int main()
+//{
+//	cin >> n >> k;
+//	dp[1][0] = 1;
+//	for (int i = 2; i < n; i++)
+//	{
+//		dp[i][0] = 2;
+//		for (int j = 0; j <= i; j++)
+//		{
+//			dp[i + 1][j] += mod(dp[i][j] * (j + 1));
+//			dp[i + 1][j + 1] += mod(dp[i][j] * 2);
+//			dp[i + 1][j + 2] += mod(dp[i][j] * (i - j - 2));
+//		}
+//	}
+//	cout << dp[n][k - 1] % x;
+//	return 0;
+//}
+
 #include <iostream>
+#include <string>
 
 using namespace std;
-
-const int x = 123456;
-int n, k;
-int dp[505][505];
-int mod(int a)
+int p;
+string change(int x, int p)
 {
-	return a % x;
+	// 将x转换为p进制的数
+	string ret;
+	int a, b;
+	char c;
+	while (x)
+	{
+		a = x / p;
+		b = x % p;
+		if(b<=9) ret += to_string(b);
+		else {
+			// b=10 ->A   b-10+'A'
+			c = b + 'A' - 10;
+			ret += c;
+		}
+		x = a;
+	}
+	reverse(ret.begin(), ret.end());
+	return ret;
 }
 int main()
 {
-	cin >> n >> k;
-	dp[1][0] = 1;
-	for (int i = 2; i < n; i++)
+	cin >> p;
+	for (int i = 1; i < p; i++)
 	{
-		dp[i][0] = 2;
-		for (int j = 0; j <= i; j++)
+		for (int j = 1; j <= i; j++)
 		{
-			dp[i + 1][j] += mod(dp[i][j] * (j + 1));
-			dp[i + 1][j + 1] += mod(dp[i][j] * 2);
-			dp[i + 1][j + 2] += mod(dp[i][j] * (i - j - 2));
+			// i*j=
+			cout << change(i, p) << "*" << change(j, p) << "=" << change(j * i, p) << " ";
 		}
+		cout << endl;
 	}
-	cout << dp[n][k - 1] % x;
 	return 0;
 }
