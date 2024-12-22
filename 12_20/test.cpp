@@ -4,6 +4,20 @@
 using namespace std;
 int n, a[114514], p, l;//数组开大一点
 string q;
+#include<iostream>
+using namespace std;
+int main()
+{
+	int ans = 0;
+	for (int i = 1; i <= 5; i++)
+	{
+		char a, b, c, d;
+		cin >> a >> b >> c >> d;
+		if (a == c && d - b == 1) ans++;
+	}
+	cout << ans;
+	return 0;
+}
 void C()//乘法
 {
 	for (int i = 1; i <= l; i++)
