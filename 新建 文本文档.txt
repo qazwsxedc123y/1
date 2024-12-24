@@ -1,0 +1,396 @@
+#include <iostream>
+using namespace std;
+
+class Box {
+private:
+    int length;
+    int width;
+    int height;
+
+public:
+    Box(int l, int w, int h)
+        : length(l)
+        , width(w)
+        , height(h)
+    {}
+    int display()
+    {
+        return length * width * height;
+    }
+};
+int main()
+{
+    int length, width, height;
+    cin >> length >> width >> height;
+    Box box(length, width, height);
+    cout << box.display() << endl;
+    return 0;
+}
+
+
+
+//#include <iostream>
+//using namespace std;
+//
+///*请将Vector2类的代码写在这里*/
+//class Vector2
+//{
+//private:
+//    int x;
+//    int y;
+//public:
+//    Vector2(int _x, int _y)
+//        :x(_x)
+//        , y(_y)
+//    {}
+//    Vector2 operator+(Vector2& t)
+//    {
+//        Vector2 ret(0,0);
+//        ret.x = x + t.x;
+//        ret.y = y + t.y;
+//        return ret;
+//    }
+//    void show()
+//    {
+//        //The value of vector is :（32,25)
+//        cout << "The value of vector is :（" << x << "," << y << ")" << endl;
+//    }
+//};
+//int main()
+//{
+//    int x1, y1;
+//    int x2, y2;
+//    cin >> x1 >> y1 >> x2 >> y2;
+//    Vector2 v1(x1, y1); //创建向量v1(x1,y1)
+//    Vector2 v2(x2, y2); //创建向量v1(x2,y2)
+//    Vector2 v3 = v1 + v2; //用+运算符实现向量的加法运算
+//    v3.show();
+//    return 0;
+//}
+
+
+
+//#include <iostream>
+//using namespace std;
+//
+///*请将Point类代码写在这里*/
+//class Point
+//{
+//private:
+//    int x;
+//    int y;
+//public:
+//    Point(int _x, int _y)
+//        :x(_x)
+//        , y(_y)
+//    {}
+//    Point()
+//        : x(0)
+//        , y(0)
+//    {}
+//    Point move(int xd, int yd)
+//    {
+//        Point ret;
+//        ret.x = x + xd;
+//        ret.y = y + yd;
+//        return ret;
+//    }
+//    void show()
+//    {
+//        //The point value is :(15,15)
+//        cout << "The point value is :(" << x << "," << y << ")" << endl;
+//    }
+//};
+//
+//int main()
+//{
+//    int x, y;
+//    Point p1, p2;  //定义点对象p1,p2,并将其坐标初始化为（0,0,0）
+//    cin >> x >> y;
+//    p1 = Point(x, y);  //将p1点坐标更新为（x,y)
+//    int xDis, yDis;
+//    cin >> xDis >> yDis;
+//    p2 = p1.move(xDis, yDis);//将p1点平移(xDis, yDis),并将p2点坐标更新为平移后的新坐标
+//    p2.show();  //输出平移后的新坐标值
+//}
+
+
+
+
+//#include <iostream>
+//using namespace std;
+//class Material
+//{
+//private:
+//    double mRed;
+//    double mGreen;
+//    double mBlue;
+//public:
+//    Material()
+//        : mRed(0)
+//        , mGreen(0)
+//        , mBlue(0)
+//    {}
+//    Material(double red, double green, double blue)
+//        : mRed(red)
+//        , mGreen(green)
+//        , mBlue(blue)
+//    {}
+//    void displayMaterial()
+//    {
+//        cout << "材质的反射率为：（" << mRed << "," << mGreen << "," << mBlue << ")" << endl;
+//    }
+//    void displayColor(double red, double green, double blue)
+//    {
+//        cout << "材质的反射率为：（" << mRed * red << "," << mGreen * green << "," << mBlue * blue << ")" << endl;
+//    }
+//};
+//// 材质的反射率为：（0.5, 1, 0)
+//// 材质的反射率为：（0.5, 1, 0）
+//// 材质的表面颜色为：（0.4, 0.8, 0）
+//int main()
+//    {
+//        double mRed, mGreen, mBlue;
+//        cin >> mRed >> mGreen >> mBlue;//输入材质反射率分量
+//        if (mRed < 0 || mGreen < 0 || mBlue < 0 || mRed>1 || mGreen>1 || mBlue>1) {
+//            cout << "材质反射率有误，请更正！" << endl;
+//        }
+//        else
+//        {
+//            Material* m1 = new Material(mRed, mGreen, mBlue);
+//            m1->displayMaterial();    //显示材质反射率分量
+//            m1->displayColor(0.8, 0.8, 0.8);    //显示在光强（0.8,0.8,0.8）作用下的材质表面呈现的色彩
+//        }
+//    }
+
+
+
+
+//#include <iostream>
+//using namespace std;
+//int x, y;
+//class Rectangle
+//{
+//private:
+//    int Length;
+//    int Width;
+//public:
+//    Rectangle(int l, int w)
+//        :Length(l)
+//        , Width(w)
+//    {}
+//    double Perimeter()
+//    {
+//        return 2 * Length * Width;
+//    }
+//    double Area()
+//    {
+//        return Width * Length;
+//    }
+//};
+//class Program
+//{
+//private:
+//    Rectangle r;
+//public:
+//    Program(Rectangle& s)
+//        : r(s)
+//    {}
+//    void display()
+//    {
+//        printf("the perimeter is %2f，the area is %2f", r.Perimeter(), r.Area());
+//    }
+//};
+//
+//int main()
+//{
+//    cin >> x >> y;
+//    if ((x >= 0 && x <= 20) && (y >= 0 && y <= 20)) // 符合
+//    {
+//        Rectangle rc(x, y);
+//        Program p(rc);
+//        p.display();
+//    }
+//    else // 不符合
+//    {
+//        cout << "The value you input is not within the required range" << endl;
+//    }
+//    return 0;
+//}
+
+
+
+
+//#include <iostream>
+//using namespace std;
+//
+////实现两个整数的相加
+//int add(int x,int y)
+//{
+//    int sum;
+//    sum = x + y;
+//    return sum;
+//}
+//
+////实现三个整数的相加
+//int add(int x, int y,int z)
+//{
+//    int sum;
+//    sum = x + y + z;
+//    return sum;
+//}
+//
+//int main()
+//{
+//    int a, b;
+//    int x, y, z;
+//    cin >> x >> y >> z;
+//    a = add(x, y);    //求x、y两个数的相加结果
+//    b = add(x, y, z);    //求x、y、z三个数的相加结果
+//    cout << "a=" << a << endl;
+//    cout << "b=" << b << endl;
+//
+//    return 0;
+//}
+
+
+//#include <iostream>
+//using namespace std;
+//
+//int main()
+//{
+//    int num = 50;
+//
+//    int& ref = num;
+//    声明引用变量ref，并将其初始化为num的别名
+//
+//    ref += 10;
+//    将ref的值修改为自增10
+//    cout << "num=" << num << endl;
+//    cout << "ref=" << ref << endl;
+//
+//    return 0;
+//}
+
+
+//#include <iostream>
+//using namespace std;
+//
+//int main()
+//{
+//    int* p;
+//
+//    p = new int;
+//    // 为指针变量p分配内存空间
+//    *p = 5;
+//    cout << *p << endl;
+//
+//
+//    free(p);
+//    // 释放指针变量p代表的内存空间
+//    return 0;
+//}
+
+
+//#include <iostream>
+//using namespace std;
+//
+//class Complex
+//{
+//    //数据成员
+//private:
+//    double real;//实部
+//    double image;//虚部
+//    //成员函数
+//public:
+//    Complex()
+//        :real(0)
+//        ,image(0)
+//    {}
+//    Complex(double r, double i)
+//        :real(r)
+//        ,image(i)
+//    {}
+//
+//    //实现两个复数相加
+//    Complex operator+(Complex& b)
+//    {
+//        Complex ret;
+//        ret.real = real + b.real;
+//        ret.image = image + b.image;
+//        return ret;
+//    }
+//    //friend void display(Complex&);//输出显示复数
+//};
+//int main()
+//{
+//    Complex c1(1, 2);
+//    Complex c2(3, 4);
+//    Complex c3 = c1 + c2;
+//    return 0;
+//}
+
+
+//int main()
+//{
+//    int  i, n, * p;            // n表示数组元素的个数
+//    cin >> n;
+//
+//    int* p = new int[n];
+//    //使用动态内存分配建立长度为n的数组变量，并将数组首地址保持在指针变量p中
+//    if (p == 0)        // 动态内存分配失败
+//    {
+//        cout << "内存分配失败，退出！" << endl;
+//        exit(1);
+//    }
+//
+//    for (int i = 0; i < n; i++)        // 为数组元素赋值
+//        p[i] = i * 2;
+//
+//    cout << "数组中各元素分别为：" << endl;
+//    for (i = 0; i < n; i++)
+//        cout << p[i] << "  ";
+//    cout << endl;
+//
+//
+//    free(p);
+//    // 释放动态分配的数组内存空间
+//
+//    return 0;
+//}
+
+//class Furniture            // 定义家具类
+//{
+//public:
+//    //Furniture类的有参构造函数
+//    Furniture(int _weight)
+//        :weight(_weight)
+//    {}
+//
+//protected:
+//    int weight;
+//};
+//class Bed : public Furniture    //Furniture类公有派生出子类Bed
+//{
+//private:
+//    int length;
+//    int width;
+//public:
+//    //派生类的构造函数
+//    Bed(int _weight, int _lenght, int _width)
+//        :Furniture(_weight)
+//        ,length(_lenght)a
+//        , width(_width)
+//    {}
+//
+//    void sleep() {
+//        cout << "sleeping...\n";
+//    }
+//
+//};
+//int main()
+//{
+//    Bed bed(2, 2, 100);//创建Bed类对象bed
+//    bed.sleep();
+//    return 0;
+//}
