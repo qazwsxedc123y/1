@@ -1,0 +1,53 @@
+*{padding:0;margin:0}
+body{font-size:"微软雅黑";background:#ffe2f3}
+ul li{list-style: none;}
+a{text-decoration: none;}
+.clear{clear:both;}
+
+.wp{width:1100px;margin:10px auto;background:#fff;padding:10px;}
+.top h2{text-align: center;line-height: 80px;}
+.logo{line-height: 100px;}
+.logo h2{padding-left:120px;}
+.top .nav{line-height: 50px;background:#ff057e}
+.top .nav ul li{float:left;}
+.top .nav ul li a{display:block;text-align: center;width:120px;color:#f7f706;}
+.top .nav ul li a:hover,.top .nav ul li a.active{background:#cb0e69;color:#f7f706;font-weight:bold}
+.banner{width:100%;}
+.banner img{width:100%;}
+.div01 h3{margin:20px 0px;line-height: 40px;text-align: center;}
+.div01 p{line-height: 24px;text-indent: 2em;}
+.box01 img{width:340px;float:left;margin:10px;height:220px;overflow: hidden;}
+
+.prodetail h4{text-align: center;line-height: 50px;font-size:24px;}
+.prodetail .tc{text-align: center;}
+.content{margin:30px 0px;}
+.content p{line-height: 24px;}
+.content h3{text-align: center;line-height:50px;margin:20px 0px;font-weight: 600;font-size:22px;background:#ff057e;color:#fff;}
+
+.box{margin:30px auto;width:400px;text-align: center;}
+.box h3{line-height: 50px;text-align: center;}
+.box .item_input{margin:10px auto;width:300px;height:40px;padding:0px 5px;}
+.box .item{margin:10px;}
+.aboutjs{margin:30px 0px;}
+.div01{float:left;width:500px;margin-left:30px;}
+.div01box{float:left;width:500px;}
+.div01box img{width:100%;}
+.alist{margin-top:10px;}
+.alist ul li{width:30%;margin:1%;float:left;height:244px;overflow: hidden;}
+.alist ul li img{width:100%;}
+.mt{margin:30px 0px;}
+.mt h3{text-align: center;margin:10px 0px;line-height:50px;font-weight: 600;font-size:22px;}
+.mt h4{line-height: 32px;font-size:16px;font-weight:normal;text-align: center;margin-bottom:20px}
+.liuyan h3,.aboutjs h3{padding-left:10px;line-height:50px;margin:20px 0px;font-weight: 600;font-size:22px;background:#ff057e;color:#fff;}
+.proimg ul li{width:340px;float:left;margin:10px;height:340px;overflow: hidden;}
+.detail{padding:20px;}
+.detail h3{line-height: 50px;}
+.detail p{line-height: 28px;text-indent: 2em;margin-bottom:10px;}
+.proimg ul li img{width:100%;}
+.biaodan p{line-height: 32px;margin-bottom:10px;}
+.biaodan input{line-height: 24px;margin:0px 10px;}
+.biaodan .btn{border:none;line-height: 32px;width:100px;text-align: center;color:#fff;background:#ff057e}
+.proimg ul li h3{line-height: 40px;font-weight: 500;font-size:18px;}
+.content p{margin-bottom:15px;line-height: 28px;}
+
+.footer{background:#ff057e;padding:20px 0px;text-align: center;color:#fff;margin-top:50px}
