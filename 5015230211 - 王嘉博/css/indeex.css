@@ -1,0 +1,48 @@
+@charset "utf-8";
+/*重置浏览器的默认样式*/
+body, ul, li, ol, dl, dd, dt, p, h1, h2, h3, h4, h5, h6, form, fieldset, legend, img{margin:0; padding:0; border:0; list-style:none;}
+ /*banner*/
+ .banner{
+ 	width:1000px;
+ 	height:285px;
+ 	margin:13px auto 15px auto;
+ 	position:relative;
+ 	overflow: hidden;
+ }
+ .banner .banner_pic .pic{display:none;}
+ .banner .banner_pic .current{display:block;}
+ .banner ol{
+ 	position:absolute;
+ 	left:50%;
+ 	bottom:6%;
+ }
+ .banner ol .but{
+ 	float:left;
+ 	width:10px;
+ 	height:10px;
+ 	border:1px solid #2fafbc;
+	border-radius:50%;
+ 	margin-right:12px;
+ 	text-align:center;
+ 	line-height:22px;
+ 	background:#fff;
+ 	color:#2fafbc;
+ 	font-size:16px;
+ 	font-weight:bold;
+	opacity:0.5;
+ }
+ .banner ol li{cursor:pointer;}
+ .banner ol .current{
+ 	color:#fff;
+ 	background:#2fafbc;
+ 	float:left;
+ 	width:10px;
+ 	height:10px;
+ 	border:1px solid #2fafbc;
+	border-radius:50%;
+ 	margin-right:12px;
+ 	text-align:center;
+ 	line-height:22px;
+ 	font-size:16px;
+ 	font-weight:bold;
+ }

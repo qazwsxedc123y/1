@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="css/common.css">
+	<link rel="stylesheet" type="text/css" href="css/index.css">
+</head>
+<body>
+	<header class="clearfix">
+		<img src="img/log.jpg" width="135" height="56">
+		<ul>
+			<li><a href="index.html">首页</a></li>
+			<li><a href="dingzhi.html">订制</a></li>
+			<li><a href="home.html">合作</a></li>
+		</ul>
+	</header>
+	<main>
+		<img src="img/1.jpg" width="100%" height="450" id="ban">
+		<button>></button>
+	</main>
+	<footer class="clearfix">
+		<div>
+		<img src="img/image2.jpg" width="120" height="120">
+		<p>隐私保护　化妆品店----　版权所有 5015230213<br>
+
+学号 ： 5015230213　</p></div>
+	</footer>
+	<script>
+		var oImg=document.getElementById("ban");
+		var oBtn=document.getElementsByTagName("button")[0];
+		var i=1;
+		oBtn.onclick=function(){
+			i++;
+			i=i>3?1:i;
+			oImg.src="img/"+i+".jpg";
+		}
+	</script>
+</body>
+</html>
