@@ -87,11 +87,63 @@ using namespace std;
 //    }
 //};
 
+//class Solution {
+//public:
+//    string multiply(string num1, string num2) {
+//        // 不进位相乘
+//
+//        int n1 = num1.size() - 1, n2 = num2.size() - 1;
+//        int arr[n1 + n2 + 1];
+//        for (int i = 0; i <= n2; i++) // 下
+//        {
+//            for (int j = 0; j <= n1; j++) // 上
+//            {
+//                int t = i + j;
+//                int sum = 1;
+//                sum *= num1[n1 - i];
+//                sum *= num2[n2 - j];
+//                arr[t] += sum;
+//            }
+//        }
+//    }
+//};
+
+//class Solution {
+//public:
+//    string multiply(string num1, string num2) {
+//        // 无进位相乘
+//        int m = num1.size(), n = num2.size();
+//        reverse(num1.begin(), num1.end());
+//        reverse(num2.begin(), num2.end());
+//
+//        vector<int> tmp(n + m - 1);
+//
+//        // 先无进位相乘
+//        for (int i = 0; i < m; i++)
+//            for (int j = 0; j < n; j++)
+//                tmp[i + j] += (num1[i] - '0') * (num2[j] - '0');
+//
+//        // 处理进位
+//        int cur = 0, t = 0;
+//        string ret;
+//        while (cur < n + m - 1 || t)
+//        {
+//            if (cur < n + m - 1) t += tmp[cur++];
+//            ret += t % 10 + '0';
+//            t /= 10;
+//        }
+//
+//        // 处理前导零 
+//        // 0*任何数
+//        while (ret.size() > 1 && ret.back() == '0') ret.pop_back();
+//        reverse(ret.begin(), ret.end());
+//        return ret;
+//    }
+//};
+
 int main()
 {
     Solution s;
-    vector <string> strs({ "flower", "flow", "flight" });
-    s.longestCommonPrefix(strs);
     return 0;
 }
 
