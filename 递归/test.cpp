@@ -368,3 +368,93 @@
 //        dfs(root->right, path);
 //    }
 //};
+
+
+//class Solution {
+//    vector<vector<int>> ret;
+//    vector<int> path;
+//    bool check[7];
+//public:
+//    vector<vector<int>> permute(vector<int>& nums) {
+//        dfs(nums);
+//        return ret;
+//    }
+//    void dfs(vector<int>& nums) {
+//        if (path.size() == nums.size()) {
+//            ret.push_back(path);
+//            return;
+//        }
+//        for (int i = 0; i < nums.size(); i++) {
+//            if (check[i] == false) {
+//                path.push_back(nums[i]);
+//                check[i] = true;
+//                dfs(nums);
+//                // 回溯
+//                path.pop_back();
+//                check[i] = false;
+//            }
+//        }
+//    }
+//};
+
+
+//class Solution {
+//    vector<vector<int>> ret;
+//    vector<int> path;
+//public:
+//    vector<vector<int>> subsets(vector<int>& nums) {
+//        int i = 0;
+//        dfs(nums, i);
+//        return ret;
+//    }
+//    void dfs(vector<int>& nums, int i) {
+//        if (i == nums.size()) {
+//            ret.push_back(path);
+//            return;
+//        }
+//        // 选
+//        path.push_back(nums[i]);
+//        dfs(nums, i + 1);
+//        path.pop_back();
+//
+//        // 不选
+//        dfs(nums, i + 1);
+//    }
+//};
+
+
+//class Solution {
+//    vector<vector<int>> ret;
+//    vector<int> path;
+//public:
+//    vector<vector<int>> subsets(vector<int>& nums) {
+//        int i = 0;
+//        // 解法一：
+//        // dfs1(nums, i);
+//
+//        // 解法二：
+//        dfs2(nums, i);
+//        return ret;
+//    }
+//    void dfs1(vector<int>& nums, int i) {
+//        if (i == nums.size()) {
+//            ret.push_back(path);
+//            return;
+//        }
+//        // 选
+//        path.push_back(nums[i]);
+//        dfs1(nums, i + 1);
+//        path.pop_back();
+//
+//        // 不选
+//        dfs1(nums, i + 1);
+//    }
+//    void dfs2(vector<int>& nums, int i) {
+//        ret.push_back(path);
+//        for (int pos = i; pos < nums.size(); pos++) {
+//            path.push_back(nums[pos]);
+//            dfs2(nums, pos + 1);
+//            path.pop_back();
+//        }
+//    }
+//};
