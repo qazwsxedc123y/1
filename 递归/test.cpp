@@ -406,3 +406,114 @@
 //};
 
 
+//class Solution {
+//    bool checkCol[10], checkDig1[20], checkDig2[20];
+//    vector<vector<string>> ret;
+//    vector<string> path;
+//
+//public:
+//    vector<vector<string>> solveNQueens(int n) {
+//        path.resize(n);
+//        for (int i = 0; i < n; i++) {
+//            // 先将本行全设为 .
+//            path[i].append(n, '.');
+//        }
+//        dfs(n, 0);
+//        return ret;
+//    }
+//    void dfs(int n, int pos) {
+//        if (pos == n) {
+//            ret.push_back(path);
+//            return;
+//        }
+//
+//        for (int i = 0; i < n; i++) {
+//
+//            // 尝试在pos行第i列放一个皇后
+//            if (checkCol[i] == false
+//                && checkDig1[pos - i + n] == false
+//                && checkDig2[pos + i] == false)
+//            {
+//                checkCol[i] = true;
+//                checkDig1[pos - i + n] = true;
+//                checkDig2[pos + i] = true;
+//                path[pos][i] = 'Q';
+//                dfs(n, pos + 1);
+//                path[pos][i] = '.';
+//                checkCol[i] = false;
+//                checkDig1[pos - i + n] = false;
+//                checkDig2[pos + i] = false;
+//            }
+//
+//            // 全排列放置
+//
+//            // path[pos][i] = 'Q';
+//            // dfs(n, pos + 1);
+//            // path[pos][i] = '.';
+//        }
+//    }
+//};
+
+
+class Solution {
+    vector<vector<string>> ret;
+    vector<string> path;
+    int n;
+public:
+    vector<vector<string>> solveNQueens(int _n) {
+        n = _n;
+        path.resize(n);
+        for (int i = 0; i < n; i++) {
+            // 先将本行全设为 .
+            path[i].append(n, '.');
+        }
+        dfs(0);
+        return ret;
+    }
+    bool check(int row, int col) {
+        for (int i = 0; i < n; i++) {
+            if (path[i][col] == 'Q') {
+                return false;
+            }
+        }
+        // 检查对角线
+        // 小细节，只需要检查前面的行就行，后面的行还没有放皇后
+        // 检查主对角线（左上到右下）
+        for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
+            if (path[i][j] == 'Q') {
+                return false;
+            }
+        }
+
+        // 检查副对角线（右上到左下）
+        for (int i = row - 1, j = col + 1; i >= 0 && j < n; i--, j++) {
+            if (path[i][j] == 'Q') {
+                return false;
+            }
+        }
+        return true;
+    }
+    void dfs(int pos) {
+        if (pos == n) {
+            ret.push_back(path);
+            return;
+        }
+
+        for (int i = 0; i < n; i++) {
+
+            // 尝试在pos行第i列放一个皇后
+            if (check(pos, i))
+            {
+                path[pos][i] = 'Q';
+                dfs(pos + 1);
+                path[pos][i] = '.';
+            }
+
+            // 全排列放置
+
+            // path[pos][i] = 'Q';
+            // dfs(n, pos + 1);
+            // path[pos][i] = '.';
+        }
+    }
+};
