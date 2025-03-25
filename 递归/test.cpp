@@ -1,5 +1,42 @@
 #define  _CRT_SECURE_NO_WARNINGS
 
+
+///**
+// * Definition for a binary tree node.
+// * struct TreeNode {
+// *     int val;
+// *     TreeNode *left;
+// *     TreeNode *right;
+// *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+// *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+// *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+// * };
+// */
+//class Solution {
+//    long pre = LONG_MIN; // 设置为INT_MIN，还不够小，因为存在单个节点-2^31 -> -2147483648
+//public:
+//    bool isValidBST(TreeNode* root) {
+//        if (root == nullptr) return true;
+//
+//        // 如果为二叉搜索树，那么中序遍历为有序
+//        bool left = isValidBST(root->left);
+//        // 剪枝
+//        if (left == false) return false;
+//
+//        bool falg = true;
+//        if (root->val <= pre) {
+//            falg = false;
+//        }
+//        pre = root->val;
+//        // 剪枝
+//        if (falg == false) return false;
+//        bool right = isValidBST(root->right);
+//
+//        return left && right && falg;
+//    }
+//};
+
+
 //class Solution {
 //    int ret;
 //    int cur = 0;
@@ -609,49 +646,145 @@
 //};
 
 
-class Solution {
-    // 利用空间换时间
-    // 默认初始化为0，也就是false
-    bool Row[9][10];     // 利用此检测某行是否纯在重复数
-    bool Col[10][9];     // 利用此检测某列是否纯在重复数
-    bool grid[3][3][10]; // 利用此检测某个三行三列的小矩阵是否纯在重复数
-public:
-    void solveSudoku(vector<vector<char>>& board) {
-        for (int i = 0; i < 9; i++)
-        {
-            for (int j = 0; j < 9; j++)
-            {
-                if (board[i][j] != '.')
-                {
-                    int num = board[i][j] - '0';
-                    Row[i][num] = Col[num][j] = grid[i / 3][j / 3][num] = true;
-                }
-            }
-        }
-        dfs(board);
-    }
-    bool dfs(vector<vector<char>>& board) {
-        for (int i = 0; i < 9; i++)
-        {
-            for (int j = 0; j < 9; j++)
-            {
-                if (board[i][j] == '.')
-                {
-                    for (int num = 1; num <= 9; num++)
-                    {
-                        if (!Row[i][num] && !Col[num][j] && !grid[i / 3][j / 3][num])
-                        {
-                            board[i][j] = '0' + num;
-                            Row[i][num] = Col[num][j] = grid[i / 3][j / 3][num] = true;
-                            if (dfs(board) == true) return true;
-                            board[i][j] = '.';
-                            Row[i][num] = Col[num][j] = grid[i / 3][j / 3][num] = false;
-                        }
-                    }
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-};
+//class Solution {
+//    // 利用空间换时间
+//    // 默认初始化为0，也就是false
+//    bool Row[9][10];     // 利用此检测某行是否纯在重复数
+//    bool Col[10][9];     // 利用此检测某列是否纯在重复数
+//    bool grid[3][3][10]; // 利用此检测某个三行三列的小矩阵是否纯在重复数
+//public:
+//    void solveSudoku(vector<vector<char>>& board) {
+//        for (int i = 0; i < 9; i++)
+//        {
+//            for (int j = 0; j < 9; j++)
+//            {
+//                if (board[i][j] != '.')
+//                {
+//                    int num = board[i][j] - '0';
+//                    Row[i][num] = Col[num][j] = grid[i / 3][j / 3][num] = true;
+//                }
+//            }
+//        }
+//        dfs(board);
+//    }
+//    bool dfs(vector<vector<char>>& board) {
+//        for (int i = 0; i < 9; i++)
+//        {
+//            for (int j = 0; j < 9; j++)
+//            {
+//                if (board[i][j] == '.')
+//                {
+//                    for (int num = 1; num <= 9; num++)
+//                    {
+//                        if (!Row[i][num] && !Col[num][j] && !grid[i / 3][j / 3][num])
+//                        {
+//                            board[i][j] = '0' + num;
+//                            Row[i][num] = Col[num][j] = grid[i / 3][j / 3][num] = true;
+//                            if (dfs(board) == true) return true;
+//                            board[i][j] = '.';
+//                            Row[i][num] = Col[num][j] = grid[i / 3][j / 3][num] = false;
+//                        }
+//                    }
+//                    return false;
+//                }
+//            }
+//        }
+//        return true;
+//    }
+//};
+
+
+//class Solution {
+//    bool vis[7][7];
+//    int m, n;
+//public:
+//    bool exist(vector<vector<char>>& board, string word) {
+//        // m行 n列
+//        m = board.size(), n = board[0].size();
+//        for (int i = 0; i < m; i++)
+//        {
+//            for (int j = 0; j < n; j++)
+//            {
+//                if (board[i][j] == word[0])
+//                {
+//                    vis[i][j] = true;
+//                    if (dfs(board, i, j, word, 1)) return true;
+//                    vis[i][j] = false;
+//                }
+//            }
+//        }
+//        return false;
+//    }
+//    int dx[4] = { 0, 0, -1, 1 };
+//    int dy[4] = { -1, 1, 0, 0 };
+//    bool dfs(vector<vector<char>>& board, int i, int j, string word, int pos) {
+//        if (pos == word.size())
+//        {
+//            return true;
+//        }
+//        // 四个方位
+//        // i-1,j   i+1,j    i,j-1    i,j+1
+//        // 小细节，可以利用创建两个数组，单独控制x，y
+//        for (int k = 0; k < 4; k++)
+//        {
+//            int x = i + dx[k], y = j + dy[k];
+//            if (x >= 0 && x < m && y >= 0 && y < n && !vis[x][y] && board[x][y] == word[pos]) {
+//                vis[x][y] = true;
+//                if (dfs(board, x, y, word, pos + 1)) return true;
+//                vis[x][y] = false;
+//            }
+//        }
+//        return false;
+//    }
+//};
+
+
+//class Solution {
+//    int ret = 0;
+//    int sum = 0;
+//    int m, n;
+//    bool vis[15][15];
+//public:
+//    int getMaximumGold(vector<vector<int>>& grid) {
+//        // m行 n列
+//        m = grid.size(), n = grid[0].size();
+//        // 如果没有这个，那么(0, 0) 开始 DFS，如果grid[0][0] == 0，DFS 会直接结束
+//        for (int i = 0; i < m; i++)
+//        {
+//            for (int j = 0; j < n; j++)
+//            {
+//                if (grid[i][j] != 0)
+//                { // 从所有非零格子开始DFS
+//                    vis[i][j] = true;
+//                    sum += grid[i][j];
+//                    dfs(grid, i, j);
+//                    sum -= grid[i][j];
+//                    vis[i][j] = false;
+//                }
+//            }
+//        }
+//        return ret;
+//    }
+//    int dx[4] = { 0, 0, -1, 1 };
+//    int dy[4] = { -1, 1, 0, 0 };
+//    void dfs(vector<vector<int>>& grid, int i, int j) {
+//        if (sum > ret) {
+//            ret = sum;
+//            // 如果直接返回，会终止当前路径的继续探索，可能错过更优解。
+//        }
+//
+//        // 四个方位
+//        // i-1,j   i+1,j    i,j-1    i,j+1
+//        // 小细节，可以利用创建两个数组，单独控制x，y
+//        for (int k = 0; k < 4; k++) {
+//            int x = i + dx[k], y = j + dy[k];
+//            if (x >= 0 && x < m && y >= 0 && y < n && grid[x][y] != 0 && !vis[x][y]) {
+//                vis[x][y] = true;
+//                sum += grid[x][y];
+//                dfs(grid, x, y);
+//                sum -= grid[x][y];
+//                vis[x][y] = false;
+//            }
+//        }
+//    }
+//};
