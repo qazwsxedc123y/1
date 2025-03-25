@@ -455,65 +455,203 @@
 //};
 
 
-class Solution {
-    vector<vector<string>> ret;
-    vector<string> path;
-    int n;
-public:
-    vector<vector<string>> solveNQueens(int _n) {
-        n = _n;
-        path.resize(n);
-        for (int i = 0; i < n; i++) {
-            // 先将本行全设为 .
-            path[i].append(n, '.');
-        }
-        dfs(0);
-        return ret;
-    }
-    bool check(int row, int col) {
-        for (int i = 0; i < n; i++) {
-            if (path[i][col] == 'Q') {
-                return false;
-            }
-        }
-        // 检查对角线
-        // 小细节，只需要检查前面的行就行，后面的行还没有放皇后
-        // 检查主对角线（左上到右下）
-        for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
-            if (path[i][j] == 'Q') {
-                return false;
-            }
-        }
+//class Solution {
+//    vector<vector<string>> ret;
+//    vector<string> path;
+//    int n;
+//public:
+//    vector<vector<string>> solveNQueens(int _n) {
+//        n = _n;
+//        path.resize(n);
+//        for (int i = 0; i < n; i++) {
+//            // 先将本行全设为 .
+//            path[i].append(n, '.');
+//        }
+//        dfs(0);
+//        return ret;
+//    }
+//    bool check(int row, int col) {
+//        for (int i = 0; i < n; i++) {
+//            if (path[i][col] == 'Q') {
+//                return false;
+//            }
+//        }
+//        // 检查对角线
+//        // 小细节，只需要检查前面的行就行，后面的行还没有放皇后
+//        // 检查主对角线（左上到右下）
+//        for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
+//            if (path[i][j] == 'Q') {
+//                return false;
+//            }
+//        }
+//
+//        // 检查副对角线（右上到左下）
+//        for (int i = row - 1, j = col + 1; i >= 0 && j < n; i--, j++) {
+//            if (path[i][j] == 'Q') {
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
+//    void dfs(int pos) {
+//        if (pos == n) {
+//            ret.push_back(path);
+//            return;
+//        }
+//
+//        for (int i = 0; i < n; i++) {
+//
+//            // 尝试在pos行第i列放一个皇后
+//            if (check(pos, i))
+//            {
+//                path[pos][i] = 'Q';
+//                dfs(pos + 1);
+//                path[pos][i] = '.';
+//            }
+//
+//            // 全排列放置
+//
+//            // path[pos][i] = 'Q';
+//            // dfs(n, pos + 1);
+//            // path[pos][i] = '.';
+//        }
+//    }
+//};
 
-        // 检查副对角线（右上到左下）
-        for (int i = row - 1, j = col + 1; i >= 0 && j < n; i--, j++) {
-            if (path[i][j] == 'Q') {
-                return false;
+
+//#include <iostream>
+//bool Row[9][10];
+//using namespace std;
+//
+//int main() 
+//{
+//	if (Row[1][1] == false) {
+//		cout << "false" << endl;
+//	}
+//	return 0;
+//}
+
+
+//class Solution {
+//    // 利用空间换时间
+//    // 默认初始化为0，也就是false
+//    bool Row[9][10]; // 利用此检测某行是否纯在重复数
+//    bool Col[10][9]; // 利用此检测某列是否纯在重复数
+//    bool grid[3][3][10]; // 利用此检测某个三行三列的小矩阵是否纯在重复数
+//public:
+//    bool isValidSudoku(vector<vector<char>>& board) {
+//        for (int i = 0; i < 9; i++) { // 行
+//            for (int j = 0; j < 9; j++) { // 列
+//                if (board[i][j] != '.') {
+//                    int num = board[i][j] - '0';
+//                    if (Row[i][num] || Col[num][j] || grid[i / 3][j / 3][num]) {
+//                        return false;
+//                    }
+//                    Row[i][num] = true;
+//                    Col[num][j] = true;
+//                    grid[i / 3][j / 3][num] = true;
+//                }
+//            }
+//        }
+//        return true;
+//    }
+//};
+
+
+//class Solution {
+//    // 利用空间换时间
+//    // 默认初始化为0，也就是false
+//    bool Row[9][10];     // 利用此检测某行是否纯在重复数
+//    bool Col[10][9];     // 利用此检测某列是否纯在重复数
+//    bool grid[3][3][10]; // 利用此检测某个三行三列的小矩阵是否纯在重复数
+//public:
+//    void solveSudoku(vector<vector<char>>& board) {
+//        for (int i = 0; i < 9; i++) {
+//            for (int j = 0; j < 9; j++) {
+//                if (board[i][j] != '.') {
+//                    int num = board[i][j] - '0';
+//                    Row[i][num] = true;
+//                    Col[num][j] = true;
+//                    grid[i / 3][j / 3][num] = true;
+//                }
+//            }
+//        }
+//        dfs(board, 0, 0);
+//    }
+//    bool dfs(vector<vector<char>>& board, int row, int col) {
+//        if (row == 9) {
+//            return true;
+//        }
+//        if (col == 9) {
+//            return dfs(board, row + 1, 0);
+//        }
+//        // 如果当前格子已有数字，跳过
+//        if (board[row][col] != '.') {
+//            return dfs(board, row, col + 1);
+//        }
+//
+//        for (int num = 1; num <= 9; num++)
+//        {
+//            if (!Row[row][num] && !Col[num][col] && !grid[row / 3][col / 3][num])
+//            {
+//                board[row][col] = '0' + num;
+//                Row[row][num] = Col[num][col] = grid[row / 3][col / 3][num] = true;
+//                if (dfs(board, row, col + 1) == true)
+//                    return true;
+//                // 恢复现场
+//                board[row][col] = '.';
+//                Row[row][num] = Col[num][col] = grid[row / 3][col / 3][num] = false;;
+//            }
+//        }
+//        // 1-9全都试完了，都不行
+//        return false;
+//    }
+//};
+
+
+class Solution {
+    // 利用空间换时间
+    // 默认初始化为0，也就是false
+    bool Row[9][10];     // 利用此检测某行是否纯在重复数
+    bool Col[10][9];     // 利用此检测某列是否纯在重复数
+    bool grid[3][3][10]; // 利用此检测某个三行三列的小矩阵是否纯在重复数
+public:
+    void solveSudoku(vector<vector<char>>& board) {
+        for (int i = 0; i < 9; i++)
+        {
+            for (int j = 0; j < 9; j++)
+            {
+                if (board[i][j] != '.')
+                {
+                    int num = board[i][j] - '0';
+                    Row[i][num] = Col[num][j] = grid[i / 3][j / 3][num] = true;
+                }
+            }
+        }
+        dfs(board);
+    }
+    bool dfs(vector<vector<char>>& board) {
+        for (int i = 0; i < 9; i++)
+        {
+            for (int j = 0; j < 9; j++)
+            {
+                if (board[i][j] == '.')
+                {
+                    for (int num = 1; num <= 9; num++)
+                    {
+                        if (!Row[i][num] && !Col[num][j] && !grid[i / 3][j / 3][num])
+                        {
+                            board[i][j] = '0' + num;
+                            Row[i][num] = Col[num][j] = grid[i / 3][j / 3][num] = true;
+                            if (dfs(board) == true) return true;
+                            board[i][j] = '.';
+                            Row[i][num] = Col[num][j] = grid[i / 3][j / 3][num] = false;
+                        }
+                    }
+                    return false;
+                }
             }
         }
         return true;
-    }
-    void dfs(int pos) {
-        if (pos == n) {
-            ret.push_back(path);
-            return;
-        }
-
-        for (int i = 0; i < n; i++) {
-
-            // 尝试在pos行第i列放一个皇后
-            if (check(pos, i))
-            {
-                path[pos][i] = 'Q';
-                dfs(pos + 1);
-                path[pos][i] = '.';
-            }
-
-            // 全排列放置
-
-            // path[pos][i] = 'Q';
-            // dfs(n, pos + 1);
-            // path[pos][i] = '.';
-        }
     }
 };
