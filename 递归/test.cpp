@@ -788,3 +788,50 @@
 //        }
 //    }
 //};
+
+
+//class Solution {
+//    int ret;
+//    int step;
+//    int m, n;
+//    int x1, y1;
+//    bool vis[21][21];
+//public:
+//    int uniquePathsIII(vector<vector<int>>& grid) {
+//        m = grid.size(), n = grid[0].size();
+//        for (int i = 0; i < m; i++)
+//        {
+//            for (int j = 0; j < n; j++)
+//            {
+//                if (grid[i][j] == 0) step++;
+//                else if (grid[i][j] == 1)
+//                {
+//                    x1 = i;
+//                    y1 = j;
+//                }
+//            }
+//        }
+//        step += 2;
+//        vis[x1][y1] = true;
+//        dfs(grid, x1, y1, 1);
+//        return ret;
+//    }
+//    int dx[4] = { 0, 0, -1, 1 };
+//    int dy[4] = { -1, 1, 0, 0 };
+//    void dfs(vector<vector<int>>& grid, int i, int j, int count) {
+//        if (grid[i][j] == 2) {
+//            if (count == step) {
+//                ret++;
+//                return;
+//            }
+//        }
+//        for (int k = 0; k < 4; k++) {
+//            int x = i + dx[k], y = j + dy[k];
+//            if (x >= 0 && x < m && y >= 0 && y < n && grid[x][y] != -1 && !vis[x][y]) {
+//                vis[x][y] = true;
+//                dfs(grid, x, y, count + 1);
+//                vis[x][y] = false;
+//            }
+//        }
+//    }
+//};
