@@ -825,12 +825,410 @@
 //                return;
 //            }
 //        }
+        //for (int k = 0; k < 4; k++) {
+        //    int x = i + dx[k], y = j + dy[k];
+        //    if (x >= 0 && x < m && y >= 0 && y < n && grid[x][y] != -1 && !vis[x][y]) {
+        //        vis[x][y] = true;
+        //        dfs(grid, x, y, count + 1);
+        //        vis[x][y] = false;
+        //    }
+        //}
+//    }
+//};
+
+
+//class Solution {
+//    int n, m;
+//    int color;
+//    int ans;
+//public:
+//    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int _color) {
+//        m = image.size();
+//        if (m == 0) return image;
+//        n = image[0].size();
+//        color = _color;
+//
+//        ans = image[sr][sc];
+//        image[sr][sc] = color;
+//
+//        if (ans == color) return image; // 关键，处理特殊情况
+//        dfs(image, sr, sc);
+//        return image;
+//    }
+//    int dx[4] = { 0, 0, -1, 1 };
+//    int dy[4] = { -1, 1, 0, 0 };
+//    void dfs(vector<vector<int>>& image, int i, int j) {
 //        for (int k = 0; k < 4; k++) {
 //            int x = i + dx[k], y = j + dy[k];
-//            if (x >= 0 && x < m && y >= 0 && y < n && grid[x][y] != -1 && !vis[x][y]) {
+//            if (x >= 0 && x < m && y >= 0 && y < n && image[x][y] == ans) {
+//                image[x][y] = color;
+//                dfs(image, x, y);
+//            }
+//        }
+//    }
+//};
+
+
+//class Solution {
+//    int n, m;
+//    // 题目给的n， m范围最大为300，如果用数组，就有点浪费空间
+//    // 所以可以用vector
+//    vector<vector<bool>> vis;
+//    int ret;
+//public:
+//    int numIslands(vector<vector<char>>& grid) {
+//        m = grid.size(), n = grid[0].size();
+//        vis = vector<vector<bool>>(m, vector<bool>(n));
+//
+//        for (int i = 0; i < m; i++)
+//        {
+//            for (int j = 0; j < n; j++)
+//            {
+//                if (!vis[i][j] && grid[i][j] == '1')
+//                {
+//                    ret++;
+//                    dfs(grid, i, j);
+//                }
+//            }
+//        }
+//        return ret;
+//    }
+//    int dx[4] = { 0, 0, -1, 1 };
+//    int dy[4] = { -1, 1, 0, 0 };
+//    void dfs(vector<vector<char>>& grid, int i, int j)
+//    {
+//        vis[i][j] = true;
+//        for (int k = 0; k < 4; k++) {
+//            int x = i + dx[k], y = j + dy[k];
+//            if (x >= 0 && x < m && y >= 0 && y < n && grid[x][y] == '1' && !vis[x][y]) {
+//                dfs(grid, x, y);
+//            }
+//        }
+//    }
+//};
+
+//
+//class Solution {
+//    int m, n;
+//
+//public:
+//    // 正难则反
+//    // 先处理边界问题，然后剩下的o全改为x就完成
+//    // 然后再还原边界
+//    void solve(vector<vector<char>>& board) {
+//        m = board.size(), n = board[0].size();
+//
+//        // 1. 把边界的连通块，全部的 o 改为 .
+//        for (int j = 0; j < n; j++) {
+//            if (board[0][j] == 'O')
+//                dfs(board, 0, j);
+//            if (board[m - 1][j] == 'O')
+//                dfs(board, m - 1, j);
+//        }
+//        for (int i = 0; i < m; i++) {
+//            if (board[i][0] == 'O')
+//                dfs(board, i, 0);
+//            if (board[i][n - 1] == 'O')
+//                dfs(board, i, n - 1);
+//        }
+//
+//        // 再遍历，将所有的 o 改为 x ，再复原边界即完成
+//        for (int i = 0; i < m; i++) {
+//            for (int j = 0; j < n; j++) {
+//                if (board[i][j] == 'O')
+//                    board[i][j] = 'X';
+//                else if (board[i][j] == '.')
+//                    board[i][j] = 'O';
+//            }
+//        }
+//    }
+//    int dx[4] = { 0, 0, -1, 1 };
+//    int dy[4] = { -1, 1, 0, 0 };
+//    void dfs(vector<vector<char>>& board, int i, int j)
+//    {
+//        // 只有是存放 'O' 的坐标才会被传进dfs内
+//        board[i][j] = '.';
+//        for (int k = 0; k < 4; k++) {
+//            int x = i + dx[k], y = j + dy[k];
+//            if (x >= 0 && x < m && y >= 0 && y < n && board[x][y] == 'O') {
+//                dfs(board, x, y);
+//            }
+//        }
+//    }
+//};
+// 
+
+//
+// class Solution {
+//    int m, n;
+//public:
+//    // 正难则反
+//    // 先处理边界问题，然后剩下的o全改为x就完成
+//    // 然后再还原边界
+//    void solve(vector<vector<char>>& board) {
+//        m = board.size(), n = board[0].size();
+//
+//        // 1. 把边界的连通块，全部的 o 改为 .
+//        for (int j = 0; j < n; j++) {
+//            if (board[0][j] == 'O')
+//                dfs(board, 0, j);
+//            if (board[m - 1][j] == 'O')
+//                dfs(board, m - 1, j);
+//        }
+//        for (int i = 0; i < m; i++) {
+//            if (board[i][0] == 'O')
+//                dfs(board, i, 0);
+//            if (board[i][n - 1] == 'O')
+//                dfs(board, i, n - 1);
+//        }
+//
+//        // 再遍历，将所有的 o 改为 x ，再复原边界即完成
+//        for (int i = 0; i < m; i++) {
+//            for (int j = 0; j < n; j++) {
+//                if (board[i][j] == 'O')
+//                    board[i][j] = 'X';
+//                else if (board[i][j] == '.')
+//                    board[i][j] = 'O';
+//            }
+//        }
+//    }
+//    int dx[4] = { 0, 0, -1, 1 };
+//    int dy[4] = { -1, 1, 0, 0 };
+//    void dfs(vector<vector<char>>& board, int i, int j)
+//    {
+//        // 只有是存放 'O' 的坐标才会被传进dfs内
+//        board[i][j] = '.';
+//        for (int k = 0; k < 4; k++) {
+//            int x = i + dx[k], y = j + dy[k];
+//            if (x >= 0 && x < m && y >= 0 && y < n && board[x][y] == 'O') {
+//                dfs(board, x, y);
+//            }
+//        }
+//    }
+//};
+
+
+//class Solution {
+//    int m, n;
+//    int dx[4] = { 0, 0, -1, 1 };
+//    int dy[4] = { -1, 1, 0, 0 };
+//    vector<vector<int>> ret;
+//    // 逆向
+//    // 分别统计那个位置可以流向 什么什么 洋
+//public:
+//    vector<vector<int>> pacificAtlantic(vector<vector<int>>& heights) {
+//        m = heights.size(), n = heights[0].size();
+//
+//        vector<vector<bool>> pac(m, vector<bool>(n));
+//        vector<vector<bool>> atc(m, vector<bool>(n));
+//
+//        // 先处理太平洋
+//        for (int i = 0; i < m; i++) dfs(heights, i, 0, pac);
+//        for (int j = 0; j < n; j++) dfs(heights, 0, j, pac);
+//
+//        // 再处理大西洋
+//        for (int i = 0; i < m; i++) dfs(heights, i, n - 1, atc);
+//        for (int j = 0; j < n; j++) dfs(heights, m - 1, j, atc);
+//
+//        for (int i = 0; i < m; i++)
+//        {
+//            for (int j = 0; j < n; j++)
+//            {
+//                if (pac[i][j] && atc[i][j])
+//                {
+//                    ret.push_back({ i, j });
+//                }
+//            }
+//        }
+//        return ret;
+//    }
+//    void dfs(vector<vector<int>>& heights, int i, int j, vector<vector<bool>>& vis) {
+//        vis[i][j] = true;
+//        for (int k = 0; k < 4; k++) {
+//            int x = i + dx[k], y = j + dy[k];
+//            if (x >= 0 && x < m && y >= 0 && y < n && heights[x][y] >= heights[i][j] && !vis[x][y]) {
+//                dfs(heights, x, y, vis);
+//            }
+//        }
+//    }
+//};
+
+
+//class Solution {
+//    int m, n;
+//    int dx[8] = { -1, 0, 1, -1, 1, -1, 0, 1 };
+//    int dy[8] = { -1, -1, -1, 0, 0, 1, 1, 1 };
+//public:
+//    vector<vector<char>> updateBoard(vector<vector<char>>& board, vector<int>& click) {
+//        m = board.size(), n = board[0].size();
+//        int x = click[0], y = click[1];
+//        if (board[x][y] == 'M') // 踩到雷，游戏结束
+//        {
+//            board[x][y] = 'X';
+//            return board;
+//        }
+//        // 正常
+//        dfs(board, x, y);
+//        return board;
+//    }
+//    void dfs(vector<vector<char>>& board, int i, int j) {
+//        int count = 0;
+//        for (int k = 0; k < 8; k++) {
+//            int x = i + dx[k], y = j + dy[k];
+//            if (x >= 0 && x < m && y >= 0 && y < n && board[x][y] == 'M') {
+//                count++;
+//            }
+//        }
+//        if (count != 0) {
+//            board[i][j] = '0' + count;
+//        }
+//        else
+//        {
+//            board[i][j] = 'B';
+//            for (int k = 0; k < 8; k++)
+//            {
+//                int x = i + dx[k], y = j + dy[k];
+//                if (x >= 0 && x < m && y >= 0 && y < n && board[x][y] == 'E')
+//                    dfs(board, x, y);
+//            }
+//        }
+//    }
+//};
+
+
+//bool digit(int x, int y) {
+//    int sum1 = 0;
+//    while (x /= 10) {
+//        sum1 = sum1 + x % 10;
+//    }
+//    int sum2 = 0;
+//    while (y /= 10) {
+//        sum2 = sum2 + y % 10;
+//    }
+//    return sum1 + sum2 <= 1;
+//}
+//int main()
+//{
+//    digit(1, 2);
+//    return 0;
+//}
+
+
+//class Solution {
+//    int m, n, cnt;
+//    int ret;
+//    int dx[2] = { 1, 0 };
+//    int dy[2] = { 0, 1 };
+//    vector<vector<bool>> vis;
+//public:
+//    int wardrobeFinishing(int _m, int _n, int _cnt) {
+//        m = _m, n = _n, cnt = _cnt;
+//        vis = vector<vector<bool>>(m, vector<bool>(n));
+//        //if(cnt == 0) return 1;
+//        vis[0][0] = true;
+//        dfs(0, 0);
+//        return ret;
+//    }
+//    bool digit(int x, int y) {
+//        int sum1 = 0;
+//        while (x) {
+//            sum1 = sum1 + x % 10;
+//            x /= 10;
+//        }
+//        int sum2 = 0;
+//        while (y) {
+//            sum2 = sum2 + y % 10;
+//            y /= 10;
+//        }
+//        return sum1 + sum2 <= cnt;
+//    }
+//    void dfs(int i, int j) {
+//        ret++;
+//        for (int k = 0; k < 2; k++) {
+//            int x = i + dx[k], y = j + dy[k];
+//            if (x >= 0 && x < m && y >= 0 && y < n && digit(x, y) && !vis[x][y]) {
 //                vis[x][y] = true;
-//                dfs(grid, x, y, count + 1);
-//                vis[x][y] = false;
+//                dfs(x, y);
+//            }
+//        }
+//    }
+//};
+
+
+//class Solution {
+//    int m, n, cnt;
+//    int ret;
+//    int dx[2] = { 1, 0 };
+//    int dy[2] = { 0, 1 };
+//    vector<vector<bool>> vis;
+//public:
+//    int wardrobeFinishing(int _m, int _n, int _cnt) {
+//        m = _m, n = _n, cnt = _cnt;
+//        vis = vector<vector<bool>>(m, vector<bool>(n));
+//        //if(cnt == 0) return 1;
+//        vis[0][0] = true;
+//        dfs(0, 0);
+//        return ret;
+//    }
+//    bool digit(int x, int y) {
+//        int sum1 = 0;
+//        while (x) {
+//            sum1 = sum1 + x % 10;
+//            x /= 10;
+//        }
+//        int sum2 = 0;
+//        while (y) {
+//            sum2 = sum2 + y % 10;
+//            y /= 10;
+//        }
+//        return sum1 + sum2 <= cnt;
+//    }
+//    void dfs(int i, int j) {
+//        ret++;
+//        cout << "(" << i << "," << j << ").";
+//        for (int k = 0; k < 2; k++) {
+//            int x = i + dx[k], y = j + dy[k];
+//            if (x >= 0 && x < m && y >= 0 && y < n && digit(x, y) && !vis[x][y]) {
+//                vis[x][y] = true;
+//                dfs(x, y);
+//            }
+//        }
+//    }
+//};
+
+
+//class Solution {
+//    int m, n, cnt;
+//    int ret;
+//    int dx[2] = { 1, 0 };
+//    int dy[2] = { 0, 1 };
+//    bool vis[101][101];
+//public:
+//    int wardrobeFinishing(int _m, int _n, int _cnt) {
+//        m = _m, n = _n, cnt = _cnt;
+//        dfs(0, 0);
+//        return ret;
+//    }
+//    bool digit(int x, int y) {
+//        int sum1 = 0;
+//        while (x) {
+//            sum1 = sum1 + x % 10;
+//            x /= 10;
+//        }
+//        int sum2 = 0;
+//        while (y) {
+//            sum2 = sum2 + y % 10;
+//            y /= 10;
+//        }
+//        return sum1 + sum2 <= cnt;
+//    }
+//    void dfs(int i, int j) {
+//        ret++;
+//        vis[i][j] = true;
+//        for (int k = 0; k < 2; k++) {
+//            int x = i + dx[k], y = j + dy[k];
+//            if (x >= 0 && x < m && y >= 0 && y < n && digit(x, y) && !vis[x][y]) {
+//                dfs(x, y);
 //            }
 //        }
 //    }
