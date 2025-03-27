@@ -1403,8 +1403,8 @@
 
 //class Solution {
 //    int m, n;
-//    int dx[4] = { 0, 0, -1, 1 };
-//    int dy[4] = { -1, 1, 0, 0 };
+    //int dx[4] = { 0, 0, -1, 1 };
+    //int dy[4] = { -1, 1, 0, 0 };
 //    int memo[201][201];
 //public:
 //    int longestIncreasingPath(vector<vector<int>>& matrix) {
@@ -1433,3 +1433,276 @@
 //        return ret;
 //    }
 //};
+
+
+//class Solution {
+//    typedef pair<int, int> PII;
+//    int dx[4] = { 0, 0, -1, 1 };
+//    int dy[4] = { -1, 1, 0, 0 };
+//public:
+//    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+//        int prev = image[sr][sc]; // 先标记一下需要修改的像素值
+//        if (prev == color) return image; // 处理特殊情况
+//
+//        int m = image.size(), n = image[0].size();
+//
+//        queue<PII> q;
+//        q.push({ sr, sc });
+//
+//        while (!q.empty()) {
+//            auto [a, b] = q.front();
+//            q.pop();
+//            image[a][b] = color;
+//            for (int k = 0; k < 4; k++) {
+//                int x = a + dx[k], y = b + dy[k];
+//                if (x >= 0 && x < m && y >= 0 && y < n && image[x][y] == prev) {
+//                    q.push({ x, y });
+//                }
+//            }
+//        }
+//        return image;
+//    }
+//};
+
+
+//class Solution {
+//    int n, m;
+//    int ret;
+//    int dx[4] = { 0, 0, -1, 1 };
+//    int dy[4] = { -1, 1, 0, 0 };
+//    typedef pair<int, int> PII;
+//public:
+//    int numIslands(vector<vector<char>>& grid) {
+//        m = grid.size(), n = grid[0].size();
+//
+//        for (int i = 0; i < m; i++)
+//        {
+//            for (int j = 0; j < n; j++)
+//            {
+//                if (grid[i][j] == '1') {
+//                    ret++;
+//                    bfs(grid, i, j);
+//                }
+//            }
+//        }
+//        return ret;
+//    }
+//    void bfs(vector<vector<char>>& grid, int i, int j) {
+//        queue<PII> q;
+//        q.push({ i, j });
+//        while (!q.empty()) {
+//            auto [a, b] = q.front();
+//            q.pop();
+//            grid[a][b] = '0';
+//            for (int k = 0; k < 4; k++) {
+//                int x = a + dx[k], y = b + dy[k];
+//                if (x >= 0 && x < m && y >= 0 && y < n && grid[x][y] == '1') {
+//                    q.push({ x, y });
+//                }
+//            }
+//        }
+//    }
+//};
+
+
+//class Solution {
+//    int n, m;
+//    int ret;
+//    int dx[4] = { 0, 0, -1, 1 };
+//    int dy[4] = { -1, 1, 0, 0 };
+//    typedef pair<int, int> PII;
+//    bool vis[301][301];
+//public:
+//    int numIslands(vector<vector<char>>& grid) {
+//        m = grid.size(), n = grid[0].size();
+//
+//        for (int i = 0; i < m; i++)
+//        {
+//            for (int j = 0; j < n; j++)
+//            {
+//                if (grid[i][j] == '1' && !vis[i][j]) {
+//                    ret++;
+//                    bfs(grid, i, j);
+//                }
+//            }
+//        }
+//        return ret;
+//    }
+//    void bfs(vector<vector<char>>& grid, int i, int j) {
+//        queue<PII> q;
+//        q.push({ i, j });
+//        vis[i][j] = true;
+//
+//        while (!q.empty()) {
+//            auto [a, b] = q.front();
+//            q.pop();
+//            for (int k = 0; k < 4; k++) {
+//                int x = a + dx[k], y = b + dy[k];
+//                if (x >= 0 && x < m && y >= 0 && y < n && grid[x][y] == '1' && !vis[x][y]) {
+//                    q.push({ x, y });
+//                    vis[x][y] = true;
+//                }
+//            }
+//        }
+//    }
+//};
+
+
+//class Solution {
+//    int n, m;
+//    int max_area = 0;
+//    int count;
+//    int dx[4] = { 0, 0, -1, 1 };
+//    int dy[4] = { -1, 1, 0, 0 };
+//    typedef pair<int, int> PII;
+//public:
+//    int maxAreaOfIsland(vector<vector<int>>& grid) {
+//        if (grid.empty() || grid[0].empty())
+//            return 0;
+//
+//        m = grid.size(), n = grid[0].size();
+//
+//        for (int i = 0; i < m; i++) {
+//            for (int j = 0; j < n; j++) {
+//                if (grid[i][j] == 1) {
+//                    count = 1;
+//                    bfs(grid, i, j);
+//                    max_area = max(max_area, count);
+//                }
+//            }
+//        }
+//        return max_area;
+//    }
+//
+//    void bfs(vector<vector<int>>& grid, int i, int j) {
+//
+//        queue<PII> q;
+//        q.push({ i, j });
+//        grid[i][j] = 0;
+//
+//        while (!q.empty()) {
+//            auto [a, b] = q.front();
+//            q.pop();
+//            for (int k = 0; k < 4; k++) {
+//                int x = a + dx[k], y = b + dy[k];
+//                if (x >= 0 && x < m && y >= 0 && y < n && grid[x][y] == 1) {
+//                    count++;
+//                    q.push({ x, y });
+//                    grid[x][y] = 0;
+//                }
+//            }
+//        }
+//    }
+//}
+//;
+
+
+//class Solution {
+//    int n, m;
+//    int max_area = 0;
+//    int count;
+//    int dx[4] = { 0, 0, -1, 1 };
+//    int dy[4] = { -1, 1, 0, 0 };
+//    typedef pair<int, int> PII;
+//    bool vis[51][51];
+//public:
+//    int maxAreaOfIsland(vector<vector<int>>& grid) {
+//        if (grid.empty() || grid[0].empty())
+//            return 0;
+//
+//        m = grid.size(), n = grid[0].size();
+//
+//        for (int i = 0; i < m; i++) {
+//            for (int j = 0; j < n; j++) {
+//                if (grid[i][j] == 1 && !vis[i][j]) {
+//                    count = 1;
+//                    bfs(grid, i, j);
+//                    max_area = max(max_area, count);
+//                }
+//            }
+//        }
+//        return max_area;
+//    }
+//
+//    void bfs(vector<vector<int>>& grid, int i, int j) {
+//
+//        queue<PII> q;
+//        q.push({ i, j });
+//        vis[i][j] = true;
+//
+//        while (!q.empty()) {
+//            auto [a, b] = q.front();
+//            q.pop();
+//            for (int k = 0; k < 4; k++) {
+//                int x = a + dx[k], y = b + dy[k];
+//                if (x >= 0 && x < m && y >= 0 && y < n && grid[x][y] == 1 && !vis[x][y]) {
+//                    count++;
+//                    q.push({ x, y });
+//                    vis[x][y] = true;
+//                }
+//            }
+//        }
+//    }
+//}
+//;
+
+
+//class Solution {
+//    int m, n;
+//    typedef pair<int, int> PII;
+//public:
+//    // 正难则反
+//    // 先处理边界问题，然后剩下的o全改为x就完成
+//    // 然后再还原边界
+//    void solve(vector<vector<char>>& board) {
+//        m = board.size(), n = board[0].size();
+//
+//        // 1. 把边界的连通块，全部的 o 改为 .
+//        for (int j = 0; j < n; j++) {
+//            if (board[0][j] == 'O')
+//                bfs(board, 0, j);
+//            if (board[m - 1][j] == 'O')
+//                bfs(board, m - 1, j);
+//        }
+//        for (int i = 0; i < m; i++) {
+//            if (board[i][0] == 'O')
+//                bfs(board, i, 0);
+//            if (board[i][n - 1] == 'O')
+//                bfs(board, i, n - 1);
+//        }
+//
+//        // 再遍历，将所有的 o 改为 x ，再复原边界即完成
+//        for (int i = 0; i < m; i++) {
+//            for (int j = 0; j < n; j++) {
+//                if (board[i][j] == 'O')
+//                    board[i][j] = 'X';
+//                else if (board[i][j] == '.')
+//                    board[i][j] = 'O';
+//            }
+//        }
+//    }
+//    int dx[4] = { 0, 0, -1, 1 };
+//    int dy[4] = { -1, 1, 0, 0 };
+//    void bfs(vector<vector<char>>& board, int i, int j)
+//    {
+//        // 只有是存放 'O' 的坐标才会被传进bfs内
+//        queue<PII> q;
+//        q.push({ i, j });
+//        board[i][j] = '.';
+//
+//        while (!q.empty()) {
+//            auto [a, b] = q.front();
+//            q.pop();
+//            for (int k = 0; k < 4; k++) {
+//                int x = a + dx[k], y = b + dy[k];
+//                if (x >= 0 && x < m && y >= 0 && y < n && board[x][y] == 'O') {
+//                    q.push({ x, y });
+//                    board[x][y] = '.';
+//                }
+//            }
+//        }
+//    }
+//};
+
+
+
