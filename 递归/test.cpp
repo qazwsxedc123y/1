@@ -1010,8 +1010,8 @@
 
 //class Solution {
 //    int m, n;
-//    int dx[4] = { 0, 0, -1, 1 };
-//    int dy[4] = { -1, 1, 0, 0 };
+    //int dx[4] = { 0, 0, -1, 1 };
+    //int dy[4] = { -1, 1, 0, 0 };
 //    vector<vector<int>> ret;
 //    // 逆向
 //    // 分别统计那个位置可以流向 什么什么 洋
@@ -1231,5 +1231,205 @@
 //                dfs(x, y);
 //            }
 //        }
+//    }
+//};
+
+
+//class Solution {
+//    // 记忆搜素
+//    // 减少重复的问题递归
+//    // 利用添加一个备忘录
+//    // 1. 添加一个备忘录
+//    // 2. 递归每次返回的时候，将结果放到备忘录里面保存
+//    // 3. 在每次进入递归的时候，往备忘录里面瞅一瞅
+//    int memo[31]; // memeory -> 记忆
+//public:
+//    int fib(int n) {
+//        for (int i = 0; i <= 30; i++) {
+//            memo[i] = -1;
+//        }
+//        return dfs(n);
+//    }
+//    int dfs(int n) {
+//        if (memo[n] != -1) return memo[n];
+//
+//        if (n == 0 || n == 1) {
+//            memo[n] = n;
+//            return n;
+//        }
+//        memo[n] = dfs(n - 1) + dfs(n - 2);
+//
+//        return memo[n];
+//    }
+//};
+
+
+//class Solution {
+//    int memo[101][101];
+//public:
+//    int uniquePaths(int m, int n) {
+//        for (int i = 0; i < 101; i++)
+//            for (int j = 0; j < 101; j++)
+//                memo[i][j] = -1;
+//
+//        return dfs(m, n);
+//    }
+//    int dfs(int i, int j) {
+//        if (memo[i][j] != -1) return memo[i][j];
+//
+//        if (i == 1 && j == 1) return 1; // 起点是1条有效路径
+//        if (i == 1 || j == 1) return 1; // 网格边界只有1条路径
+//
+//        memo[i][j] = dfs(i - 1, j) + dfs(i, j - 1);
+//        return memo[i][j];
+//    }
+//};
+
+
+//class Solution {
+//    int dp[101][101];
+//public:
+//    int uniquePaths(int m, int n) {
+//
+//        dp[1][1] = 1;
+//
+//        for (int i = 1; i <= m; i++) {
+//            for (int j = 1; j <= n; j++) {
+//                if (i == 1 && j == 1) continue;
+//                dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+//            }
+//        }
+//        return dp[m][n];
+//    }
+//};
+
+
+//class Solution {
+//    int n;
+//public:
+//    int lengthOfLIS(vector<int>& nums) {
+//        int ret = 0;
+//        n = nums.size();
+//        vector<int> dp(n, 1); // dp[i] 表示以第 i 个位置为起点，然后统计最长的递增子序列长度
+//        // 因为记忆搜索中的状态方程，前面的值要依赖后面的值，所以dp应该从后往前遍历
+//        for (int i = n - 1; i >= 0; i--) {
+//            for (int j = i + 1; j < n; j++) {
+//                if (nums[i] < nums[j]) {
+//                    dp[i] = max(dp[i], dp[j] + 1);
+//                }
+//            }
+//            ret = max(ret, dp[i]);
+//        }
+//        return ret;
+//    }
+//};
+
+
+//class Solution {
+//public:
+//    int getMoneyAmount(int n) {
+//        // 我们要遍历所有的节点
+//        return dfs(1, n);
+//    }
+//    int dfs(int left, int right) {
+//        if (left >= right) {
+//            return 0;
+//        }
+//        int ret = INT_MAX;
+//        for (int head = left; head <= right; head++) {
+//            int x = dfs(left, head - 1);
+//            int y = dfs(head + 1, right);
+//            ret = min(ret, head + max(x, y));
+//        }
+//        return ret;
+//    }
+//};
+
+
+//class Solution {
+//    int memo[201][201];
+//public:
+//    int getMoneyAmount(int n) {
+//        // 我们要遍历所有的节点
+//        return dfs(1, n);
+//    }
+//    int dfs(int left, int right) {
+//        if (left >= right) return 0;
+//
+//        if (memo[left][right]) return memo[left][right];
+//
+//        int ret = INT_MAX;
+//        for (int head = left; head <= right; head++) {
+//            int x = dfs(left, head - 1);
+//            int y = dfs(head + 1, right);
+//            ret = min(ret, head + max(x, y));
+//        }
+//        memo[left][right] = ret;
+//        return ret;
+//    }
+//};
+
+
+//class Solution {
+//    int m, n; 
+//    int dx[4] = { 0, 0, -1, 1 };
+//    int dy[4] = { -1, 1, 0, 0 };
+//public:
+//    int longestIncreasingPath(vector<vector<int>>& matrix) {
+//        int ret;
+//        m = matrix.size(), n = matrix[0].size();
+//        for (int i = 0; i < m; i++)
+//        {
+//            for (int j = 0; j < n; j++)
+//            {
+//                ret = max(ret, dfs(matrix, i, j));
+//            }
+//        }
+//        return ret;
+//    }
+//    int dfs(vector<vector<int>>& matrix, int i, int j) {
+//        int ret = 1;
+//        for (int k = 0; k < 4; k++)
+//        {
+//            int x = i + dx[k], y = j + dy[k];
+//            if (x >= 0 && x < m && y >= 0 && y < n && matrix[x][y] > matrix[i][j]) {
+//                ret = max(ret, dfs(matrix, x, y) + 1);
+//            }
+//        }
+//        return ret;
+//    }
+//};
+
+
+//class Solution {
+//    int m, n;
+//    int dx[4] = { 0, 0, -1, 1 };
+//    int dy[4] = { -1, 1, 0, 0 };
+//    int memo[201][201];
+//public:
+//    int longestIncreasingPath(vector<vector<int>>& matrix) {
+//        int ret = 0;
+//        m = matrix.size(), n = matrix[0].size();
+//        for (int i = 0; i < m; i++)
+//        {
+//            for (int j = 0; j < n; j++)
+//            {
+//                ret = max(ret, dfs(matrix, i, j));
+//            }
+//        }
+//        return ret;
+//    }
+//    int dfs(vector<vector<int>>& matrix, int i, int j) {
+//        if (memo[i][j] != 0) return memo[i][j];
+//        int ret = 1;
+//        for (int k = 0; k < 4; k++)
+//        {
+//            int x = i + dx[k], y = j + dy[k];
+//            if (x >= 0 && x < m && y >= 0 && y < n && matrix[x][y] > matrix[i][j]) {
+//                ret = max(ret, dfs(matrix, x, y) + 1);
+//            }
+//        }
+//        memo[i][j] = ret;
+//        return ret;
 //    }
 //};
