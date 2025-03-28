@@ -1705,4 +1705,131 @@
 //};
 
 
+// BFS解决最短路径问题
+
+
+//class Solution {
+//    int dx[4] = { 0, 0, -1, 1 };
+//    int dy[4] = { -1, 1, 0, 0 };
+//    int m, n;
+//    bool vis[101][101];
+//public:
+//    int nearestExit(vector<vector<char>>& maze, vector<int>& entrance) {
+//        int ret = 0;
+//        m = maze.size(), n = maze[0].size();
+//
+//        queue<pair<int, int>> q;
+//        q.push({ entrance[0], entrance[1] });
+//        vis[entrance[0]][entrance[1]] = true;
+//
+//        while (!q.empty()) {
+//            ret++;
+//            int sz = q.size();
+//            for (int i = 0; i < sz; i++) {
+//                auto [a, b] = q.front();
+//                q.pop();
+//                for (int k = 0; k < 4; k++) {
+//                    int x = a + dx[k], y = b + dy[k];
+//                    if (x >= 0 && x < m && y >= 0 && y < n && maze[x][y] == '.' && !vis[x][y]) {
+//                        if (x == 0 || x == m - 1 || y == 0 || y == n - 1) return ret;
+//                        q.push({ x, y });
+//                        vis[x][y] = true;
+//                    }
+//                }
+//            }
+//        }
+//        return -1;
+//    }
+//};
+
+
+// 很有成就感的一集
+
+
+//class Solution {
+//public:
+//    int minMutation(string startGene, string endGene, vector<string>& bank) {
+//        int ret = 0;
+//        int n = startGene.size();
+//        unordered_set<string> bankSet(bank.begin(), bank.end()); // 将bank转为哈希集合
+//        if (bankSet.find(endGene) == bankSet.end()) return -1;  // 终点不在bank中
+//        char d[4] = { 'A', 'C', 'G', 'T' };
+//
+//        // 标记位，就不能用数组了，改用哈希表
+//        unordered_set<string> hash;
+//
+//        queue<string> q;
+//        q.push(startGene);
+//        hash.insert(startGene);
+//
+//        while (!q.empty()) {
+//            ret++;
+//            int sz = q.size();
+//            for (int i = 0; i < sz; i++) {
+//                auto tmp = q.front();
+//                q.pop();
+//                // 修改第 j 个字符
+//                for (int j = 0; j < n; j++) {
+//                    // 将第 j 个字符修改为 ch
+//                    char prev = tmp[j]; // 用于复原
+//                    for (int k = 0; k < 4; k++) {
+//                        char ch = d[k];
+//                        tmp[j] = ch;
+//                        if (bankSet.find(tmp) != bankSet.end() && hash.find(tmp) == hash.end()) {
+//                            if (tmp == endGene) return ret;
+//                            hash.insert(tmp);
+//                            q.push(tmp);
+//                        }
+//                        tmp[j] = prev; // 复原
+//                    }
+//                }
+//            }
+//        }
+//        return -1;
+//    }
+//};
+
+
+//class Solution {
+//public:
+//    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+//        int ret = 1;
+//        int n = beginWord.size();
+//        unordered_set<string> wordListSet(wordList.begin(), wordList.end()); // 将wordList转为哈希集合
+//        if (wordListSet.find(endWord) == wordListSet.end()) return 0;  // 终点不在wordList中
+//
+//        // 标记位，就不能用数组了，改用哈希表
+//        unordered_set<string> hash;
+//
+//        queue<string> q;
+//        q.push(beginWord);
+//        hash.insert(beginWord);
+//
+//        while (!q.empty()) {
+//            ret++;
+//            int sz = q.size();
+//            for (int i = 0; i < sz; i++) {
+//                auto tmp = q.front();
+//                q.pop();
+//                // 修改第 j 个字符
+//                for (int j = 0; j < n; j++) {
+//                    // 将第 j 个字符修改为 ch
+//                    char prev = tmp[j]; // 用于复原
+//                    for (int k = 0; k < 32; k++) {
+//                        char ch = 'a' + k;
+//                        tmp[j] = ch;
+//                        if (wordListSet.find(tmp) != wordListSet.end() && hash.find(tmp) == hash.end()) {
+//                            if (tmp == endWord) return ret;
+//                            hash.insert(tmp);
+//                            q.push(tmp);
+//                        }
+//                        tmp[j] = prev; // 复原
+//                    }
+//                }
+//            }
+//        }
+//        return 0;
+//    }
+//};
+
 
