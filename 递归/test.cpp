@@ -1833,3 +1833,76 @@
 //};
 
 
+//class Solution {
+//    int m, n;
+//public:
+//    int cutOffTree(vector<vector<int>>& f) {
+//        m = f.size(), n = f[0].size();
+//        vector<pair<int, int>> tree;
+//        for (int i = 0; i < m; i++)
+//        {
+//            for (int j = 0; j < n; j++)
+//            {
+//                if (f[i][j] > 1)
+//                {
+//                    tree.push_back({ i, j });
+//                }
+//            }
+//        }
+//        sort(tree.begin(), tree.end(), [&](const pair<int, int>& p1, const pair<int, int>& p2)
+//            {
+//                return f[p1.first][p1.second] < f[p2.first][p2.second];
+//            });
+//
+//        // 按照顺序进行砍树
+//        int bx = 0, by = 0;
+//        int ret = 0;
+//        for (auto& [a, b] : tree)
+//        {
+//            // 计算从(bx,by)到(a,b)的最短距离
+//            int step = bfs(f, bx, by, a, b);
+//            if (step == -1) return -1;
+//            bx = a, by = b;
+//            ret += step;
+//        }
+//        return ret;
+//    }
+//    bool vis[51][51];
+//    int dx[4] = { 0, 0, -1, 1 };
+//    int dy[4] = { -1, 1, 0, 0 };
+//    int bfs(vector<vector<int>>& f, int cx, int cy, int bx, int by)
+//    {
+//        if (cx == bx && cy == by) return 0;
+//
+//        queue<pair<int, int>> q;
+//        memset(vis, 0, sizeof(vis));
+//
+//        q.push({ cx, cy });
+//        vis[cx][cy] = true;
+//        int ret = 0;
+//        while (!q.empty())
+//        {
+//            ret++;
+//            int sz = q.size();
+//            for (int i = 0; i < sz; i++)
+//            {
+//                auto [a, b] = q.front();
+//                q.pop();
+//                for (int k = 0; k < 4; k++)
+//                {
+//                    int x = a + dx[k], y = b + dy[k];
+//                    if (x >= 0 && x < m && y >= 0 && y < n && !vis[x][y] && f[x][y] != 0)
+//                    {
+//                        if (x == bx && y == by) return ret;
+//                        q.push({ x, y });
+//                        vis[x][y] = true;
+//                    }
+//                }
+//            }
+//        }
+//        return -1;
+//    }
+//};
+
+
+
