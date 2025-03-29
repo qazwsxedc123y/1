@@ -1905,4 +1905,347 @@
 //};
 
 
+// 开始用BFS解决多源最短路径问题
 
+
+//class Solution {
+//    int m, n;
+//    vector<vector<bool>> vis;
+//public:
+//    int numEnclaves(vector<vector<int>>& grid) {
+//        // 正难则反，可以先对边缘进行bfs，将1改为0，然后遍历统计1
+//        m = grid.size(), n = grid[0].size();
+//        vis = vector<vector<bool>>(m, vector<bool>(n));
+//        int ret = 0;
+//
+//        for (int i = 0; i < m; i++)
+//        {
+//            if (grid[i][0] == 1) bfs(grid, i, 0);
+//            if (grid[i][n - 1] == 1) bfs(grid, i, n - 1);
+//        }
+//        for (int j = 0; j < n; j++)
+//        {
+//            if (grid[0][j] == 1) bfs(grid, 0, j);
+//            if (grid[m - 1][j] == 1) bfs(grid, m - 1, j);
+//        }
+//
+//        for (int i = 0; i < m; i++)
+//        {
+//            for (int j = 0; j < n; j++)
+//            {
+//                if (grid[i][j] == 1)
+//                {
+//                    ret++;
+//                }
+//            }
+//        }
+//        return ret;
+//    }
+//    int dx[4] = { 0, 0, -1, 1 };
+//    int dy[4] = { -1, 1, 0, 0 };
+//    void bfs(vector<vector<int>>& grid, int i, int j) {
+//        queue<pair<int, int>> q;
+//        q.push({ i, j });
+//        grid[i][j] = 0;
+//        vis[i][j] == true;
+//
+//        while (!q.empty()) {
+//            int sz = q.size();
+//            for (int i = 0; i < sz; i++) {
+//                auto [a, b] = q.front();
+//                q.pop();
+//                for (int k = 0; k < 4; k++) {
+//                    int x = a + dx[k], y = b + dy[k];
+//                    if (x >= 0 && x < m && y >= 0 && y < n && !vis[x][y] && grid[x][y] == 1) {
+//                        grid[x][y] = 0;
+//                        q.push({ x, y });
+//                        vis[x][y] = true;
+//                    }
+//                }
+//            }
+//        }
+//    }
+//};
+
+
+//class Solution {
+//    int m, n;
+//    vector<vector<bool>> vis;
+//    int dx[4] = { 0, 0, -1, 1 };
+//    int dy[4] = { -1, 1, 0, 0 };
+//
+//public:
+//    int numEnclaves(vector<vector<int>>& grid) {
+//        // 正难则反，可以先对边缘进行bfs，将1改为0，然后遍历统计1
+//        m = grid.size(), n = grid[0].size();
+//        vis = vector<vector<bool>>(m, vector<bool>(n));
+//
+//        queue<pair<int, int>> q;
+//
+//        for (int i = 0; i < m; i++) {
+//            if (grid[i][0] == 1) {
+//                q.push({ i, 0 });
+//                vis[i][0] = true;
+//            }
+//            if (grid[i][n - 1] == 1) {
+//                q.push({ i, n - 1 });
+//                vis[i][n - 1] = true;
+//            }
+//        }
+//        for (int j = 0; j < n; j++) {
+//            if (grid[0][j] == 1) {
+//                q.push({ 0, j });
+//                vis[0][j] = true;
+//            }
+//            if (grid[m - 1][j] == 1) {
+//                q.push({ m - 1, j });
+//                vis[m - 1][j] = true;
+//            }
+//        }
+//
+//        // 利用多源解决
+//        while (!q.empty()) {
+//            auto [a, b] = q.front();
+//            q.pop();
+//            for (int k = 0; k < 4; k++) {
+//                int x = a + dx[k], y = b + dy[k];
+//                if (x >= 0 && x < m && y >= 0 && y < n && !vis[x][y] && grid[x][y] == 1) {
+//                    // grid[x][y] = 0; // 也可以不修改
+//                    q.push({ x, y });
+//                    vis[x][y] = true;
+//                }
+//            }
+//        }
+//
+//        int ret = 0;
+//        for (int i = 0; i < m; i++) {
+//            for (int j = 0; j < n; j++) {
+//                if (grid[i][j] == 1 && !vis[i][j]) {
+//                    ret++;
+//                }
+//            }
+//        }
+//        return ret;
+//    }
+//};
+
+
+//class Solution {
+//    int m, n;
+//    vector<vector<bool>> vis;
+    //int dx[4] = { 0, 0, -1, 1 };
+    //int dy[4] = { -1, 1, 0, 0 };
+//
+//public:
+//    int numEnclaves(vector<vector<int>>& grid) {
+//        // 正难则反，可以先对边缘进行bfs，将1改为0，然后遍历统计1
+//        m = grid.size(), n = grid[0].size();
+//        vis = vector<vector<bool>>(m, vector<bool>(n));
+//
+//        queue<pair<int, int>> q;
+//
+//        for (int i = 0; i < m; i++) {
+//            if (grid[i][0] == 1) {
+//                q.push({ i, 0 });
+//                vis[i][0] = true;
+//            }
+//            if (grid[i][n - 1] == 1) {
+//                q.push({ i, n - 1 });
+//                vis[i][n - 1] = true;
+//            }
+//        }
+//        for (int j = 0; j < n; j++) {
+//            if (grid[0][j] == 1) {
+//                q.push({ 0, j });
+//                vis[0][j] = true;
+//            }
+//            if (grid[m - 1][j] == 1) {
+//                q.push({ m - 1, j });
+//                vis[m - 1][j] = true;
+//            }
+//        }
+//
+//        // 利用多源解决
+//        while (!q.empty()) {
+//            auto [a, b] = q.front();
+//            grid[a][b] = 0;// 也可以不修改，但是要注意，要放在前面就加上 = 0
+//            q.pop();
+//            for (int k = 0; k < 4; k++) {
+//                int x = a + dx[k], y = b + dy[k];
+//                if (x >= 0 && x < m && y >= 0 && y < n && !vis[x][y] && grid[x][y] == 1) {
+//
+//                    q.push({ x, y });
+//                    vis[x][y] = true;
+//                }
+//            }
+//        }
+//
+//        int ret = 0;
+//        for (int i = 0; i < m; i++) {
+//            for (int j = 0; j < n; j++) {
+//                if (grid[i][j] == 1 /* && !vis[i][j] */) {
+//                    ret++;
+//                }
+//            }
+//        }
+//        return ret;
+//    }
+//};
+
+
+//class Solution {
+//    int dx[4] = { 0, 0, -1, 1 };
+//    int dy[4] = { -1, 1, 0, 0 };
+//public:
+//    vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
+//        queue<pair<int, int>> q;
+//        vector<vector<bool>> vis;
+//        int m = mat.size(), n = mat[0].size();
+//        vis = vector<vector<bool>>(m, vector<bool>(n));
+//        for (int i = 0; i < m; i++) {
+//            for (int j = 0; j < n; j++) {
+//                if (mat[i][j] == 0) {
+//                    q.push({ i, j });
+//                    vis[i][j] = true;
+//                }
+//            }
+//        }
+//        int step = 0;
+//        while (!q.empty()) {
+//            step++;
+//            int sz = q.size();
+//            for (int i = 0; i < sz; i++) {
+//                auto [a, b] = q.front();
+//                q.pop();
+//                for (int k = 0; k < 4; k++) {
+//                    int x = a + dx[k], y = b + dy[k];
+//                    if (x >= 0 && x < m && y >= 0 && y < n && !vis[x][y] && mat[x][y] != 0) {
+//                        q.push({ x, y });
+//                        vis[x][y] = true;
+//                        mat[x][y] = step;
+//                    }
+//                }
+//            }
+//        }
+//        return mat;
+//    }
+//};
+
+
+//class Solution {
+//    int dx[4] = { 0, 0, -1, 1 };
+//    int dy[4] = { -1, 1, 0, 0 };
+//
+//public:
+//    vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
+//        int m = mat.size(), n = mat[0].size();
+//        queue<pair<int, int>> q;
+//
+//        vector<vector<int>> dist(m, vector<int>(n, -1));
+//
+//
+//        for (int i = 0; i < m; i++) {
+//            for (int j = 0; j < n; j++) {
+//                if (mat[i][j] == 0) {
+//                    q.push({ i, j });
+//                    dist[i][j] = 0;
+//                }
+//            }
+//        }
+//        while (!q.empty()) {
+//            int sz = q.size();
+//            auto [a, b] = q.front();
+//            q.pop();
+//            for (int k = 0; k < 4; k++) {
+//                int x = a + dx[k], y = b + dy[k];
+//                if (x >= 0 && x < m && y >= 0 && y < n && dist[x][y] == -1) {
+//                    q.push({ x, y });
+//                    dist[x][y] = dist[a][b] + 1;
+//                }
+//            }
+//        }
+//        return dist;
+//    }
+//};
+
+
+//class Solution {
+//    int dx[4] = { 0, 0, -1, 1 };
+//    int dy[4] = { -1, 1, 0, 0 };
+//
+//public:
+//    vector<vector<int>> highestPeak(vector<vector<int>>& isWater) {
+//        int m = isWater.size(), n = isWater[0].size();
+//
+//        queue<pair<int, int>> q;
+//        vector<vector<int>> dist(m, vector<int>(n, -1));
+//
+//        for (int i = 0; i < m; i++) {
+//            for (int j = 0; j < n; j++) {
+//                if (isWater[i][j] == 1) {
+//                    dist[i][j] = 0;
+//                    q.push({ i, j });
+//                }
+//            }
+//        }
+//
+//        while (!q.empty()) {
+//            int sz = q.size();
+//            auto [a, b] = q.front();
+//            q.pop();
+//            for (int k = 0; k < 4; k++) {
+//                int x = a + dx[k], y = b + dy[k];
+//                if (x >= 0 && x < m && y >= 0 && y < n && dist[x][y] == -1) {
+//                    q.push({ x, y });
+//                    dist[x][y] = dist[a][b] + 1;
+//                }
+//            }
+//        }
+//        return dist;
+//    }
+//};
+
+
+class Solution {
+    // 正难则反
+    // 可以计算陆地到海洋的最大距离
+    int dx[4] = { 0, 0, -1, 1 };
+    int dy[4] = { -1, 1, 0, 0 };
+public:
+    int maxDistance(vector<vector<int>>& grid) {
+        int n = grid.size();
+
+        queue<pair<int, int>> q;
+        bool vis[101][101];
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1) {
+                    q.push({ i, j });
+                    vis[i][j] = true;
+                }
+            }
+        }
+
+        if (q.size() == 0 || q.size() == n * n) return -1;
+
+        int ret = -1;
+        while (!q.empty()) {
+            ret++;
+            int sz = q.size();
+            for (int i = 0; i < sz; i++) {
+                auto [a, b] = q.front();
+                q.pop();
+                for (int k = 0; k < 4; k++) {
+                    int x = a + dx[k], y = b + dy[k];
+                    if (x >= 0 && x < n && y >= 0 && y < n && !vis[x][y] && grid[x][y] == 0) {
+                        q.push({ x, y });
+                        vis[x][y] = true;
+                    }
+                }
+            }
+        }
+
+        return ret;
+    }
+};
