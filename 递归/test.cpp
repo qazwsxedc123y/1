@@ -2206,46 +2206,211 @@
 //};
 
 
+//class Solution {
+//    // 正难则反
+//    // 可以计算陆地到海洋的最大距离
+//    int dx[4] = { 0, 0, -1, 1 };
+//    int dy[4] = { -1, 1, 0, 0 };
+//public:
+//    int maxDistance(vector<vector<int>>& grid) {
+//        int n = grid.size();
+//
+//        queue<pair<int, int>> q;
+//        bool vis[101][101];
+//
+//        for (int i = 0; i < n; i++) {
+//            for (int j = 0; j < n; j++) {
+//                if (grid[i][j] == 1) {
+//                    q.push({ i, j });
+//                    vis[i][j] = true;
+//                }
+//            }
+//        }
+//
+//        if (q.size() == 0 || q.size() == n * n) return -1;
+//
+//        int ret = -1;
+//        while (!q.empty()) {
+//            ret++;
+//            int sz = q.size();
+//            for (int i = 0; i < sz; i++) {
+//                auto [a, b] = q.front();
+//                q.pop();
+//                for (int k = 0; k < 4; k++) {
+//                    int x = a + dx[k], y = b + dy[k];
+//                    if (x >= 0 && x < n && y >= 0 && y < n && !vis[x][y] && grid[x][y] == 0) {
+//                        q.push({ x, y });
+//                        vis[x][y] = true;
+//                    }
+//                }
+//            }
+//        }
+//
+//        return ret;
+//    }
+//};
+
+
+// 利用BFS解决拓扑排序问题
+
+
+//class Solution {
+//public:
+//    bool canFinish(int n, vector<vector<int>>& prerequisites) {
+//        // 1. 准备工作
+//        unordered_map<int, vector<int>> edges; // 邻接表创建
+//        vector<int> in(n);
+//        // 2. 建图
+//        for (auto& e : prerequisites) {
+//            int a = e[0], b = e[1];
+//            // b -> a
+//            in[a]++;
+//            edges[b].push_back(a);
+//        }
+//        // 3. 拓扑排序
+//        queue<int> q;
+//        // (1) ： 将所有入度为 0 的点加入队列中
+//        for (int i = 0; i < n; i++) {
+//            if (in[i] == 0) {
+//                q.push(i);
+//            }
+//        }
+//        //(2) ： BFS
+//        while (!q.empty()) {
+//            int t = q.front();
+//            q.pop();
+//            // 删除对应边，减少与之相连的点的入度
+//            for (int a : edges[t])
+//            {
+//                in[a]--;
+//                if (in[a] == 0) q.push(a);
+//            }
+//        }
+//
+//        // 4. 判断是否有环
+//        for (int i = 0; i < n; i++) {
+//            if (in[i] != 0) {
+//                return false;
+//            }
+//        }
+//
+//        return true;
+//    }
+//};
+
+
+//class Solution {
+//public:
+//    vector<int> findOrder(int n, vector<vector<int>>& prerequisites) {
+//        vector<int> ret;
+//
+//        // 1. 准备工作
+//        unordered_map<int, vector<int>> edges; // 邻接表创建
+//        vector<int> in(n);
+//
+//        // 2. 建图
+//        for (auto& e : prerequisites) {
+//            int a = e[0], b = e[1];
+//            // b -> a
+//            in[a]++;
+//            edges[b].push_back(a);
+//        }
+//        // 3. 拓扑排序
+//        queue<int> q;
+//        // (1) ： 将所有入度为 0 的点加入队列中
+//        for (int i = 0; i < n; i++) {
+//            if (in[i] == 0) {
+//                q.push(i);
+//            }
+//        }
+//        //(2) ： BFS
+//        while (!q.empty()) {
+//            int t = q.front();
+//            q.pop();
+//            ret.push_back(t);
+//            // 删除对应边，减少与之相连的点的入度
+//            for (int a : edges[t]) {
+//                in[a]--;
+//                if (in[a] == 0)
+//                    q.push(a);
+//
+//            }
+//        }
+//
+//        // 4. 判断是否有环
+//        for (int i = 0; i < n; i++) {
+//            if (in[i] != 0) {
+//                return {};
+//            }
+//        }
+//
+//        return ret;
+//    }
+//};
+
+
 class Solution {
-    // 正难则反
-    // 可以计算陆地到海洋的最大距离
-    int dx[4] = { 0, 0, -1, 1 };
-    int dy[4] = { -1, 1, 0, 0 };
+    // 1. 准备工作
+    unordered_map<char, unordered_set<char>> edges;
+    unordered_map<char, int> in;
+    int n;
+    bool check = false; // 处理边缘情况
 public:
-    int maxDistance(vector<vector<int>>& grid) {
-        int n = grid.size();
-
-        queue<pair<int, int>> q;
-        bool vis[101][101];
-
+    string alienOrder(vector<string>& words) {
+        // 2. 建图 + 初始化哈希表
+        for (auto& s : words) {
+            for (auto ch : s)
+            {
+                in[ch] = 0;
+            }
+        }
+        n = words.size();
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (grid[i][j] == 1) {
-                    q.push({ i, j });
-                    vis[i][j] = true;
-                }
+            for (int j = i + 1; j < n; j++) {
+                Add(words[i], words[j]);
+                if (check) return "";
             }
         }
 
-        if (q.size() == 0 || q.size() == n * n) return -1;
-
-        int ret = -1;
+        // 3. 拓扑排序
+        queue<char> q;
+        for (auto& [a, b] : in) {
+            if (b == 0) q.push(a);
+        }
+        string ret;
         while (!q.empty()) {
-            ret++;
-            int sz = q.size();
-            for (int i = 0; i < sz; i++) {
-                auto [a, b] = q.front();
-                q.pop();
-                for (int k = 0; k < 4; k++) {
-                    int x = a + dx[k], y = b + dy[k];
-                    if (x >= 0 && x < n && y >= 0 && y < n && !vis[x][y] && grid[x][y] == 0) {
-                        q.push({ x, y });
-                        vis[x][y] = true;
-                    }
-                }
+            char t = q.front();
+            ret += t;
+            q.pop();
+            for (auto ch : edges[t]) {
+                in[ch]--;
+                if (in[ch] == 0) q.push(ch);
             }
         }
 
+        // 判断
+        for (auto& [a, b] : in) {
+            if (in[a] != 0) return "";
+        }
         return ret;
+    }
+    void Add(string& s1, string& s2) {
+        int n = s1.size(), m = s2.size();
+        int i = 0;
+        for (; i < n; i++) {
+            if (s1[i] != s2[i])
+            {
+                char a = s1[i];
+                char b = s2[i];
+                // a -> b
+                if (!edges[a].count(b))
+                {
+                    edges[a].insert(b);
+                    in[b]++;
+                }
+                break;
+            }
+        }
+        if (i == s2.size() && i < s1.size()) check = true; // 处理边缘情况
     }
 };
