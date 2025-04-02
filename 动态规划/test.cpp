@@ -198,26 +198,142 @@ using namespace std;
 //};
 
 
-class Solution {
-public:
-    int minPathSum(vector<vector<int>>& grid) {
-        int m = grid.size(), n = grid[0].size();
-        vector<vector<int>> dp(m + 1, vector<int>(n + 1)); // dp[i][j]表示到达(i-1,j-1)下标的最小和
-        for (int i = 0; i <= m; i++) dp[i][0] = INT_MAX;
-        for (int j = 0; j <= n; j++) dp[0][j] = INT_MAX;
-        dp[0][0] = dp[0][1] = dp[1][0] = 0;
+//class Solution {
+//public:
+//    int minPathSum(vector<vector<int>>& grid) {
+//        int m = grid.size(), n = grid[0].size();
+//        vector<vector<int>> dp(m + 1, vector<int>(n + 1)); // dp[i][j]表示到达(i-1,j-1)下标的最小和
+//        for (int i = 0; i <= m; i++) dp[i][0] = INT_MAX;
+//        for (int j = 0; j <= n; j++) dp[0][j] = INT_MAX;
+//        dp[0][0] = dp[0][1] = dp[1][0] = 0;
+//
+//        for (int i = 1; i <= m; i++)
+//        {
+//            for (int j = 1; j <= n; j++)
+//            {
+//                dp[i][j] = min(dp[i - 1][j], dp[i][j - 1]) + grid[i - 1][j - 1];
+//            }
+//        }
+//
+//        return dp[m][n];
+//    }
+//};
 
-        for (int i = 1; i <= m; i++)
-        {
-            for (int j = 1; j <= n; j++)
-            {
-                dp[i][j] = min(dp[i - 1][j], dp[i][j - 1]) + grid[i - 1][j - 1];
-            }
-        }
 
-        return dp[m][n];
-    }
-};
+//class Solution {
+//public:
+//    int calculateMinimumHP(vector<vector<int>>& dungeon) {
+//        int m = dungeon.size(), n = dungeon[0].size();
+//        // dp[i][j]表示以(i,j)为起点时所消耗的最小健康点数
+//        vector<vector<int>> dp(m + 1, vector<int>(n + 1, INT_MAX));
+//        dp[m][n - 1] = dp[m - 1][n] = 1;
+//
+//        for (int i = m - 1; i >= 0; i--)
+//        {
+//            for (int j = n - 1; j >= 0; j--)
+//            {
+//                dp[i][j] = min(dp[i + 1][j], dp[i][j + 1]) - dungeon[i][j];
+//                dp[i][j] = max(1, dp[i][j]);
+//            }
+//        }
+//        return dp[0][0];
+//    }
+//};
+
+
+//class Solution {
+//public:
+//    int calculateMinimumHP(vector<vector<int>>& dungeon) {
+//        int m = dungeon.size(), n = dungeon[0].size();
+//        // dp[i][j]表示以(i,j)为起点时所消耗的最小健康点数
+//        vector<vector<int>> dp(m + 1, vector<int>(n + 1, INT_MAX));
+//        dp[m][n - 1] = dp[m - 1][n] = 1;
+//
+//        for (int i = m - 1; i >= 0; i--)
+//        {
+//            for (int j = n - 1; j >= 0; j--)
+//            {
+//                dp[i][j] = min(dp[i + 1][j], dp[i][j + 1]) - dungeon[i][j];
+//                dp[i][j] = max(1, dp[i][j]);
+//            }
+//        }
+//        return dp[0][0];
+//    }
+//};
+
+
+//class Solution {
+//    // 多状态dp
+//public:
+//    int massage(vector<int>& nums) {
+//        int n = nums.size();
+//        if (n == 0) return 0;
+//        vector<int> f(n); // f[i]表示选到i位置时，nums[i]必选的情况下，此时最长的预约时长
+//        vector<int> g(n); // g[i]表示选到i位置时，nums[i]不选的情况下，此时最长的预约时长
+//        // 初始化
+//        f[0] = nums[0], g[0] = 0;
+//        for (int i = 1; i < n; i++)
+//        {
+//            f[i] = g[i - 1] + nums[i];
+//            g[i] = max(f[i - 1], g[i - 1]);
+//        }
+//        return max(f[n - 1], g[n - 1]);
+//    }
+//};
+
+
+//class Solution {
+//public:
+//    int rob(vector<int>& nums) {
+//        int n = nums.size();
+//        // 选第一个， 不选第一个
+//        return max(nums[0] + rob1(nums, 2, n - 2), rob1(nums, 1, n - 1));
+//    }
+//    int rob1(vector<int>& nums, int left, int right) {
+//        if (left > right) return 0;
+//        // 创建dp表
+//        // 初始化
+//        // 填表
+//        // 返回结果
+//        int n = nums.size();
+//        vector<int> f(n);
+//        auto g = f;
+//
+//        f[left] = nums[left];
+//        for (int i = left + 1; i <= right; i++) {
+//            f[i] = g[i - 1] + nums[i];
+//            g[i] = max(f[i - 1], g[i - 1]);
+//        }
+//        return max(f[right], g[right]);
+//    }
+//};
+
+
+//class Solution {
+//public:
+//    int deleteAndEarn(vector<int>& nums) {
+//        // 预处理
+//        int N = 10001;
+//        int n = nums.size();
+//        int arr[10001] = { 0 };
+//        for (auto x : nums) arr[x] += x;
+//
+//        // 创建dp表
+//        vector<int> f(N);
+//        auto g = f;
+//        // 填表        
+//        // 初始化
+//        for (int i = 1; i < N; i++)
+//        {
+//            f[i] = g[i - 1] + arr[i];
+//            g[i] = max(g[i - 1], f[i - 1]);
+//        }
+//        // 返回值
+//
+//        return max(f[N - 1], g[N - 1]);
+//    }
+//};
+
 
 int main()
 {
