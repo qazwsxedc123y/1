@@ -476,6 +476,103 @@ using namespace std;
 //};
 
 
+//class Solution {
+//    const int INF = 0x3f3f3f3f;
+//public:
+//    int maxSubarraySumCircular(vector<int>& nums) {
+//        int n = nums.size();
+//        vector<int> f(n + 1); // f[i]表示以i为结尾的子数组的最大和
+//        auto g = f; // g[i]表示以i为结尾的子数组的最小和
+//        f[0] = g[0] = 0;
+//
+//        // 返回值的处理，找到f中的最大值，g中的最小值，然后sum - g
+//        int sum = 0, fmax = -INF, gmin = INF;
+//        for (int i = 1; i < n + 1; i++) {
+//            f[i] = max(nums[i - 1], f[i - 1] + nums[i - 1]);
+//            g[i] = min(nums[i - 1], g[i - 1] + nums[i - 1]);
+//            fmax = max(fmax, f[i]);
+//            gmin = min(gmin, g[i]);
+//            sum += nums[i - 1];
+//        }
+//
+//        int ret = max(fmax, sum - gmin);
+//        if (sum == gmin) ret = fmax;
+//        return ret;
+//    }
+//};
+
+
+//class Solution {
+//public:
+//    int maxProduct(vector<int>& nums) {
+//        int n = nums.size();
+//        if (n == 1) return nums[0];
+//        vector<int> f(n + 1); // f[i]表示以i为结尾，最大的非空连续子数组最大积 （正数）
+//        auto g = f; // g[i]表示以i为结尾，最大的非空连续子数组最小积 （负数）
+//        f[0] = g[0] = 1;
+//        int ret = 0;
+//        for (int i = 1; i < n + 1; i++) {
+//            if (nums[i - 1] > 0) {
+//                f[i] = max(f[i - 1] * nums[i - 1], nums[i - 1]);
+//                g[i] = min(g[i - 1] * nums[i - 1], nums[i - 1]);
+//            }
+//            else if (nums[i - 1] < 0) {
+//                f[i] = max(g[i - 1] * nums[i - 1], nums[i - 1]);
+//                g[i] = min(f[i - 1] * nums[i - 1], nums[i - 1]);
+//            }
+//            ret = max(ret, f[i]);
+//        }
+//        return ret;
+//    }
+//};
+
+
+//class Solution {
+//public:
+//    int getMaxLen(vector<int>& nums) {
+//        int n = nums.size();
+//        vector<int> f(n + 1); // f[i]表示以i为结尾，乘积为正数的，最长子数组的长度
+//        auto g = f; // g[i]表示以i为结尾，乘积为负数的，最长子数组的长度
+//        f[0] = g[0] = 0;
+//        int ret = 0;
+//        for (int i = 1; i < n + 1; i++) {
+//            if (nums[i - 1] > 0) {
+//                f[i] = f[i - 1] + 1;
+//                // g[i] = g[i-1] + 1; // 特殊条件，如果g[i-1] 为0的话，也就是前面全是正数
+//                g[i] = g[i - 1] == 0 ? 0 : g[i - 1] + 1;
+//            }
+//            else if (nums[i - 1] < 0) {
+//                // f[i] = g[i-1] + 1; // 同理，特殊条件
+//                f[i] = g[i - 1] == 0 ? 0 : g[i - 1] + 1;
+//                g[i] = f[i - 1] + 1;
+//            }
+//            ret = max(ret, f[i]);
+//        }
+//        return ret;
+//    }
+//};
+
+
+//class Solution {
+//public:
+//    int numberOfArithmeticSlices(vector<int>& nums) {
+//        int n = nums.size();
+//        vector<int> dp(n);
+//        if (n < 3) return 0;
+//        int ret = 0;
+//        dp[0] = dp[1] = 0;
+//        for (int i = 2; i < n; i++) {
+//            if (nums[i] - nums[i - 1] == nums[i - 1] - nums[i - 2]) {
+//                dp[i] = dp[i - 1] + 1;
+//            }
+//            else dp[i] = 0;
+//            ret += dp[i];
+//        }
+//        return ret;
+//    }
+//};
+
+
 int main()
 {
     Solution s;
