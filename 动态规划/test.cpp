@@ -335,9 +335,150 @@ using namespace std;
 //};
 
 
+//class Solution {
+//public:
+//    int minCost(vector<vector<int>>& costs) {
+//        int n = costs.size();
+//        vector<vector<int>> dp(n + 1, vector<int>(3));
+//        // 填表
+//        for (int i = 1; i <= n; i++) {
+//            dp[i][0] = min(dp[i - 1][1], dp[i - 1][2]) + costs[i - 1][0];
+//            dp[i][1] = min(dp[i - 1][0], dp[i - 1][2]) + costs[i - 1][1];
+//            dp[i][2] = min(dp[i - 1][0], dp[i - 1][1]) + costs[i - 1][2];
+//        }
+//        int ret;
+//        ret = min(dp[n][0], min(dp[n][1], dp[n][2]));
+//        return ret;
+//    }
+//};
+
+
+//class Solution {
+//public:
+//    int maxProfit(vector<int>& prices) {
+//        int n = prices.size();
+//        // 0 -> 买入   1 -> 冷冻期  2 -> 可交易
+//        vector<vector<int>> dp(n, vector<int>(3));
+//        dp[0][0] = -prices[0];
+//
+//        // 填表
+//        for (int i = 1; i < n; i++) {
+//            dp[i][0] = max(dp[i - 1][0], dp[i - 1][2] - prices[i]);
+//            dp[i][1] = dp[i - 1][0] + prices[i];
+//            dp[i][2] = max(dp[i - 1][1], dp[i - 1][2]);
+//        }
+//        // 小优化 因为最后答案肯定不是买入，所以可以忽略dp[n-1][0]
+//
+//        return max(dp[n - 1][1], dp[n - 1][2]);
+//    }
+//};
+
+
+//class Solution {
+//public:
+//    int maxProfit(vector<int>& prices, int fee) {
+//        int n = prices.size();
+//        // 0 -> 买入  1 -> 可交易
+//        // vector<vector<int>> dp(n, vector<int>(2));
+//
+//        vector<int> f(n); // 买入
+//        auto g = f; // 可交易
+//
+//        f[0] = -prices[0] - fee;
+//        g[0] = 0;
+//
+//        for (int i = 1; i < n; i++) {
+//            f[i] = max(f[i - 1], g[i - 1] - prices[i] - fee);
+//            g[i] = max(g[i - 1], f[i - 1] + prices[i]);
+//        }
+//
+//        // 小优化，最优解，肯定是最后一天不买
+//        return g[n - 1];
+//    }
+//};
+
+
+//class Solution {
+//public:
+//    const int INF = 0x3f3f3f3f;
+//    int maxProfit(vector<int>& prices) {
+//        // 创建dp表
+//        // 初始化
+//        // 填表
+//        // 返回值
+//        int n = prices.size();
+//
+//        // f[i][j] 表示第i天结束后，完成了j笔交易，此时处于买入状态下，的最大利润
+//        // g[i][j] 表示第i天结束后，完成了j笔交易，此时处于可交易状态下，的最大利润   
+//        vector<vector<int>> f(n, vector<int>(3, -INF));
+//        auto g = f;
+//
+//        // 初始化
+//        f[0][0] = -prices[0], g[0][0] = 0;
+//
+//        // 填表
+//        for (int i = 1; i < n; i++)
+//        {
+//            for (int j = 0; j < 3; j++)
+//            {
+//                f[i][j] = max(f[i - 1][j], g[i - 1][j] - prices[i]);
+//                g[i][j] = g[i - 1][j];
+//                // 处理边界条件
+//                if (j >= 1)
+//                    g[i][j] = max(g[i][j], f[i - 1][j - 1] + prices[i]);
+//            }
+//        }
+//
+//        // 返回值为g的最后一行的最大值
+//        return max(g[n - 1][0], max(g[n - 1][1], g[n - 1][2]));
+//    }
+//};
+
+
+//class Solution {
+//    const int INF = 0x3f3f3f3f;
+//public:
+//    int maxProfit(int k, vector<int>& prices) {
+//        // 创建dp表
+//        // 初始化
+//        // 填表
+//        // 返回值
+//        int n = prices.size();
+//
+//        // f[i][j] 表示第i天结束后，完成了j笔交易，此时处于买入状态下，的最大利润
+//        // g[i][j] 表示第i天结束后，完成了j笔交易，此时处于可交易状态下，的最大利润   
+//        vector<vector<int>> f(n, vector<int>(k + 1, -INF));
+//        auto g = f;
+//
+//        // 初始化
+//        f[0][0] = -prices[0], g[0][0] = 0;
+//
+//        // 填表
+//        for (int i = 1; i < n; i++)
+//        {
+//            for (int j = 0; j < k + 1; j++)
+//            {
+//                f[i][j] = max(f[i - 1][j], g[i - 1][j] - prices[i]);
+//                g[i][j] = g[i - 1][j];
+//                // 处理边界条件
+//                if (j >= 1)
+//                    g[i][j] = max(g[i][j], f[i - 1][j - 1] + prices[i]);
+//            }
+//        }
+//
+//        // 返回值为g的最后一行的最大值
+//        int ret = -INF;
+//        for (int i = 0; i <= k; i++) {
+//            ret = max(ret, g[n - 1][i]);
+//        }
+//        return ret;
+//    }
+//};
+
+
 int main()
 {
     Solution s;
-    s.numDecodings({ "10" });
+    s.maxProfit()
     return 0;
 }
