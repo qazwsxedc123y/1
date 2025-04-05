@@ -573,6 +573,60 @@ using namespace std;
 //};
 
 
+//class Solution {
+//public:
+//    int maxTurbulenceSize(vector<int>& nums) {
+//        // 分两个统计，一个为第一个为下降趋势，另一个为第一个为上升趋势
+//        // 但是这样对于状态表达，就会需要用到nums[i-2]，这样显然不是最优
+//        // 所以改状态表示
+//        // 一个表示最后的状态为上升状态，另一个表示为最后的状态为下降状态。下最长湍流子数组的长度
+//        int n = nums.size();
+//        vector<int> f(n, 1); // 先全部初始化为1
+//        auto g = f;
+//        int ret = 1;
+//        for (int i = 1; i < n; i++) {
+//            if (nums[i] > nums[i - 1]) {
+//                f[i] = g[i - 1] + 1;
+//            }
+//            else if (nums[i] < nums[i - 1]) {
+//                g[i] = f[i - 1] + 1;
+//            }
+//            ret = max(ret, max(f[i], g[i]));
+//        }
+//        return ret;
+//    }
+//};
+
+
+//class Solution {
+//public:
+//    bool wordBreak(string s, vector<string>& wordDict) {
+//        // 优化，先将字典序中的单词扔进哈希表内
+//        unordered_set<string> hash;
+//        for (auto& e : wordDict) hash.insert(e);
+//
+//        int n = s.size();
+//        vector<bool> dp(n + 1); // dp[i]表示以[0，i]区间的字符串，是否可以由字典序构成。
+//        dp[0] = true; // 保证后续的填表正确
+//        s = ' ' + s; // 使原始的字符串的下标统一 +1
+//        // 大致思路是下标j为为最后一个单词的起始位置
+//        // 是查看是否[0,j-1]是否可以构成，然后再查看[j,i]单词是否可以用字典序构成
+//        for (int i = 1; i < n + 1; i++)
+//        {
+//            for (int j = i; j >= 1; j--)
+//            {
+//                if (dp[j - 1] && hash.count(s.substr(j, i - j + 1)))
+//                {
+//                    dp[i] = true;
+//                }
+//            }
+//        }
+//
+//        return dp[n];
+//    }
+//};
+
+
 int main()
 {
     Solution s;
