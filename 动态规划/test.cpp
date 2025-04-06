@@ -1,4 +1,4 @@
-#define  _CRT_SECURE_NO_WARNINGS
+ï»¿#define  _CRT_SECURE_NO_WARNINGS
 #include <vector>
 #include <iostream>
 
@@ -27,7 +27,7 @@ using namespace std;
 //        if (n == 1) return 1;
 //        if (n == 2) return 2;
 //        if (n == 3) return 4;
-//        vector<int> dp(n + 1); // ±íÊ¾µ½´ïµÚi²ãµÄ·½·¨ÓĞ¶àÉÙ
+//        vector<int> dp(n + 1); // è¡¨ç¤ºåˆ°è¾¾ç¬¬iå±‚çš„æ–¹æ³•æœ‰å¤šå°‘
 //        dp[1] = 1, dp[2] = 2, dp[3] = 4;
 //        for (int i = 4; i <= n; i++) {
 //            dp[i] = ((dp[i - 1] + dp[i - 2]) % MOD + dp[i - 3]) % MOD;
@@ -44,7 +44,7 @@ using namespace std;
 //        if (n == 1) return 1;
 //        if (n == 2) return 2;
 //        if (n == 3) return 4;
-//        vector<long long> dp(n + 1); // ±íÊ¾µ½´ïµÚi²ãµÄ·½·¨ÓĞ¶àÉÙ
+//        vector<long long> dp(n + 1); // è¡¨ç¤ºåˆ°è¾¾ç¬¬iå±‚çš„æ–¹æ³•æœ‰å¤šå°‘
 //        dp[1] = 1, dp[2] = 2, dp[3] = 4;
 //        for (int i = 4; i <= n; i++) {
 //            dp[i] = (dp[i - 1] + dp[i - 2] + dp[i - 3]) % MOD;
@@ -57,9 +57,9 @@ using namespace std;
 //class Solution {
 //public:
 //    int minCostClimbingStairs(vector<int>& cost) {
-//        // ÊÇĞèÒªÅÀµ½ÏÂ±êÎª n¡£
+//        // æ˜¯éœ€è¦çˆ¬åˆ°ä¸‹æ ‡ä¸º nã€‚
 //        int n = cost.size();
-//        vector<int> dp(n + 1); // dp[i] ±íÊ¾ÅÀµ½ÏÂ±êÎªi²ãÂ¥ÌİĞèÒªÖ§¸¶µÄ·ÑÓÃ
+//        vector<int> dp(n + 1); // dp[i] è¡¨ç¤ºçˆ¬åˆ°ä¸‹æ ‡ä¸ºiå±‚æ¥¼æ¢¯éœ€è¦æ”¯ä»˜çš„è´¹ç”¨
 //        dp[0] = dp[1] = 0;
 //        for (int i = 2; i <= n; i++) {
 //            dp[i] = min(dp[i - 1] + cost[i - 1], dp[i - 2] + cost[i - 2]);
@@ -73,24 +73,24 @@ using namespace std;
 //public:
 //    int numDecodings(string s) {
 //        int n = s.size();
-//        vector<int> dp(n); // ±íÊ¾ÒÔÏÂ±ê i ½áÎ²£¬´ËÊ±±àÂëÊıÎª¶àÉÙ
+//        vector<int> dp(n); // è¡¨ç¤ºä»¥ä¸‹æ ‡ i ç»“å°¾ï¼Œæ­¤æ—¶ç¼–ç æ•°ä¸ºå¤šå°‘
 //
-//        // ³õÊ¼»¯dp[0], dp[1]
+//        // åˆå§‹åŒ–dp[0], dp[1]
 //        if (s[0] != '0') dp[0] = 1;
 //        else dp[0] = 0;
 //        if (n == 1) return dp[0];
 //
-//        // Á½¸ö¶¼ÊÇµ¥¶À±àÂë
+//        // ä¸¤ä¸ªéƒ½æ˜¯å•ç‹¬ç¼–ç 
 //        if (s[0] != '0' && s[1] != '0') dp[1] += 1;
-//        // Á½¸öÒ»Æğ±àÂë
+//        // ä¸¤ä¸ªä¸€èµ·ç¼–ç 
 //        int t = (s[0] - '0') * 10 + s[1] - '0';
 //        if (t >= 10 && t <= 26) dp[1] += 1;
 //
 //        for (int i = 2; i < n; i++)
 //        {
-//            // s[i] µ¥¶À±àÂë
+//            // s[i] å•ç‹¬ç¼–ç 
 //            if (s[i] != '0') dp[i] += dp[i - 1];
-//            // s[i] Óë s[i-1] Ò»Æğ±àÂë
+//            // s[i] ä¸ s[i-1] ä¸€èµ·ç¼–ç 
 //            int t = (s[i - 1] - '0') * 10 + s[i] - '0';
 //            if (t >= 10 && t <= 26) dp[i] += dp[i - 2];
 //        }
@@ -103,24 +103,24 @@ using namespace std;
 //public:
 //    int numDecodings(string s) {
 //        int n = s.size();
-//        vector<int> dp(n); // ±íÊ¾ÒÔÏÂ±ê i ½áÎ²£¬´ËÊ±±àÂëÊıÎª¶àÉÙ
+//        vector<int> dp(n); // è¡¨ç¤ºä»¥ä¸‹æ ‡ i ç»“å°¾ï¼Œæ­¤æ—¶ç¼–ç æ•°ä¸ºå¤šå°‘
 //
-//        // ³õÊ¼»¯dp[0], dp[1]
+//        // åˆå§‹åŒ–dp[0], dp[1]
 //        if (s[0] != '0') dp[0] = 1;
 //        else dp[0] = 0;
 //        if (n == 1) return dp[0];
 //
-//        // Á½¸ö¶¼ÊÇµ¥¶À±àÂë
+//        // ä¸¤ä¸ªéƒ½æ˜¯å•ç‹¬ç¼–ç 
 //        if (s[0] != '0' && s[1] != '0') dp[1] += 1;
-//        // Á½¸öÒ»Æğ±àÂë
+//        // ä¸¤ä¸ªä¸€èµ·ç¼–ç 
 //        int t = (s[0] - '0') * 10 + s[1] - '0';
 //        if (t >= 10 && t <= 26) dp[1] += 1;
 //
 //        for (int i = 2; i < n; i++)
 //        {
-//            // s[i] µ¥¶À±àÂë
+//            // s[i] å•ç‹¬ç¼–ç 
 //            if (s[i] != '0') dp[i] += dp[i - 1];
-//            // s[i] Óë s[i-1] Ò»Æğ±àÂë
+//            // s[i] ä¸ s[i-1] ä¸€èµ·ç¼–ç 
 //            int t = (s[i - 1] - '0') * 10 + s[i] - '0';
 //            if (t >= 10 && t <= 26) dp[i] += dp[i - 2];
 //        }
@@ -153,7 +153,7 @@ using namespace std;
 
 
 //class Solution {
-//    int dp[201][201]; // dp[i][j]±íÊ¾ (i,j) Î»ÖÃÊ±£¬ÄÃµ½µÄ×î¸ß¼ÛÖµ
+//    int dp[201][201]; // dp[i][j]è¡¨ç¤º (i,j) ä½ç½®æ—¶ï¼Œæ‹¿åˆ°çš„æœ€é«˜ä»·å€¼
 //public:
 //    int jewelleryValue(vector<vector<int>>& frame) {
 //        int m = frame.size(), n = frame[0].size();
@@ -175,8 +175,8 @@ using namespace std;
 //public:
 //    int minFallingPathSum(vector<vector<int>>& matrix) {
 //        int n = matrix.size();
-//        // ÎªÁË·ÀÖ¹Ô½½ç£¬ÉèÖÃµÄdp±í´óĞ¡Îªn+1ĞĞ£¬n+2ÁĞ
-//        vector<vector<int>> dp(n + 1, vector<int>(n + 2)); // dp[i][j]±íÊ¾µ½´ïµÚ(i+1,+1)ÏÂ±êµÄ×îĞ¡Öµ
+//        // ä¸ºäº†é˜²æ­¢è¶Šç•Œï¼Œè®¾ç½®çš„dpè¡¨å¤§å°ä¸ºn+1è¡Œï¼Œn+2åˆ—
+//        vector<vector<int>> dp(n + 1, vector<int>(n + 2)); // dp[i][j]è¡¨ç¤ºåˆ°è¾¾ç¬¬(i+1,+1)ä¸‹æ ‡çš„æœ€å°å€¼
 //        for (int j = 0; j < n + 2; j++) dp[0][j] = 0;
 //        for (int i = 1; i < n + 1; i++) dp[i][0] = dp[i][n + 1] = INT_MAX;
 //
@@ -184,11 +184,11 @@ using namespace std;
 //        {
 //            for (int j = 1; j <= n; j++)
 //            {
-//                // È¡ÉÏÃæÈı¸öµÄ×îĞ¡Öµ£¬È»ºó+matrix[i-1][j-1]
+//                // å–ä¸Šé¢ä¸‰ä¸ªçš„æœ€å°å€¼ï¼Œç„¶å+matrix[i-1][j-1]
 //                dp[i][j] = matrix[i - 1][j - 1] + min(dp[i - 1][j - 1], min(dp[i - 1][j], dp[i - 1][j + 1]));
 //            }
 //        }
-//        // ±éÀú×îºóÒ»ĞĞ£¬È¡×îĞ¡Öµ
+//        // éå†æœ€åä¸€è¡Œï¼Œå–æœ€å°å€¼
 //        int ret = INT_MAX;
 //        for (int j = 1; j < n + 1; j++) {
 //            ret = min(ret, dp[n][j]);
@@ -202,7 +202,7 @@ using namespace std;
 //public:
 //    int minPathSum(vector<vector<int>>& grid) {
 //        int m = grid.size(), n = grid[0].size();
-//        vector<vector<int>> dp(m + 1, vector<int>(n + 1)); // dp[i][j]±íÊ¾µ½´ï(i-1,j-1)ÏÂ±êµÄ×îĞ¡ºÍ
+//        vector<vector<int>> dp(m + 1, vector<int>(n + 1)); // dp[i][j]è¡¨ç¤ºåˆ°è¾¾(i-1,j-1)ä¸‹æ ‡çš„æœ€å°å’Œ
 //        for (int i = 0; i <= m; i++) dp[i][0] = INT_MAX;
 //        for (int j = 0; j <= n; j++) dp[0][j] = INT_MAX;
 //        dp[0][0] = dp[0][1] = dp[1][0] = 0;
@@ -224,7 +224,7 @@ using namespace std;
 //public:
 //    int calculateMinimumHP(vector<vector<int>>& dungeon) {
 //        int m = dungeon.size(), n = dungeon[0].size();
-//        // dp[i][j]±íÊ¾ÒÔ(i,j)ÎªÆğµãÊ±ËùÏûºÄµÄ×îĞ¡½¡¿µµãÊı
+//        // dp[i][j]è¡¨ç¤ºä»¥(i,j)ä¸ºèµ·ç‚¹æ—¶æ‰€æ¶ˆè€—çš„æœ€å°å¥åº·ç‚¹æ•°
 //        vector<vector<int>> dp(m + 1, vector<int>(n + 1, INT_MAX));
 //        dp[m][n - 1] = dp[m - 1][n] = 1;
 //
@@ -245,7 +245,7 @@ using namespace std;
 //public:
 //    int calculateMinimumHP(vector<vector<int>>& dungeon) {
 //        int m = dungeon.size(), n = dungeon[0].size();
-//        // dp[i][j]±íÊ¾ÒÔ(i,j)ÎªÆğµãÊ±ËùÏûºÄµÄ×îĞ¡½¡¿µµãÊı
+//        // dp[i][j]è¡¨ç¤ºä»¥(i,j)ä¸ºèµ·ç‚¹æ—¶æ‰€æ¶ˆè€—çš„æœ€å°å¥åº·ç‚¹æ•°
 //        vector<vector<int>> dp(m + 1, vector<int>(n + 1, INT_MAX));
 //        dp[m][n - 1] = dp[m - 1][n] = 1;
 //
@@ -263,14 +263,14 @@ using namespace std;
 
 
 //class Solution {
-//    // ¶à×´Ì¬dp
+//    // å¤šçŠ¶æ€dp
 //public:
 //    int massage(vector<int>& nums) {
 //        int n = nums.size();
 //        if (n == 0) return 0;
-//        vector<int> f(n); // f[i]±íÊ¾Ñ¡µ½iÎ»ÖÃÊ±£¬nums[i]±ØÑ¡µÄÇé¿öÏÂ£¬´ËÊ±×î³¤µÄÔ¤Ô¼Ê±³¤
-//        vector<int> g(n); // g[i]±íÊ¾Ñ¡µ½iÎ»ÖÃÊ±£¬nums[i]²»Ñ¡µÄÇé¿öÏÂ£¬´ËÊ±×î³¤µÄÔ¤Ô¼Ê±³¤
-//        // ³õÊ¼»¯
+//        vector<int> f(n); // f[i]è¡¨ç¤ºé€‰åˆ°iä½ç½®æ—¶ï¼Œnums[i]å¿…é€‰çš„æƒ…å†µä¸‹ï¼Œæ­¤æ—¶æœ€é•¿çš„é¢„çº¦æ—¶é•¿
+//        vector<int> g(n); // g[i]è¡¨ç¤ºé€‰åˆ°iä½ç½®æ—¶ï¼Œnums[i]ä¸é€‰çš„æƒ…å†µä¸‹ï¼Œæ­¤æ—¶æœ€é•¿çš„é¢„çº¦æ—¶é•¿
+//        // åˆå§‹åŒ–
 //        f[0] = nums[0], g[0] = 0;
 //        for (int i = 1; i < n; i++)
 //        {
@@ -286,15 +286,15 @@ using namespace std;
 //public:
 //    int rob(vector<int>& nums) {
 //        int n = nums.size();
-//        // Ñ¡µÚÒ»¸ö£¬ ²»Ñ¡µÚÒ»¸ö
+//        // é€‰ç¬¬ä¸€ä¸ªï¼Œ ä¸é€‰ç¬¬ä¸€ä¸ª
 //        return max(nums[0] + rob1(nums, 2, n - 2), rob1(nums, 1, n - 1));
 //    }
 //    int rob1(vector<int>& nums, int left, int right) {
 //        if (left > right) return 0;
-//        // ´´½¨dp±í
-//        // ³õÊ¼»¯
-//        // Ìî±í
-//        // ·µ»Ø½á¹û
+//        // åˆ›å»ºdpè¡¨
+//        // åˆå§‹åŒ–
+//        // å¡«è¡¨
+//        // è¿”å›ç»“æœ
 //        int n = nums.size();
 //        vector<int> f(n);
 //        auto g = f;
@@ -312,23 +312,23 @@ using namespace std;
 //class Solution {
 //public:
 //    int deleteAndEarn(vector<int>& nums) {
-//        // Ô¤´¦Àí
+//        // é¢„å¤„ç†
 //        int N = 10001;
 //        int n = nums.size();
 //        int arr[10001] = { 0 };
 //        for (auto x : nums) arr[x] += x;
 //
-//        // ´´½¨dp±í
+//        // åˆ›å»ºdpè¡¨
 //        vector<int> f(N);
 //        auto g = f;
-//        // Ìî±í        
-//        // ³õÊ¼»¯
+//        // å¡«è¡¨        
+//        // åˆå§‹åŒ–
 //        for (int i = 1; i < N; i++)
 //        {
 //            f[i] = g[i - 1] + arr[i];
 //            g[i] = max(g[i - 1], f[i - 1]);
 //        }
-//        // ·µ»ØÖµ
+//        // è¿”å›å€¼
 //
 //        return max(f[N - 1], g[N - 1]);
 //    }
@@ -340,7 +340,7 @@ using namespace std;
 //    int minCost(vector<vector<int>>& costs) {
 //        int n = costs.size();
 //        vector<vector<int>> dp(n + 1, vector<int>(3));
-//        // Ìî±í
+//        // å¡«è¡¨
 //        for (int i = 1; i <= n; i++) {
 //            dp[i][0] = min(dp[i - 1][1], dp[i - 1][2]) + costs[i - 1][0];
 //            dp[i][1] = min(dp[i - 1][0], dp[i - 1][2]) + costs[i - 1][1];
@@ -357,17 +357,17 @@ using namespace std;
 //public:
 //    int maxProfit(vector<int>& prices) {
 //        int n = prices.size();
-//        // 0 -> ÂòÈë   1 -> Àä¶³ÆÚ  2 -> ¿É½»Ò×
+//        // 0 -> ä¹°å…¥   1 -> å†·å†»æœŸ  2 -> å¯äº¤æ˜“
 //        vector<vector<int>> dp(n, vector<int>(3));
 //        dp[0][0] = -prices[0];
 //
-//        // Ìî±í
+//        // å¡«è¡¨
 //        for (int i = 1; i < n; i++) {
 //            dp[i][0] = max(dp[i - 1][0], dp[i - 1][2] - prices[i]);
 //            dp[i][1] = dp[i - 1][0] + prices[i];
 //            dp[i][2] = max(dp[i - 1][1], dp[i - 1][2]);
 //        }
-//        // Ğ¡ÓÅ»¯ ÒòÎª×îºó´ğ°¸¿Ï¶¨²»ÊÇÂòÈë£¬ËùÒÔ¿ÉÒÔºöÂÔdp[n-1][0]
+//        // å°ä¼˜åŒ– å› ä¸ºæœ€åç­”æ¡ˆè‚¯å®šä¸æ˜¯ä¹°å…¥ï¼Œæ‰€ä»¥å¯ä»¥å¿½ç•¥dp[n-1][0]
 //
 //        return max(dp[n - 1][1], dp[n - 1][2]);
 //    }
@@ -378,11 +378,11 @@ using namespace std;
 //public:
 //    int maxProfit(vector<int>& prices, int fee) {
 //        int n = prices.size();
-//        // 0 -> ÂòÈë  1 -> ¿É½»Ò×
+//        // 0 -> ä¹°å…¥  1 -> å¯äº¤æ˜“
 //        // vector<vector<int>> dp(n, vector<int>(2));
 //
-//        vector<int> f(n); // ÂòÈë
-//        auto g = f; // ¿É½»Ò×
+//        vector<int> f(n); // ä¹°å…¥
+//        auto g = f; // å¯äº¤æ˜“
 //
 //        f[0] = -prices[0] - fee;
 //        g[0] = 0;
@@ -392,7 +392,7 @@ using namespace std;
 //            g[i] = max(g[i - 1], f[i - 1] + prices[i]);
 //        }
 //
-//        // Ğ¡ÓÅ»¯£¬×îÓÅ½â£¬¿Ï¶¨ÊÇ×îºóÒ»Ìì²»Âò
+//        // å°ä¼˜åŒ–ï¼Œæœ€ä¼˜è§£ï¼Œè‚¯å®šæ˜¯æœ€åä¸€å¤©ä¸ä¹°
 //        return g[n - 1];
 //    }
 //};
@@ -402,34 +402,34 @@ using namespace std;
 //public:
 //    const int INF = 0x3f3f3f3f;
 //    int maxProfit(vector<int>& prices) {
-//        // ´´½¨dp±í
-//        // ³õÊ¼»¯
-//        // Ìî±í
-//        // ·µ»ØÖµ
+//        // åˆ›å»ºdpè¡¨
+//        // åˆå§‹åŒ–
+//        // å¡«è¡¨
+//        // è¿”å›å€¼
 //        int n = prices.size();
 //
-//        // f[i][j] ±íÊ¾µÚiÌì½áÊøºó£¬Íê³ÉÁËj±Ê½»Ò×£¬´ËÊ±´¦ÓÚÂòÈë×´Ì¬ÏÂ£¬µÄ×î´óÀûÈó
-//        // g[i][j] ±íÊ¾µÚiÌì½áÊøºó£¬Íê³ÉÁËj±Ê½»Ò×£¬´ËÊ±´¦ÓÚ¿É½»Ò××´Ì¬ÏÂ£¬µÄ×î´óÀûÈó   
+//        // f[i][j] è¡¨ç¤ºç¬¬iå¤©ç»“æŸåï¼Œå®Œæˆäº†jç¬”äº¤æ˜“ï¼Œæ­¤æ—¶å¤„äºä¹°å…¥çŠ¶æ€ä¸‹ï¼Œçš„æœ€å¤§åˆ©æ¶¦
+//        // g[i][j] è¡¨ç¤ºç¬¬iå¤©ç»“æŸåï¼Œå®Œæˆäº†jç¬”äº¤æ˜“ï¼Œæ­¤æ—¶å¤„äºå¯äº¤æ˜“çŠ¶æ€ä¸‹ï¼Œçš„æœ€å¤§åˆ©æ¶¦   
 //        vector<vector<int>> f(n, vector<int>(3, -INF));
 //        auto g = f;
 //
-//        // ³õÊ¼»¯
+//        // åˆå§‹åŒ–
 //        f[0][0] = -prices[0], g[0][0] = 0;
 //
-//        // Ìî±í
+//        // å¡«è¡¨
 //        for (int i = 1; i < n; i++)
 //        {
 //            for (int j = 0; j < 3; j++)
 //            {
 //                f[i][j] = max(f[i - 1][j], g[i - 1][j] - prices[i]);
 //                g[i][j] = g[i - 1][j];
-//                // ´¦Àí±ß½çÌõ¼ş
+//                // å¤„ç†è¾¹ç•Œæ¡ä»¶
 //                if (j >= 1)
 //                    g[i][j] = max(g[i][j], f[i - 1][j - 1] + prices[i]);
 //            }
 //        }
 //
-//        // ·µ»ØÖµÎªgµÄ×îºóÒ»ĞĞµÄ×î´óÖµ
+//        // è¿”å›å€¼ä¸ºgçš„æœ€åä¸€è¡Œçš„æœ€å¤§å€¼
 //        return max(g[n - 1][0], max(g[n - 1][1], g[n - 1][2]));
 //    }
 //};
@@ -439,34 +439,34 @@ using namespace std;
 //    const int INF = 0x3f3f3f3f;
 //public:
 //    int maxProfit(int k, vector<int>& prices) {
-//        // ´´½¨dp±í
-//        // ³õÊ¼»¯
-//        // Ìî±í
-//        // ·µ»ØÖµ
+//        // åˆ›å»ºdpè¡¨
+//        // åˆå§‹åŒ–
+//        // å¡«è¡¨
+//        // è¿”å›å€¼
 //        int n = prices.size();
 //
-//        // f[i][j] ±íÊ¾µÚiÌì½áÊøºó£¬Íê³ÉÁËj±Ê½»Ò×£¬´ËÊ±´¦ÓÚÂòÈë×´Ì¬ÏÂ£¬µÄ×î´óÀûÈó
-//        // g[i][j] ±íÊ¾µÚiÌì½áÊøºó£¬Íê³ÉÁËj±Ê½»Ò×£¬´ËÊ±´¦ÓÚ¿É½»Ò××´Ì¬ÏÂ£¬µÄ×î´óÀûÈó   
+//        // f[i][j] è¡¨ç¤ºç¬¬iå¤©ç»“æŸåï¼Œå®Œæˆäº†jç¬”äº¤æ˜“ï¼Œæ­¤æ—¶å¤„äºä¹°å…¥çŠ¶æ€ä¸‹ï¼Œçš„æœ€å¤§åˆ©æ¶¦
+//        // g[i][j] è¡¨ç¤ºç¬¬iå¤©ç»“æŸåï¼Œå®Œæˆäº†jç¬”äº¤æ˜“ï¼Œæ­¤æ—¶å¤„äºå¯äº¤æ˜“çŠ¶æ€ä¸‹ï¼Œçš„æœ€å¤§åˆ©æ¶¦   
 //        vector<vector<int>> f(n, vector<int>(k + 1, -INF));
 //        auto g = f;
 //
-//        // ³õÊ¼»¯
+//        // åˆå§‹åŒ–
 //        f[0][0] = -prices[0], g[0][0] = 0;
 //
-//        // Ìî±í
+//        // å¡«è¡¨
 //        for (int i = 1; i < n; i++)
 //        {
 //            for (int j = 0; j < k + 1; j++)
 //            {
 //                f[i][j] = max(f[i - 1][j], g[i - 1][j] - prices[i]);
 //                g[i][j] = g[i - 1][j];
-//                // ´¦Àí±ß½çÌõ¼ş
+//                // å¤„ç†è¾¹ç•Œæ¡ä»¶
 //                if (j >= 1)
 //                    g[i][j] = max(g[i][j], f[i - 1][j - 1] + prices[i]);
 //            }
 //        }
 //
-//        // ·µ»ØÖµÎªgµÄ×îºóÒ»ĞĞµÄ×î´óÖµ
+//        // è¿”å›å€¼ä¸ºgçš„æœ€åä¸€è¡Œçš„æœ€å¤§å€¼
 //        int ret = -INF;
 //        for (int i = 0; i <= k; i++) {
 //            ret = max(ret, g[n - 1][i]);
@@ -481,11 +481,11 @@ using namespace std;
 //public:
 //    int maxSubarraySumCircular(vector<int>& nums) {
 //        int n = nums.size();
-//        vector<int> f(n + 1); // f[i]±íÊ¾ÒÔiÎª½áÎ²µÄ×ÓÊı×éµÄ×î´óºÍ
-//        auto g = f; // g[i]±íÊ¾ÒÔiÎª½áÎ²µÄ×ÓÊı×éµÄ×îĞ¡ºÍ
+//        vector<int> f(n + 1); // f[i]è¡¨ç¤ºä»¥iä¸ºç»“å°¾çš„å­æ•°ç»„çš„æœ€å¤§å’Œ
+//        auto g = f; // g[i]è¡¨ç¤ºä»¥iä¸ºç»“å°¾çš„å­æ•°ç»„çš„æœ€å°å’Œ
 //        f[0] = g[0] = 0;
 //
-//        // ·µ»ØÖµµÄ´¦Àí£¬ÕÒµ½fÖĞµÄ×î´óÖµ£¬gÖĞµÄ×îĞ¡Öµ£¬È»ºósum - g
+//        // è¿”å›å€¼çš„å¤„ç†ï¼Œæ‰¾åˆ°fä¸­çš„æœ€å¤§å€¼ï¼Œgä¸­çš„æœ€å°å€¼ï¼Œç„¶åsum - g
 //        int sum = 0, fmax = -INF, gmin = INF;
 //        for (int i = 1; i < n + 1; i++) {
 //            f[i] = max(nums[i - 1], f[i - 1] + nums[i - 1]);
@@ -507,8 +507,8 @@ using namespace std;
 //    int maxProduct(vector<int>& nums) {
 //        int n = nums.size();
 //        if (n == 1) return nums[0];
-//        vector<int> f(n + 1); // f[i]±íÊ¾ÒÔiÎª½áÎ²£¬×î´óµÄ·Ç¿ÕÁ¬Ğø×ÓÊı×é×î´ó»ı £¨ÕıÊı£©
-//        auto g = f; // g[i]±íÊ¾ÒÔiÎª½áÎ²£¬×î´óµÄ·Ç¿ÕÁ¬Ğø×ÓÊı×é×îĞ¡»ı £¨¸ºÊı£©
+//        vector<int> f(n + 1); // f[i]è¡¨ç¤ºä»¥iä¸ºç»“å°¾ï¼Œæœ€å¤§çš„éç©ºè¿ç»­å­æ•°ç»„æœ€å¤§ç§¯ ï¼ˆæ­£æ•°ï¼‰
+//        auto g = f; // g[i]è¡¨ç¤ºä»¥iä¸ºç»“å°¾ï¼Œæœ€å¤§çš„éç©ºè¿ç»­å­æ•°ç»„æœ€å°ç§¯ ï¼ˆè´Ÿæ•°ï¼‰
 //        f[0] = g[0] = 1;
 //        int ret = 0;
 //        for (int i = 1; i < n + 1; i++) {
@@ -531,18 +531,18 @@ using namespace std;
 //public:
 //    int getMaxLen(vector<int>& nums) {
 //        int n = nums.size();
-//        vector<int> f(n + 1); // f[i]±íÊ¾ÒÔiÎª½áÎ²£¬³Ë»ıÎªÕıÊıµÄ£¬×î³¤×ÓÊı×éµÄ³¤¶È
-//        auto g = f; // g[i]±íÊ¾ÒÔiÎª½áÎ²£¬³Ë»ıÎª¸ºÊıµÄ£¬×î³¤×ÓÊı×éµÄ³¤¶È
+//        vector<int> f(n + 1); // f[i]è¡¨ç¤ºä»¥iä¸ºç»“å°¾ï¼Œä¹˜ç§¯ä¸ºæ­£æ•°çš„ï¼Œæœ€é•¿å­æ•°ç»„çš„é•¿åº¦
+//        auto g = f; // g[i]è¡¨ç¤ºä»¥iä¸ºç»“å°¾ï¼Œä¹˜ç§¯ä¸ºè´Ÿæ•°çš„ï¼Œæœ€é•¿å­æ•°ç»„çš„é•¿åº¦
 //        f[0] = g[0] = 0;
 //        int ret = 0;
 //        for (int i = 1; i < n + 1; i++) {
 //            if (nums[i - 1] > 0) {
 //                f[i] = f[i - 1] + 1;
-//                // g[i] = g[i-1] + 1; // ÌØÊâÌõ¼ş£¬Èç¹ûg[i-1] Îª0µÄ»°£¬Ò²¾ÍÊÇÇ°ÃæÈ«ÊÇÕıÊı
+//                // g[i] = g[i-1] + 1; // ç‰¹æ®Šæ¡ä»¶ï¼Œå¦‚æœg[i-1] ä¸º0çš„è¯ï¼Œä¹Ÿå°±æ˜¯å‰é¢å…¨æ˜¯æ­£æ•°
 //                g[i] = g[i - 1] == 0 ? 0 : g[i - 1] + 1;
 //            }
 //            else if (nums[i - 1] < 0) {
-//                // f[i] = g[i-1] + 1; // Í¬Àí£¬ÌØÊâÌõ¼ş
+//                // f[i] = g[i-1] + 1; // åŒç†ï¼Œç‰¹æ®Šæ¡ä»¶
 //                f[i] = g[i - 1] == 0 ? 0 : g[i - 1] + 1;
 //                g[i] = f[i - 1] + 1;
 //            }
@@ -576,12 +576,12 @@ using namespace std;
 //class Solution {
 //public:
 //    int maxTurbulenceSize(vector<int>& nums) {
-//        // ·ÖÁ½¸öÍ³¼Æ£¬Ò»¸öÎªµÚÒ»¸öÎªÏÂ½µÇ÷ÊÆ£¬ÁíÒ»¸öÎªµÚÒ»¸öÎªÉÏÉıÇ÷ÊÆ
-//        // µ«ÊÇÕâÑù¶ÔÓÚ×´Ì¬±í´ï£¬¾Í»áĞèÒªÓÃµ½nums[i-2]£¬ÕâÑùÏÔÈ»²»ÊÇ×îÓÅ
-//        // ËùÒÔ¸Ä×´Ì¬±íÊ¾
-//        // Ò»¸ö±íÊ¾×îºóµÄ×´Ì¬ÎªÉÏÉı×´Ì¬£¬ÁíÒ»¸ö±íÊ¾Îª×îºóµÄ×´Ì¬ÎªÏÂ½µ×´Ì¬¡£ÏÂ×î³¤ÍÄÁ÷×ÓÊı×éµÄ³¤¶È
+//        // åˆ†ä¸¤ä¸ªç»Ÿè®¡ï¼Œä¸€ä¸ªä¸ºç¬¬ä¸€ä¸ªä¸ºä¸‹é™è¶‹åŠ¿ï¼Œå¦ä¸€ä¸ªä¸ºç¬¬ä¸€ä¸ªä¸ºä¸Šå‡è¶‹åŠ¿
+//        // ä½†æ˜¯è¿™æ ·å¯¹äºçŠ¶æ€è¡¨è¾¾ï¼Œå°±ä¼šéœ€è¦ç”¨åˆ°nums[i-2]ï¼Œè¿™æ ·æ˜¾ç„¶ä¸æ˜¯æœ€ä¼˜
+//        // æ‰€ä»¥æ”¹çŠ¶æ€è¡¨ç¤º
+//        // ä¸€ä¸ªè¡¨ç¤ºæœ€åçš„çŠ¶æ€ä¸ºä¸Šå‡çŠ¶æ€ï¼Œå¦ä¸€ä¸ªè¡¨ç¤ºä¸ºæœ€åçš„çŠ¶æ€ä¸ºä¸‹é™çŠ¶æ€ã€‚ä¸‹æœ€é•¿æ¹æµå­æ•°ç»„çš„é•¿åº¦
 //        int n = nums.size();
-//        vector<int> f(n, 1); // ÏÈÈ«²¿³õÊ¼»¯Îª1
+//        vector<int> f(n, 1); // å…ˆå…¨éƒ¨åˆå§‹åŒ–ä¸º1
 //        auto g = f;
 //        int ret = 1;
 //        for (int i = 1; i < n; i++) {
@@ -601,16 +601,16 @@ using namespace std;
 //class Solution {
 //public:
 //    bool wordBreak(string s, vector<string>& wordDict) {
-//        // ÓÅ»¯£¬ÏÈ½«×ÖµäĞòÖĞµÄµ¥´ÊÈÓ½ø¹şÏ£±íÄÚ
+//        // ä¼˜åŒ–ï¼Œå…ˆå°†å­—å…¸åºä¸­çš„å•è¯æ‰”è¿›å“ˆå¸Œè¡¨å†…
 //        unordered_set<string> hash;
 //        for (auto& e : wordDict) hash.insert(e);
 //
 //        int n = s.size();
-//        vector<bool> dp(n + 1); // dp[i]±íÊ¾ÒÔ[0£¬i]Çø¼äµÄ×Ö·û´®£¬ÊÇ·ñ¿ÉÒÔÓÉ×ÖµäĞò¹¹³É¡£
-//        dp[0] = true; // ±£Ö¤ºóĞøµÄÌî±íÕıÈ·
-//        s = ' ' + s; // Ê¹Ô­Ê¼µÄ×Ö·û´®µÄÏÂ±êÍ³Ò» +1
-//        // ´óÖÂË¼Â·ÊÇÏÂ±êjÎªÎª×îºóÒ»¸öµ¥´ÊµÄÆğÊ¼Î»ÖÃ
-//        // ÊÇ²é¿´ÊÇ·ñ[0,j-1]ÊÇ·ñ¿ÉÒÔ¹¹³É£¬È»ºóÔÙ²é¿´[j,i]µ¥´ÊÊÇ·ñ¿ÉÒÔÓÃ×ÖµäĞò¹¹³É
+//        vector<bool> dp(n + 1); // dp[i]è¡¨ç¤ºä»¥[0ï¼Œi]åŒºé—´çš„å­—ç¬¦ä¸²ï¼Œæ˜¯å¦å¯ä»¥ç”±å­—å…¸åºæ„æˆã€‚
+//        dp[0] = true; // ä¿è¯åç»­çš„å¡«è¡¨æ­£ç¡®
+//        s = ' ' + s; // ä½¿åŸå§‹çš„å­—ç¬¦ä¸²çš„ä¸‹æ ‡ç»Ÿä¸€ +1
+//        // å¤§è‡´æ€è·¯æ˜¯ä¸‹æ ‡jä¸ºä¸ºæœ€åä¸€ä¸ªå•è¯çš„èµ·å§‹ä½ç½®
+//        // æ˜¯æŸ¥çœ‹æ˜¯å¦[0,j-1]æ˜¯å¦å¯ä»¥æ„æˆï¼Œç„¶åå†æŸ¥çœ‹[j,i]å•è¯æ˜¯å¦å¯ä»¥ç”¨å­—å…¸åºæ„æˆ
 //        for (int i = 1; i < n + 1; i++)
 //        {
 //            for (int j = i; j >= 1; j--)
@@ -625,11 +625,112 @@ using namespace std;
 //        return dp[n];
 //    }
 //};
+#include <vector>
+#include <iostream>
+
+
+//class Solution {
+//public:
+//    bool check(vector<int>& nums) {
+//        int n = nums.size();
+//        for (int i = 1; i < n; i++) {
+//            if (nums[i] < nums[i - 1]) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+//    int minimumPairRemoval(vector<int>& nums) {
+//        int n = nums.size();
+//        vector<int> dp(n);
+//        int ret = 0;
+//        while (check(nums)) {
+//            int min = INT_MAX;
+//            int ans = -1;
+//            for (int i = 1; i < n; i++) {
+//                dp[i] = nums[i] + nums[i - 1];
+//                if (dp[i] < min) {
+//                    min = dp[i];
+//                    ans = i;
+//                }
+//            }
+//            // æ›¿æ¢
+//            nums[ans - 1] = min;
+//            for (int i = ans; i < n - 1; i++) {
+//                nums[i] = nums[i + 1];
+//            }
+//            n--;
+//            ret++;
+//        }
+//        return ret;
+//    }
+//};
+
+
+//class Solution {
+//    int n;
+//    const int INF = 0x3f3f3f3f;
+//public:
+//    int minimumPairRemoval(vector<int>& nums) {
+//        n = nums.size();
+//        int ret = 0;
+//        int flag = true;
+//        while (flag) {
+//            long long min = LONG_MAX;
+//            int ans = -1;
+//            flag = false;
+//            for (int i = 1; i < n; i++) {
+//                if (nums[i - 1] == INF || nums[i] == INF) continue;
+//                if (nums[i] < nums[i - 1]) flag = true;
+//                long long sum = (long long)nums[i] + nums[i - 1];
+//                if (sum < min) {
+//                    min = sum;
+//                    ans = i;
+//                }
+//            }
+//            // å·²ç»æ˜¯å‡åº
+//            if (!flag) break;
+//            // æ›¿æ¢
+//            nums[ans - 1] = min;
+//            nums[ans] = INF;
+//            // for(int i = ans; i < n - 1; i++){
+//            //     nums[i] = nums[i + 1];
+//            // }
+//            ret++;
+//        }
+//        return ret;
+//    }
+//}; 
+
+
+//class Solution {
+//public:
+//    int findSubstringInWraproundString(string s) {
+//        int n = s.size();
+//        vector<int> dp(n, 1);
+//        for (int i = 1; i < n; i++) {
+//            if (s[i - 1] + 1 == s[i] || (s[i - 1] == 'z' && s[i] == 'a')) {
+//                dp[i] += dp[i - 1];
+//            }
+//        }
+//
+//        int hash[26] = { 0 }; // å»é‡
+//        for (int i = 0; i < n; i++) {
+//            hash[s[i] - 'a'] = max(hash[s[i] - 'a'], dp[i]);
+//        }
+//
+//        int ret = 0;
+//        for (int i = 0; i < 26; i++) ret += hash[i];
+//
+//        return ret;
+//    }
+//};
 
 
 int main()
 {
     Solution s;
-    s.maxProfit()
+    vector<int> v{ 2,2,-1,3,-2,2,1,1,1,0,-1 };
+    s.minimumPairRemoval(v);
     return 0;
 }
