@@ -754,6 +754,10 @@ using namespace std;
 //        return maxcount;
 //    }
 //};
+
+
+#include <algorithm>
+
 #include <algorithm>
 
 //class Solution {
@@ -915,39 +919,39 @@ using namespace std;
 
 
 
-//class Solution {
-//public:
-//    int numberOfArithmeticSlices(vector<int>& nums) {
-//        int n = nums.size();
-//
-//        vector<vector<int>> dp(n, vector<int>(n)); // dp[i][j] 表示以i，j为结尾表示的等差子序列的个数
-//        // 规定j > i
-//
-//        unordered_map<long long, vector<int>> hash;
-//        for (int i = 0; i < n; i++) hash[nums[i]].push_back(i);
-//
-//        int sum = 0;
-//        for (int j = 2; j < n; j++)
-//        {
-//            for (int i = 1; i < j; i++)
-//            {
-//                // 
-//                long long a = (long long)2 * nums[i] - nums[j];
-//                if (hash.count(a))
-//                {
-//                    int sz = hash[a].size();
-//                    for (int m = 0; m < sz; m++)
-//                    {
-//                        if (hash[a][m] < i) dp[i][j] += dp[hash[a][m]][i] + 1;
-//                    }
-//                }
-//                sum += dp[i][j];
-//            }
-//        }
-//
-//        return sum;
-//    }
-//};
+class Solution {
+public:
+    int numberOfArithmeticSlices(vector<int>& nums) {
+        int n = nums.size();
+
+        vector<vector<int>> dp(n, vector<int>(n)); // dp[i][j] 表示以i，j为结尾表示的等差子序列的个数
+        // 规定j > i
+
+        unordered_map<long long, vector<int>> hash;
+        for (int i = 0; i < n; i++) hash[nums[i]].push_back(i);
+
+        int sum = 0;
+        for (int j = 2; j < n; j++)
+        {
+            for (int i = 1; i < j; i++)
+            {
+                // 
+                long long a = (long long)2 * nums[i] - nums[j];
+                if (hash.count(a))
+                {
+                    int sz = hash[a].size();
+                    for (int m = 0; m < sz; m++)
+                    {
+                        if (hash[a][m] < i) dp[i][j] += dp[hash[a][m]][i] + 1;
+                    }
+                }
+                sum += dp[i][j];
+            }
+        }
+
+        return sum;
+    }
+};
 
 
 int main()
