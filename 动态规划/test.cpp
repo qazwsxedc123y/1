@@ -727,10 +727,233 @@ using namespace std;
 //};
 
 
+//class Solution {
+//public:
+//    int findNumberOfLIS(vector<int>& nums) {
+//        int n = nums.size();
+//        vector<int> len(n, 1); // 统计以i为结尾，最长递增子序列的长度
+//        vector<int> count(n, 1); // 统计以i为结尾，最长递增子序列的长度的个数
+//
+//        int maxret = 1, maxcount = 1;
+//        for (int i = 1; i < n; i++)
+//        {
+//            for (int j = 0; j < i; j++)
+//            {
+//                if (nums[j] < nums[i])
+//                {
+//                    if (len[i] == len[j] + 1) count[i] += count[j];
+//                    else if (len[i] < len[j] + 1) len[i] = len[j] + 1, count[i] = count[j];
+//                }
+//            }
+//            if (maxret < len[i]) {
+//                maxcount = count[i];
+//                maxret = len[i];
+//            }
+//            else if (maxret == len[i]) maxcount += count[i];
+//        }
+//        return maxcount;
+//    }
+//};
+#include <algorithm>
+
+//class Solution {
+//public:
+//    int findLongestChain(vector<vector<int>>& pairs) {
+//        // 先预排序
+//        sort(pairs.begin(), pairs.end());
+//        int n = pairs.size();
+//        vector<int> dp(n, 1);
+//
+//        int ret = 1;
+//
+//        for (int i = 1; i < n; i++)
+//        {
+//            for (int j = 0; j < i; j++)
+//            {
+//                if (pairs[i][0] > pairs[j][1])
+//                    dp[i] = max(dp[i], dp[j] + 1);
+//            }
+//            ret = max(ret, dp[i]);
+//        }
+//
+//        return ret;
+//    }
+//};
+
+
+//class Solution {
+//public:
+//    int longestSubsequence(vector<int>& arr, int difference) {
+//        int n = arr.size();
+//        vector<int> dp(n, 1);
+//        unordered_map<int, int> hash; // 第一个存的是arr[i]，是为了便于寻找，第二个是存的dp表
+//        // 如果存在多个同样的值，最优的情况下是使用最后一个
+//
+//        // 初始化
+//        hash[arr[0]] = 1;
+//
+//        int ret = 1;
+//
+//        for (int i = 1; i < n; i++)
+//        {
+//            hash[arr[i]] = hash[arr[i] - difference] + 1;
+//            ret = max(ret, hash[arr[i]]);
+//        }
+//
+//        return ret;
+//    }
+//};
+
+
+//class Solution {
+//public:
+//    int lenLongestFibSubseq(vector<int>& arr) {
+//        int n = arr.size();
+//
+//        // 对于这个的dp表是要创建二维，因为如果使用一维，无法保证是连续的
+//        vector<vector<int>> dp(n, vector<int>(n, 2)); // dp[i][j] 表示以i，j为结尾表示的最长的斐波那契式
+//        // 子序列的长度
+//
+//        // 同样优化：是使用哈希表，存储起来，使得查找某个值时，时间复杂度时o(1)
+//
+//        unordered_map<int, int> hash;
+//        for (int i = 0; i < n; i++)hash[arr[i]] = i;
+//
+//        int ret = 2;
+//
+//        for (int j = 2; j < n; j++)
+//        {
+//            for (int i = 1; i < j; i++)
+//            {
+//                int a = arr[j] - arr[i];
+//                if (hash.count(a) && hash[a] < i) dp[i][j] = dp[hash[a]][i] + 1;
+//                ret = max(ret, dp[i][j]);
+//            }
+//        }
+//
+//        return ret == 2 ? 0 : ret;
+//
+//    }
+//};
+
+
+//class Solution {
+//public:
+//    int longestArithSeqLength(vector<int>& nums) {
+//        // 对于这个的dp表是要创建二维，因为如果使用一维，无法明确知道该等差子序列的差值
+//
+//        int n = nums.size();
+//        vector<vector<int>> dp(n, vector<int>(n, 2)); // dp[i][j] 表示以i，j为结尾表示的最长的等差子序列
+//        // 规定j > i
+//
+//        // 同样优化：是使用哈希表，存储起来，使得查找某个值时，时间复杂度时o(1)
+//        // 但第二个键值对要用下标数组，因为可能存在多个一样的值在不同下标
+//        unordered_map<int, vector<int>> hash;
+//        for (int i = 0; i < n; i++) hash[nums[i]].push_back(i);
+//
+//        int ret = 2;
+//        for (int j = 2; j < n; j++)
+//        {
+//            for (int i = 1; i < j; i++)
+//            {
+//                // 
+//                int a = 2 * nums[i] - nums[j];
+//                if (hash.count(a))
+//                {
+//                    int sz = hash[a].size();
+//                    for (int m = 0; m < sz; m++)
+//                    {
+//                        if (hash[a][m] < i) dp[i][j] = dp[hash[a][m]][i] + 1;
+//                        ret = max(ret, dp[i][j]);
+//                    }
+//                }
+//
+//            }
+//        }
+//
+//        return ret == 2 ? 0 : ret;
+//    }
+//};
+
+
+//class Solution {
+//public:
+//    int longestArithSeqLength(vector<int>& nums) {
+//        // 对于这个的dp表是要创建二维，因为如果使用一维，无法明确知道该等差子序列的差值
+//
+//        int n = nums.size();
+//        vector<vector<int>> dp(n, vector<int>(n, 2)); // dp[i][j] 表示以i，j为结尾表示的最长的等差子序列
+//        // 规定j > i
+//
+//        // 同样优化：是使用哈希表，存储起来，使得查找某个值时，时间复杂度时o(1)<元素，下标>
+//        // 但与之不同的是，下标填的是与之最近的位置下标，所以初始化要在循环填dp中
+//        unordered_map<int, int> hash;
+//        hash[nums[0]] = 0;
+//
+//        int ret = 2;
+//        // 填表顺序为先固定倒数第二个数，然后再最后一个
+//        for (int i = 1; i < n; i++)
+//        {
+//            for (int j = i + 1; j < n; j++)
+//            {
+//                int a = 2 * nums[i] - nums[j];
+//                if (hash.count(a))
+//                {
+//                    dp[i][j] = dp[hash[a]][i] + 1;
+//                    ret = max(ret, dp[i][j]);
+//                }
+//            }
+//            hash[nums[i]] = i;
+//        }
+//
+//        return ret;
+//    }
+//};
+#include <unordered_map>
+#include <unordered_set>
+#include <vector>
+
+
+
+//class Solution {
+//public:
+//    int numberOfArithmeticSlices(vector<int>& nums) {
+//        int n = nums.size();
+//
+//        vector<vector<int>> dp(n, vector<int>(n)); // dp[i][j] 表示以i，j为结尾表示的等差子序列的个数
+//        // 规定j > i
+//
+//        unordered_map<long long, vector<int>> hash;
+//        for (int i = 0; i < n; i++) hash[nums[i]].push_back(i);
+//
+//        int sum = 0;
+//        for (int j = 2; j < n; j++)
+//        {
+//            for (int i = 1; i < j; i++)
+//            {
+//                // 
+//                long long a = (long long)2 * nums[i] - nums[j];
+//                if (hash.count(a))
+//                {
+//                    int sz = hash[a].size();
+//                    for (int m = 0; m < sz; m++)
+//                    {
+//                        if (hash[a][m] < i) dp[i][j] += dp[hash[a][m]][i] + 1;
+//                    }
+//                }
+//                sum += dp[i][j];
+//            }
+//        }
+//
+//        return sum;
+//    }
+//};
+
+
 int main()
 {
     Solution s;
-    vector<int> v{ 2,2,-1,3,-2,2,1,1,1,0,-1 };
-    s.minimumPairRemoval(v);
+    vector<int> v{ 0,2000000000,-294967296 };
+    s.numberOfArithmeticSlices(v);
     return 0;
 }
