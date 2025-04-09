@@ -1,9 +1,126 @@
-#include <iostream>
-#include <bits/stdc++.h>
 #include <cmath>
+#include <iostream>
+#include <string> 
+#include <queue> 
+#include <cstring>
+#include <algorithm>
 using namespace std;
 
+int dx[4] = { -1, 1, 0, 0 }; 
+int dy[4] = { 0, 0, -1, 1 };
+char dir[4] = { 'U', 'D', 'L', 'R' };
+string maza[30];
+bool vis[30][50]; 
+vector<vector<char>> pathDir(30, vector<char>(50, ' '));
+int main()
+{
+	memset(vis, 0, sizeof(vis));
+	int rows = 30, cols = 50;
 
+	queue<pair<int, int>> q;
+	q.push({ 0, 0 });
+	vis[0][0] = true;
+
+	for (int i = 0; i < 30; i++) cin >> maza[i];
+
+	while (!q.empty()) {
+		int sz = q.size();
+		for (int i = 0; i < sz; i++) {
+			int a = q.front().first;
+			int b = q.front().second;
+			q.pop();
+			if (a == rows - 1 && b == cols - 1) {
+				// ???Y?¡¤??
+				string path;
+				int i = rows - 1, j = cols - 1;
+				while (i != 0 || j != 0) {
+					path += pathDir[i][j];
+					if (pathDir[i][j] == 'D') i--;
+					else if (pathDir[i][j] == 'L') j++;
+					else if (pathDir[i][j] == 'R') j--;
+					else if (pathDir[i][j] == 'U') i++;
+				}
+				reverse(path.begin(), path.end());
+				cout << path << endl;
+				return 0;
+			}
+			for (int k = 0; k < 4; k++) {
+				int x = a + dx[k], y = b + dy[k];
+				if (x >= 0 && x < rows && y >= 0 && y < cols && maza[x][y] == '0' && !vis[x][y]) {
+					q.push({ x, y });
+					vis[x][y] = true;
+					pathDir[x][y] = dir[k];
+				}
+			}
+		}
+	}
+
+	return 0;
+}
+
+
+
+//// 4659
+//
+//int a[20190350];
+//
+//int main()
+//{
+//	int n = 20190324;
+//	a[1] = a[2] = a[3] = 1;
+//	for(int i = 4; i <= n; i++){
+//		a[i] = ((a[i-1] + a[i-2]) % 10000+ a[i-3]) % 10000;
+//	}
+//	cout << a[12];
+//	return 0;
+//} 
+
+
+
+//// 2658417853
+//
+//bool check(int i){
+//	while(i){
+//		int t = i % 10;
+//		i /= 10;
+//		if(t == 2 || t == 0 || t == 1 || t == 9) return true;
+//	}
+//	return false;
+//}
+//
+//int main()
+//{
+//	long long sum = 0, ans = 0;
+//	for(int i = 1; i <= 2019; i++){
+//		if(check(i)){
+//			ans = i * i;
+//			sum += ans; 
+//		}
+//	}
+//	cout << sum << endl; 
+//	return 0;
+//}
+
+
+//// AAAEEEEEEHHHIIILLRRRSSTTWWWY
+//int main()
+//{
+//	string s;
+//	cin >> s;
+//	int ch[32] = {0};
+//	int n = s.size();
+//	for(int i = 0; i < n; i++){
+//		ch[s[i] - 'A']++;
+//	}
+//	for(int i = 0; i < 26; i++){
+//		int sz = ch[i];
+//		for(int j = 0; j < sz; j++){
+//			char t = 'A' + i;
+//			cout << t;
+//		}
+//	}
+//	return 0;
+//} 
 
 //long long a[10010];
 //int main()
