@@ -3,38 +3,36 @@
 
 class Solution {
 public:
-    vector<int> findWordsContaining(vector<string>& words, char x) {
-        vector<int> ret;
-        int n = words.size();
-        for (int i = 0; i < n; i++)
+    int differenceOfSums(int n, int m) {
+        int ret = 0;
+        for (int i = 1; i <= n; i++)
         {
-            if (words[i].find(x) != string::npos)
+            if (i % m == 0) // ¿ÉÒÔÕû³ý
             {
-                ret.push_back(i);
+                ret -= i;
+            }
+            else
+            {
+                ret += i;
             }
         }
         return ret;
     }
 };
 
+class Solution {
+public:
+    int differenceOfSums(int n, int m) {
+        int k = n / m;
+        int ret = n * (n + 1) / 2 - k * (k + 1) * m;
+        return ret;
+    }
+};
 
 class Solution {
 public:
-    vector<int> findWordsContaining(vector<string>& words, char x) {
-        vector<int> ret;
-        int n = words.size();
-        for (int i = 0; i < n; i++)
-        {
-            int sz = words[i].size();
-            for (int j = 0; j < sz; j++)
-            {
-                if (words[i][j] == x)
-                {
-                    ret.push_back(i);
-                    break;
-                }
-            }
-        }
-        return ret;
+    int differenceOfSums(int n, int m) {
+        int k = n / m;
+        return n * (n + 1) / 2 - k * (k + 1) * m;
     }
 };
