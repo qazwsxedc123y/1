@@ -50,10 +50,12 @@ print(len(e))
 # a = "hello world"
 # print(a ,f"type(a) = {type(a)}")
 
+# 但是输入的接受的返回值是字符串类型
 
 # a = input("请输入第一个数")
 # b = input("请输入第二个数")
 # c = input("请输入第三个数")
+# print(type(a))
 # print(f"第一个数：{a},第二个数：{b},第三个数{c}")
 # print(a,b,c)
 
