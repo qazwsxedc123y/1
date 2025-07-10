@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <queue>
+#include <unordered_set>
 using namespace std;
 //#include <iostream>
 //using namespace std;
@@ -210,37 +211,37 @@ using namespace std;
 
 
 
-
-#include <algorithm>
-int n, k;
-int main()
-{
-    int sum = 0;
-    cin >> n >> k;
-    vector<int> v;
-    for (int i = 0; i < n; i++)
-    {
-        int t;
-        cin >> t;
-        if (t % 2 != 0) sum += t;
-        else v.push_back(t);
-    }
-    while (k--)
-    {
-        sort(v.begin(), v.end());
-        int t = v[v.size() - 1];
-        v.pop_back();
-        t /= 2;
-        if (t % 2 != 0) sum += t;
-        else v.push_back(t);
-    }
-    for (int i = 0; i < v.size(); i++)
-    {
-        sum += v[i];
-    }
-    cout << sum << endl;
-    return 0;
-}
+//
+//#include <algorithm>
+//int n, k;
+//int main()
+//{
+//    int sum = 0;
+//    cin >> n >> k;
+//    vector<int> v;
+//    for (int i = 0; i < n; i++)
+//    {
+//        int t;
+//        cin >> t;
+//        if (t % 2 != 0) sum += t;
+//        else v.push_back(t);
+//    }
+//    while (k--)
+//    {
+//        sort(v.begin(), v.end());
+//        int t = v[v.size() - 1];
+//        v.pop_back();
+//        t /= 2;
+//        if (t % 2 != 0) sum += t;
+//        else v.push_back(t);
+//    }
+//    for (int i = 0; i < v.size(); i++)
+//    {
+//        sum += v[i];
+//    }
+//    cout << sum << endl;
+//    return 0;
+//}
 
 // int main() {
 //     // 大根堆
@@ -272,4 +273,32 @@ int main()
 //     }
 //     cout << sum << endl;
 // }
+// 64 位输出请用 printf("%lld")
+
+
+
+const int N = 1000000;
+int n, ret = 0;
+int main() {
+    n = 15;
+    int a = 0, b = 1, c = 1;
+    int a1, a2;
+    while (c >= n)
+    {
+        a = b;
+        b = c;
+        c = a + b;
+    }
+    a2 = c, a1 = b;
+    while (true)
+    {
+        if (a1 == n || a2 == n)
+        {
+            break;
+        }
+        a1++, a2--;
+        ret++;
+    }
+    cout << ret << endl;
+}
 // 64 位输出请用 printf("%lld")
