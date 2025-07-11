@@ -307,136 +307,185 @@ using namespace std;
 // 64 位输出请用 printf("%lld")
 
 
+//class Solution {
+//public:
+//    /**
+//     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+//     *
+//     *
+//     * @param grid int整型vector<vector<>>
+//     * @return int整型
+//     */
+//    int n, m;
+//    int ret = 0;
+//    queue<pair<int, int>> q;
+//    int dx[4] = { -1, 1, 0, 0 };
+//    int dy[4] = { 0, 0, -1, 1 };
+//    bool vis[1001][1001];
+//    void bfs(vector<vector<int> >& grid)
+//    {
+//        while (!q.empty())
+//        {
+//            int sz = q.size();
+//            for (int i = 0; i < sz; i++)
+//            {
+//                auto [a, b] = q.front();
+//                q.pop();
+//                for (int k = 0; k < 4; k++)
+//                {
+//                    int x = a + dx[k], y = b + dy[k];
+//                    if (x >= 0 && y >= 0 && x < n && y < m && grid[x][y] == 1 && vis[x][y] == false)
+//                    {
+//                        vis[x][y] = true;
+//                        q.push({ x, y });
+//                    }
+//                }
+//            }
+//            ret++;
+//        }
+//    }
+//    int rotApple(vector<vector<int> >& grid) {
+//        // write code here
+//        n = grid.size(), m = grid[0].size();
+//        for (int i = 0; i < n; i++)
+//        {
+//            for (int j = 0; j < m; j++)
+//            {
+//                if (grid[i][j] == 2)// 蔓延
+//                {
+//                    q.push({ i, j });
+//                    vis[i][j] = true;
+//                }
+//            }
+//        }
+//        if (q.size() == n * m) return 0;
+//        bfs(grid);
+//        cout << ret << endl;
+//        for (int i = 0; i < n; i++)
+//        {
+//            for (int j = 0; j < m; j++)
+//            {
+//                if (grid[i][j] == 1 && vis[i][j] == false)// 蔓延
+//                {
+//                    return -1;
+//                }
+//            }
+//        }
+//        return ret - 1;
+//    }
+//}; class Solution {
+//public:
+//    /**
+//     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+//     *
+//     *
+//     * @param grid int整型vector<vector<>>
+//     * @return int整型
+//     */
+//    int n, m;
+//    int ret = 0;
+//    queue<pair<int, int>> q;
+//    int dx[4] = { -1, 1, 0, 0 };
+//    int dy[4] = { 0, 0, -1, 1 };
+//    bool vis[1001][1001];
+//    void bfs(vector<vector<int> >& grid)
+//    {
+//        while (!q.empty())
+//        {
+//            int sz = q.size();
+//            for (int i = 0; i < sz; i++)
+//            {
+//                auto [a, b] = q.front();
+//                q.pop();
+//                for (int k = 0; k < 4; k++)
+//                {
+//                    int x = a + dx[k], y = b + dy[k];
+//                    if (x >= 0 && y >= 0 && x < n && y < m && grid[x][y] == 1 && vis[x][y] == false)
+//                    {
+//                        vis[x][y] = true;
+//                        q.push({ x, y });
+//                    }
+//                }
+//            }
+//            ret++;
+//        }
+//    }
+//    int rotApple(vector<vector<int> >& grid) {
+//        // write code here
+//        n = grid.size(), m = grid[0].size();
+//        for (int i = 0; i < n; i++)
+//        {
+//            for (int j = 0; j < m; j++)
+//            {
+//                if (grid[i][j] == 2)// 蔓延
+//                {
+//                    q.push({ i, j });
+//                    vis[i][j] = true;
+//                }
+//            }
+//        }
+//        if (q.size() == n * m) return 0;
+//        bfs(grid);
+//        cout << ret << endl;
+//        for (int i = 0; i < n; i++)
+//        {
+//            for (int j = 0; j < m; j++)
+//            {
+//                if (grid[i][j] == 1 && vis[i][j] == false)// 蔓延
+//                {
+//                    return -1;
+//                }
+//            }
+//        }
+//        return ret - 1;
+//    }
+//};
+
+
+//class Solution {
+//public:
+//    int iceBreakingGame(int n, int m) {
+//        int ans = 0;
+//        for (int i = 2; i <= n; i++)
+//        {
+//            ans = (ans + m) % i;
+//        }
+//        return ans;
+//    }
+//};
+
 class Solution {
-public:
-    /**
-     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
-     *
-     *
-     * @param grid int整型vector<vector<>>
-     * @return int整型
-     */
-    int n, m;
-    int ret = 0;
-    queue<pair<int, int>> q;
-    int dx[4] = { -1, 1, 0, 0 };
-    int dy[4] = { 0, 0, -1, 1 };
-    bool vis[1001][1001];
-    void bfs(vector<vector<int> >& grid)
+    struct Node
     {
-        while (!q.empty())
-        {
-            int sz = q.size();
-            for (int i = 0; i < sz; i++)
-            {
-                auto [a, b] = q.front();
-                q.pop();
-                for (int k = 0; k < 4; k++)
-                {
-                    int x = a + dx[k], y = b + dy[k];
-                    if (x >= 0 && y >= 0 && x < n && y < m && grid[x][y] == 1 && vis[x][y] == false)
-                    {
-                        vis[x][y] = true;
-                        q.push({ x, y });
-                    }
-                }
-            }
-            ret++;
-        }
-    }
-    int rotApple(vector<vector<int> >& grid) {
-        // write code here
-        n = grid.size(), m = grid[0].size();
-        for (int i = 0; i < n; i++)
-        {
-            for (int j = 0; j < m; j++)
-            {
-                if (grid[i][j] == 2)// 蔓延
-                {
-                    q.push({ i, j });
-                    vis[i][j] = true;
-                }
-            }
-        }
-        if (q.size() == n * m) return 0;
-        bfs(grid);
-        cout << ret << endl;
-        for (int i = 0; i < n; i++)
-        {
-            for (int j = 0; j < m; j++)
-            {
-                if (grid[i][j] == 1 && vis[i][j] == false)// 蔓延
-                {
-                    return -1;
-                }
-            }
-        }
-        return ret - 1;
-    }
-}; class Solution {
+        Node* next;
+        int val;
+        Node(int v) : val(v), next(nullptr) {}
+    };
 public:
-    /**
-     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
-     *
-     *
-     * @param grid int整型vector<vector<>>
-     * @return int整型
-     */
-    int n, m;
-    int ret = 0;
-    queue<pair<int, int>> q;
-    int dx[4] = { -1, 1, 0, 0 };
-    int dy[4] = { 0, 0, -1, 1 };
-    bool vis[1001][1001];
-    void bfs(vector<vector<int> >& grid)
-    {
-        while (!q.empty())
+    int iceBreakingGame(int n, int m) {
+        // 环形链表
+        if (n == 1) return 0;
+        Node* head = new Node(0);
+        Node* cur = head;
+        for (int i = 1; i < n; i++)
         {
-            int sz = q.size();
-            for (int i = 0; i < sz; i++)
-            {
-                auto [a, b] = q.front();
-                q.pop();
-                for (int k = 0; k < 4; k++)
-                {
-                    int x = a + dx[k], y = b + dy[k];
-                    if (x >= 0 && y >= 0 && x < n && y < m && grid[x][y] == 1 && vis[x][y] == false)
-                    {
-                        vis[x][y] = true;
-                        q.push({ x, y });
-                    }
-                }
-            }
-            ret++;
+            cur->next = new Node(i);
+            cur = cur->next;
         }
-    }
-    int rotApple(vector<vector<int> >& grid) {
-        // write code here
-        n = grid.size(), m = grid[0].size();
-        for (int i = 0; i < n; i++)
-        {
-            for (int j = 0; j < m; j++)
-            {
-                if (grid[i][j] == 2)// 蔓延
-                {
-                    q.push({ i, j });
-                    vis[i][j] = true;
-                }
+        cur->next = head;
+        // 模拟
+        Node* prev = cur;  // 前驱节点
+        cur = head;        // 当前节点
+        while (cur->next != cur) {
+            // 找到第m个节点
+            for (int i = 1; i < m; i++) {
+                prev = cur;
+                cur = cur->next;
             }
+            // 删除当前节点
+            prev->next = cur->next;
+            cur = prev->next; // 从下一个继续
         }
-        if (q.size() == n * m) return 0;
-        bfs(grid);
-        cout << ret << endl;
-        for (int i = 0; i < n; i++)
-        {
-            for (int j = 0; j < m; j++)
-            {
-                if (grid[i][j] == 1 && vis[i][j] == false)// 蔓延
-                {
-                    return -1;
-                }
-            }
-        }
-        return ret - 1;
+        return cur->val;
     }
 };
