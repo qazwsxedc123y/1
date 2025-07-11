@@ -3,6 +3,7 @@
 #include <string>
 #include <queue>
 #include <unordered_set>
+#include <unordered_map>
 using namespace std;
 //#include <iostream>
 //using namespace std;
@@ -277,28 +278,165 @@ using namespace std;
 
 
 
-const int N = 1000000;
-int n, ret = 0;
-int main() {
-    n = 15;
-    int a = 0, b = 1, c = 1;
-    int a1, a2;
-    while (c >= n)
-    {
-        a = b;
-        b = c;
-        c = a + b;
-    }
-    a2 = c, a1 = b;
-    while (true)
-    {
-        if (a1 == n || a2 == n)
-        {
-            break;
-        }
-        a1++, a2--;
-        ret++;
-    }
-    cout << ret << endl;
-}
+//const int N = 1000000;
+//int n, ret = 0;
+//int main() {
+//    n = 15;
+//    int a = 0, b = 1, c = 1;
+//    int a1, a2;
+//    while (c >= n)
+//    {
+//        a = b;
+//        b = c;
+//        c = a + b;
+//    }
+//    a2 = c, a1 = b;
+//    while (true)
+//    {
+//        if (a1 == n || a2 == n)
+//        {
+//            break;
+//        }
+//        a1++, a2--;
+//        ret++;
+//    }
+//    cout << ret << endl;
+//}
+// 
+// 
 // 64 位输出请用 printf("%lld")
+
+
+class Solution {
+public:
+    /**
+     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+     *
+     *
+     * @param grid int整型vector<vector<>>
+     * @return int整型
+     */
+    int n, m;
+    int ret = 0;
+    queue<pair<int, int>> q;
+    int dx[4] = { -1, 1, 0, 0 };
+    int dy[4] = { 0, 0, -1, 1 };
+    bool vis[1001][1001];
+    void bfs(vector<vector<int> >& grid)
+    {
+        while (!q.empty())
+        {
+            int sz = q.size();
+            for (int i = 0; i < sz; i++)
+            {
+                auto [a, b] = q.front();
+                q.pop();
+                for (int k = 0; k < 4; k++)
+                {
+                    int x = a + dx[k], y = b + dy[k];
+                    if (x >= 0 && y >= 0 && x < n && y < m && grid[x][y] == 1 && vis[x][y] == false)
+                    {
+                        vis[x][y] = true;
+                        q.push({ x, y });
+                    }
+                }
+            }
+            ret++;
+        }
+    }
+    int rotApple(vector<vector<int> >& grid) {
+        // write code here
+        n = grid.size(), m = grid[0].size();
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < m; j++)
+            {
+                if (grid[i][j] == 2)// 蔓延
+                {
+                    q.push({ i, j });
+                    vis[i][j] = true;
+                }
+            }
+        }
+        if (q.size() == n * m) return 0;
+        bfs(grid);
+        cout << ret << endl;
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < m; j++)
+            {
+                if (grid[i][j] == 1 && vis[i][j] == false)// 蔓延
+                {
+                    return -1;
+                }
+            }
+        }
+        return ret - 1;
+    }
+}; class Solution {
+public:
+    /**
+     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+     *
+     *
+     * @param grid int整型vector<vector<>>
+     * @return int整型
+     */
+    int n, m;
+    int ret = 0;
+    queue<pair<int, int>> q;
+    int dx[4] = { -1, 1, 0, 0 };
+    int dy[4] = { 0, 0, -1, 1 };
+    bool vis[1001][1001];
+    void bfs(vector<vector<int> >& grid)
+    {
+        while (!q.empty())
+        {
+            int sz = q.size();
+            for (int i = 0; i < sz; i++)
+            {
+                auto [a, b] = q.front();
+                q.pop();
+                for (int k = 0; k < 4; k++)
+                {
+                    int x = a + dx[k], y = b + dy[k];
+                    if (x >= 0 && y >= 0 && x < n && y < m && grid[x][y] == 1 && vis[x][y] == false)
+                    {
+                        vis[x][y] = true;
+                        q.push({ x, y });
+                    }
+                }
+            }
+            ret++;
+        }
+    }
+    int rotApple(vector<vector<int> >& grid) {
+        // write code here
+        n = grid.size(), m = grid[0].size();
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < m; j++)
+            {
+                if (grid[i][j] == 2)// 蔓延
+                {
+                    q.push({ i, j });
+                    vis[i][j] = true;
+                }
+            }
+        }
+        if (q.size() == n * m) return 0;
+        bfs(grid);
+        cout << ret << endl;
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < m; j++)
+            {
+                if (grid[i][j] == 1 && vis[i][j] == false)// 蔓延
+                {
+                    return -1;
+                }
+            }
+        }
+        return ret - 1;
+    }
+};
