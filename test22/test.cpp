@@ -454,38 +454,162 @@ using namespace std;
 //    }
 //};
 
+//class Solution {
+//    struct Node
+//    {
+//        Node* next;
+//        int val;
+//        Node(int v) : val(v), next(nullptr) {}
+//    };
+//public:
+//    int iceBreakingGame(int n, int m) {
+//        // 环形链表
+//        if (n == 1) return 0;
+//        Node* head = new Node(0);
+//        Node* cur = head;
+//        for (int i = 1; i < n; i++)
+//        {
+//            cur->next = new Node(i);
+//            cur = cur->next;
+//        }
+//        cur->next = head;
+//        // 模拟
+//        Node* prev = cur;  // 前驱节点
+//        cur = head;        // 当前节点
+//        while (cur->next != cur) {
+//            // 找到第m个节点
+//            for (int i = 1; i < m; i++) {
+//                prev = cur;
+//                cur = cur->next;
+//            }
+//            // 删除当前节点
+//            prev->next = cur->next;
+//            cur = prev->next; // 从下一个继续
+//        }
+//        return cur->val;
+//    }
+//};
+
+
+
+//class Solution {
+//public:
+//    /**
+//     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+//     *
+//     * 计算两个数之和
+//     * @param s string字符串 表示第一个整数
+//     * @param t string字符串 表示第二个整数
+//     * @return string字符串
+//     */
+//    string solve(string s, string t) {
+//        // write code here
+//        // 不转为数字，直接用字符串计算，添加一个进位
+//        int array = 0;
+//        int n = s.size() - 1, m = t.size() - 1;
+//        string ret;
+//        int a, b;
+//        while (n >= 0 || m >= 0)
+//        {
+//            a = b = 0;
+//            if (n >= 0) a = s[n] - '0';
+//            if (m >= 0) b = t[m] - '0';
+//            int sum = a + b + array;
+//            array = sum / 10;
+//            sum %= 10;
+//            ret.push_back(sum + '0');
+//            n--, m--;
+//        }
+//        if (array != 0) ret.push_back(array + '0');
+//        ret.reserve();
+//        int sz = ret.size();
+//        for (int i = 0; i < sz / 2; i++)
+//        {
+//            char tmp = ret[i];
+//            ret[i] = ret[sz - i - 1];
+//            ret[sz - i - 1] = tmp;
+//        }
+//        return ret;
+//    }
+//};
+//
+
+//
+//struct ListNode {
+// 	int val;
+// 	struct ListNode *next;
+//    ListNode(int x) : val(x), next(nullptr) {}
+//};
+// 
+//class Solution {
+//public:
+//    /**
+//     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+//     *
+//     *
+//     * @param head1 ListNode类
+//     * @param head2 ListNode类
+//     * @return ListNode类
+//     */    ListNode* addInList(int a, int b) {
+//        // write code here
+//
+//        int sum = a + b;
+//        ListNode* head = nullptr;
+//        while (sum)
+//        {
+//            int t = sum % 10;
+//            sum /= 10;
+//            ListNode* cur = new ListNode(t);
+//            if (head == nullptr) head = cur;
+//            else
+//            {
+//                cur->next = head->next;
+//                head->next = cur;
+//                head = cur;
+//            }
+//        }
+//        return head;
+//};
+//int main()
+//{
+//    Solution s;
+//    s.addInList(937, 63);
+//    return 0;
+//}
+
+
 class Solution {
-    struct Node
-    {
-        Node* next;
-        int val;
-        Node(int v) : val(v), next(nullptr) {}
-    };
 public:
-    int iceBreakingGame(int n, int m) {
-        // 环形链表
-        if (n == 1) return 0;
-        Node* head = new Node(0);
-        Node* cur = head;
-        for (int i = 1; i < n; i++)
+    string multiply(string num1, string num2) {
+        int m = num1.size(), n = num2.size();
+        reverse(num1.begin(), num1.end());
+        reverse(num2.begin(), num2.end());
+
+        // 先计算无进位相乘
+        vector<int> tmp(n + m - 1);
+
+        for (int i = 0; i < m; i++)
         {
-            cur->next = new Node(i);
-            cur = cur->next;
-        }
-        cur->next = head;
-        // 模拟
-        Node* prev = cur;  // 前驱节点
-        cur = head;        // 当前节点
-        while (cur->next != cur) {
-            // 找到第m个节点
-            for (int i = 1; i < m; i++) {
-                prev = cur;
-                cur = cur->next;
+            for (int j = 0; j < n; j++)
+            {
+                tmp[i + j] += ((num1[i] - '0') * (num2[j] - '0'));
             }
-            // 删除当前节点
-            prev->next = cur->next;
-            cur = prev->next; // 从下一个继续
         }
-        return cur->val;
+
+        // 处理进位
+        int cur = 0, array = 0;
+        string ret;
+        while (cur < n + m - 1 || array)
+        {
+            if (cur < n + m - 1) array += tmp[cur++];
+            ret.push_back(array % 10 + '0');
+            array /= 10;
+        }
+
+        // 处理前导0
+        while (ret.size() > 1 && ret.back() == '0') ret.pop_back();
+        // 逆置
+        reverse(ret.begin(), ret.end());
+        return ret;
     }
 };
