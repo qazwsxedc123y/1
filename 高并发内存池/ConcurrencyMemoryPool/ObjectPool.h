@@ -27,6 +27,8 @@ inline static void* SystemAlloc(size_t kpage)
 	return ptr;
 }
 
+// 这里的 _freeList 就相当于ThreadCache 的桶（自由链表）
+// _memory 相当于从 CentralCache 批量获取的内存
 
 template<class T>
 class ObjectPool
