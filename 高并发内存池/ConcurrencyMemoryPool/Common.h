@@ -11,6 +11,7 @@ using std::endl;
 static const size_t MAX_BYTES = 267 * 1024;
 static const size_t MAX_FREE_LIST = 208;
 
+// 用函数来获取其下一个内存块
 static void*& NextObj(void* obj)
 {
 	return *(void**)obj;
@@ -34,10 +35,13 @@ public:
 	{
 		assert(obj);
 
+		// 头插
 		NextObj(obj) = _freeList;
 		_freeList = obj;
 	}
 
+	// 判断此时这个ThreadCache的自由链表是否为空
+	// 他有很多个自由链表，每一个链表都是_freeList对象
 	bool Empty()
 	{
 		return _freeList == nullptr;

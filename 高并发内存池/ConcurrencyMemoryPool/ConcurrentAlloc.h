@@ -3,6 +3,9 @@
 #include "Common.h"
 #include "ThreadCache.h"
 
+// 封装，当有线程/进程申请内存时
+// 会向ThreaCache上获取内存块
+// 其会调用Allocate
 static void* ConcurrentAlloc(size_t size)
 {
 	if (pTLSThreadCache == nullptr)
@@ -14,7 +17,9 @@ static void* ConcurrentAlloc(size_t size)
 	return pTLSThreadCache->Allocate(size);
 }
 
-
+// 其该函数也是封装
+// 其会调用Deallocate，其作用是当有线程/进程释放用tcmalloc申请的内存时
+// 会调用该函数，还给ThreadCache
 // 传参传 size 是为了计算其桶的位置
 static void ConcurrentFree(void* ptr, size_t size)
 {

@@ -11,6 +11,10 @@ void* ThreadCache::FetchFromCentralCache(size_t index, size_t size)
 }
 
 // 申请
+// 向ThreadCache申请内存时，首先要知道其位于那个桶的自由链表
+// 然后申请
+// 如果该桶为空，就向Central获取
+// 反之可以直接申请
 void* ThreadCache::Allocate(size_t size)
 {
 	assert(size <= MAX_BYTES);
