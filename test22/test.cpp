@@ -578,38 +578,277 @@ using namespace std;
 //}
 
 
-class Solution {
-public:
-    string multiply(string num1, string num2) {
-        int m = num1.size(), n = num2.size();
-        reverse(num1.begin(), num1.end());
-        reverse(num2.begin(), num2.end());
+//class Solution {
+//public:
+//    string multiply(string num1, string num2) {
+//        int m = num1.size(), n = num2.size();
+//        reverse(num1.begin(), num1.end());
+//        reverse(num2.begin(), num2.end());
+//
+//        // 先计算无进位相乘
+//        vector<int> tmp(n + m - 1);
+//
+//        for (int i = 0; i < m; i++)
+//        {
+//            for (int j = 0; j < n; j++)
+//            {
+//                tmp[i + j] += ((num1[i] - '0') * (num2[j] - '0'));
+//            }
+//        }
+//
+//        // 处理进位
+//        int cur = 0, array = 0;
+//        string ret;
+//        while (cur < n + m - 1 || array)
+//        {
+//            if (cur < n + m - 1) array += tmp[cur++];
+//            ret.push_back(array % 10 + '0');
+//            array /= 10;
+//        }
+//
+//        // 处理前导0
+//        while (ret.size() > 1 && ret.back() == '0') ret.pop_back();
+//        // 逆置
+//        reverse(ret.begin(), ret.end());
+//        return ret;
+//    }
+//};
 
-        // 先计算无进位相乘
-        vector<int> tmp(n + m - 1);
 
-        for (int i = 0; i < m; i++)
+//#include <iostream>
+//using namespace std;
+//
+//int main() {
+//    string s, ret;
+//    s = "abcd1230587890ed125ss123058789";
+//    int sz = s.size();
+//    int begin, len = 0, ans = 0;
+//    for (int i = 0; i < sz;)
+//    {
+//        if (s[i] >= '0' && s[i] <= '9')
+//        {
+//            int t = i;
+//            len = 0;
+//            while (i < sz && s[i] >= '0' && s[i] <= '9')
+//            {
+//                len++;
+//                i++;
+//            }
+//            if (ans < len)
+//            {
+//                ans = len;
+//                begin = t;
+//            }
+//        }
+//        else i++;
+//    }
+//    cout << s.substr(begin, ans) << endl;
+//
+//}
+//// 64 位输出请用 printf("%lld")
+
+
+//class Solution {
+//public:
+//    /**
+//     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+//     *
+//     * 判断岛屿数量
+//     * @param grid char字符型vector<vector<>>
+//     * @return int整型
+//     */
+//     // 1 -> 陆地
+//    vector<vector<bool>> vis;
+//    int dx[4] = { -1, 1, 0, 0 };
+//    int dy[4] = { 0, 0, -1, 1 };
+//    int n, m;
+//    void dfs(vector<vector<char> >& grid, int i, int j)
+//    {
+//        vis[i][j] = true;
+//        for (int k = 0; k < 4; k++)
+//        {
+//            int x = dx[k] + i, y = dy[k] + j;
+//            if (x >= 0 && y >= 0 && x < n && y < m && vis[x][y] == false && grid[x][y] == '1')
+//            {
+//                dfs(grid, x, y);
+//            }
+//        }
+//    }
+//    int solve(vector<vector<char> >& grid) {
+//        // write code here
+//        n = grid.size(), m = grid[0].size();
+//        vis = vector<vector<bool>>(n, vector<bool>(m));
+//        int ret = 0;
+//        for (int i = 0; i < n; i++)
+//        {
+//            for (int j = 0; j < m; j++)
+//            {
+//                if (grid[i][j] == '1' && vis[i][j] == false)
+//                {
+//                    dfs(grid, i, j);
+//                    ret++;
+//                }
+//            }
+//        }
+//        return ret;
+//    }
+//};
+
+
+//int main()
+//{
+//	int arr[3] = { 1,2,3 };
+//	arr.fin
+//	return 0;
+//}
+
+
+
+
+//#include <iostream>
+//#include <vector>
+//#include <cstdlib>  // 添加abs函数需要的头文件
+//using namespace std;
+//
+//int arr[6];
+//bool flag = false;  // 修正拼写错误：falg -> flag
+//
+//bool isTriangle(int a, int b, int c) {
+//    return (a + b > c) && (a + c > b) && (b + c > a);
+//}
+//
+//void is_true(vector<int>& arr1) {
+//    int a = arr[arr1[0]], b = arr[arr1[1]], c = arr[arr1[2]];
+//
+//    if (isTriangle(a, b, c)) {
+//        vector<int> other;
+//        for (int k = 0; k < 6; k++) {
+//            if (k != arr1[0] && k != arr1[1] && k != arr1[2]) {
+//                other.push_back(arr[k]);
+//            }
+//        }
+//
+//        int x = other[0], y = other[1], z = other[2];
+//        if (isTriangle(x, y, z)) {
+//            flag = true;
+//        }
+//    }
+//}
+//
+//void dfs(vector<int>& arr1, vector<bool>& visited) {
+//    if (flag) return;
+//    if (arr1.size() == 3) {
+//        is_true(arr1);
+//        return;  // 添加return，避免不必要的递归
+//    }
+//    for (int j = 0; j < 6; j++) {
+//        if (!visited[j]) {
+//            visited[j] = true;
+//            arr1.push_back(j);
+//            dfs(arr1, visited);
+//            arr1.pop_back();
+//            visited[j] = false;
+//        }
+//    }
+//}
+//
+//int main() {
+//    int t;
+//    cin >> t;
+//    for (int i = 0; i < t; i++) {
+//        flag = false;  // 每次测试用例前重置flag
+//        vector<bool> visited(6, false);
+//        for (int j = 0; j < 6; j++) {
+//            cin >> arr[j];
+//        }
+//        vector<int> arr1;
+//        dfs(arr1, visited);
+//        cout << (flag ? "Yes" : "No") << endl;
+//    }
+//    return 0;
+//}
+
+
+
+
+#include <iostream>
+#include <vector>
+using namespace std;
+int arr[6];
+bool flag = false;
+vector<bool> visited(6, false);
+bool isTriangle(int a, int b, int c) {
+    return (a + b > c) && (a + c > b) && (b + c > a);
+}
+void is_true(vector<int>& arr1)
+{
+    // 如何获取另外的三个数字组合？
+
+    int a = arr[arr1[0]], b = arr[arr1[1]], c = arr[arr1[2]];
+    int _a = arr1[0], _b = arr1[1], _c = arr1[2];
+
+    if (isTriangle(a, b, c))
+    {
+        // 获取另外的三个的组合
+        // 全为 1 怎么处理？
+        // 全排列为下标
+        int tmp[3];
+        int i = 0;
+        for (int k = 0; k < 6; k++)
         {
-            for (int j = 0; j < n; j++)
+            if (k != _a && k != _b && k != _c)
             {
-                tmp[i + j] += ((num1[i] - '0') * (num2[j] - '0'));
+                tmp[i++] = k;
             }
         }
-
-        // 处理进位
-        int cur = 0, array = 0;
-        string ret;
-        while (cur < n + m - 1 || array)
+        a = arr[tmp[0]], b = arr[tmp[1]], c = arr[tmp[2]];
+        if (isTriangle(a, b, c))
         {
-            if (cur < n + m - 1) array += tmp[cur++];
-            ret.push_back(array % 10 + '0');
-            array /= 10;
+            flag = true;
         }
-
-        // 处理前导0
-        while (ret.size() > 1 && ret.back() == '0') ret.pop_back();
-        // 逆置
-        reverse(ret.begin(), ret.end());
-        return ret;
     }
-};
+}
+void dfs(vector<int>& arr1, vector<bool>& visited)
+{
+    if (arr1.size() > 3) return;
+    if (arr1.size() == 3)
+    {
+        // 判断是否为三角形
+        if (flag == true) return;
+        is_true(arr1);
+        if (flag == true) return;
+    }
+    for (int j = 0; j < 6; j++)
+    {
+        if (!visited[j])
+        { // 避免重复选择同一个元素
+            visited[j] = true;
+            arr1.push_back(j);
+            dfs(arr1, visited);
+            arr1.pop_back();
+            visited[j] = false;
+        }
+    }
+}
+
+int main() {
+    // 全排列
+    // 后判断是否为三角形
+    int t;
+
+    cin >> t;
+    for (int i = 0; i < t; i++)
+    {
+        flag = false;
+        for (int j = 0; j < 6; j++)
+        {
+            cin >> arr[j];
+        }
+        // 进行全排列
+        vector<int> arr1;
+        dfs(arr1, visited);
+        if (flag == true) cout << "Yes" << endl;
+        else cout << "No" << endl;
+    }
+}
+// 64 位输出请用 printf("%lld")修改正确
