@@ -3,12 +3,14 @@
 #include "Common.h"
 #include "ThreadCache.h"
 
-// å°è£…ï¼Œå½“æœ‰çº¿ç¨‹/è¿›ç¨‹ç”³è¯·å†…å­˜æ—¶
-// ä¼šå‘ThreaCacheä¸ŠèŽ·å–å†…å­˜å—
-// å…¶ä¼šè°ƒç”¨Allocate
+// ·â×°£¬µ±ÓÐÏß³Ì/½ø³ÌÉêÇëÄÚ´æÊ±
+// »áÏòThreaCacheÉÏ»ñÈ¡ÄÚ´æ¿é
+// Æä»áµ÷ÓÃAllocate
 static void* ConcurrentAlloc(size_t size)
 {
-	// é€šè¿‡TLS æ¯ä¸ªçº¿ç¨‹æ— é”çš„èŽ·å–è‡ªå·±çš„ä¸“å±žçš„ThreadCacheå¯¹è±¡
+	// Í¨¹ýTLS Ã¿¸öÏß³ÌÎÞËøµÄ»ñÈ¡×Ô¼ºµÄ×¨ÊôµÄThreadCache¶ÔÏó
+	// Èç¹ûÊÇµÚÒ»´Î£¬ÄÇÃ´´ËÊ±µÄpTLSThreadCacheÎª¿Õ£¬´´½¨Ò»¸ö
+	// ºóÐø¾Í²»ÐèÒª´´½¨ÁË£¬ÒòÎªÒÑ¾­´æÔÚÁË
 	if (pTLSThreadCache == nullptr)
 	{
 		pTLSThreadCache = new ThreadCache;
@@ -18,10 +20,10 @@ static void* ConcurrentAlloc(size_t size)
 	return pTLSThreadCache->Allocate(size);
 }
 
-// å…¶è¯¥å‡½æ•°ä¹Ÿæ˜¯å°è£…
-// å…¶ä¼šè°ƒç”¨Deallocateï¼Œå…¶ä½œç”¨æ˜¯å½“æœ‰çº¿ç¨‹/è¿›ç¨‹é‡Šæ”¾ç”¨tcmallocç”³è¯·çš„å†…å­˜æ—¶
-// ä¼šè°ƒç”¨è¯¥å‡½æ•°ï¼Œè¿˜ç»™ThreadCache
-// ä¼ å‚ä¼  size æ˜¯ä¸ºäº†è®¡ç®—å…¶æ¡¶çš„ä½ç½®
+// Æä¸Ãº¯ÊýÒ²ÊÇ·â×°
+// Æä»áµ÷ÓÃDeallocate£¬Æä×÷ÓÃÊÇµ±ÓÐÏß³Ì/½ø³ÌÊÍ·ÅÓÃtcmallocÉêÇëµÄÄÚ´æÊ±
+// »áµ÷ÓÃ¸Ãº¯Êý£¬»¹¸øThreadCache
+// ´«²Î´« size ÊÇÎªÁË¼ÆËãÆäÍ°µÄÎ»ÖÃ
 static void ConcurrentFree(void* ptr, size_t size)
 {
 	assert(pTLSThreadCache);
