@@ -853,81 +853,126 @@ using namespace std;
 //// 64 位输出请用 printf("%lld")修改正确
 
 
-#include <queue>
-class Solution {
-public:
-    /**
-     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
-     *
-     * max increasing subsequence
-     * @param arr int整型vector the array
-     * @return int整型
-     */
-    int MLS(vector<int>& arr) {
-        // write code here
-        priority_queue<int> q;
-        int ret = 0, len = 1;
-        for (int i = 0; i < arr.size(); i++)
-        {
-            q.push(arr[i]);
-        }
-        int a = q.top();
-        q.pop();
-        while (!q.empty())
-        {
-            // 手机掉网了wifi不好
-            int t = q.top();
-            q.pop();
-            if (a == t + 1)
-            {
-                len++;
-            }
-            else if (a == t)
-            {
+//#include <queue>
+//class Solution {
+//public:
+//    /**
+//     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+//     *
+//     * max increasing subsequence
+//     * @param arr int整型vector the array
+//     * @return int整型
+//     */
+//    int MLS(vector<int>& arr) {
+//        // write code here
+//        priority_queue<int> q;
+//        int ret = 0, len = 1;
+//        for (int i = 0; i < arr.size(); i++)
+//        {
+//            q.push(arr[i]);
+//        }
+//        int a = q.top();
+//        q.pop();
+//        while (!q.empty())
+//        {
+//            // 手机掉网了wifi不好
+//            int t = q.top();
+//            q.pop();
+//            if (a == t + 1)
+//            {
+//                len++;
+//            }
+//            else if (a == t)
+//            {
+//
+//            }
+//            else
+//            {
+//                ret = max(ret, len);
+//                len = 1;
+//            }
+//            a = t;
+//        }
+//        ret = max(ret, len);
+//        return ret;
+//    }
+//};
+//
+//int n, m;
+//int dp[502][502];
+//char ch[502][502];
+//int is_love(char c)
+//{
+//    if (c == 'l') return 4;
+//    else if (c == 'o') return 3;
+//    else if (c == 'v') return 2;
+//    else if (c == 'e') return 1;
+//    else return 0;
+//}
+//int main() {
+//    // 不使用dfs，使用dp
+//    // 其只可以向右或向下走
+//    cin >> n >> m;
+//    for (int i = 0; i < n; i++)
+//    {
+//        for (int j = 0; j < m; j++)
+//        {
+//            cin >> ch[i][j];
+//        }
+//    }
+//    for (int i = 1; i <= n; i++)
+//    {
+//        for (int j = 1; j <= m; j++)
+//        {
+//            dp[i][j] = max(dp[i][j - 1] + is_love(ch[i - 1][j - 1]), dp[i - 1][j] + is_love(ch[i - 1][j - 1]));
+//        }
+//    }
+//    cout << dp[n][m] << endl;
+//    return 0;
+//}
+//// 64 位输出请用 printf("%lld")
+//
+//
+//#include <iostream>
+//#include <algorithm>
+//using namespace std;
+//int N;
+//string ret;
+//int i = 0;
+//int main() {
+//    cin >> N;
+//    while (N)
+//    {
+//        i++;
+//        int t = N % 10;
+//        ret.push_back(t + '0');
+//        if (i % 3 == 0) ret.push_back(',');
+//        N /= 10;
+//    }
+//    if (ret[ret.size() - 1] == ',') ret.pop_back();
+//    reverse(ret.begin(), ret.end());
+//    cout << ret << endl;
+//}
+//// 64 位输出请用 printf("%lld")
 
-            }
-            else
-            {
-                ret = max(ret, len);
-                len = 1;
-            }
-            a = t;
-        }
-        ret = max(ret, len);
-        return ret;
-    }
-};
 
-int n, m;
-int dp[502][502];
-char ch[502][502];
-int is_love(char c)
-{
-    if (c == 'l') return 4;
-    else if (c == 'o') return 3;
-    else if (c == 'v') return 2;
-    else if (c == 'e') return 1;
-    else return 0;
-}
-int main() {
-    // 不使用dfs，使用dp
-    // 其只可以向右或向下走
-    cin >> n >> m;
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < m; j++)
-        {
-            cin >> ch[i][j];
-        }
-    }
-    for (int i = 1; i <= n; i++)
-    {
-        for (int j = 1; j <= m; j++)
-        {
-            dp[i][j] = max(dp[i][j - 1] + is_love(ch[i - 1][j - 1]), dp[i - 1][j] + is_love(ch[i - 1][j - 1]));
-        }
-    }
-    cout << dp[n][m] << endl;
-    return 0;
-}
-// 64 位输出请用 printf("%lld")
+//#include <iostream>
+//using namespace std;
+//int n;
+//int dp[41];
+//int main() {
+//    // 使用dp
+//    // 从0台阶开始跳
+//    cin >> n;
+//    // dp[i] 表示到达第 i 台阶的方式有多少种
+//    // dp[i] = dp[i-1] + dp[i-2]
+//    dp[0] = 0, dp[1] = 1, dp[2] = 2;
+//    for (int i = 3; i <= n; i++)
+//    {
+//        dp[i] = dp[i - 1] + dp[i - 2];
+//    }
+//    cout << dp[n] << endl;
+//}
+//// 64 位输出请用 printf("%lld")
+
+
