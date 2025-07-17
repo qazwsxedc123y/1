@@ -976,3 +976,179 @@ using namespace std;
 //// 64 位输出请用 printf("%lld")
 
 
+//class Solution {
+//public:
+//    /**
+//     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+//     *
+//     *
+//     * @param A string字符串
+//     * @return int整型
+//     */
+//    int is_Palindromic(string s)
+//    {
+//        int sz = s.size();
+//        int l = 0, r = sz - 1;
+//        while (l < r)
+//        {
+//            if (s[l] != s[r]) return 0;
+//            l++, r--;
+//        }
+//        return sz;
+//    }
+//    int getLongestPalindrome(string A) {
+//        // write code here
+//        int n = A.size();
+//        int ret = 1;
+//        for (int i = 0; i < n; i++)
+//        {
+//            for (int j = i + 1; j < n; j++)
+//            {
+//                // 计算当前字串是否为回文子串
+//                ret = max(ret, is_Palindromic(A.substr(i, j - i + 1)));
+//            }
+//        }
+//        return ret;
+//    }
+//};
+//
+//int main()
+//{
+//    Solution s;
+//    s.getLongestPalindrome("ababc");
+//    return 0;
+//}
+
+
+#include <iostream>
+#include <unordered_map>
+using namespace std;
+int n, m, x, y;
+int dp[21][21];
+unordered_map<int, int> myhash;
+void func(int x, int y)
+{
+    int x1 = x + 2, y1 = y + 1;
+    if (x1 <= n && y1 <= m)
+    {
+        myhash.insert({ x1,y1 });
+    }
+}
+int main() {
+    cin >> n >> m >> x >> y;
+    func(x, y);
+}
+// 64 位输出请用 printf("%lld")
+
+
+//#include <iostream>
+//#include <unordered_map>
+//using namespace std;
+//int n, m, x, y;
+//bool vis[21][21] = { false };  // 记录是否可达
+//int dp[22][22]; // 到达 i j下标的总路径数 dp[i-1][j] + dp[i][j]
+//void func(int x, int y) {
+//    int dx[] = { 2, 1, -1, -2, -2, -1, 1, 2 };
+//    int dy[] = { 1, 2, 2, 1, -1, -2, -2, -1 };
+//
+//    for (int i = 0; i < 8; i++) {
+//        int x1 = x + dx[i];
+//        int y1 = y + dy[i];
+//        if (x1 >= 1 && x1 <= n && y1 >= 1 && y1 <= m) {
+//            vis[x1][y1] = true;  // 标记为可达
+//        }
+//    }
+//}
+//int main() {
+//    cin >> n >> m >> x >> y;
+//    func(x, y);
+//    for (int i = 0; i < n; i++)
+//    {
+//        if (vis[i][0] != true) dp[i][0] = 1;
+//    }
+//    for (int j = 0; j < m; j++)
+//    {
+//        if (vis[0][j] != true) dp[0][j] = 1;
+//    }
+//    for (int i = 1; i <= n; i++)
+//    {
+//        for (int j = 1; j <= m; j++)
+//        {
+//            if (vis[i - 1][j - 1] == true) dp[i][j] = 0;
+//            else
+//            {
+//                dp[i][j] = dp[i - 1][j] + dp[i][j-1];
+//            }
+//        }
+//    }
+//    cout << dp[n][m] << endl;
+//}
+//// 64 位输出请用 printf("%lld")
+
+
+//#include <iostream>
+//#include <unordered_map>
+//using namespace std;
+//int n, m, x, y;
+//bool vis[21][21] = { false };  // 记录是否可达
+//int dp[22][22]; // 到达 i j下标的总路径数 dp[i-1][j] + dp[i][j]
+//void func(int x, int y) {
+//    int dx[] = { 2, 1, -1, -2, -2, -1, 1, 2 };
+//    int dy[] = { 1, 2, 2, 1, -1, -2, -2, -1 };
+//
+//    for (int i = 0; i < 8; i++) {
+//        int x1 = x + dx[i];
+//        int y1 = y + dy[i];
+//        if (x1 >= 1 && x1 <= n && y1 >= 1 && y1 <= m) {
+//            vis[x1][y1] = true;  // 标记为可达
+//        }
+//    }
+//}
+//int main() {
+//    cin >> n >> m >> x >> y;
+//    func(x, y);
+//    dp[0][0] = vis[0][0] ? 0 : 1;  // 起点
+//    for (int i = 0; i < n; i++)
+//    {
+//        if (!vis[i][0]) {
+//            dp[i][0] = dp[i - 1][0];
+//        }
+//    }
+//    for (int j = 0; j < m; j++)
+//    {
+//        if (!vis[0][j]) {
+//            dp[0][j] = dp[0][j - 1];
+//        }
+//    }
+//    for (int i = 1; i <= n; i++)
+//    {
+//        for (int j = 1; j <= m; j++)
+//        {
+//            if (vis[i - 1][j - 1] == true || (i == x - 1 && j == y - 1)) dp[i][j] = 0;
+//            else
+//            {
+//                dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+//            }
+//        }
+//    }
+//    cout << dp[n][m] << endl;
+//}
+//// 64 位输出请用 printf("%lld")
+
+#include <iostream>
+#include <unordered_map>
+
+int main() {
+    std::unordered_map<int, int> myMap;  // 建议不要用 hash 作为变量名
+
+    int a = 1, b = 100;
+    myMap.insert({ a, b });  // C++11 及以上支持这种方式
+
+    // 或者更简单的方式：
+    myMap[a] = b;
+
+    // 验证是否插入成功
+    std::cout << myMap[a] << std::endl;  // 输出 100
+
+    return 0;
+}
