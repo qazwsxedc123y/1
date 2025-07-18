@@ -1,16 +1,55 @@
 #define  _CRT_SECURE_NO_WARNINGS
 
 #include "CentralCache.h"
+#include "PageCache.h"
 
 CentralCache CentralCache::_sInst;  // 静态成员变量的定义
 
 
 // 获取一个非空的span
 // 当Central没有时，就需要向PageCache申请
-Span* CentralCache::GetOneSpan(SpanList& list, size_t byte_size)
+Span* CentralCache::GetOneSpan(SpanList& list, size_t size)
 {
-	// ...
-	return nullptr;
+	// 先检查当前Central的是否有非空的span
+	Span* it = list.Begin();
+	while (it != list.End())
+	{
+		if (it->_freeList != nullptr) return it;
+		it = it->_next;
+	}
+	
+	// 先把central cache的桶锁解掉，这样如果其他线程释放内存对象回来，不会阻塞
+	list._mtx.unlock();
+
+	// 走到这里说明当前的Central没有非空的span
+	// 需要向PageCache上申请
+
+	PageCache::GetInstance()->_pageMtx.lock();
+	Span* span = PageCache::GetInstance()->NewSpan(SizeClass::NumMovePage(size));
+	PageCache::GetInstance()->_pageMtx.unlock();
+
+	// 获取到了
+	// 对获取span进行切分，不需要加锁，因为这会其他线程访问不到这个span
+	char* start = (char*)(span->_pageId << PAGE_SHIFT);
+	size_t bytes = span->_n << PAGE_SHIFT;
+	char* end = start + bytes;
+
+	// 把大块内存切成自由链表链接起来
+	// 1、先切一块下来去做头，方便尾插
+	span->_freeList = start;
+	start += size;
+	void* tail = span->_freeList;
+	while (start < end)
+	{
+		NextObj(tail) = start;
+		tail = NextObj(tail);
+		start += size;
+	}
+	// 切好span以后，需要把span挂到桶里面去的时候，再加锁
+	list._mtx.lock();
+	list.PushFront(span);
+
+	return span;
 }
 
 // 从中心缓存获取一定数量的对象给thread cache

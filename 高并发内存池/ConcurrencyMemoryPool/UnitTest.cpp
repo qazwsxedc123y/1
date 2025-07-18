@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ObjectPool.h"
+ #include "ObjectPool.h"
 #include "ConcurrentAlloc.h"
 
 void Alloc1()
@@ -30,11 +30,44 @@ void TLSTest()
 }
 
 
-// 4-7 ½Ú´úÂë²âÊÔ
+void TestConcurrentAlloc1()
+{
+	void* p1 = ConcurrentAlloc(6);
+	void* p2 = ConcurrentAlloc(8);
+	void* p3 = ConcurrentAlloc(1);
+	void* p4 = ConcurrentAlloc(7);
+	void* p5 = ConcurrentAlloc(8);
+
+	cout << p1 << endl;
+	cout << p2 << endl;
+	cout << p3 << endl;
+	cout << p4 << endl;
+	cout << p5 << endl;
+}
+
+void TestConcurrentAlloc2()
+{
+	for (size_t i = 0; i < 1024; ++i)
+	{
+		void* p1 = ConcurrentAlloc(6);
+		cout << p1 << endl;
+	}
+
+	void* p2 = ConcurrentAlloc(8);
+	cout << p2 << endl;
+}
+
 int main()
 {
-	//TestObjectPool();
-	TLSTest();
+	// 1-3
+	// TestObjectPool();
+	 
+	// 4-7
+	// TLSTest();
+	
+	// 8-14
+	// 15½ÚÉêÇë²âÊÔ
+	TestConcurrentAlloc2();
 
 	return 0;
 }

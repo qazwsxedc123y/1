@@ -1,10 +1,5 @@
 #pragma once
-#include <iostream>
-#include <vector>
-#include <time.h>
-using std::cout;
-using std::endl;
-
+#include "Common.h"
 
 #ifdef _WIN32
 #include<windows.h>
@@ -12,20 +7,20 @@ using std::endl;
 // 
 #endif
 
-// 直接去堆上按页申请空间
-inline static void* SystemAlloc(size_t kpage)
-{
-#ifdef _WIN32
-	void* ptr = VirtualAlloc(0, kpage << 13, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
-#else
-	// linux下brk mmap等
-#endif
-
-	if (ptr == nullptr)
-		throw std::bad_alloc();
-
-	return ptr;
-}
+//// 直接去堆上按页申请空间
+//inline static void* SystemAlloc(size_t kpage)
+//{
+//#ifdef _WIN32
+//	void* ptr = VirtualAlloc(0, kpage << 13, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
+//#else
+//	// linux下brk mmap等
+//#endif
+//
+//	if (ptr == nullptr)
+//		throw std::bad_alloc();
+//
+//	return ptr;
+//}
 
 // 这里的 _freeList 就相当于ThreadCache 的桶（自由链表）
 // _memory 相当于从 CentralCache 批量获取的内存
