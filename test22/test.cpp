@@ -1034,10 +1034,10 @@ void func(int x, int y)
         myhash.insert({ x1,y1 });
     }
 }
-int main() {
-    cin >> n >> m >> x >> y;
-    func(x, y);
-}
+//int main() {
+//    cin >> n >> m >> x >> y;
+//    func(x, y);
+//}
 // 64 位输出请用 printf("%lld")
 
 
@@ -1134,21 +1134,234 @@ int main() {
 //    cout << dp[n][m] << endl;
 //}
 //// 64 位输出请用 printf("%lld")
+//
+//#include <iostream>
+//#include <unordered_map>
+//
+//int main() {
+//    std::unordered_map<int, int> myMap;  // 建议不要用 hash 作为变量名
+//
+//    int a = 1, b = 100;
+//    myMap.insert({ a, b });  // C++11 及以上支持这种方式
+//
+//    // 或者更简单的方式：
+//    myMap[a] = b;
+//
+//    // 验证是否插入成功
+//    std::cout << myMap[a] << std::endl;  // 输出 100
+//
+//    return 0;
+//}
+
+
+//int main() {
+//    // 当天的状态
+//    // 有   f[i] = max(f[i-1], g[i-1] - price[i]);            有   没有 
+//    // 没有  g[i] = max(f[i-1] + prices[i], g[i-1]);      有   没有
+//    // f[i]表示第i天买入后的最大收入
+//    // g[i]表示第i天卖出后的最大收入
+//
+//    // 初始化
+//    // f[0] = -prices[0], g[0] = 0;
+//        
+//
+//    int n = 7;
+//    int prices[7];
+//    for (int i = 0; i < n; i++) cin >> prices[i];
+//    int f[7], g[7];    
+//    f[0] = -prices[0], g[0] = 0;
+//    for (int i = 1; i < n; i++)
+//    {
+//        f[i] = max(f[i - 1], g[i - 1] - prices[i]);
+//        g[i] = max(f[i - 1] + prices[i], g[i - 1]);
+//        cout << f[i] << " " << g[i] << endl;
+//    }
+//    cout << f[n - 1] << endl;
+//    cout << g[n - 1] << endl;
+//}
+//// 64 位输出请用 printf("%lld")
+
+
+//#include <iostream>
+//using namespace std;
+//
+//int main() {
+//    string s;
+//    getline(std::cin, s);
+//    s = ' ' + s;
+//    int sz = s.size() - 1;
+//    string ret;
+//    int t = sz;
+//    while (sz >= 0)
+//    {
+//        if (s[sz] == ' ')
+//        {
+//            int len = t - sz;
+//            ret += s.substr(sz + 1, len);
+//            ret += ' ';
+//            t = sz - 1;
+//        }
+//        sz--;
+//    }
+//    ret.pop_back();
+//    cout << ret << endl;
+//}
+//// 64 位输出请用 printf("%lld")
+
+///*
+//struct ListNode {
+//	int val;
+//	struct ListNode *next;
+//	ListNode(int x) :
+//			val(x), next(NULL) {
+//	}
+//};*/
+//class Solution {
+//public:
+//	ListNode* FindFirstCommonNode(ListNode* pHead1, ListNode* pHead2) {
+//		if (pHead1 == nullptr || pHead2 == nullptr) {
+//			return nullptr;
+//		}
+//		ListNode* head1 = pHead1, * head2 = pHead2;
+//		int n1 = 0, n2 = 0;
+//		while (head1 != nullptr)
+//		{
+//			n1++;
+//			head1 = head1->next;
+//		}
+//		while (head2 != nullptr)
+//		{
+//			n2++;
+//			head2 = head2->next;
+//		}
+//		head1 = pHead1, head2 = pHead2;
+//		if (n1 < n2)
+//		{
+//			head1 = pHead2;
+//			head2 = pHead1;
+//			swap(n2, n1);
+//		}
+//		int t = n1 - n2;
+//		while (t)
+//		{
+//			head1 = head1->next;
+//			t--;
+//		}
+//		while (head1 != nullptr && head2 != nullptr && head1 != head2)
+//		{
+//			head1 = head1->next;
+//			head2 = head2->next;
+//		}
+//		return head1;
+//	}
+//};
+
+/*
+struct ListNode {
+    int val;
+    struct ListNode *next;
+    ListNode(int x) :
+            val(x), next(NULL) {
+    }
+};*/
+//class Solution {
+//public:
+//    ListNode* FindFirstCommonNode(ListNode* pHead1, ListNode* pHead2) {
+//        if (pHead1 == nullptr || pHead2 == nullptr) {
+//            return nullptr;
+//        }
+//
+//        ListNode* head1 = pHead1, * head2 = pHead2;
+//        while (head1 != head2)
+//        {
+//            if (head1 == nullptr) head1 = pHead2;
+//            else head1 = head1->next;
+//            if (head2 == nullptr) head2 = pHead1;
+//            else head2 = head2->next;
+//        }
+//        return head1;
+//    }
+//};
+
+
+///*
+//struct ListNode {
+//    int val;
+//    struct ListNode *next;
+//    ListNode(int x) :
+//            val(x), next(NULL) {
+//    }
+//};*/
+//class Solution {
+//public:
+//    ListNode* FindFirstCommonNode(ListNode* pHead1, ListNode* pHead2) {
+//        if (pHead1 == nullptr || pHead2 == nullptr) {
+//            return nullptr;
+//        }
+//
+//        ListNode* head1 = pHead1, * head2 = pHead2;
+//        while (head1 != head2)
+//        {
+//            head1 = head1 != nullptr ? head1->next : pHead2;
+//            head2 = head2 != nullptr ? head2->next : pHead1;
+//        }
+//        return head1;
+//    }
+//};
+
+
+//#include <iostream>
+//#include <string>
+//using namespace std;
+//int n;
+//string str;
+//long long s[300001], sh[300001], shy[300001];
+//int main()
+//{
+//    cin >> n >> str;
+//    // s[i]表示[0,i]区间内有多少个s
+//    // sh[i]表示[0,i]区间内有多少个sh
+//    // shy[i]表示[0,i]区间内有多少个shy
+//
+//    // 初始化
+//    s[0] = str[0] == 's' ? 1 : 0;
+//    sh[0] = shy[0] = 0;
+//    for (int i = 1; i < n; i++)
+//    {
+//        if (str[i] == 's') s[i] = s[i - 1] + 1;
+//        else s[i] = s[i - 1];
+//
+//        if (str[i] == 'h') sh[i] = s[i - 1] + sh[i - 1];
+//        else sh[i] = sh[i - 1];
+//
+//        if (str[i] == 'y') shy[i] = sh[i - 1] + shy[i - 1];
+//        else shy[i] = shy[i - 1];
+//    }
+//    cout << shy[n - 1] << endl;
+//    return 0;
+//}
+
 
 #include <iostream>
-#include <unordered_map>
+#include <string>
+using namespace std;
+int n;
+string str;
+int main()
+{
+    cin >> n >> str;
+    long long s, h, y;
+    // 初始化
+    s = str[0] == 's' ? 1 : 0;
+    h = y = 0;
+    for (int i = 1; i < n; i++)
+    {
+        char ch = str[i];
 
-int main() {
-    std::unordered_map<int, int> myMap;  // 建议不要用 hash 作为变量名
-
-    int a = 1, b = 100;
-    myMap.insert({ a, b });  // C++11 及以上支持这种方式
-
-    // 或者更简单的方式：
-    myMap[a] = b;
-
-    // 验证是否插入成功
-    std::cout << myMap[a] << std::endl;  // 输出 100
-
+        if (ch == 's') s += 1;
+        else if (ch == 'h') h += s;
+        else if (ch == 'y') y += h;
+    }
+    cout << y << endl;
     return 0;
 }
