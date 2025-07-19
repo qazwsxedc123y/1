@@ -14,6 +14,9 @@ public:
 	// 然后ThreadCache有了足够的内存块
 	void* FetchFromCentralCache(size_t index, size_t size);
 
+	// 释放对象导致链表过长，回收内存到中心缓存
+	void ListTooLong(FreeList& list, size_t size);
+
 private:
 	// 其为一个ThreadCache的所有自由链表的数组，其为单个线程的所有ThreadCache
 	// 其结构还是一个哈希桶的结构

@@ -18,6 +18,9 @@ public:
 
 	// 从中心缓存获取一定数量的对象给thread cache
 	size_t FetchRangeObj(void*& start, void*& end, size_t batchNum, size_t size);
+
+	// 将一定数量的对象释放到span跨度
+	void ReleaseListToSpans(void* start, size_t size);
 private:
 	// 其为一个CentralCache的所有自由链表的数组，其为单个线程的所有CentralCache
 	// 其结构还是一个哈希桶的结构

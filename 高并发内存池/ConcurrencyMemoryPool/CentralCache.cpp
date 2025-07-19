@@ -80,7 +80,53 @@ size_t CentralCache::FetchRangeObj(void*& start, void*& end, size_t batchNum, si
 	span->_freeList = NextObj(end);
 	NextObj(end) = nullptr;
 
+	span->_useCount += actualNum;
+
 	_spanLists[index]._mtx.unlock();
 	
 	return actualNum;
+}
+
+
+// 将一定数量的对象释放到span跨度
+void CentralCache::ReleaseListToSpans(void* start, size_t size)
+{
+	size_t index = SizeClass::Index(size);
+	_spanLists[index]._mtx.lock(); // 加锁
+
+	while (start)
+	{
+		void* next = NextObj(start);
+		Span* span = PageCache::GetInstance()->MapObjectToSpan(start);
+		NextObj(start) = span->_freeList;
+		span->_freeList = start;
+
+		span->_useCount--; //更新被分配给thread cache的计数
+
+		if (span->_useCount == 0) // 说明这个span分配出去的对象全部都回来了
+		{
+			// 此时这个span就可以再回收给page cache，page cache可以再尝试去做前后页的合并
+			
+			// 先处理span，做准备工作
+			_spanLists[index].Erase(span);
+			span->_freeList = nullptr;
+			span->_next = nullptr;
+			span->_prev = nullptr;
+
+			// 释放span给page cache时，使用page cache的锁就可以了
+			// 这时把桶锁解掉
+			_spanLists[index]._mtx.unlock();
+
+			PageCache::GetInstance()->_pageMtx.lock();
+			PageCache::GetInstance()->ReleaseSpanToPageCache(span);
+			span->_isUse = true;
+			PageCache::GetInstance()->_pageMtx.unlock();
+
+			_spanLists[index]._mtx.lock();
+		}
+
+		start = next;
+	}
+
+	_spanLists[index]._mtx.unlock(); // 加锁
 }

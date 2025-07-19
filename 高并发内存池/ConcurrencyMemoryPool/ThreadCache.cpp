@@ -33,7 +33,7 @@ void* ThreadCache::FetchFromCentralCache(size_t index, size_t size)
 	}
 	else
 	{
-		_freeLists[index].PushRange(NextObj(start), end);
+		_freeLists[index].PushRange(NextObj(start), end, actualNum - 1);
 		return start;
 	}
 }
@@ -60,7 +60,21 @@ void* ThreadCache::Allocate(size_t size)
 	}
 }
 
+// 释放对象导致链表过长，回收内存到中心缓存
+void ThreadCache::ListTooLong(FreeList& list, size_t size)
+{
+	void* start = nullptr;
+	void* end = nullptr;
+
+	//从list中取出一次批量个数的对象
+	list.PopRange(start, end, list.MaxSize());
+
+	//将取出的对象还给central cache中对应的span
+	CentralCache::GetInstance()->ReleaseListToSpans(start, size);
+}
+
 // 释放
+// 这里的参数 size 是内存块对象的大小，不是个数
 void ThreadCache::Deallocate(void* ptr, size_t size)
 {
 	assert(ptr);
@@ -69,4 +83,15 @@ void ThreadCache::Deallocate(void* ptr, size_t size)
 	// 找对映射的自由链表桶，对象插入进入
 	size_t index = SizeClass::Index(size);
 	_freeLists[index].Push(ptr);
+	
+
+	// 当然，为了避免某个threadcahce占用太多内存对象
+	// 导致别的threadcache饥饿的状态
+	// 也要设置threadcache向centralcache归还
+
+	// 当自由链表长度大于一次批量申请的对象个数时就开始还一段list给central cache
+	if (_freeLists[index].Size() > _freeLists[index].MaxSize())
+	{
+		ListTooLong(_freeLists[index], size);
+	}
 }

@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <unordered_map>
 
 #include <assert.h>
 #include <time.h>
@@ -65,6 +66,8 @@ public:
 		void* obj = _freeList;
 		_freeList = NextObj(obj);
 
+		--_size;
+
 		return obj;
 	}
 
@@ -75,12 +78,31 @@ public:
 		// 头插
 		NextObj(obj) = _freeList;
 		_freeList = obj;
+		++_size;
 	}
 
-	void PushRange(void* start, void* end)
+	void PushRange(void* start, void* end, int n)
 	{
 		NextObj(end) = _freeList;
 		_freeList = start;
+
+		_size += n;
+	}
+
+	void PopRange(void*& start, void*& end, size_t n)
+	{
+		assert(n <= _size);
+
+		start = _freeList;
+		end = start;
+
+		for (size_t i = 0; i < n - 1; i++)
+		{
+			end = NextObj(end);
+		}
+		_freeList = NextObj(end);
+		NextObj(end) = nullptr;
+		_size -= n;
 	}
 
 	// 判断此时这个ThreadCache的自由链表是否为空
@@ -90,6 +112,11 @@ public:
 		return _freeList == nullptr;
 	}
 
+	size_t Size()
+	{
+		return _size;
+	}
+
 	size_t& MaxSize()
 	{
 		return _maxSize;
@@ -97,6 +124,7 @@ public:
 private:
 	void* _freeList = nullptr;
 	size_t _maxSize = 1;
+	size_t _size = 0;
 };
 
 // 准备工作，计算出其相对应的桶的位置 -- ThreadCache
@@ -266,6 +294,8 @@ struct Span
 	// 其Span也是由多个小块内存的自由链表组成
 	size_t _useCount = 0; // 使用计数，==0 说明所有的对象都还回来了，其值表示被分配给thread cache的计数
 	void* _freeList = nullptr;  // 切好的小块内存的自由链表
+
+	bool _isUse = false;          // 是否在被使用
 };
 
 // 带头双向循环链表 
