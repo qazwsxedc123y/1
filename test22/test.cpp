@@ -1019,22 +1019,22 @@ using namespace std;
 //    return 0;
 //}
 
-
-#include <iostream>
-#include <unordered_map>
-using namespace std;
-int n, m, x, y;
-int dp[21][21];
-unordered_map<int, int> myhash;
-void func(int x, int y)
-{
-    int x1 = x + 2, y1 = y + 1;
-    if (x1 <= n && y1 <= m)
-    {
-        myhash.insert({ x1,y1 });
-    }
-}
-//int main() {
+//
+//#include <iostream>
+//#include <unordered_map>
+//using namespace std;
+//int n, m, x, y;
+//int dp[21][21];
+//unordered_map<int, int> myhash;
+//void func(int x, int y)
+//{
+//    int x1 = x + 2, y1 = y + 1;
+//    if (x1 <= n && y1 <= m)
+//    {
+//        myhash.insert({ x1,y1 });
+//    }
+//}
+////int main() {
 //    cin >> n >> m >> x >> y;
 //    func(x, y);
 //}
@@ -1342,26 +1342,251 @@ struct ListNode {
 //}
 
 
-#include <iostream>
-#include <string>
-using namespace std;
-int n;
-string str;
-int main()
-{
-    cin >> n >> str;
-    long long s, h, y;
-    // 初始化
-    s = str[0] == 's' ? 1 : 0;
-    h = y = 0;
-    for (int i = 1; i < n; i++)
-    {
-        char ch = str[i];
+//#include <iostream>
+//#include <string>
+//using namespace std;
+//int n;
+//string str;
+//int main()
+//{
+//    cin >> n >> str;
+//    long long s, h, y;
+//    // 初始化
+//    s = str[0] == 's' ? 1 : 0;
+//    h = y = 0;
+//    for (int i = 1; i < n; i++)
+//    {
+//        char ch = str[i];
+//
+//        if (ch == 's') s += 1;
+//        else if (ch == 'h') h += s;
+//        else if (ch == 'y') y += h;
+//    }
+//    cout << y << endl;
+//    return 0;
+//}
 
-        if (ch == 's') s += 1;
-        else if (ch == 'h') h += s;
-        else if (ch == 'y') y += h;
+
+//class Solution {
+//public:
+//    /**
+//     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+//     *
+//     *
+//     * @param arr int整型vector the array
+//     * @return int整型
+//     */
+//    int maxLength(vector<int>& arr) {
+//        // write code here
+//        unordered_map<int, int> hash;
+//        int sz = arr.size();
+//        int ret = 0;
+//        int l = 0, r = 0;
+//        for (; r < sz; r++)
+//        {
+//            hash[arr[r]]++;
+//
+//            while (hash[arr[r]] >= 2)
+//            {
+//                hash[arr[l]]--;
+//                if (hash[arr[l]] == 0) hash.erase(arr[l]);
+//                l++;
+//            }
+//            ret = max(ret, r - l + 1);
+//        }
+//        return ret;
+//    }
+//};
+
+
+
+//#include <iostream>
+//using namespace std;
+//int n;
+//string s;
+//int counts[32];
+//void func()
+//{
+//    int x = 0;
+//    char ch;
+//    for (int i = 0; i < n; i++)
+//    {
+//        counts[s[i] - 'a']++;
+//        if (x < counts[s[i] - 'a'])
+//        {
+//            x = counts[s[i] - 'a'];
+//            ch = s[i];
+//        }
+//    }
+//    if (n - x < x - 2)
+//    {
+//        cout << "no" << endl;
+//        return;
+//    }
+//    else
+//    {
+//        cout << "yes" << endl;
+//
+//         模拟组合
+//        string ret(x, ch);
+//        counts[ch - 'a'] = 0;
+//         ret.insert(k, "x");在下标k前插入
+//         分两次插入，第一个是先将最多的隔开
+//         后随便隔空插入
+//        for (int j = 0; j < 32; j++)
+//        {
+//            if (counts[j] != 0)
+//            {
+//                for (int i = 0; i < x + 1; i++)
+//                {
+//                    ret.insert(i, j + "a");
+//                }
+//            }
+//        }
+//
+//
+//        return;
+//    }
+//}
+//int main() {
+//     因其 n 范围，所以全排列，多层for循环不行
+//     数学的插入组合
+//     但是如何返回字符串呢？只可以判断yes/no
+//     最多的字符个数是x，总的为n，n-x >= x-2 即为yes，反之为no
+//
+//    cin >> n >> s;
+//    func();
+//}
+ //64 位输出请用 printf("%lld")
+
+
+//int main()
+//{
+//    char a = 'a';
+//    string s(5, a);
+//    s.insert(1, 2 + "a");
+//    cout << s << endl;
+//    return 0;
+//}
+
+
+//#include <iostream>
+//using namespace std;
+//int n;
+//const int N = 100001;
+//string s;
+//int counts[26];
+//char ret[N];
+//void func()
+//{
+//    int x = 0;
+//    char ch;
+//    for (int i = 0; i < n; i++)
+//    {
+//        counts[s[i] - 'a']++;
+//        if (x < counts[s[i] - 'a'])
+//        {
+//            x = counts[s[i] - 'a'];
+//            ch = s[i];
+//        }
+//    }
+//
+//    // cout << x << " " << ch << endl;
+//
+//    if (n - x < x - 1)
+//    {
+//        cout << "no" << endl;
+//        return;
+//    }
+//    else
+//    {
+//        cout << "yes" << endl;
+//
+//        int i = 0;
+//        while (x--)
+//        {
+//            ret[i] = ch;
+//            i += 2;
+//        }
+//
+//        // cout << ret[2] << endl;
+//
+//        // 处理剩余
+//        for (int j = 0; j < 26; j++)
+//        {
+//            if (counts[j] && j + 'a' != ch)
+//            {
+//                while (counts[j]--)
+//                {
+//                    if (i >= n) i = 1;
+//                    ret[i] = j + 'a';
+//                    i += 2;
+//                }
+//            }
+//        }
+//        for (int i = 0; i < n; i++) cout << ret[i];
+//        cout << endl;
+//
+//        return;
+//    }
+//}
+//int main() {
+//    // 因其 n 范围，所以全排列，多层for循环不行
+//    // 数学的插入组合
+//    // 但是如何返回字符串呢？只可以判断yes/no
+//    // 最多的字符个数是x，总的为n，n-x >= x-2 即为yes，反之为no
+//
+//    cin >> n >> s;
+//    func();
+//}
+
+
+class Solution {
+public:
+    string reorganizeString(string s) {
+        const int N = 1e5 + 10;
+        int n = s.size();
+        char ret[N];
+        int counts[26] = { 0 };
+        int x = 0;
+        char ch;
+        for (int i = 0; i < n; i++) {
+            counts[s[i] - 'a']++;
+            if (x < counts[s[i] - 'a']) {
+                x = counts[s[i] - 'a'];
+                ch = s[i];
+            }
+        }
+
+        // cout << x << " " << ch << endl;
+
+        if (n - x < x - 1) {
+            return "";
+        }
+        else {
+
+            int i = 0;
+            while (x--) {
+                ret[i] = ch;
+                i += 2;
+            }
+
+            // cout << ret[2] << endl;
+
+            // 处理剩余
+            for (int j = 0; j < 26; j++) {
+                if (counts[j] && j + 'a' != ch) {
+                    while (counts[j]--) {
+                        if (i >= n)
+                            i = 1;
+                        ret[i] = j + 'a';
+                        i += 2;
+                    }
+                }
+            }
+            string ans;
+            for (int i = 0; i < n; i++) ans += ret[i];
+            return ans;
+        }
     }
-    cout << y << endl;
-    return 0;
-}
+};
