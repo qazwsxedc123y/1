@@ -1540,53 +1540,159 @@ struct ListNode {
 //    func();
 //}
 
+//
+//class Solution {
+//public:
+//    string reorganizeString(string s) {
+//        const int N = 1e5 + 10;
+//        int n = s.size();
+//        char ret[N];
+//        int counts[26] = { 0 };
+//        int x = 0;
+//        char ch;
+//        for (int i = 0; i < n; i++) {
+//            counts[s[i] - 'a']++;
+//            if (x < counts[s[i] - 'a']) {
+//                x = counts[s[i] - 'a'];
+//                ch = s[i];
+//            }
+//        }
+//
+//        // cout << x << " " << ch << endl;
+//
+//        if (n - x < x - 1) {
+//            return "";
+//        }
+//        else {
+//
+//            int i = 0;
+//            while (x--) {
+//                ret[i] = ch;
+//                i += 2;
+//            }
+//
+//            // cout << ret[2] << endl;
+//
+//            // 处理剩余
+//            for (int j = 0; j < 26; j++) {
+//                if (counts[j] && j + 'a' != ch) {
+//                    while (counts[j]--) {
+//                        if (i >= n)
+//                            i = 1;
+//                        ret[i] = j + 'a';
+//                        i += 2;
+//                    }
+//                }
+//            }
+//            string ans;
+//            for (int i = 0; i < n; i++) ans += ret[i];
+//            return ans;
+//        }
+//    }
+//};
 
-class Solution {
-public:
-    string reorganizeString(string s) {
-        const int N = 1e5 + 10;
-        int n = s.size();
-        char ret[N];
-        int counts[26] = { 0 };
-        int x = 0;
-        char ch;
-        for (int i = 0; i < n; i++) {
-            counts[s[i] - 'a']++;
-            if (x < counts[s[i] - 'a']) {
-                x = counts[s[i] - 'a'];
-                ch = s[i];
-            }
-        }
 
-        // cout << x << " " << ch << endl;
 
-        if (n - x < x - 1) {
-            return "";
-        }
-        else {
 
-            int i = 0;
-            while (x--) {
-                ret[i] = ch;
-                i += 2;
-            }
+//#include <iostream>
+//#include <vector>
+//#include <algorithm>
+//using namespace std;
+//const int N = 1e5 + 10;
+//vector<int> v;
+//int main() {
+//    int n;
+//    cin >> n;
+//    v.resize(n*3);
+//    for (int i = 0; i < n*3; i++)
+//    {
+//        cin >> v[i];
+//    }
+//    sort(v.begin(), v.end());
+//    long long ret = 0;
+//    for (int i = n*2-1; i >= n; i--)
+//    {
+//        ret += v[i];
+//    }
+//    cout << ret << endl;
+//}
+// 64 位输出请用 printf("%lld")
 
-            // cout << ret[2] << endl;
 
-            // 处理剩余
-            for (int j = 0; j < 26; j++) {
-                if (counts[j] && j + 'a' != ch) {
-                    while (counts[j]--) {
-                        if (i >= n)
-                            i = 1;
-                        ret[i] = j + 'a';
-                        i += 2;
-                    }
-                }
-            }
-            string ans;
-            for (int i = 0; i < n; i++) ans += ret[i];
-            return ans;
-        }
+
+//#include <iostream>
+//#include <unordered_map>
+//using namespace std;
+//unordered_map<int, int> hash1;
+//int main() {
+//    int n;
+//    for (int i = 0; i < n; i++)
+//    {
+//        int t;
+//        cin >> t;
+//        hash1[t]++;
+//    }
+//    // cout << hash1[1] << endl;
+//    for (auto it : hash1)
+//    {
+//        if (hash1.count(it.first - 1)&&)
+//        cout << it.first << " " << it.second << endl;
+//    }
+//}
+
+
+//#include <iostream>
+//#include <algorithm>
+//using namespace std;
+//// 定义长整型，防止溢出
+//typedef unsigned long long LL;
+//
+//const int MAXN = 1e5 + 10; // 根据实际需求调整数组大小上限
+//int arr[MAXN * 3];
+//
+//int main() {
+//    int n;
+//    cin >> n;
+//    for (int i = 0; i < 3 * n; i++) {
+//        cin >> arr[i];
+//    }
+//    sort(arr, arr + 3 * n);
+//
+//    int pos = 3 * n - 2;
+//    int count = 1;
+//    LL ret = 0;
+//    while (count++ <= n) {
+//        ret += arr[pos];
+//        pos -= 2;
+//    }
+//    cout << ret << endl;
+//    return 0;
+//}
+
+
+
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+const int N = 100005;  // 根据实际情况调整 N 的大小
+int sum[N];  // sum[i] 表示 i 出现的总和
+int n;
+int f[N], g[N];
+
+int main() {
+    cin >> n;
+    int x;
+    for (int i = 0; i < n; i++) {
+        cin >> x;
+        sum[x] += x;
     }
-};
+
+    for (int i = 1; i < N; i++) {
+        f[i] = g[i - 1] + sum[i];
+        g[i] = max(f[i - 1], g[i - 1]);
+    }
+
+    cout << max(f[N - 1], g[N - 1]) << endl;  // 修正原代码中 max 参数书写问题
+    return 0;
+}
