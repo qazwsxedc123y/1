@@ -4,6 +4,7 @@
 #include <queue>
 #include <unordered_set>
 #include <unordered_map>
+#include <cmath>
 using namespace std;
 //#include <iostream>
 //using namespace std;
@@ -1671,28 +1672,73 @@ struct ListNode {
 
 
 
-#include <iostream>
-#include <algorithm>
-using namespace std;
+//#include <iostream>
+//#include <algorithm>
+//using namespace std;
+//
+//const int N = 100005;  // 根据实际情况调整 N 的大小
+//int sum[N];  // sum[i] 表示 i 出现的总和
+//int n;
+//int f[N], g[N];
+//
+//int main() {
+//    cin >> n;
+//    int x;
+//    for (int i = 0; i < n; i++) {
+//        cin >> x;
+//        sum[x] += x;
+//    }
+//
+//    for (int i = 1; i < N; i++) {
+//        f[i] = g[i - 1] + sum[i];
+//        g[i] = max(f[i - 1], g[i - 1]);
+//    }
+//
+//    cout << max(f[N - 1], g[N - 1]) << endl;  // 修正原代码中 max 参数书写问题
+//    return 0;
+//}
 
-const int N = 100005;  // 根据实际情况调整 N 的大小
-int sum[N];  // sum[i] 表示 i 出现的总和
-int n;
-int f[N], g[N];
 
-int main() {
-    cin >> n;
-    int x;
-    for (int i = 0; i < n; i++) {
-        cin >> x;
-        sum[x] += x;
+    #include <iostream>
+    #include <queue>
+    #include <unordered_map>
+    using namespace std;
+    int main() {
+        int n, m;
+        unordered_map<int, int> hash1;
+        cin >> n >> m;
+        int sz = 0;
+        for (int i = 0; i < n; i++)
+        {
+            int t;
+            cin >> t;
+            if (hash1.find(t) == hash1.end()) sz++;
+            hash1[t]++;
+        }
+        if (sz > m)
+        {
+            cout << "-1" << endl;
+            return 0;
+        }
+        // 获取第a个大的即为返回值
+        priority_queue<int> q;
+        for (auto t : hash1)
+        {
+            int b = t.second;
+            q.push(b);
+        }
+        int a = m - sz;
+        while (a--)
+        {
+            int t = q.top();
+            q.pop();
+            int tmp = t / 2;
+            t -= tmp;
+            t = t < 0 ? -t : t;
+            q.push(tmp);
+            q.push(t);
+        }
+        cout << q.top() << endl;
+        return 0;
     }
-
-    for (int i = 1; i < N; i++) {
-        f[i] = g[i - 1] + sum[i];
-        g[i] = max(f[i - 1], g[i - 1]);
-    }
-
-    cout << max(f[N - 1], g[N - 1]) << endl;  // 修正原代码中 max 参数书写问题
-    return 0;
-}
+    // 64 位输出请用 printf("%lld")
