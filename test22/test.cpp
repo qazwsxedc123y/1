@@ -1699,46 +1699,249 @@ struct ListNode {
 //}
 
 
-    #include <iostream>
-    #include <queue>
-    #include <unordered_map>
-    using namespace std;
-    int main() {
-        int n, m;
-        unordered_map<int, int> hash1;
-        cin >> n >> m;
-        int sz = 0;
-        for (int i = 0; i < n; i++)
-        {
-            int t;
-            cin >> t;
-            if (hash1.find(t) == hash1.end()) sz++;
-            hash1[t]++;
-        }
-        if (sz > m)
-        {
-            cout << "-1" << endl;
-            return 0;
-        }
-        // 获取第a个大的即为返回值
-        priority_queue<int> q;
-        for (auto t : hash1)
-        {
-            int b = t.second;
-            q.push(b);
-        }
-        int a = m - sz;
-        while (a--)
-        {
-            int t = q.top();
-            q.pop();
-            int tmp = t / 2;
-            t -= tmp;
-            t = t < 0 ? -t : t;
-            q.push(tmp);
-            q.push(t);
-        }
-        cout << q.top() << endl;
-        return 0;
-    }
-    // 64 位输出请用 printf("%lld")
+//#include <iostream>
+//#include <queue>
+//#include <unordered_map>
+//using namespace std;
+//int main() {
+//    int n, m;
+//    unordered_map<int, int> hash1;
+//    cin >> n >> m;
+//    int sz = 0;
+//    for (int i = 0; i < n; i++)
+//    {
+//        int t;
+//        cin >> t;
+//        if (hash1.find(t) == hash1.end()) sz++;
+//        hash1[t]++;
+//    }
+//    if (sz > m)
+//    {
+//        cout << "-1" << endl;
+//        return 0;
+//    }
+//    // 获取第a个大的即为返回值
+//    priority_queue<int> q;
+//    for (auto t : hash1)
+//    {
+//        int b = t.second;
+//        q.push(b);
+//    }
+//    int a = m - sz;
+//    while (a--)
+//    {
+//        int t = q.top();
+//        q.pop();
+//        int tmp = t / 2;
+//        t -= tmp;
+//        t = t < 0 ? -t : t;
+//        q.push(tmp);
+//        q.push(t);
+//    }
+//    cout << q.top() << endl;
+//    return 0;
+//}
+//// 64 位输出请用 printf("%lld")
+
+
+//#include <iostream>
+//#include <string>
+//#include <unordered_map>
+//using namespace std;
+//int n, m;
+//unordered_map<int, int> hash1;
+//// 判断最多人数为x时，是否能分成m组
+//bool check(int x)
+//{
+//    int g = 0;
+//    for (auto& [a, b] : hash1)
+//    {
+//        g += b / x + (b % x == 0 ? 0 : 1);
+//    }
+//    return g <= m;
+//}
+//int main()
+//{
+//    cin >> n >> m;
+//    int hmax = 0;
+//    for (int i = 0; i < n; i++)
+//    {
+//        int t;
+//        cin >> t;
+//        hmax = max(hmax, ++hash1[t]);
+//    }
+//
+//    // 暴力枚举
+//    int kinds = hash1.size();
+//    if (kinds > m) cout << "-1" << endl;
+//    //     else
+//    //     {
+//    //         // 暴力枚举
+//    //         for(int i = 1; i <= hmax; i++)
+//    //         {
+//    //             if(check(i))
+//    //             {
+//    //                 cout << i << endl;
+//    //                 break;
+//    //             }
+//    //         }
+//    //     }
+//
+//    else
+//    {
+//        int l = 1, r = hmax;
+//        while (l < r)
+//        {
+//            int mid = (r + l) / 2;
+//            if (check(mid)) r = mid;
+//            else l = mid + 1;
+//        }
+//        cout << l << endl;
+//    }
+//    return 0;
+//}
+
+
+//#include <iostream>
+//#include <vector>
+//#include <queue>
+//using namespace std;
+//const int N = 2e5 + 5;
+//vector<vector<int>> edges(N); // 邻接表存储边
+//vector<int> in(N); // 标记每一个点的入度
+//queue<int> q;
+//vector<int> ret;
+//int n, m;
+//int main() {
+//    cin >> n >> m;
+//    // 建图
+//    for (int i = 0; i < m; i++)
+//    {
+//        int a, b;
+//        cin >> a >> b;
+//        edges[a].push_back(b); // 存储边的信息
+//        in[b]++;
+//    }
+//    for (int i = 1; i <= n; i++)
+//    {
+//        if (in[i] == 0)
+//        {
+//            q.push(i);
+//        }
+//    }
+//
+//    while (q.size())
+//    {
+//        int a = q.front();
+//        q.pop();
+//        ret.push_back(a);
+//
+//        for (auto b : edges[a])
+//        {
+//            if (--in[b] == 0)
+//            {
+//                q.push(b);
+//            }
+//        }
+//    }
+//    if (ret.size() == n)
+//    {
+//        for (int i = 0; i < n; i++)
+//        {
+//            cout << ret[i];
+//            if (i != n - 1)
+//            {
+//                cout << " ";
+//            }
+//        }
+//    }
+//    else
+//    {
+//        cout << "-1" << endl;
+//    }
+//}
+//// 64 位输出请用 printf("%lld")
+
+
+//#include <iostream>
+//#include <vector>
+//#include <unordered_set>
+//using namespace std;
+//int a, b;
+//unordered_set<int> cnt;
+//bool is(int x, int y)
+//{
+//    int a = x * 10 + y;
+//    // 判断是不是质数
+//    // 只能被 1 与 本身 整除
+//    for (int i = 2; i <= a - 1; i++)
+//    {
+//        if (a % i == 0) return false;
+//    }
+//    return true;
+//}
+//void func(int x)
+//{
+//    vector<int> v;
+//    int t = x;
+//    while (x)
+//    {
+//        v.push_back(x % 10);
+//        x /= 10;
+//    }
+//    for (int i = 0; i < v.size(); i++) //第一个数
+//    {
+//        for (int j = 0; j < v.size(); j++)
+//        {
+//            if (v[i] == 0) continue;
+//            if (is(v[i], v[j])) cnt.insert(t);
+//        }
+//    }
+//    return;
+//}
+//int main() {
+//    a = 11, b = 20;
+//    for (int i = a; i <= b; i++)
+//    {
+//        func(i);
+//    }
+//    for (auto e : cnt) cout << e << endl;
+//    cout << cnt.size() << endl;
+//}
+//// 64 位输出请用 printf("%lld")
+
+
+//#include <iostream>
+//#include <string>
+//using namespace std;
+//string s;
+//int n;
+//int main() {
+//    cin >> s >> n;
+//    int count = 0;
+//    int cmax = 0;
+//    int l = 0;
+//    string ret;
+//    for (int r = 0; r < s.size();)
+//    {
+//        if (s[r] == 'C' || s[r] == 'G') count++;
+//        r++;
+//        if (r - l >= n)
+//        {
+//            if (cmax < count)
+//            {
+//                ret = s.substr(l, n);
+//                cmax = count;
+//            }
+//            if (s[l] == 'C' || s[l] == 'G')
+//            {
+//                count--;
+//            }
+//            l++;
+//        }
+//    }
+//    cout << ret << endl;
+//}
+//// 64 位输出请用 printf("%lld")
+
+
