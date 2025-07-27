@@ -1,9 +1,11 @@
 #define  _CRT_SECURE_NO_WARNINGS
 
 #include <iostream>
+#include <unordered_map>
+#include <algorithm>
 #include <vector>
 #include <string>
-#include <algorithm>
+#include <queue>
 using namespace std;
 
 
@@ -107,17 +109,7 @@ using namespace std;
 //            else
 //            {
 //                ret += ch;
-//                // 加上后面数字
-//                string tmp;
-//                int t = ans;
-//                while (t)
-//                {
-//                    int x = t % 10;
-//                    tmp.push_back('0' + x);
-//                    t /= 10;
-//                }
-//                reverse(tmp.begin(), tmp.end());
-//                ret += tmp;
+//                ret += to_string(ans);
 //            }
 //        }
 //        return ret;
@@ -133,68 +125,182 @@ using namespace std;
 
 
 
-#include <iostream>
-#include <unordered_map>
-#include <algorithm>
-#include <vector>
-#include <string>
-#include <queue>
-using namespace std;
-// 堆的top K问题
-// 再加上一个哈希表
-const int N = 2e5 + 10;
-long long arra[N]; // 酸
-long long arrb[N]; // 甜
-unordered_map<long long, vector<long long>> hash1;
-priority_queue<long long> q;
-long long n, k;
-int main() {
-    cin >> n >> k;
-    // 先输入酸
-    // 后甜
-    for (long long i = 0; i < n; i++) cin >> arra[i];
 
-    for (long long i = 0; i < n; i++) cin >> arrb[i];
-
-    for (long long i = 0; i < n; i++)
-    {
-        q.push(arrb[i]);
-        hash1[arrb[i]].push_back(arra[i]);
-    }
-
-
-    for (auto& [a, b] : hash1)
-    {
-        sort(b.begin(), b.end());
-    }
-
-    long long ans1 = 0; // 存酸度
-    long long ans2 = 0; // 存甜度
-
-    for (long long i = 0; i < k; i++)
-    {
-        long long t = q.top();
-        q.pop();
-        ans2 += t;
-        // 取最小的酸度
-        auto a = hash1[t];
-        for (long long j = 0; j < a.size(); j++)
-        {
-            if (a[j] != -1)
-            {
-                ans1 += a[j];
-                a[j] = -1;
-
-                break;
-            }
-        }
-    }
-    cout << ans1 << " " << ans2 << endl;
-}
-// 64 位输出请用 printf("%lld")
+//using namespace std;
+//// 堆的top K问题
+//// 再加上一个哈希表
+//const int N = 2e5 + 10;
+//long long arra[N]; // 酸
+//long long arrb[N]; // 甜
+//unordered_map<long long, vector<long long>> hash1;
+//priority_queue<long long> q;
+//long long n, k;
+//int main() {
+//    cin >> n >> k;
+//    // 先输入酸
+//    // 后甜
+//    for (long long i = 0; i < n; i++) cin >> arra[i];
+//
+//    for (long long i = 0; i < n; i++) cin >> arrb[i];
+//
+//    for (long long i = 0; i < n; i++)
+//    {
+//        q.push(arrb[i]);
+//        hash1[arrb[i]].push_back(arra[i]);
+//    }
+//
+//
+//    for (auto& [a, b] : hash1)
+//    {
+//        sort(b.begin(), b.end());
+//    }
+//
+//    long long ans1 = 0; // 存酸度
+//    long long ans2 = 0; // 存甜度
+//
+//    for (long long i = 0; i < k; i++)
+//    {
+//        long long t = q.top();
+//        q.pop();
+//        ans2 += t;
+//        // 取最小的酸度
+//        auto a = hash1[t];
+//        for (long long j = 0; j < a.size(); j++)
+//        {
+//            if (a[j] != -1)
+//            {
+//                ans1 += a[j];
+//                a[j] = -1;
+//
+//                break;
+//            }
+//        }
+//    }
+//    cout << ans1 << " " << ans2 << endl;
+//}
+//// 64 位输出请用 printf("%lld")
+//
 
 
+//#include <iostream>
+//#include <algorithm>
+//#include <vector>
+//#include <queue>
+//using namespace std;
+//
+//// 堆的top K问题
+//const int N = 2e5 + 10;
+//typedef pair<int, int> PII; // <甜度,酸度>
+//int arra[N]; // 酸
+//int arrb[N]; // 甜
+//priority_queue<long long> q;
+//int n, k;
+//
+//struct cmp {
+//    bool operator()(const PII& a, const PII& b)
+//    {
+//        if (a.first != b.first)
+//        {
+//            return a.first < b.first; // 甜度大的优先
+//        }
+//        else
+//        {
+//            return a.second > b.second; // 甜度相同，酸度小的优先
+//        }
+//    }
+//};
+//
+//int main() {
+//    cin >> n >> k;
+//    // 先输入酸
+//    // 后甜
+//    for (long long i = 0; i < n; i++) cin >> arra[i];
+//
+//    for (long long i = 0; i < n; i++) cin >> arrb[i];
+//
+//    priority_queue<PII, vector<PII>, cmp> q;
+//
+//    for (int i = 0; i < n; i++)
+//    {
+//        q.push({ arrb[i], arra[i] });
+//    }
+//
+//    long long ans1 = 0; // 存酸度
+//    long long ans2 = 0; // 存甜度
+//
+//    for (int i = 0; i < k; i++)
+//    {
+//        auto t = q.top();
+//        q.pop();
+//        ans1 += t.second;
+//        ans2 += t.first;
+//    }
+//    cout << ans1 << " " << ans2 << endl;
+//}
+//// 64 位输出请用 printf("%lld")
+//
+//
 
+//#include <iostream>
+//#include <algorithm>
+//#include <vector>
+//#include <queue>
+//using namespace std;
+//
+//// 堆的top K问题
+//const int N = 2e5 + 10;
+//typedef pair<int, int> PII; // <甜度,酸度>
+//int arra[N]; // 酸
+//int arrb[N]; // 甜
+//priority_queue<long long> q;
+//int n, k;
+//PII arr[N];
+//
+//struct cmp {
+//    bool operator()(const PII& a, const PII& b)
+//    {
+//        if (a.first != b.first)
+//        {
+//            return a.first < b.first; // 甜度大的优先
+//        }
+//        else
+//        {
+//            return a.second > b.second; // 甜度相同，酸度小的优先
+//        }
+//    }
+//};
+//
+//int main() {
+//    cin >> n >> k;
+//    // 先输入酸
+//    // 后甜
+//    for (long long i = 0; i < n; i++) cin >> arr[i].second;
+//
+//    for (long long i = 0; i < n; i++) cin >> arr[i].first;
+//
+//    sort(arr, arr + n, [&](const PII& a, const PII& b)
+//        {
+//            if (a.first != b.first)
+//            {
+//                return a.first > b.first; // 甜度大的优先
+//            }
+//            else
+//            {
+//                return a.second < b.second; // 甜度相同，酸度小的优先
+//            }
+//        });
+//
+//    long long ans1 = 0; // 存酸度
+//    long long ans2 = 0; // 存甜度
+//
+//    for (int i = 0; i < k; i++)
+//    {
+//        ans1 += arr[i].second;
+//        ans2 += arr[i].first;
+//    }
+//    cout << ans1 << " " << ans2 << endl;
+//}
+//// 64 位输出请用 printf("%lld")
 
 
 
