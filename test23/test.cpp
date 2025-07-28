@@ -305,17 +305,207 @@ using namespace std;
 
 
 
+//#include <iostream>
+//#include <memory.h>
+//using namespace std;
+//const int N = 1024;
+//
+//int n, V, v[N], w[N];
+//// 第一问：dp[i][j] 表示从 i 个物品挑选，总体积不超过 j ，所有选法中选出来的最大价值
+//// 第二问：dp[i][j] 表示从 i 个物品挑选，总体积恰好为 j ，所有选法中选出来的最大价值
+//int dp[N][N];
+//
+//int main() {
+//    // 读入数据
+//    cin >> n >> V;
+//    for (int i = 1; i <= n; i++)
+//        cin >> v[i] >> w[i];
+//
+//    // 第一问
+//    // 初始化 全为0
+//    for (int i = 1; i <= n; i++)
+//    {
+//        for (int j = 1; j <= V; j++)
+//        {
+//            // 不选 dp[i][j] = dp[i-1][j]
+//            // 选   dp[i][j] = w[i] + dp[i-1][j-v[i]]
+//            dp[i][j] = dp[i - 1][j];
+//            if (j >= v[i]) dp[i][j] = max(w[i] + dp[i - 1][j - v[i]], dp[i][j]);
+//        }
+//    }
+//    cout << dp[n][V] << endl;
+//
+//    // 第二问
+//    memset(dp, 0, sizeof(dp));
+//
+//    // 初始化
+//    for (int i = 1; i <= V; i++) dp[0][i] = -1;
+//    for (int i = 1; i <= n; i++)
+//    {
+//        for (int j = 1; j <= V; j++)
+//        {
+//            // 不选 dp[i][j] = dp[i-1][j];
+//            // 选 dp[i][j] = w[i] + dp[i-1][j-v[i]]
+//            dp[i][j] = dp[i - 1][j];
+//            if (j >= v[i] && dp[i - 1][j - v[i]] != -1)
+//                dp[i][j] = max(w[i] + dp[i - 1][j - v[i]], dp[i][j]);
+//        }
+//    }
+//
+//    cout << ((dp[n][V] == -1) ? 0 : dp[n][V]) << endl;
+//}
+
+
+//#include <iostream>
+//#include <string.h>
+//using namespace std;
+//const int N = 1024;
+//
+//int n, V, v[N], w[N];
+//// 第一问：dp[i][j] 表示从 i 个物品挑选，总体积不超过 j ，所有选法中选出来的最大价值
+//// 第二问：dp[i][j] 表示从 i 个物品挑选，总体积恰好为 j ，所有选法中选出来的最大价值
+//int dp[N];
+//
+//int main() {
+//    // 读入数据
+//    cin >> n >> V;
+//    for (int i = 1; i <= n; i++)
+//        cin >> v[i] >> w[i];
+//
+//    // 第一问
+//    // 初始化 全为0
+//    for (int i = 1; i <= n; i++)
+//    {
+//        for (int j = V; j >= v[i]; j--)
+//        {
+//            dp[j] = max(w[i] + dp[j - v[i]], dp[j]);
+//        }
+//    }
+//    cout << dp[V] << endl;
+//
+//    // 第二问
+//    memset(dp, 0, sizeof(dp));
+//
+//    // 初始化
+//    for (int i = 1; i <= V; i++) dp[i] = -1;
+//    for (int i = 1; i <= n; i++)
+//    {
+//        for (int j = V; j >= v[i]; j--)
+//        {
+//            dp[j] = dp[j];
+//            if (dp[j - v[i]] != -1)
+//                dp[j] = max(w[i] + dp[j - v[i]], dp[j]);
+//        }
+//    }
+//
+//    cout << ((dp[V] == -1) ? 0 : dp[V]) << endl;
+//}
+//// 64 位输出请用 printf("%lld")
+
+
+//const int N = 1e5 + 10;
+//long long n, x, arr[N];
+//int gcb(int a, int b)
+//{
+//    while (a % b != 0)
+//    {
+//        int c = a % b;
+//        a = b;
+//        b = c;
+//    }
+//    return b;
+//}
+//int main() {
+//    cin >> n >> x;
+//    for (int i = 0; i < n; i++) cin >> arr[i];
+//
+//    for (int i = 0; i < n; i++)
+//    {
+//        if (arr[i] <= x) x += arr[i];
+//        else
+//        {
+//            x += gcb(x, arr[i]);
+//        }
+//    }
+//    cout << x << endl;
+//}
+//// 64 位输出请用 printf("%lld")
+
+
+//class Solution {
+//public:
+//    /**
+//     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+//     *
+//     *
+//     * @param grid int整型vector<vector<>>
+//     * @return int整型
+//     */
+//    int maxValue(vector<vector<int> >& grid) {
+//        // write code here
+//        // 使用动态规划
+//        // dp[i][j] 表示到达下表为 (i-1,j-1) 时，拿到最大的价值
+//        int n = grid.size(), m = grid[0].size();
+//        int dp[n + 1][m + 1];
+//        memset(dp, 0, sizeof(dp));
+//
+//        // 初始化
+//        // dp[i][j] = max(dp[i-1][j] + grid[i-1][j-1], dp[i][j-1] + grid[i-1][j-1])
+//
+//        for (int i = 1; i <= n; i++)
+//        {
+//            for (int j = 1; j <= m; j++)
+//            {
+//                dp[i][j] = max(dp[i - 1][j] + grid[i - 1][j - 1], dp[i][j - 1] + grid[i - 1][j - 1]);
+//            }
+//        }
+//
+//        return dp[n][m];
+//    }
+//};
 
 
 
-
-
-
-
-
-
-
-
-
-
-
+const int N = 110;
+int t, n;
+int main() {
+    cin >> t;
+    for (int k = 0; k < t; k++)
+    {
+        cin >> n;
+        bool arr[n][26];
+        memset(arr, false, sizeof(arr));
+        for (int i = 0; i < n; i++)
+        {
+            string s;
+            cin >> s;
+            for (int j = 0; j < s.size(); j++)
+            {
+                arr[i][s[j] - 'a'] = true;
+            }
+        }
+        int l = 0, r = n - 1;
+        bool flag = true;
+        while (l <= r)
+        {
+            bool ans = false;
+            for (int j = 0; j < 26; j++)
+            {
+                if (arr[l][j] == true && arr[r][j] == true)
+                {
+                    ans = true;
+                    break;
+                }
+            }
+            if (ans == false)
+            {
+                flag = false;
+                break;
+            }
+            l++, r--;
+        }
+        if (flag == true) cout << "Yes" << endl;
+        else cout << "No" << endl;
+    }
+}
+// 64 位输出请用 printf("%lld")
