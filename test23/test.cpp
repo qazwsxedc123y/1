@@ -535,23 +535,70 @@ using namespace std;
 
 
 
-const int N = 2e5 + 10;
-long long n, arr[N], dp[N]; // dp[i]表示下标[0,i-1]之间的和
-int main() {
-    // 前缀和 或 滑动数组
-    cin >> n;
-    for (long long i = 0; i < n; i++) cin >> arr[i];
+//const int N = 2e5 + 10;
+//long long n, arr[N], dp[N]; // dp[i]表示下标[0,i-1]之间的和
+//int main() {
+//    // 前缀和 或 滑动数组
+//    cin >> n;
+//    for (long long i = 0; i < n; i++) cin >> arr[i];
+//
+//    for (long long i = 1; i <= n; i++) dp[i] = dp[i - 1] + arr[i - 1];
+//
+//    long long ret = 0;
+//    for (long long i = 1; i <= n; i++) // 右
+//    {
+//        for (long long j = 1; j < i; j++) // 左
+//        {
+//            ret = max(ret, dp[i] - dp[j]);
+//        }
+//    }
+//    cout << ret << endl;
+//}
+//// 64 位输出请用 printf("%lld")
 
-    for (long long i = 1; i <= n; i++) dp[i] = dp[i - 1] + arr[i - 1];
 
-    long long ret = 0;
-    for (long long i = 1; i <= n; i++) // 右
+#include <iostream>
+#include <string>
+using namespace std;
+
+string s;
+int n;
+int func()
+{
+    // 先判断是否全为相同字符
+    bool flag = false;
+    for (int i = 1; i < n; i++)
     {
-        for (long long j = 1; j < i; j++) // 左
+        if (s[i] != s[0])
         {
-            ret = max(ret, dp[i] - dp[j]);
+            flag = true;
+            break;
         }
     }
-    cout << ret << endl;
+    if (flag == false) return 0;
+
+    // 判断本身是否为回文
+    flag = true;
+    int left = 0, right = n - 1;
+    while (left < right)
+    {
+        if (s[left] == s[right])
+        {
+            left++, right--;
+        }
+        else
+        {
+            flag = false;
+            break;
+        }
+    }
+    if (flag == true) return n - 1;
+    else return n;
 }
-// 64 位输出请用 printf("%lld")
+int main()
+{
+    cin >> s;
+    n = s.size();
+    cout << func() << endl;
+    return 0;
+}s
