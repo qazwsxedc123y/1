@@ -466,46 +466,92 @@ using namespace std;
 
 
 
-const int N = 110;
-int t, n;
+//const int N = 110;
+//int t, n;
+//int main() {
+//    cin >> t;
+//    for (int k = 0; k < t; k++)
+//    {
+//        cin >> n;
+//        bool arr[n][26];
+//        memset(arr, false, sizeof(arr));
+//        for (int i = 0; i < n; i++)
+//        {
+//            string s;
+//            cin >> s;
+//            for (int j = 0; j < s.size(); j++)
+//            {
+//                arr[i][s[j] - 'a'] = true;
+//            }
+//        }
+//        int l = 0, r = n - 1;
+//        bool flag = true;
+//        while (l <= r)
+//        {
+//            bool ans = false;
+//            for (int j = 0; j < 26; j++)
+//            {
+//                if (arr[l][j] == true && arr[r][j] == true)
+//                {
+//                    ans = true;
+//                    break;
+//                }
+//            }
+//            if (ans == false)
+//            {
+//                flag = false;
+//                break;
+//            }
+//            l++, r--;
+//        }
+//        if (flag == true) cout << "Yes" << endl;
+//        else cout << "No" << endl;
+//    }
+//}
+//// 64 位输出请用 printf("%lld")
+
+
+//int a, h, b, k;
+//int main() {
+//    cin >> a >> h >> b >> k;
+//    // 首先 光 先攻击，后对立攻击
+//    // 然后互相攻击
+//    long long ret = 0;
+//    while (h > 0 && k > 0)
+//    {
+//        int t = min(h / b, k / a);
+//        ret = ret + t * b;
+//        ret = ret + t * a;
+//
+//        h = h - t * b;
+//        k = k - t * a;
+//
+//    }
+//    if (h > 0 && k <= 0) ret = ret + 10 * a;
+//    if (k > 0 && h <= 0) ret = ret + 10 * b;
+//    cout << ret << endl;
+//}
+// 64 位输出请用 printf("%lld")
+
+
+
+const int N = 2e5 + 10;
+long long n, arr[N], dp[N]; // dp[i]表示下标[0,i-1]之间的和
 int main() {
-    cin >> t;
-    for (int k = 0; k < t; k++)
+    // 前缀和 或 滑动数组
+    cin >> n;
+    for (long long i = 0; i < n; i++) cin >> arr[i];
+
+    for (long long i = 1; i <= n; i++) dp[i] = dp[i - 1] + arr[i - 1];
+
+    long long ret = 0;
+    for (long long i = 1; i <= n; i++) // 右
     {
-        cin >> n;
-        bool arr[n][26];
-        memset(arr, false, sizeof(arr));
-        for (int i = 0; i < n; i++)
+        for (long long j = 1; j < i; j++) // 左
         {
-            string s;
-            cin >> s;
-            for (int j = 0; j < s.size(); j++)
-            {
-                arr[i][s[j] - 'a'] = true;
-            }
+            ret = max(ret, dp[i] - dp[j]);
         }
-        int l = 0, r = n - 1;
-        bool flag = true;
-        while (l <= r)
-        {
-            bool ans = false;
-            for (int j = 0; j < 26; j++)
-            {
-                if (arr[l][j] == true && arr[r][j] == true)
-                {
-                    ans = true;
-                    break;
-                }
-            }
-            if (ans == false)
-            {
-                flag = false;
-                break;
-            }
-            l++, r--;
-        }
-        if (flag == true) cout << "Yes" << endl;
-        else cout << "No" << endl;
     }
+    cout << ret << endl;
 }
 // 64 位输出请用 printf("%lld")
