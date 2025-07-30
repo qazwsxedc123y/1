@@ -557,48 +557,164 @@ using namespace std;
 //// 64 位输出请用 printf("%lld")
 
 
-#include <iostream>
-#include <string>
-using namespace std;
+//#include <iostream>
+//#include <string>
+//using namespace std;
+//
+//string s;
+//int n;
+//int func()
+//{
+//    // 先判断是否全为相同字符
+//    bool flag = false;
+//    for (int i = 1; i < n; i++)
+//    {
+//        if (s[i] != s[0])
+//        {
+//            flag = true;
+//            break;
+//        }
+//    }
+//    if (flag == false) return 0;
+//
+//    // 判断本身是否为回文
+//    flag = true;
+//    int left = 0, right = n - 1;
+//    while (left < right)
+//    {
+//        if (s[left] == s[right])
+//        {
+//            left++, right--;
+//        }
+//        else
+//        {
+//            flag = false;
+//            break;
+//        }
+//    }
+//    if (flag == true) return n - 1;
+//    else return n;
+//}
 
-string s;
-int n;
-int func()
-{
-    // 先判断是否全为相同字符
-    bool flag = false;
-    for (int i = 1; i < n; i++)
-    {
-        if (s[i] != s[0])
-        {
-            flag = true;
-            break;
-        }
-    }
-    if (flag == false) return 0;
 
-    // 判断本身是否为回文
-    flag = true;
-    int left = 0, right = n - 1;
-    while (left < right)
-    {
-        if (s[left] == s[right])
-        {
-            left++, right--;
+//#include <iostream>
+//#include <string>
+//using namespace std;
+//const int N = 1e3 + 10;
+//string s;
+//bool dp[N][N];
+//int main() {
+//    cin >> s;
+//    int n = s.size();
+//    int ans = 1;
+//
+//    // 初始化长度为1的子串
+//    for (int i = 0; i < n; i++) {
+//        dp[i][i] = true;
+//    }
+//
+//    // 检查长度为2的子串
+//    for (int i = 0; i < n - 1; i++) {
+//        if (s[i] == s[i + 1]) {
+//            dp[i][i + 1] = true;
+//            ans = 2;
+//        }
+//    }
+//
+//    // 检查长度大于2的子串
+//    for (int len = 3; len <= n; len++) {
+//        for (int i = 0; i + len - 1 < n; i++) {
+//            int j = i + len - 1;
+//            if (s[i] == s[j] && dp[i + 1][j - 1]) {
+//                dp[i][j] = true;
+//                ans = max(ans, len);
+//            }
+//        }
+//    }
+//
+//    cout << ans << endl;
+//    return 0;
+//}
+
+
+
+
+//#include <iostream>
+//#include <string>
+//using namespace std;
+//const int N = 1e3 + 10;
+//string s;
+//int dp[N][N];
+//int main() {
+//    // 动态规划
+//    // 二阶dp表
+//    cin >> s;
+//    int n = s.size();
+//    // dp[i][j] 表示是否为区间(i,j)是否为回文序列
+//    // dp[i][j] = 
+//    // 区间 [i+1, j-1] 是回文序列 并且s[i] == s[j]，dp[i][j] = dp[i+1][j-1] + 2;
+//    // 反之任何情况都是 false
+//
+//    // 初始化
+//    // dp[x][x] = true
+//    for (int i = 1; i <= n; i++)
+//    {
+//        for (int j = 1; j <= i; j++)
+//            dp[i][j] = 1;
+//    }
+//    int ans = 1;
+//
+//    for (int i = 1; i <= n; i++)
+//    {
+//        for (int j = 1; j < i; j++)
+//        {
+//            if (i - j == 1)
+//            {
+//                if (s[i - 1] == s[j - 1]) dp[i][j] = 2;
+//                else dp[i][j] = 1;
+//            }
+//            else
+//            {
+//                if (s[i - 1] == s[j - 1])
+//                {
+//                    dp[i][j] = dp[i + 1][j - 1] + 2;
+//                }
+//                else dp[i][j] = dp[i + 1][j - 1];
+//            }
+//            ans = max(ans, dp[i][j]);
+//        }
+//    }
+//    cout << ans << endl;
+//}
+//// 64 位输出请用 printf("%lld")
+
+
+
+class Solution {
+public:
+    int longestPalindromeSubseq(string s) {
+        int n = s.size();
+        int dp[n][n];
+        memset(dp, 0, sizeof(dp));
+
+        // 初始化：单个字符的子序列长度为1
+        for (int i = 0; i < n; i++) {
+            dp[i][i] = 1;
         }
-        else
-        {
-            flag = false;
-            break;
+
+        // 从子串长度 len = 2 开始逐步扩展
+        for (int len = 2; len <= n; len++) {
+            for (int i = 0; i + len - 1 < n; i++) {
+                int j = i + len - 1;
+                if (s[i] == s[j]) {
+                    dp[i][j] = dp[i + 1][j - 1] + 2;
+                }
+                else {
+                    dp[i][j] = max(dp[i + 1][j], dp[i][j - 1]);
+                }
+            }
         }
+
+        return dp[0][n - 1];
     }
-    if (flag == true) return n - 1;
-    else return n;
-}
-int main()
-{
-    cin >> s;
-    n = s.size();
-    cout << func() << endl;
-    return 0;
-}s
+};
