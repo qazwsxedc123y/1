@@ -878,3 +878,43 @@ public:
         return ret;
     }
 };
+
+
+class Solution {
+public:
+    /**
+     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+     *
+     *
+     * @param m int整型vector<vector<>>
+     * @return int整型
+     */
+    bool vis[201] = { 0 };
+    int citys(vector<vector<int> >& m) {
+        // write code here
+        int n = m.size();
+
+        int ret = 0;
+        for (int i = 0; i < n; i++)
+        {
+            if (!vis[i])
+            {
+                ret++;
+                dfs(m, i);
+            }
+        }
+        return ret;
+    }
+    void dfs(vector<vector<int> >& m, int pos)
+    {
+        vis[pos] = true;
+
+        for (int i = 0; i < m.size(); i++)
+        {
+            if (m[pos][i] == 1 && !vis[i])
+            {
+                dfs(m, i);
+            }
+        }
+    }
+};
