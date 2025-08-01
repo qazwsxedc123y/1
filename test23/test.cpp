@@ -690,31 +690,191 @@ using namespace std;
 
 
 
+//class Solution {
+//public:
+//    int longestPalindromeSubseq(string s) {
+//        int n = s.size();
+//        int dp[n][n];
+//        memset(dp, 0, sizeof(dp));
+//
+//        // 初始化：单个字符的子序列长度为1
+//        for (int i = 0; i < n; i++) {
+//            dp[i][i] = 1;
+//        }
+//
+//        // 从子串长度 len = 2 开始逐步扩展
+//        for (int len = 2; len <= n; len++) {
+//            for (int i = 0; i + len - 1 < n; i++) {
+//                int j = i + len - 1;
+//                if (s[i] == s[j]) {
+//                    dp[i][j] = dp[i + 1][j - 1] + 2;
+//                }
+//                else {
+//                    dp[i][j] = max(dp[i + 1][j], dp[i][j - 1]);
+//                }
+//            }
+//        }
+//
+//        return dp[0][n - 1];
+//    }
+//};
+
+
+
+//string s1, s2;
+//int main() {
+//    cin >> s1 >> s2;
+//    int sz1 = s1.size(), sz2 = s2.size();
+//
+//    // 模拟，暴力
+//    int ans = 0;
+//    for (int i = 0; i < sz2 - sz1; i++)
+//    {
+//        int count = 0;
+//        for (int j = 0; j < sz1; j++)
+//        {
+//            if (s1[j] == s2[j + i])
+//                count++;
+//        }
+//        ans = max(ans, count);
+//    }
+//
+//    cout << sz1 - ans << endl;
+//}
+//// 64 位输出请用 printf("%lld")
+
+
+
+//#include <iostream>
+//#include <queue>
+//using namespace std;
+//const int N = 55;
+//int n, arr[N];
+//struct cmp
+//{
+//    bool operator()(const int& a, const int& b)
+//    {
+//        return b < a;
+//    }
+//};
+//priority_queue<long long, vector<long long>, cmp> q;
+//int main() {
+//    cin >> n;
+//    long long _max = 0;
+//    for (int i = 0; i < n; i++)
+//    {
+//        long long t;
+//        cin >> t;
+//        _max = max(_max, t);
+//        q.push(t);
+//    }
+//
+//    // 由于数据量很小，所以可以暴力
+//
+//    // 如果当前的值乘2，超过最大值，那么直接No
+//
+//    while (!q.empty())
+//    {
+//        long long t = q.top();
+//        q.pop();
+//        if (t == _max)
+//        {
+//            cout << "YES" << endl;
+//            break;
+//        }
+//        t *= 2;
+//        if (t > _max) {
+//            cout << "NO" << endl;
+//            break;
+//        }
+//        else if (t < _max) q.push(t);
+//    }
+//}
+//// 64 位输出请用 printf("%lld")
+
+
+
+//
+//#include <iostream>
+//using namespace std;
+//// 背包问题
+//const int N1 = 40, N2 = 2e4 + 10;
+//int V, n, v[N1];
+//int dp[N2]; // dp[i][j] 表示从 i 个物品挑选，总体积不超过 j ，所有选法中选出来的最大价值
+//int main() {
+//    cin >> V >> n;
+//    for (int i = 1; i <= n; i++) cin >> v[i];
+//
+//    // 让其价值等于体积
+//    // 求出装入最大体积，然后求出装入最大的价值
+//
+//    // 选 / 不选
+//    // 选 dp[i][j] = dp[i-1][j-v[i-1]] + v[i];
+//    // 不选 dp[i][j] = dp[i-1][j]
+//
+//    for (int i = 1; i <= n; i++)
+//    {
+//        for (int j = V; j >= v[i]; j--)
+//        {
+//            dp[j] = max(dp[j - v[i]] + v[i], dp[j]);
+//        }
+//    }
+//    //cout << dp[n][V] << endl;
+//    int ret = V - dp[V];
+//    cout << ret << endl;
+//}
+//// 64 位输出请用 printf("%lld")
+
+
+
+
+
 class Solution {
 public:
-    int longestPalindromeSubseq(string s) {
-        int n = s.size();
-        int dp[n][n];
-        memset(dp, 0, sizeof(dp));
-
-        // 初始化：单个字符的子序列长度为1
-        for (int i = 0; i < n; i++) {
-            dp[i][i] = 1;
+    /**
+     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+     *
+     *
+     * @param m int整型vector<vector<>>
+     * @return int整型
+     */
+    int n;
+    int dx[4] = { -1, 1, 0, 0 };
+    int dy[4] = { 0, 0, -1, 1 };
+    void dfs(vector<vector<int>>& m, int i, int j, vector<vector<bool>>& vis)
+    {
+        for (int k = 0; k < 4; k++)
+        {
+            int x = j + dx[k], y = i + dy[k];
+            if (x >= 0 && y >= 0 && x < n && y < n && vis[x][y] == false && m[x][y] == 1)
+            {
+                vis[x][y] = true;
+                dfs(m, x, y, vis);
+                vis[x][y] = false;
+            }
         }
-
-        // 从子串长度 len = 2 开始逐步扩展
-        for (int len = 2; len <= n; len++) {
-            for (int i = 0; i + len - 1 < n; i++) {
-                int j = i + len - 1;
-                if (s[i] == s[j]) {
-                    dp[i][j] = dp[i + 1][j - 1] + 2;
-                }
-                else {
-                    dp[i][j] = max(dp[i + 1][j], dp[i][j - 1]);
+    }
+    int citys(vector<vector<int>>& m) {
+        n = m.size();
+        // write code here
+        // dfs 统计多少个岛屿
+        vector<vector<bool>> vis;
+        vis.resize(n, vector<bool>(n));
+        int ret = 0;
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                if (m[i][j] == 1 && vis[i][j] == false)
+                {
+                    vis[i][j] = true;
+                    dfs(m, i, j, vis);
+                    vis[i][j] = false;
+                    ret++;
                 }
             }
         }
 
-        return dp[0][n - 1];
+        return ret;
     }
 };
