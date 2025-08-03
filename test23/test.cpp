@@ -829,92 +829,222 @@ using namespace std;
 
 
 
-class Solution {
-public:
-    /**
-     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
-     *
-     *
-     * @param m int整型vector<vector<>>
-     * @return int整型
-     */
-    int n;
-    int dx[4] = { -1, 1, 0, 0 };
-    int dy[4] = { 0, 0, -1, 1 };
-    void dfs(vector<vector<int>>& m, int i, int j, vector<vector<bool>>& vis)
+//class Solution {
+//public:
+//    /**
+//     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+//     *
+//     *
+//     * @param m int整型vector<vector<>>
+//     * @return int整型
+//     */
+//    int n;
+//    int dx[4] = { -1, 1, 0, 0 };
+//    int dy[4] = { 0, 0, -1, 1 };
+//    void dfs(vector<vector<int>>& m, int i, int j, vector<vector<bool>>& vis)
+//    {
+//        for (int k = 0; k < 4; k++)
+//        {
+//            int x = j + dx[k], y = i + dy[k];
+//            if (x >= 0 && y >= 0 && x < n && y < n && vis[x][y] == false && m[x][y] == 1)
+//            {
+//                vis[x][y] = true;
+//                dfs(m, x, y, vis);
+//                vis[x][y] = false;
+//            }
+//        }
+//    }
+//    int citys(vector<vector<int>>& m) {
+//        n = m.size();
+//        // write code here
+//        // dfs 统计多少个岛屿
+//        vector<vector<bool>> vis;
+//        vis.resize(n, vector<bool>(n));
+//        int ret = 0;
+//        for (int i = 0; i < n; i++)
+//        {
+//            for (int j = 0; j < n; j++)
+//            {
+//                if (m[i][j] == 1 && vis[i][j] == false)
+//                {
+//                    vis[i][j] = true;
+//                    dfs(m, i, j, vis);
+//                    vis[i][j] = false;
+//                    ret++;
+//                }
+//            }
+//        }
+//
+//        return ret;
+//    }
+//};
+//
+//
+//class Solution {
+//public:
+//    /**
+//     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+//     *
+//     *
+//     * @param m int整型vector<vector<>>
+//     * @return int整型
+//     */
+//    bool vis[201] = { 0 };
+//    int citys(vector<vector<int> >& m) {
+//        // write code here
+//        int n = m.size();
+//
+//        int ret = 0;
+//        for (int i = 0; i < n; i++)
+//        {
+//            if (!vis[i])
+//            {
+//                ret++;
+//                dfs(m, i);
+//            }
+//        }
+//        return ret;
+//    }
+//    void dfs(vector<vector<int> >& m, int pos)
+//    {
+//        vis[pos] = true;
+//
+//        for (int i = 0; i < m.size(); i++)
+//        {
+//            if (m[pos][i] == 1 && !vis[i])
+//            {
+//                dfs(m, i);
+//            }
+//        }
+//    }
+//};
+//
+//
+//#include <iostream>
+//using namespace std;
+//const int N = 3e5 + 10;
+//int n, arr[N];
+//int count0 = 0, count1 = 0;
+//int ans0 = 0, ans1 = 0;
+//int main() {
+//    // 滑动窗口，滑动窗口的大小是长度/2
+//    // 如果该窗口内0与1个数为总的一半，那么就为一种方案
+//
+//    cin >> n;
+//    for (int i = 0; i < n; i++)
+//    {
+//        cin >> arr[i];
+//        if (arr[i] == 0) count0++;
+//        else count1++;
+//    }
+//
+//    count0 /= 2;
+//    count1 /= 2;
+//
+//    int len = n / 2;
+//    int l = 0;
+//    int ret = 0;
+//    for (int r = 0; r < n; r++)
+//    {
+//        if (arr[r] == 0) ans0++;
+//        else ans1++;
+//
+//        if (r - l + 1 >= len)
+//        {
+//            if (ans0 == count0 && ans1 == count1) ret++;
+//            if (arr[l] == 0) ans0--;
+//            else ans1--;
+//            l++;
+//        }
+//    }
+//
+//    cout << ret << endl;
+//    return 0;
+//}
+
+
+//#include <iostream>
+//using namespace std;
+//const int N = 110;
+//const int M = -127 * N;
+//int n, arr[N][N];
+//int f[N][N] = { 0 };
+//int main() {
+//    cin >> n;
+//    for (int i = 1; i <= n; i++)
+//        for (int j = 1; j <= n; j++)
+//            cin >> arr[i][j];
+//
+//    // 前缀和？
+//    for (int i = 1; i <= n; i++)
+//    {
+//        for (int j = 1; j <= n; j++)
+//        {
+//            f[i][j] = f[i - 1][j] + f[i][j - 1] - f[i - 1][j - 1] + arr[i][j];
+//        }
+//    }
+//
+//    int ans = M;
+//    for (int i = 1; i <= n; i++)
+//    {
+//        for (int j = 1; j <= n; j++)
+//        {
+//            for (int x = 0; x < i; x++)
+//            {
+//                for (int y = 0; y < j; y++)
+//                {
+//                    //if (x == i && y == j) continue;
+//                    ans = max(ans, f[i][j] - f[i][y] - f[x][j] + f[x][y]);
+//                }
+//            }
+//        }
+//    }
+//
+//    cout << ans << endl;
+//}
+//// 64 位输出请用 printf("%lld")s
+
+
+#include <iostream>
+#include <string>
+using namespace std;
+const int N = 3e5 + 10;
+int n;
+string s;
+int count0 = 0, count1 = 0;
+int ans0 = 0, ans1 = 0;
+int main() {
+    // 滑动窗口，滑动窗口的大小是长度/2
+    // 如果该窗口内0与1个数为总的一半，那么就为一种方案
+
+    cin >> n;
+    cin >> s;
+    for (int i = 0; i < n; i++)
     {
-        for (int k = 0; k < 4; k++)
-        {
-            int x = j + dx[k], y = i + dy[k];
-            if (x >= 0 && y >= 0 && x < n && y < n && vis[x][y] == false && m[x][y] == 1)
-            {
-                vis[x][y] = true;
-                dfs(m, x, y, vis);
-                vis[x][y] = false;
-            }
-        }
+        if (s[i] == '0') count0++;
+        else count1++;
     }
-    int citys(vector<vector<int>>& m) {
-        n = m.size();
-        // write code here
-        // dfs 统计多少个岛屿
-        vector<vector<bool>> vis;
-        vis.resize(n, vector<bool>(n));
-        int ret = 0;
-        for (int i = 0; i < n; i++)
-        {
-            for (int j = 0; j < n; j++)
-            {
-                if (m[i][j] == 1 && vis[i][j] == false)
-                {
-                    vis[i][j] = true;
-                    dfs(m, i, j, vis);
-                    vis[i][j] = false;
-                    ret++;
-                }
-            }
-        }
 
-        return ret;
-    }
-};
+    count0 /= 2;
+    count1 /= 2;
 
-
-class Solution {
-public:
-    /**
-     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
-     *
-     *
-     * @param m int整型vector<vector<>>
-     * @return int整型
-     */
-    bool vis[201] = { 0 };
-    int citys(vector<vector<int> >& m) {
-        // write code here
-        int n = m.size();
-
-        int ret = 0;
-        for (int i = 0; i < n; i++)
-        {
-            if (!vis[i])
-            {
-                ret++;
-                dfs(m, i);
-            }
-        }
-        return ret;
-    }
-    void dfs(vector<vector<int> >& m, int pos)
+    int len = n / 2;
+    int l = 0;
+    int ret = 0;
+    for (int r = 0; r < n - 1; r++)
     {
-        vis[pos] = true;
+        if (s[r] == '0') ans0++;
+        else ans1++;
 
-        for (int i = 0; i < m.size(); i++)
+        if (r - l + 1 >= len)
         {
-            if (m[pos][i] == 1 && !vis[i])
-            {
-                dfs(m, i);
-            }
+            if (ans0 == count0 && ans1 == count1) ret++;
+            if (s[l] == '0') ans0--;
+            else ans1--;
+            l++;
         }
     }
-};
+
+    cout << ret * 2 << endl;
+    return 0;
+}
