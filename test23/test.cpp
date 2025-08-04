@@ -1004,47 +1004,183 @@ using namespace std;
 //}
 //// 64 位输出请用 printf("%lld")s
 
+//
+//#include <iostream>
+//#include <string>
+//using namespace std;
+//const int N = 3e5 + 10;
+//int n;
+//string s;
+//int count0 = 0, count1 = 0;
+//int ans0 = 0, ans1 = 0;
+//int main() {
+//    // 滑动窗口，滑动窗口的大小是长度/2
+//    // 如果该窗口内0与1个数为总的一半，那么就为一种方案
+//
+//    cin >> n;
+//    cin >> s;
+//    for (int i = 0; i < n; i++)
+//    {
+//        if (s[i] == '0') count0++;
+//        else count1++;
+//    }
+//
+//    count0 /= 2;
+//    count1 /= 2;
+//
+//    int len = n / 2;
+//    int l = 0;
+//    int ret = 0;
+//    for (int r = 0; r < n - 1; r++)
+//    {
+//        if (s[r] == '0') ans0++;
+//        else ans1++;
+//
+//        if (r - l + 1 >= len)
+//        {
+//            if (ans0 == count0 && ans1 == count1) ret++;
+//            if (s[l] == '0') ans0--;
+//            else ans1--;
+//            l++;
+//        }
+//    }
+//
+//    cout << ret * 2 << endl;
+//    return 0;
+//}
+
 
 #include <iostream>
+#include <cmath>
 #include <string>
 using namespace std;
-const int N = 3e5 + 10;
-int n;
 string s;
-int count0 = 0, count1 = 0;
-int ans0 = 0, ans1 = 0;
-int main() {
-    // 滑动窗口，滑动窗口的大小是长度/2
-    // 如果该窗口内0与1个数为总的一半，那么就为一种方案
-
-    cin >> n;
-    cin >> s;
-    for (int i = 0; i < n; i++)
+int cnt[26] = { 0 };
+int _max = 0, _min = 110;
+void func(int x)
+{
+    // 先判断是否为质数
+    bool flag = true;
+    if (x == 0 || x == 1) flag = false;
+    for (int i = 2; i < x; i++)
     {
-        if (s[i] == '0') count0++;
-        else count1++;
-    }
-
-    count0 /= 2;
-    count1 /= 2;
-
-    int len = n / 2;
-    int l = 0;
-    int ret = 0;
-    for (int r = 0; r < n - 1; r++)
-    {
-        if (s[r] == '0') ans0++;
-        else ans1++;
-
-        if (r - l + 1 >= len)
+        if (x % i == 0)
         {
-            if (ans0 == count0 && ans1 == count1) ret++;
-            if (s[l] == '0') ans0--;
-            else ans1--;
-            l++;
+            flag = false;
+            break;
         }
     }
-
-    cout << ret * 2 << endl;
-    return 0;
+    if (flag)
+    {
+        cout << "Lucky Word" << endl;
+        cout << x << endl;
+    }
+    else
+    {
+        cout << "No Answer" << endl;
+        cout << "0" << endl;
+    }
 }
+int main() {
+    cin >> s;
+    int n = s.size();
+    for (int i = 0; i < n; i++)
+    {
+        cnt[s[i] - 'a']++;
+        _max = max(cnt[s[i] - 'a'], _max);
+        _min = min(cnt[s[i] - 'a'], _min);
+    }
+    int ret = _max - _min;
+    func(ret);
+}
+// 64 位输出请用 printf("%lld")
+
+struct cmp {
+    bool operator()(const vector<int>& a, const vector<int>& b) {
+        return a[0] < b[0] || (a[0] == b[0] && a[1] < b[1]);
+    }
+};
+class Solution {
+public:
+    /**
+     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+     *
+     *
+     * @param schedule int整型vector<vector<>>
+     * @return bool布尔型
+     */
+    bool hostschedule(vector<vector<int> >& schedule) {
+        // write code here
+        // 飞机起飞， dfs
+
+        // 可以采用先排序，然后再遍历查看
+        sort(schedule.begin(), schedule.end(), cmp());
+
+        bool flag = true;
+
+        int n = schedule.size();
+        int begin = schedule[0][0], end = schedule[0][1];
+
+        for (int i = 1; i < n; i++)
+        {
+            if (end > schedule[i][0])
+            {
+                flag = false;
+                break;
+            }
+            begin = schedule[i][0];
+            end = schedule[i][1];
+            cout << begin << " " << end << endl;
+        }
+        return flag;
+    }
+};
+
+
+#include <iostream>
+using namespace std;
+const int N = 550;
+int n, nums[N], sum = 0;
+bool vis[N] = { false }, falg = false;
+void dfs(int x)
+{
+    if (falg == true) return;
+    if (x >= sum)
+    {
+        //cout << x << endl;
+        if (x == sum) falg = true;
+        return;
+    }
+    // 剪枝
+    for (int i = 0; i < n; i++)
+    {
+        if (vis[i] == false)
+        {
+            vis[i] = true;
+            x += nums[i];
+            dfs(x);
+            vis[i] = false;
+            x -= nums[i];
+        }
+    }
+}
+int main() {
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+        cin >> nums[i];
+        sum += nums[i];
+    }
+    // 是否可以使用全排列，看是否可以组合成sum/2一半的值
+    if (sum % 2 != 0)
+    {
+        cout << "false" << endl;
+    }
+    else
+    {
+        sum /= 2;
+        dfs(0);
+        if (falg) cout << "true" << endl;
+        else cout << "false" << endl;
+    }
+}
+// 64 位输出请用 printf("%lld")
