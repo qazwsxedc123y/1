@@ -141,3 +141,41 @@ using namespace std;
 //        return heap.size();
 //    }
 //};
+
+
+/**
+ * struct TreeNode {
+ *  int val;
+ *  struct TreeNode *left;
+ *  struct TreeNode *right;
+ *  TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ * };
+ */
+class Solution {
+public:
+    /**
+     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+     *
+     *
+     * @param root TreeNode类
+     * @return int整型
+     */
+    int maxSum = INT_MIN;
+    int maxGain(TreeNode* root) {
+        if (root == nullptr) return 0;
+
+        int leftGain = max(maxGain(root->left), 0);
+        int rightGain = max(maxGain(root->right), 0);
+
+        int priceNewpath = root->val + leftGain + rightGain;
+
+        maxSum = max(maxSum, priceNewpath);
+
+        return root->val + max(leftGain, rightGain);
+    }
+    int maxPathSum(TreeNode* root) {
+        maxGain(root);
+        return maxSum;
+        // write code here
+    }
+};
