@@ -6,6 +6,7 @@
 #include <queue>
 #include <unordered_set>
 #include <unordered_map>
+#include <cmath>
 using namespace std;
 
 
@@ -143,39 +144,80 @@ using namespace std;
 //};
 
 
-/**
- * struct TreeNode {
- *  int val;
- *  struct TreeNode *left;
- *  struct TreeNode *right;
- *  TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- * };
- */
-class Solution {
-public:
-    /**
-     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
-     *
-     *
-     * @param root TreeNode类
-     * @return int整型
-     */
-    int maxSum = INT_MIN;
-    int maxGain(TreeNode* root) {
-        if (root == nullptr) return 0;
+///**
+// * struct TreeNode {
+// *  int val;
+// *  struct TreeNode *left;
+// *  struct TreeNode *right;
+// *  TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+// * };
+// */
+//class Solution {
+//public:
+//    /**
+//     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+//     *
+//     *
+//     * @param root TreeNode类
+//     * @return int整型
+//     */
+//    int maxSum = INT_MIN;
+//    int maxGain(TreeNode* root) {
+//        if (root == nullptr) return 0;
+//
+//        int leftGain = max(maxGain(root->left), 0);
+//        int rightGain = max(maxGain(root->right), 0);
+//
+//        int priceNewpath = root->val + leftGain + rightGain;
+//
+//        maxSum = max(maxSum, priceNewpath);
+//
+//        return root->val + max(leftGain, rightGain);
+//    }
+//    int maxPathSum(TreeNode* root) {
+//        maxGain(root);
+//        return maxSum;
+//        // write code here
+//    }
+//};
 
-        int leftGain = max(maxGain(root->left), 0);
-        int rightGain = max(maxGain(root->right), 0);
 
-        int priceNewpath = root->val + leftGain + rightGain;
 
-        maxSum = max(maxSum, priceNewpath);
-
-        return root->val + max(leftGain, rightGain);
+const long long N = 1e4 + 10;
+long long T, arr[N];
+int main() {
+    // 有没有规律？
+    cin >> T;
+    // 2^n - 1
+    for (long long i = 1; i <= 7; i++)
+    {
+        long long j = 1;
+        long long cnt = 0;
+        while (true)
+        {
+            long long ans = pow(2, j) - 1;
+            if (ans >= i)
+            {
+                if (ans == i)
+                {
+                    arr[i] = j;
+                }
+                else
+                {
+                    cnt = j - 1;
+                    long long t = i - pow(2, cnt) + 1;
+                    arr[i] = cnt + arr[t];
+                }
+                break;
+            }
+            j++;
+        }
     }
-    int maxPathSum(TreeNode* root) {
-        maxGain(root);
-        return maxSum;
-        // write code here
+    for (int i = 0; i < T; i++)
+    {
+        int t;
+        cin >> t;
+        cout << arr[t] << endl;
     }
-};
+}
+// 64 位输出请用 printf("%lld")
