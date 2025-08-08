@@ -183,41 +183,72 @@ using namespace std;
 
 
 
-const long long N = 1e4 + 10;
-long long T, arr[N];
-int main() {
-    // 有没有规律？
-    cin >> T;
-    // 2^n - 1
-    for (long long i = 1; i <= 7; i++)
-    {
-        long long j = 1;
-        long long cnt = 0;
-        while (true)
-        {
-            long long ans = pow(2, j) - 1;
-            if (ans >= i)
-            {
-                if (ans == i)
-                {
-                    arr[i] = j;
-                }
-                else
-                {
-                    cnt = j - 1;
-                    long long t = i - pow(2, cnt) + 1;
-                    arr[i] = cnt + arr[t];
-                }
-                break;
-            }
-            j++;
-        }
-    }
-    for (int i = 0; i < T; i++)
-    {
-        int t;
-        cin >> t;
-        cout << arr[t] << endl;
-    }
-}
-// 64 位输出请用 printf("%lld")
+//const long long N = 1e4 + 10;
+//long long T, arr[N];
+//int main() {
+//    // 有没有规律？
+//    cin >> T;
+//    // 2^n - 1
+//    for (long long i = 1; i <= 7; i++)
+//    {
+//        long long j = 1;
+//        long long cnt = 0;
+//        while (true)
+//        {
+//            long long ans = pow(2, j) - 1;
+//            if (ans >= i)
+//            {
+//                if (ans == i)
+//                {
+//                    arr[i] = j;
+//                }
+//                else
+//                {
+//                    cnt = j - 1;
+//                    long long t = i - pow(2, cnt) + 1;
+//                    arr[i] = cnt + arr[t];
+//                }
+//                break;
+//            }
+//            j++;
+//        }
+//    }
+//    for (int i = 0; i < T; i++)
+//    {
+//        int t;
+//        cin >> t;
+//        cout << arr[t] << endl;
+//    }
+//}
+//// 64 位输出请用 printf("%lld")
+
+
+
+//const int N = 15;
+//int n, a[N], ret = 0;
+//bool vis[N];
+//void dfs(int pos)
+//{
+//    if (pos == n + 1)
+//    {
+//        ret++;
+//        return;
+//    }
+//    for (int i = 1; i <= n; i++)
+//    {
+//        if (vis[i]) continue;
+//        if (vis[a[i]]) return;
+//        vis[i] = true;
+//        dfs(pos + 1);
+//        vis[i] = false;
+//    }
+//}
+//int main()
+//{
+//    cin >> n;
+//    for (int i = 1; i <= n; i++) cin >> a[i];
+//
+//    dfs(1);
+//    cout << ret << endl;
+//    return 0;
+//}
