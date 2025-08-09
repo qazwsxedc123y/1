@@ -252,3 +252,127 @@ using namespace std;
 //    cout << ret << endl;
 //    return 0;
 //}
+
+
+
+//const int N = 1e5 + 10;
+//int n, arr[N];
+//int ret = 0;
+//int main() {
+//    cin >> n;
+//    for (int i = 0; i < n; i++) cin >> arr[i];
+//
+//    for (int i = 0; i < n; i++)
+//    {
+//        if (i == n - 1)
+//        {
+//            ret++;
+//            break;
+//        }
+//
+//        if (arr[i] > arr[i + 1])
+//        {
+//            while (i + 1 < n && arr[i] >= arr[i + 1]) i++;
+//            ret++;
+//        }
+//        else if (arr[i] < arr[i + 1])
+//        {
+//            while (i + 1 < n && arr[i] <= arr[i + 1]) i++;
+//            ret++;
+//        }
+//    }
+//    cout << ret << endl;
+//}
+//// 64 位输出请用 printf("%lld")
+
+
+
+//int t, h;
+//void func()
+//{
+//    int ret = 0, a = 1;
+//    while (h)
+//    {
+//        h -= a;
+//        if (h % (a * 2) == 0)
+//        {
+//            a *= 2;
+//        }
+//        ret++;
+//    }
+//    cout << ret << endl;
+//}
+//int main()
+//{
+//    cin >> t;
+//    while (t--)
+//    {
+//        cin >> h;
+//        func();
+//    }
+//    return 0;
+//}
+
+
+
+//int T;
+//long long a, b;
+//int main() {
+//    cin >> T;
+//    for (int i = 0; i < T; i++)
+//    {
+//        cin >> a >> b;
+//        if (a == 1 || b == 1)
+//        {
+//            if (b == 1 && a == 1)
+//            {
+//                cout << "NO" << endl;
+//            }
+//            else
+//            {
+//                // 检查不为1的是不是素数
+//                long long t = (a == 1 ? b : a);
+//                bool flag = true;
+//                for (long long j = 2; j <= pow(t, 0.5); j++)
+//                {
+//                    if (t % j == 0)
+//                    {
+//                        cout << "NO" << endl;
+//                        flag = false;
+//                        break;
+//                    }
+//                }
+//                if (flag)
+//                    cout << "YES" << endl;
+//            }
+//        }
+//        else cout << "NO" << endl;
+//    }
+//}
+//// 64 位输出请用 printf("%lld")
+//
+
+
+
+//const int N = 2e5 + 10;
+//int n, k, a[N];
+//int main() {
+//    cin >> n >> k;
+//    for (int i = 0; i < n; i++) cin >> a[i];
+//
+//    sort(a, a + n);
+//
+//    int ret = 0, ans = 0;
+//    // 滑动窗口
+//    for (int l = 0, r = 0; r < n; r++)
+//    {
+//        ans = a[r] - a[l];
+//        while (ans > k)
+//        {
+//            ans = a[r] - a[++l];
+//        }
+//        ret = max(ret, r - l + 1);
+//    }
+//    cout << ret << endl;
+//}
+//// 64 位输出请用 printf("%lld")
