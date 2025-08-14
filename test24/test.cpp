@@ -11,7 +11,6 @@ using namespace std;
 
 
 
-
 // 8.5
 
 //string s;
@@ -376,3 +375,217 @@ using namespace std;
 //    cout << ret << endl;
 //}
 //// 64 位输出请用 printf("%lld")
+
+
+//#include <iostream>
+//#include <algorithm>
+//using namespace std;
+//
+//long long T, n, a, b;
+//
+//int main()
+//{
+//    cin >> T;
+//    while (T--)
+//    {
+//        cin >> n >> a >> b;
+//        if (n <= 2) {
+//            cout << min(a, b) << endl;
+//            continue;
+//        }
+//        long long ret = 0;
+//        if (a * 3 < b * 2)
+//        {
+//            // 双人
+//            ret += n / 2 * a;
+//            n %= 2;
+//            if (n != 0)
+//            {
+//                ret += min(min(a, b), b - a);
+//            }
+//        }
+//        else
+//        {
+//            ret = n / 3 * b;
+//            if (n % 3 == 2) {
+//                ret += min(3 * a - b, min(a, b));
+//            }
+//            else if (n % 3 == 1) {
+//                ret = min(ret - b + 2 * a, ret + min(a, b));
+//            }
+//        }
+//        cout << ret << endl;
+//    }
+//}
+
+
+
+//typedef pair<int, int> PII;
+//const int N = 2e5 + 10;
+//int n;
+//vector<vector<int>> v(N, vector<int>(2));
+//struct cmp
+//{
+//    bool operator()(const PII& e1, const PII& e2)
+//    {
+//        return e1.first > e2.first;
+//    }
+//};
+//int main() {
+//    cin >> n;
+//    for (int i = 0; i < n; i++) cin >> v[i][0] >> v[i][1];
+//
+//    sort(v.begin(), v.end());
+//    // 区间合并
+//    priority_queue<PII, vector<PII>, cmp> q;
+//
+//    q.push({ v[0][1], 1 });
+//
+//    for (int i = 1; i < n; i++)
+//    {
+//        int a = v[i][0];
+//        if (a >= q.top().first)
+//        {
+//            int b = q.top().second;
+//            q.pop();
+//            q.push({ v[i][1], b + 1 });
+//        }
+//        else
+//        {
+//            q.push({ v[i][1], 1 });
+//        }
+//    }
+//    int ret = 0;
+//    while (!q.empty())
+//    {
+//        ret = max(ret, q.top().second);
+//        q.pop();
+//    }
+//    cout << ret << endl;
+//}
+//// 64 位输出请用 printf("%lld")
+
+
+//class Solution {
+//public:
+//    /**
+//     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+//     *
+//     *
+//     * @param str string字符串
+//     * @return string字符串vector
+//     */
+//    int n;
+//    vector<string> v;
+//    bool vis[12] = { false };
+//    string s;
+//    void dfs(string& str)
+//    {
+//        if (s.size() == n)
+//        {
+//            v.push_back(s);
+//            return;
+//        }
+//        for (int i = 0; i < n; i++)
+//        {
+//            if (vis[i] == false)
+//            {
+//                if (i > 0 && str[i] == str[i - 1] && vis[i - 1] == false) continue;
+//                s.push_back(str[i]);
+//                vis[i] = true;
+//                dfs(str);
+//                s.pop_back();
+//                vis[i] = false;
+//            }
+//        }
+//    }
+//    vector<string> Permutation(string str) {
+//        // write code here
+//        n = str.size();
+//        sort(str.begin(), str.end());
+//        dfs(str);
+//        return v;
+//    }
+//};
+
+
+//typedef pair<int, int> PII;
+//
+//int main() {
+//    int n;
+//    cin >> n;
+//    if (n == 0) {
+//        cout << 0 << endl;
+//        return 0;
+//    }
+//    vector<vector<int>> v(n, vector<int>(2));
+//    for (int i = 0; i < n; i++)
+//    {
+//        cin >> v[i][0] >> v[i][1];
+//    }
+//
+//    sort(v.begin(), v.end());
+//    // 区间合并
+//    priority_queue<PII, vector<PII>, greater<PII>> q; // 最小堆，比较第一个元素
+//
+//    q.push({ v[0][1], 1 });
+//
+//    for (int i = 1; i < n; i++)
+//    {
+//        int a = v[i][0];
+//        if (a >= q.top().first)
+//        {
+//            int b = q.top().second;
+//            q.pop();
+//            q.push({ v[i][1], b + 1 });
+//        }
+//        else
+//        {
+//            q.push({ v[i][1], 1 });
+//        }
+//    }
+//    int ret = 0;
+//    while (!q.empty())
+//    {
+//        ret = max(ret, q.top().second);
+//        q.pop();
+//    }
+//    cout << ret << endl;
+//}
+//
+//
+//#include <iostream>
+//#include <vector>
+//#include <algorithm>
+//using namespace std;
+//typedef pair<int, int> PII;
+//
+//int main() {
+//    int n;
+//    cin >> n;
+//    if (n == 0) {
+//        cout << 0 << endl;
+//        return 0;
+//    }
+//    vector<vector<int>> v(n, vector<int>(2));
+//    for (int i = 0; i < n; i++)
+//    {
+//        cin >> v[i][0] >> v[i][1];
+//    }
+//
+//    sort(v.begin(), v.end());
+//    int ret = 1, r = v[0][1];
+//    for (int i = 1; i < n; i++)
+//    {
+//        if (v[i][0] < r)
+//        {
+//            r = min(r, v[i][1]);
+//        }
+//        else
+//        {
+//            ret++;
+//            r = v[i][1];
+//        }
+//    }
+//    cout << ret << endl;
+//}
