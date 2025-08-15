@@ -589,3 +589,51 @@ using namespace std;
 //    }
 //    cout << ret << endl;
 //}
+
+
+const int N = 1100;
+bool vis[N][N];
+int ret = 0;
+int dx[4] = { 1, -1, 0, 0 };
+int dy[4] = { 0, 0, 1, -1 };
+class Solution {
+public:
+    /**
+     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+     *
+     * 递增路径的最大长度
+     * @param matrix int整型vector<vector<>> 描述矩阵的每个数
+     * @return int整型
+     */
+
+    void dfs(vector<vector<int> >& matrix, int x, int y, int len)
+    {
+        ret = max(ret, len);
+        for (int k = 0; k < 4; k++)
+        {
+            int a = x + dx[k], b = y + dy[k];
+            if (a >= 0 && a < matrix.size() && b >= 0 && b < matrix[0].size() && !vis[a][b] && matrix[a][b] > matrix[x][y])
+            {
+                vis[a][b] = true;
+                dfs(matrix, a, b, len + 1);
+                vis[a][b] = false;
+            }
+        }
+    }
+    int solve(vector<vector<int> >& matrix) {
+        // write code here
+        int n = matrix.size(), m = matrix[0].size();
+        ret = 0;
+
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < m; j++)
+            {
+                memset(vis, false, sizeof(vis));
+                vis[i][j] = true;
+                dfs(matrix, i, j, 1);
+            }
+        }
+        return ret;
+    }
+};
