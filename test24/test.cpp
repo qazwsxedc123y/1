@@ -591,49 +591,175 @@ using namespace std;
 //}
 
 
-const int N = 1100;
-bool vis[N][N];
-int ret = 0;
-int dx[4] = { 1, -1, 0, 0 };
-int dy[4] = { 0, 0, 1, -1 };
-class Solution {
-public:
-    /**
-     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
-     *
-     * 递增路径的最大长度
-     * @param matrix int整型vector<vector<>> 描述矩阵的每个数
-     * @return int整型
-     */
+//const int N = 1100;
+//bool vis[N][N];
+//int ret = 0;
+//int dx[4] = { 1, -1, 0, 0 };
+//int dy[4] = { 0, 0, 1, -1 };
+//class Solution {
+//public:
+//    /**
+//     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+//     *
+//     * 递增路径的最大长度
+//     * @param matrix int整型vector<vector<>> 描述矩阵的每个数
+//     * @return int整型
+//     */
+//
+//    void dfs(vector<vector<int> >& matrix, int x, int y, int len)
+//    {
+//        ret = max(ret, len);
+//        for (int k = 0; k < 4; k++)
+//        {
+//            int a = x + dx[k], b = y + dy[k];
+//            if (a >= 0 && a < matrix.size() && b >= 0 && b < matrix[0].size() && !vis[a][b] && matrix[a][b] > matrix[x][y])
+//            {
+//                vis[a][b] = true;
+//                dfs(matrix, a, b, len + 1);
+//                vis[a][b] = false;
+//            }
+//        }
+//    }
+//    int solve(vector<vector<int> >& matrix) {
+//        // write code here
+//        int n = matrix.size(), m = matrix[0].size();
+//        ret = 0;
+//
+//        for (int i = 0; i < n; i++)
+//        {
+//            for (int j = 0; j < m; j++)
+//            {
+//                memset(vis, false, sizeof(vis));
+//                vis[i][j] = true;
+//                dfs(matrix, i, j, 1);
+//            }
+//        }
+//        return ret;
+//    }
+//};
 
-    void dfs(vector<vector<int> >& matrix, int x, int y, int len)
-    {
-        ret = max(ret, len);
-        for (int k = 0; k < 4; k++)
-        {
-            int a = x + dx[k], b = y + dy[k];
-            if (a >= 0 && a < matrix.size() && b >= 0 && b < matrix[0].size() && !vis[a][b] && matrix[a][b] > matrix[x][y])
-            {
-                vis[a][b] = true;
-                dfs(matrix, a, b, len + 1);
-                vis[a][b] = false;
-            }
-        }
-    }
-    int solve(vector<vector<int> >& matrix) {
-        // write code here
-        int n = matrix.size(), m = matrix[0].size();
-        ret = 0;
 
-        for (int i = 0; i < n; i++)
-        {
-            for (int j = 0; j < m; j++)
-            {
-                memset(vis, false, sizeof(vis));
-                vis[i][j] = true;
-                dfs(matrix, i, j, 1);
-            }
-        }
-        return ret;
-    }
-};
+//#include <cstring>
+//class Solution {
+//    const int N = 1100;
+//    int ret = 0;
+//    int dx[4] = { 1, -1, 0, 0 };
+//    int dy[4] = { 0, 0, 1, -1 };
+//    int memo[1010][1010];
+//    int n, m;
+//public:
+//    /**
+//     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+//     *
+//     * 递增路径的最大长度
+//     * @param matrix int整型vector<vector<>> 描述矩阵的每个数
+//     * @return int整型
+//     */
+//
+//    int dfs(vector<vector<int> >& matrix, int x, int y)
+//    {
+//        if (memo[x][y] != -1)
+//            return memo[x][y];
+//
+//        int len = 1;
+//
+//        for (int k = 0; k < 4; k++)
+//        {
+//            int a = x + dx[k], b = y + dy[k];
+//            if (a >= 0 && a < n && b >= 0 && b < m && matrix[a][b] > matrix[x][y])
+//            {
+//                len = max(len, 1 + dfs(matrix, a, b));
+//            }
+//        }
+//
+//        memo[x][y] = len;
+//
+//        return len;
+//    }
+//    int solve(vector<vector<int> >& matrix) {
+//        // write code here
+//        n = matrix.size(), m = matrix[0].size();
+//        memset(memo, -1, sizeof(memo));
+//        ret = 0;
+//
+//        for (int i = 0; i < n; i++)
+//        {
+//            for (int j = 0; j < m; j++)
+//            {
+//                ret = max(ret, dfs(matrix, i, j));
+//            }
+//        }
+//        return ret;
+//    }
+//};
+
+
+
+//int n;
+//string s;
+//int cnt[26] = { 0 };
+//int main() {
+//    cin >> n >> s;
+//
+//    for (int i = 0; i < n; i++)
+//    {
+//        cnt[s[i] - 'a']++;
+//    }
+//
+//    long long ret = 0;
+//    for (int i = 0; i < 26; i++)
+//    {
+//        // a对应的
+//        if (cnt[i] >= 1)
+//        {
+//            for (int j = 0; j < 26; j++)
+//            {
+//                if (j == i) continue;
+//
+//                else
+//                {
+//                    if (cnt[j] >= 2)
+//                    {
+//                        ret += (cnt[j] * (cnt[j] - 1) / 2);
+//                    }
+//                }
+//            }
+//        }
+//    }
+//
+//    cout << ret << endl;
+//}
+//// 64 位输出请用 printf("%lld")
+
+
+
+
+//int n;
+//string s;
+//int cnt[26] = { 0 };
+//int main() {
+//    cin >> n >> s;
+//
+//    long long ret = 0;
+//    for (int i = n - 1; i >= 0; i--)
+//    {
+//        cnt[s[i] - 'a']++;
+//
+//        // 起点为 s[i] ，向后查找能组成多少个abb
+//        for (int j = 0; j < 26; j++)
+//        {
+//            if (j == (s[i] - 'a') || cnt[j] < 2) continue;
+//
+//            else
+//            {
+//                ret += ((cnt[j] * (cnt[j] - 1) / 2));
+//            }
+//        }
+//
+//    }
+//
+//
+//
+//    cout << ret << endl;
+//}
+//// 64 位输出请用 printf("%lld")
