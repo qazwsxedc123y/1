@@ -154,3 +154,129 @@ using namespace std;
 //    cout << dp[n1][n2] << endl;
 //}
 //// 64 位输出请用 printf("%lld")
+
+
+
+//struct ListNode {
+// 	int val;
+//	struct ListNode *next;
+// 	ListNode(int x) : val(x), next(nullptr) {}
+//};
+// 
+//class Solution {
+//public:
+//    /**
+//     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+//     *
+//     *
+//     * @param lists ListNode类vector
+//     * @return ListNode类
+//     */
+//    const int N = 1e5 + 1;
+//    ListNode* mergeKLists(vector<ListNode*>& lists) {
+//        // write code here
+//        // 先保存在vector，然后再存入链表
+//        int k = lists.size();
+//        ListNode* cur1 = lists[0];
+//        ListNode* head = nullptr;
+//        for (int i = 1; i < k; i++)
+//        {
+//            ListNode* cur2 = lists[i];
+//            // 将cur1与cur2进行排序
+//            // 先确定头
+//            head = cur1->val > cur2->val ? cur2 : cur1;
+//            ListNode* tail = head;
+//            while (cur1 || cur2)
+//            {
+//                int v1 = (cur1 == nullptr ? N : cur1->val);
+//                int v2 = (cur2 == nullptr ? N : cur2->val);
+//                if (v1 < v2)
+//                {
+//                    tail->next = cur1;
+//                    tail = tail->next;
+//                    cur1 = cur1->next;
+//                }
+//                else
+//                {
+//                    tail->next = cur2;
+//                    tail = tail->next;
+//                    cur2 = cur2->next;
+//                }
+//                cout << "1" << endl;
+//            }
+//            // 排完
+//            cur1 = head;
+//        }
+//        return head;
+//    }
+//};
+//
+//int main()
+//{
+//    Solution s;
+//    ListNode* head1, * head2;
+//    ListNode* cur1 = new ListNode(1);
+//    ListNode* cur2 = new ListNode(2);
+//    ListNode* cur3 = new ListNode(3);
+//    cur1->next = cur2;
+//    cur2->next = cur3;
+//
+//    ListNode* cur4 = new ListNode(4);
+//    ListNode* cur5 = new ListNode(5);
+//    cur4->next = cur5;
+//
+//    head1 = cur1;
+//    head2 = cur4;
+//    vector<ListNode*> v;
+//    v.push_back(head1);
+//    v.push_back(head2);
+//    s.mergeKLists(v);
+//    return 0;
+//}
+
+
+//// dfs + 记忆化搜索
+//const int N = 105;
+//int p[N][N], n, m;
+//int memo[N][N] = { -1 };
+//int ret = 0;
+//
+//int dx[4] = { -1, 1, 0, 0 };
+//int dy[4] = { 0, 0, -1, 1 };
+//
+//
+//int dfs(int i, int j)
+//{
+//    if (memo[i][j] != -1) return memo[i][j];
+//    int ans = 1;
+//    for (int k = 0; k < 4; k++)
+//    {
+//        int x = i + dx[k], y = j + dy[k];
+//        if (x >= 0 && y >= 0 && x < n && y < m && p[x][y] > p[i][j])
+//        {
+//            ans = max(ans, dfs(x, y) + 1);
+//        }
+//    }
+//    memo[i][j] = ans;
+//    //cout << "1" << endl;
+//    return ans;
+//}
+//int main() {
+//    cin >> n >> m;
+//    for (int i = 0; i < n; i++)
+//        for (int j = 0; j < m; j++)
+//            cin >> p[i][j];
+//
+//    //
+//    memset(memo, -1, sizeof(memo));
+//    for (int i = 0; i < n; i++)
+//    {
+//        for (int j = 0; j < m; j++)
+//        {
+//            ret = max(ret, dfs(i, j));
+//        }
+//    }
+//
+//    cout << ret << endl;
+//}
+//// 64 位输出请用 printf("%lld")
