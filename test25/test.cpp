@@ -280,3 +280,150 @@ using namespace std;
 //    cout << ret << endl;
 //}
 //// 64 位输出请用 printf("%lld")
+
+
+
+//int cnt[26];
+//int main() {
+//    memset(cnt, 0, sizeof(cnt));
+//    int ret = 0;
+//    char ans;
+//    string s;
+//    while (getline(cin, s))
+//    {
+//        // cout << s << endl;
+//        for (int i = 0; i < s.size(); i++)
+//        {
+//            if (s[i] == ' ') continue;
+//            int pos = s[i] - 'a';
+//            cnt[pos]++;
+//            if (cnt[pos] > ret)
+//            {
+//                ret = cnt[pos];
+//                ans = s[i];
+//            }
+//        }
+//    }
+//    cout << ans << endl;
+//}
+//// 64 位输出请用 printf("%lld")
+
+
+//int main()
+//{
+//	int a = 32;
+//	int x = pow(a, 0.5);
+//	cout << x << endl;
+//	return 0;
+//}
+
+
+//const int N = 1010;
+//int n, t[N];
+//int main() {
+//    // 剩余学生身高 倒 V
+//    cin >> n;
+//    for (int i = 1; i <= n; i++) cin >> t[i];
+//
+//    // 使得 k 尽可能大
+//    // 动态规划
+//    int f[n + 1], g[n + 1]; // f[i] 表示前 i 个学生，最高的身高升序个数
+//    // g[i] 表示后 i 个学生，最高的身高升序个数
+//    for (int i = 2; i <= n; i++)
+//    {
+//        for (int j = 1; j < i; j++)
+//        {
+//            if (t[i] > t[j]) f[i] = max(f[i], f[j] + 1);
+//        }
+//        cout << f[i] << " ";
+//    }
+//    cout << endl;
+//    for (int i = n; i >= 2; i--)
+//    {
+//        for (int j = n; j > i; j--)
+//        {
+//            if (t[i] > t[j]) f[i] = max(g[i], g[j] + 1);
+//        }
+//        cout << g[i] << " ";;
+//    }
+//    cout << endl;
+//    int ret = 0;
+//
+//    for (int i = 1; i <= n; i++)
+//    {
+//        ret = max(ret, f[i] + g[i] - 1);
+//    }
+//    cout << n - ret << endl;
+//}
+//// 64 位输出请用 printf("%lld")
+
+
+
+class Solution {
+public:
+    /**
+     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+     *
+     *
+     * @param numProject int整型
+     * @param groups int整型vector<vector<>>
+     * @return int整型vector
+     */
+    vector<int> findOrder(int numProject, vector<vector<int> >& groups) {
+        // write code here
+
+        vector<vector<int>> edges(numProject); // 邻接表存储边
+        vector<int> in(numProject); // 标记每一个点的入度
+        queue<int> q;
+        // 拓扑排序
+        vector<int> ret;
+        // 先建图
+        for (int i = 0; i < numProject; i++)
+        {
+            int a = groups[i][0], b = groups[i][1];
+            edges[a].push_back(b);
+            in[b]++;
+        }
+        for (int i = 0; i < numProject; i++) {
+
+            if (in[i] == 0)
+            {
+                q.push(i);
+            }
+        }
+        while (q.size())
+        {
+            int a = q.front();
+            q.pop();
+            ret.push_back(a);
+            for (auto b : edges[a])
+            {
+                if (--in[b] == 0)
+                    q.push(b);
+            }
+        }
+
+        if (ret.size() == numProject)
+        {
+            for (int i = 0; i < numProject; i++)
+            {
+                cout << ret[i] << " ";
+            }
+            return ret;
+        }
+        else
+        {
+            vector<int> ret;
+            return ret;
+        }
+    }
+};
+
+int main()
+{
+    Solution s;
+    vector<vector<int>> v;
+    v.push_back({ 2,1 });
+    s.findOrder(3, v);
+    return 0;
+}
