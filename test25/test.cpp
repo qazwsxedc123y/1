@@ -7,6 +7,7 @@
 #include <unordered_set>
 #include <unordered_map>
 #include <cmath>
+#include <utility>
 using namespace std;
 
 
@@ -359,71 +360,314 @@ using namespace std;
 
 
 
-class Solution {
-public:
-    /**
-     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
-     *
-     *
-     * @param numProject int整型
-     * @param groups int整型vector<vector<>>
-     * @return int整型vector
-     */
-    vector<int> findOrder(int numProject, vector<vector<int> >& groups) {
-        // write code here
+//class Solution {
+//public:
+//    /**
+//     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+//     *
+//     *
+//     * @param numProject int整型
+//     * @param groups int整型vector<vector<>>
+//     * @return int整型vector
+//     */
+//    vector<int> findOrder(int numProject, vector<vector<int> >& groups) {
+//        // write code here
+//
+//        vector<vector<int>> edges(numProject); // 邻接表存储边
+//        vector<int> in(numProject); // 标记每一个点的入度
+//        queue<int> q;
+//        // 拓扑排序
+//        vector<int> ret;
+//        // 先建图
+//        for (int i = 0; i < numProject; i++)
+//        {
+//            int a = groups[i][0], b = groups[i][1];
+//            edges[a].push_back(b);
+//            in[b]++;
+//        }
+//        for (int i = 0; i < numProject; i++) {
+//
+//            if (in[i] == 0)
+//            {
+//                q.push(i);
+//            }
+//        }
+//        while (q.size())
+//        {
+//            int a = q.front();
+//            q.pop();
+//            ret.push_back(a);
+//            for (auto b : edges[a])
+//            {
+//                if (--in[b] == 0)
+//                    q.push(b);
+//            }
+//        }
+//
+//        if (ret.size() == numProject)
+//        {
+//            for (int i = 0; i < numProject; i++)
+//            {
+//                cout << ret[i] << " ";
+//            }
+//            return ret;
+//        }
+//        else
+//        {
+//            vector<int> ret;
+//            return ret;
+//        }
+//    }
+//};
 
-        vector<vector<int>> edges(numProject); // 邻接表存储边
-        vector<int> in(numProject); // 标记每一个点的入度
-        queue<int> q;
-        // 拓扑排序
-        vector<int> ret;
-        // 先建图
-        for (int i = 0; i < numProject; i++)
-        {
-            int a = groups[i][0], b = groups[i][1];
-            edges[a].push_back(b);
-            in[b]++;
-        }
-        for (int i = 0; i < numProject; i++) {
+//int main()
+//{
+//    Solution s;
+//    vector<vector<int>> v;
+//    v.push_back({ 2,1 });
+//    s.findOrder(3, v);
+//    return 0;
+//}
 
-            if (in[i] == 0)
-            {
-                q.push(i);
-            }
-        }
-        while (q.size())
-        {
-            int a = q.front();
-            q.pop();
-            ret.push_back(a);
-            for (auto b : edges[a])
-            {
-                if (--in[b] == 0)
-                    q.push(b);
-            }
-        }
 
-        if (ret.size() == numProject)
-        {
-            for (int i = 0; i < numProject; i++)
-            {
-                cout << ret[i] << " ";
-            }
-            return ret;
-        }
-        else
-        {
-            vector<int> ret;
-            return ret;
-        }
-    }
-};
+//#include <unordered_map>
+//#include <utility>
+//class Solution {
+//public:
+//    /**
+//     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+//     *
+//     *
+//     * @param A int整型vector<vector<>>
+//     * @param f int整型vector<vector<>>
+//     * @return int整型vector<vector<>>
+//     */
+//
+//    vector<vector<int> > flipChess(vector<vector<int>>& A, vector<vector<int> >& f) {
+//        // write code here
+//        // 如果翻转次数为偶数，那么就不需要翻转
+//        int dx[4] = { 0, 0, 1, -1 }, dy[4] = { 1, -1, 0, 0 };
+//        int n = A.size();
+//        bool vis[4][4];
+//        memset(vis, false, sizeof(vis));
+//        for (int i = 0; i < f.size(); i++)
+//        {
+//            int a = f[i][0] - 1;
+//            int b = f[i][1] - 1;
+//            // cout << a << " " << b;
+//            for (int k = 0; k < 4; k++)
+//            {
+//                int x = a + dx[k];
+//                int y = b + dy[4];
+//                //cout << x << " " << y << endl;
+//                if (x >= 0 && y >= 0 && x < 4 && y < 4)
+//                {
+//                    if (vis[x][y] == false) vis[x][y] = true;
+//                    else vis[x][y] = false;
+//                    //cout << x << " " << y << endl;
+//                }
+//            }
+//        }
+//
+//        for (int i = 0; i < 4; i++)
+//        {
+//            for (int j = 0; j < 4; j++)
+//            {
+//                if (vis[i][j])
+//                {
+//                    cout << i << " " << j << endl;
+//                    if (A[i][j] == 0) A[i][j] = 1;
+//                    else A[i][j] = 0;
+//                }
+//            }
+//        }
+//        return A;
+//    }
+//};
 
-int main()
-{
-    Solution s;
-    vector<vector<int>> v;
-    v.push_back({ 2,1 });
-    s.findOrder(3, v);
-    return 0;
-}
+
+
+// const int N = 1e5 + 10;
+//int n, a[N];
+//int func(int pos) // 以pos为起点，开始吞噬黑暗
+//{
+//    long long ret = 0;
+//    long long dp[N]; // dp[i] 表示以i为起点连续吞噬三部分，获得的饱食值
+//    for (int i = 0; i < 3; i++) {
+//        dp[i] = a[i + 1];
+//        if (n > i + 2) ret = max(ret, dp[i]);
+//    }
+//    dp[3] = dp[0] + a[4];
+//    if (n > 5) ret = max(ret, dp[3]);
+//
+//    dp[4] = a[5];
+//    long long t = max(dp[0], dp[1]);
+//    dp[4] += t;
+//    if (n > 6) ret = max(ret, dp[4]);
+//
+//    for (int i = 5; i < n - 2; i++)
+//    {
+//        dp[i] = a[i + 1];
+//        long long t = max(dp[i - 3], max(dp[i - 4], dp[i - 5]));
+//        dp[i] += t;
+//        ret = max(ret, dp[i]);
+//    }
+//    return ret;
+//}
+//int main() {
+//    // 有点类似打家劫舍
+//    // 动态规划
+//    cin >> n;
+//    for (int i = 0; i < n; i++) cin >> a[i];
+//
+//    long long ret = func(0);
+//
+//    cout << ret << endl;
+//}
+//// 64 位输出请用 printf("%lld")
+//
+//int main()
+//{
+//    Solution s;
+//    vector<vector<int>> v;
+//    // [[0,0,1,1],[1,0,1,0],[0,1,1,0],[0,0,1,0]],[[2,2],[3,3],[4,4]]
+//    v.push_back({ 0,0,1,1 });
+//    v.push_back({ 1,0,1,0 });
+//    v.push_back({ 0,1,1,0 });
+//    v.push_back({ 0,0,1,0 });
+//    vector<vector<int>> f;
+//    f.push_back({ 2,2 });
+//    f.push_back({ 3,3 });
+//    f.push_back({ 4,4 });
+//
+//    s.flipChess(v, f);
+//    return 0;
+//}
+
+
+
+//
+//const int N = 1e5 + 10;
+//int n;
+//long long a[N];
+//
+//long long func() {
+//    if (n < 3) return 0;
+//
+//    vector<long long> dp(n + 5, 0);
+//    long long ret = 0;
+//
+//    // 初始化所有可能的起点
+//    for (int i = 0; i <= n - 3; i++) {
+//        dp[i] = a[i + 1];  // 以i为起点，获得a[i+1]的饱食度
+//    }
+//    // 处理前几个特殊情况
+//    if (n >= 3) ret = max(ret, dp[0]);
+//    if (n >= 4) ret = max(ret, dp[1]);
+//    if (n >= 5) ret = max(ret, dp[2]);
+//    if (n >= 6) ret = max(ret, dp[3]);
+//
+//    // 动态规划转移
+//    for (int i = 3; i <= n - 3; i++) {
+//        // 可以从i-3, i-4, i-5的位置转移过来
+//        long long prev_max = 0;
+//        if (i - 3 >= 0) prev_max = max(prev_max, dp[i - 3]);
+//        if (i - 4 >= 0) prev_max = max(prev_max, dp[i - 4]);
+//        if (i - 5 >= 0) prev_max = max(prev_max, dp[i - 5]);
+//
+//        dp[i] += prev_max;
+//        ret = max(ret, dp[i]);
+//    }
+//
+//    return ret;
+//}
+//
+//int main() {
+//    cin >> n;
+//    for (int i = 0; i < n; i++) cin >> a[i];
+//
+//    long long ret = func();
+//    cout << ret << endl;
+//
+//    return 0;
+//}
+
+
+
+
+
+//int n, l, r;
+//string s;
+//int main() {
+//    cin >> n >> l >> r >> s;
+//    int cnt[26];
+//    memset(cnt, 0, sizeof(cnt));
+//    // i,j
+//    int ans = 0, ret = 0;
+//    int j = 0, i = 0;
+//    for (; j < n; j++)
+//    {
+//        int pos = s[j] - 'a';
+//        if (cnt[pos] == 0) ans++;
+//        cnt[pos]++;
+//
+//
+//        while (ans > r)
+//        {
+//            int e = s[i++] - 'a';
+//            cnt[e]--;
+//            if (cnt[e] == 0) ans--;
+//        }
+//
+//        if (ans >= l)
+//        {
+//            int tl = i;
+//            int ta = ans;
+//            int tempCnt[26];
+//            memcpy(tempCnt, cnt, sizeof(cnt));
+//
+//            while (ta >= l)
+//            {
+//                ret++;
+//                int tempPos = s[tl] - 'a';
+//                tempCnt[tempPos]--;
+//                if (tempCnt[tempPos] == 0)
+//                {
+//                    ta--;
+//                }
+//                tl++;
+//            }
+//        }
+//    }
+//    cout << ret << endl;
+//}
+//// 64 位输出请用 printf("%lld")
+
+
+
+
+//class Solution {
+//public:
+//    /**
+//     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+//     *
+//     * 最少货币数
+//     * @param arr int整型vector the array
+//     * @param aim int整型 the target
+//     * @return int整型
+//     */
+//    int minMoney(vector<int>& arr, int aim) {
+//        // write code here
+//        int dp[aim + 1]; // dp[i] 表示要凑齐 i 元所需最少货币
+//        for (int i = 1; i <= aim; i++) dp[i] = aim + 1;
+//        dp[0] = 0;
+//        for (int i = 0; i <= aim; i++)
+//        {
+//            for (int j = 0; j < arr.size(); j++)
+//            {
+//                if (i >= arr[j]) dp[i] = min(dp[i], dp[i - arr[j]] + 1);
+//            }
+//        }
+//        return dp[aim] > aim ? -1 : dp[aim];
+//    }
+//};
