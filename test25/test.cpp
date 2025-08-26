@@ -671,3 +671,124 @@ using namespace std;
 //        return dp[aim] > aim ? -1 : dp[aim];
 //    }
 //};
+
+
+
+
+//#include <iostream>
+//#include <algorithm>
+//#include <cstring>
+//using namespace std;
+//const int N = 2e5 + 10;
+//int n, l, r;
+//int main() {
+//    n = 5, l = 2, r = 3;
+//    int a[5] = { 3,1,6,2,5 };
+//
+//    sort(a, a + n);
+//
+//    // 二分
+//    long long ret = 0;
+//    for (int i = 0; i < n; i++)
+//    {
+//        // 寻找左区间 与 右区间
+//        // a[i] 的左区间 与 右区间
+//        // 先寻找左
+//        int left = i + 1, right = n - 1;
+//        int begin = 0, end = 0;
+//        int ans = a[i] + l;
+//        while (left < right)
+//        {
+//            int mid = (right - left) / 2 + left;
+//            if (a[mid] < ans) left = mid + 1;
+//            else right = mid - 1;
+//        }
+//        begin = left;
+//        // 寻找右区间
+//        ans = a[i] + r;
+//        while (left < right)
+//        {
+//            int mid = (right - left) / 2 + left;
+//            if (a[mid] < ans) left = mid + 1;
+//            else right = mid - 1;
+//        }
+//        end = left;
+//
+//        ret += (end - begin + 1);
+//    }
+//
+//    cout << ret << endl;
+//}
+//// 64 位输出请用 printf("%lld")
+
+
+//#include <iostream>
+//using namespace std;
+//const int N = 1e9 + 7;
+//int n;
+//long long ret1 = 0, ret2 = 0;
+//void hanoi1(int n, char from, char to, char aux)
+//{
+//    ret1 += 1;
+//    ret1 %= N;
+//    if (n == 1)
+//        return;
+//    hanoi1(n - 1, from, to, aux);
+//
+//    hanoi1(n - 1, to, aux, from);
+//
+//    hanoi1(n - 1, aux, to, from);
+//}
+//
+//void hanoi2(int n, char from, char to, char aux)
+//{
+//    ret2 += 1;
+//    ret2 %= N;
+//    if (n == 1)
+//    {
+//        ret2 += 1;
+//        return;
+//    }
+//
+//
+//    hanoi1(n - 1, from, to, aux);
+//
+//    hanoi1(n - 1, to, aux, from);
+//
+//    hanoi1(n - 1, to, from, aux);
+//
+//    hanoi1(n - 1, from, to, aux);
+//
+//    hanoi1(n - 1, to, aux, from);
+//}
+//int main() {
+//    cin >> n;
+//    hanoi1(n, 'A', 'B', 'C');
+//
+//    hanoi2(n, 'A', 'C', 'B');
+//
+//    cout << ret1 << " " << ret2 << endl;
+//}
+//// 64 位输出请用 printf("%lld")
+
+
+
+#include <iostream>
+using namespace std;
+
+const int MOD = 1000000007; // 通常使用10^9+7作为模数
+
+int main() {
+    int n;
+    cin >> n;
+    int x = 1, y = 2;
+    for (int i = 2; i <= n; i++)
+    {
+        int xx = x, yy = y;
+        x = (2 * yy + 1) % MOD;
+        y = ((2 * yy) % MOD + 2 + xx) % MOD;
+    }
+
+    cout << x << " " << y << endl;
+}
+// 64 位输出请用 printf("%lld")
