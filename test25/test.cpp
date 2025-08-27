@@ -773,22 +773,201 @@ using namespace std;
 
 
 
-#include <iostream>
-using namespace std;
+//#include <iostream>
+//using namespace std;
+//
+//const int MOD = 1000000007; // 通常使用10^9+7作为模数
+//
+//int main() {
+//    int n;
+//    cin >> n;
+//    int x = 1, y = 2;
+//    for (int i = 2; i <= n; i++)
+//    {
+//        int xx = x, yy = y;
+//        x = (2 * yy + 1) % MOD;
+//        y = ((2 * yy) % MOD + 2 + xx) % MOD;
+//    }
+//
+//    cout << x << " " << y << endl;
+//}
+//// 64 位输出请用 printf("%lld")
 
-const int MOD = 1000000007; // 通常使用10^9+7作为模数
 
-int main() {
-    int n;
-    cin >> n;
-    int x = 1, y = 2;
-    for (int i = 2; i <= n; i++)
-    {
-        int xx = x, yy = y;
-        x = (2 * yy + 1) % MOD;
-        y = ((2 * yy) % MOD + 2 + xx) % MOD;
-    }
 
-    cout << x << " " << y << endl;
-}
-// 64 位输出请用 printf("%lld")
+
+//using namespace std;
+//const int N = 15;
+//int n, a[N];
+//unordered_set<int> hash1;
+////bool flag = true;
+//void primeFactors(int n) {
+//    bool ans = false;
+//    // 处理2这个唯一的偶素数
+//    while (n % 2 == 0) {
+//        hash1.insert(2);
+//        //ans = true;
+//        n = n / 2;
+//    }
+//
+//    // 处理奇数因子
+//    for (int i = 3; i <= sqrt(n); i += 2) {
+//        while (n % i == 0) {
+//            hash1.insert(i);
+//            //ans = true;
+//            n = n / i;
+//        }
+//    }
+//
+//    // 如果n本身是素数且大于2
+//    if (n > 2) {
+//        //ans = true;
+//        hash1.insert(n);
+//    }
+//
+//    //if(ans == false) flag = false;
+//}
+//int main() {
+//    cin >> n;
+//    for (int i = 0; i < n; i++) cin >> a[i];
+//
+//    // 确保每一个都至少有一个素因数
+//    for (int i = 0; i < n; i++)
+//    {
+//        primeFactors(a[i]);
+//    }
+//    int ret = 0;
+//    //if(hash1.size() < n || flag == false) 
+//    if (hash1.size() < n)
+//        cout << "-1" << endl;
+//    else
+//    {
+//        int ans = 0;
+//        vector<int> v;
+//        for (auto& a : hash1)
+//        {
+//            v.push_back(a);
+//        }
+//
+//        sort(v.begin(), v.end());
+//
+//        for (int i = 0; i < n - ans; i++) ret += v[i];
+//        cout << ret << endl;
+//    }
+//}
+//// 64 位输出请用 printf("%lld")
+
+
+
+
+//class Solution {
+//    int row, col;
+//    int dx[4] = { -1, 1, 0, 0 };
+//    int dy[4] = { 0, 0, -1, 1 };
+//
+//    int min_len = INT_MAX;
+//    int min_count = 0;
+//    bool vis[12][12];
+//public:
+//    /**
+//     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+//     *
+//     *
+//     * @param CityMap int整型vector<vector<>>
+//     * @param n int整型
+//     * @param m int整型
+//     * @return int整型
+//     */
+//    void dfs(vector<vector<int>>& CityMap, int a, int b, int len)
+//    {
+//        if (CityMap[a][b] == 2)
+//        {
+//            if (len < min_len)
+//            {
+//                min_len = len;
+//                min_count = 1;
+//            }
+//            else if (len == min_len) min_count++;
+//            else return;
+//        }
+//
+//        for (int k = 0; k < 4; k++)
+//        {
+//            int x = dx[k] + a, y = dy[k] + b;
+//            if (x >= 0 && y >= 0 && x < row && y < col && CityMap[x][y] == 0 && !vis[x][y])
+//            {
+//                vis[x][y] = true;
+//                cout << x << " " << y << endl;
+//                dfs(CityMap, x, y, len + 1);
+//                vis[x][y] = false;
+//            }
+//        }
+//    }
+//    int countPath(vector<vector<int>>& CityMap, int n, int m) {
+//        // write code here
+//        // 1:起始  2:目标  -1:不能过  0:过
+//        row = n, col = m;
+//        for (int i = 0; i < n; i++)
+//        {
+//            for (int j = 0; j < m; j++)
+//            {
+//                if (CityMap[i][j] == 1)
+//                {
+//                    vis[i][j] = true;
+//                    // cout << i << " " << j << endl;
+//                    dfs(CityMap, i, j, 0);
+//                }
+//            }
+//        }
+//
+//        return min_count;
+//    }
+//};
+//
+//int main()
+//{
+//    //[[2,0,0,0],[0,-1,-1,0],[0,-1,1,0],[0,0,0,0]],4,4
+//    vector<vector<int>> v{ {2,0,0,0},{0,-1,-1,0}, {0,-1,1,0},{0,0,0,0} };
+//    Solution s;
+//    s.countPath(v, 4, 4);
+//    return 0;
+//}
+
+
+//const int N = 1010, INF = 0x3f3f3f3f;
+//int n, k, prices[N];
+//int main() {
+//    // 力扣 股票买卖
+//    cin >> n >> k;
+//    for (int i = 0; i < n; i++) cin >> prices[i];
+//
+//    // 动态规划
+//    vector<vector<int>> f(n, vector<int>(k + 1, -INF)); // f表示买入状态   可交易 买入
+//    // [i][j] 表示第i天完成j笔交易，此时最大的利润
+//    auto g = f; // g表示可交易状态
+//
+//    f[0][0] = -prices[0];
+//    g[0][0] = 0;
+//
+//    for (int i = 1; i < n; i++)
+//    {
+//        for (int j = 0; j < k + 1; j++)
+//        {
+//            f[i][j] = max(f[i - 1][j], g[i - 1][j] - prices[i]);
+//            g[i][j] = g[i - 1][j];
+//
+//            // 可以卖
+//            if (j >= 1)
+//                g[i][j] = max(g[i][j], f[i - 1][j - 1] + prices[i]);
+//        }
+//    }
+//
+//    int ret = 0;
+//    for (int i = 0; i <= k; i++)
+//    {
+//        ret = max(ret, g[n - 1][i]);
+//    }
+//
+//    cout << ret << endl;
+//}
+//// 64 位输出请用 printf("%lld")
