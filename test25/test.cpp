@@ -971,3 +971,95 @@ using namespace std;
 //    cout << ret << endl;
 //}
 //// 64 位输出请用 printf("%lld")
+
+
+
+//const int N = 15, M = 1010;
+//int n, a[N];
+//int ret = 0x3f3f3f3f, sum = 0;
+//bool use[M];
+//
+//bool isPrim(int ans)
+//{
+//    // 判断ans是不是素数
+//    for (int i = 2; i <= sqrt(ans); i++)
+//    {
+//        if (ans % i == 0) return false;
+//    }
+//    return true;
+//}
+//void dfs(int pos)
+//{
+//    if (pos == n)
+//    {
+//        ret = min(ret, sum);
+//    }
+//
+//    for (int i = 2; i <= a[pos]; i++)
+//    {
+//        if (a[pos] % i == 0 && isPrim(i) && !use[i])
+//        {
+//            sum += i;
+//            use[i] = true;
+//            dfs(pos + 1);
+//            sum -= i;
+//            use[i] = false;
+//        }
+//    }
+//}
+//int main() {
+//    cin >> n;
+//    for (int i = 0; i < n; i++) cin >> a[i];
+//
+//    dfs(0);
+//
+//    if (ret == 0x3f3f3f3f) ret = -1;
+//
+//    cout << ret << endl;
+//}
+//// 64 位输出请用 printf("%lld")
+
+
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+const int N = 1e6 + 10;
+string s;
+int n;
+int main()
+{
+    cin >> n >> s;
+
+    char arr[N];
+    int ret = 0;
+
+    for (int i = 0; i < n; i++)
+    {
+        char ch = s[i];
+        if (ret == 0 || arr[ret] <= ch) arr[++ret] = ch;
+        else
+        {
+            //             for(int j = 1; j <= ret; j++)
+            //             {
+            //                 if(arr[j] > ch)
+            //                 {
+            //                     arr[j] = ch;
+            //                     break;
+            //                 }
+            //             }
+
+            int l = 1, r = ret;
+            while (l < r)
+            {
+                int mid = (r + l) / 2;
+                if (arr[mid] > ch) r = mid;
+                else l = mid + 1;
+            }
+            arr[l] = ch;
+        }
+
+    }
+    cout << n - ret << endl;
+    return 0;
+}
