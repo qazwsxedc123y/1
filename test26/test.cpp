@@ -403,3 +403,74 @@ using namespace std;
 //
 //    return 0;
 //}
+
+
+//
+//int na, nb, nc, nd, m;
+//int func(int n, int k) // 计算Cnk
+//{
+//    int t = k;
+//    int sum = 1;
+//    while (t--)
+//    {
+//        sum *= n;
+//        n--;
+//    }
+//
+//    while (k--)
+//    {
+//        cout << k << endl;
+//        sum /= k;
+//    }
+//    cout << sum << endl;
+//    return sum;
+//}
+//int main() {
+//    //cin >> na >> nb >> nc >> nd >> m;
+//
+//    // 如果m为0，那么就是排列组合
+//
+//    int ret = func(3, 1);
+//    cout << ret << endl;
+//
+//}
+//// 64 位输出请用 printf("%lld")
+
+
+
+//class Solution {
+//public:
+//    /**
+//     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+//     *
+//     * max water
+//     * @param arr int整型vector the array
+//     * @return long长整型
+//     */
+//    long long maxWater(vector<int>& arr) {
+//        // write code here
+//        int n = arr.size();
+//        arr.push_back(0);
+//        long long ret = 0;
+//
+//        int l = 1, r = 1;
+//        for (; r < n;)
+//        {
+//            if (arr[r] <= arr[l - 1] && arr[r] <= arr[r + 1])
+//            {
+//                r++;
+//            }
+//            else
+//            {
+//                int ans = min(arr[l - 1], arr[r]);
+//                for (int j = l; j < r; j++)
+//                {
+//                    ret += ans - arr[j];
+//                }
+//                l = r + 1;
+//                r = l;
+//            }
+//        }
+//        return ret;
+//    }
+//};
