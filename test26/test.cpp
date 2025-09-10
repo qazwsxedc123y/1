@@ -474,3 +474,150 @@ using namespace std;
 //        return ret;
 //    }
 //};
+
+
+//class Solution {
+//public:
+//    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+//        vector<vector<int>> result;
+//        vector<int> current;
+//        sort(candidates.begin(), candidates.end());
+//        backtrack(candidates, target, 0, current, result);
+//        return result;
+//    }
+//    void backtrack(vector<int>& candidates, int target, int start,
+//        vector<int>& current, vector<vector<int>>& result)
+//    {
+//        if (target == 0)
+//        {
+//            result.push_back(current);
+//            return;
+//        }
+//
+//        for (int i = start; i < candidates.size(); i++)
+//        {
+//            if (i > start && candidates[i - 1] == candidates[i])
+//            {
+//                continue;
+//            }
+//            if (candidates[i] > target)
+//            {
+//                break;
+//            }
+//            current.push_back(candidates[i]);
+//            backtrack(candidates, target - candidates[i], i + 1, current, result);
+//            current.pop_back();
+//        }
+//    }
+//};
+
+
+
+//class Solution {
+//public:
+//    vector<vector<int>> combinationSum3(int k, int n) {
+//        // 和为n  个数为k
+//        vector<vector<int>> result;
+//        vector<int> current;
+//        backtrack(0, n, 1, current, result, k);
+//        return result;
+//    }
+//    void backtrack(int sz, int target, int start,
+//        vector<int>& current, vector<vector<int>>& result, int k)
+//    {
+//        if (sz == k)
+//        {
+//            if (target == 0) result.push_back(current);
+//            return;
+//        }
+//
+//        for (int i = start; i <= 9; i++)
+//        {
+//            if (i > target)
+//            {
+//                break;
+//            }
+//            current.push_back(i);
+//            backtrack(sz + 1, target - i, i + 1, current, result, k);
+//            current.pop_back();
+//        }
+//    }
+//}; 
+
+
+
+//class Solution {
+//public:
+//    vector<vector<int>> combine(int n, int k) {
+//        // 组合个数为k
+//        vector<vector<int>> result;
+//        vector<int> current;
+//        backtrack(n, 1, k, 0, current, result);
+//        return result;
+//    }
+//    void backtrack(int n, int start, int k, int sz,
+//        vector<int>& current, vector<vector<int>>& result)
+//    {
+//        if (sz == k)
+//        {
+//            result.push_back(current);
+//            return;
+//        }
+//
+//        for (int i = start; i <= n; i++)
+//        {
+//            current.push_back(i);
+//            backtrack(n, i + 1, k, sz + 1, current, result);
+//            current.pop_back();
+//        }
+//    }
+//};
+
+
+
+//class Solution {
+//public:
+//    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+//        vector<vector<int>> result;
+//        vector<int> current;
+//        sort(candidates.begin(), candidates.end());
+//        backtrack(candidates, target, 0, current, result);
+//        return result;
+//    }
+//    void backtrack(vector<int>& candidates, int target, int start,
+//        vector<int>& current, vector<vector<int>>& result)
+//    {
+//        if (target == 0)
+//        {
+//            result.push_back(current);
+//            return;
+//        }
+//        for (int i = start; i < candidates.size(); i++)
+//        {
+//            if (candidates[i] > target)
+//            {
+//                break;
+//            }
+//            current.push_back(candidates[i]);
+//            backtrack(candidates, target - candidates[i], i, current, result);
+//            current.pop_back();
+//        }
+//    }
+//};
+
+
+//class Solution {
+//public:
+//    int combinationSum4(vector<int>& nums, int target) {
+//        vector<unsigned> f(target + 1);
+//        f[0] = 1;
+//        for (int i = 1; i <= target; i++) {
+//            for (int x : nums) {
+//                if (x <= i) {
+//                    f[i] += f[i - x];
+//                }
+//            }
+//        }
+//        return f[target];
+//    }
+//};
