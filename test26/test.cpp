@@ -654,54 +654,170 @@ using namespace std;
 //};
 
 
-class Solution {
-public:
-    int binary_l(vector<int>& nums, int target) // 第一个大于等于 target 的位置
-    {
-        int left = 0, right = nums.size() - 1;
-        while (left < right)
-        {
-            int mid = left + (right - left) / 2;
-            if (nums[mid] < target)
-            {
-                left = mid + 1;
-            }
-            else
-            {
-                right = mid;
-            }
-        }
-        return left;
-    }
+//class Solution {
+//public:
+//    int binary_l(vector<int>& nums, int target) // 第一个大于等于 target 的位置
+//    {
+//        int left = 0, right = nums.size() - 1;
+//        while (left < right)
+//        {
+//            int mid = left + (right - left) / 2;
+//            if (nums[mid] < target)
+//            {
+//                left = mid + 1;
+//            }
+//            else
+//            {
+//                right = mid;
+//            }
+//        }
+//        return left;
+//    }
+//
+//    int binary_r(vector<int>& nums, int target) // 第一个大于 target 的位置
+//    {
+//        int left = 0, right = nums.size();
+//        while (left < right)
+//        {
+//            int mid = left + (right - left) / 2;
+//            if (nums[mid] <= target)
+//            {
+//                left = mid + 1;
+//            }
+//            else
+//            {
+//                right = mid;
+//            }
+//        }
+//        return left;
+//    }
+//
+//    vector<int> searchRange(vector<int>& nums, int target) {
+//        if (nums.empty()) return { -1, -1 };
+//
+//        int left_idx = binary_l(nums, target);
+//        // 检查是否找到target
+//        if (nums[left_idx] != target) {
+//            return { -1, -1 };
+//        }
+//
+//        int right_idx = binary_r(nums, target) - 1;
+//        return { left_idx, right_idx };
+//    }
+//};
 
-    int binary_r(vector<int>& nums, int target) // 第一个大于 target 的位置
-    {
-        int left = 0, right = nums.size();
-        while (left < right)
-        {
-            int mid = left + (right - left) / 2;
-            if (nums[mid] <= target)
-            {
-                left = mid + 1;
-            }
-            else
-            {
-                right = mid;
-            }
-        }
-        return left;
-    }
 
-    vector<int> searchRange(vector<int>& nums, int target) {
-        if (nums.empty()) return { -1, -1 };
 
-        int left_idx = binary_l(nums, target);
-        // 检查是否找到target
-        if (nums[left_idx] != target) {
-            return { -1, -1 };
-        }
+//class Solution {
+//public:
+//    vector<vector<int>> generateMatrix(int n) {
+//        // 进行模拟
+//        vector<vector<int>> v(n, vector<int>(n));
+//        // 先初始化为0，然后边界判断条件就为0或数值边界
+//        int maxNum = n * n;
+//        int curNum = 1;
+//        int dx[4] = { 0, 1, 0, -1 }; int dy[4] = { 1, 0, -1, 0 }; // 右下左上
+//        int x = 0, y = 0;
+//        int dir = 0;
+//        while (curNum <= maxNum)
+//        {
+//            v[x][y] = curNum++;
+//            int next_x = dx[dir] + x, next_y = dy[dir] + y;
+//            if (next_x < 0 || next_x >= n || next_y < 0 || next_y >= n || v[next_x][next_y] != 0)
+//            {
+//                dir = (dir + 1) % 4;
+//            }
+//            x += dx[dir], y += dy[dir];
+//        }
+//        return v;
+//    }
+//};
 
-        int right_idx = binary_r(nums, target) - 1;
-        return { left_idx, right_idx };
-    }
-};
+
+
+//class Solution {
+//public:
+//    bool canJump(vector<int>& nums) {
+//        int maxstep = 0;
+//        // 假设一步一步走，然后看实际情况下是否可以根据nums走到这里，走不到就false
+//        // 可以一步一步走完，那么就true
+//        for (int i = 0; i < nums.size(); i++)
+//        {
+//            if (i > maxstep) return false;
+//            maxstep = max(maxstep, i + nums[i]);
+//        }
+//        return true;
+//    }
+//};
+
+
+
+//class NumberContainers {
+//public:
+//    // 容器中存储的数字全为正整数
+//
+//    // 容器也可以设置为一个哈希
+//    // find可以设计一个哈希
+//    unordered_map<int, int> hash1; // 下标 - 数值
+//    unordered_map<int, set<int>> hash2; // 数值 - 下标
+//    NumberContainers() {
+//    }
+//
+//    void change(int index, int number) {
+//        auto it = hash1.find(index);
+//
+//        // 替换
+//        if (it != hash1.end())
+//        {
+//            hash2[it->second].erase(index);
+//        }
+//
+//        // 插入
+//        hash1[index] = number;
+//        hash2[number].insert(index);
+//    }
+//
+//    int find(int number) {
+//        auto it = hash2.find(number);
+//
+//        if (it == hash2.end() || it->second.empty()) return -1;
+//
+//        else
+//        {
+//            return *it->second.begin();
+//        }
+//    }
+//};
+//
+///**
+// * Your NumberContainers object will be instantiated and called as such:
+// * NumberContainers* obj = new NumberContainers();
+// * obj->change(index,number);
+// * int param_2 = obj->find(number);
+// */
+
+
+//class Solution {
+//public:
+//    int trap(vector<int>& height) {
+//        int n = height.size();
+//        vector<int> left(n);
+//        vector<int> right(n);
+//
+//        left[0] = height[0];
+//        right[n - 1] = height[n - 1];
+//
+//        for (int i = 1; i < n; i++) left[i] = max(left[i - 1], height[i]);
+//
+//        for (int i = n - 2; i >= 0; i--) right[i] = max(right[i + 1], height[i]);
+//
+//        int ret = 0;
+//
+//        for (int i = 0; i < n; i++)
+//        {
+//            ret += min(left[i], right[i]) - height[i];
+//        }
+//
+//        return ret;
+//    }
+//};
