@@ -1,4 +1,4 @@
-#define  _CRT_SECURE_NO_WARNINGS
+ï»¿#define  _CRT_SECURE_NO_WARNINGS
 
 #include <iostream>
 #include <vector>
@@ -18,8 +18,8 @@ using namespace std;
 //vector<vector<int>> ans(N, vector<int>(2));
 //// bool dfs(int x, int y, int pos)
 //// {
-////     // ¼ì²éÎ»ÖÃÊÇ·ñºÏ·¨
-////     // ÏÈ¼ì²éĞĞ
+////     // æ£€æŸ¥ä½ç½®æ˜¯å¦åˆæ³•
+////     // å…ˆæ£€æŸ¥è¡Œ
 ////     // [x, y]
 ////     for(int i = 1; i < N; i++)
 ////     {
@@ -31,7 +31,7 @@ using namespace std;
 ////         if(v[i][y] < pos) return false;
 ////     }
 //
-////     // ¼ì²é45¶È£¬ÏÈ¼ì²éÉÏÃæ
+////     // æ£€æŸ¥45åº¦ï¼Œå…ˆæ£€æŸ¥ä¸Šé¢
 ////     for(int i = x - 1, j = y - 1; i >= 1 && j >= 1; i--, j--)
 ////     {
 ////         if(v[i][j] < pos) return false;
@@ -42,7 +42,7 @@ using namespace std;
 ////         if(v[i][j] < pos) return false;
 ////     }
 //
-////     // 135¶È
+////     // 135åº¦
 ////     for(int i = x + 1, j = y - 1; i < 1 && j >= 1; i--, j++)
 ////     {
 ////         if(v[i][j] < pos) return false;
@@ -56,17 +56,17 @@ using namespace std;
 ////     return true;
 //// }
 //
-//// ÀûÓÃ½Ø¾à´¦ÀíĞ±Ïß£¿
+//// åˆ©ç”¨æˆªè·å¤„ç†æ–œçº¿ï¼Ÿ
 //bool dpx[N], dpy[N], dp1[N], dp2[N];
 //bool dfs(int x, int y, int pos)
 //{
 //    for (int i = 1; i < pos; i++)
 //    {
 //        int a = ans[i][0], b = ans[i][1];
-//        // ²é¿´x,y Óë a,b ÊÇ·ñ»¥Ïà¹¥»÷
+//        // æŸ¥çœ‹x,y ä¸ a,b æ˜¯å¦äº’ç›¸æ”»å‡»
 //        if (x == a || y == b) return false;
 //
-//        // ¶Ô½ÇÏß
+//        // å¯¹è§’çº¿
 //        if (x - a == y - b) return false;
 //        if (x - a == -(y - b)) return false;
 //    }
@@ -74,7 +74,7 @@ using namespace std;
 //}
 //
 //int main() {
-//    // ÖØµãÊÇ·ÅÖÃµÚi¸ö»Êºóºó£¬²»ÊÇÕûÌå
+//    // é‡ç‚¹æ˜¯æ”¾ç½®ç¬¬iä¸ªçš‡ååï¼Œä¸æ˜¯æ•´ä½“
 //    cin >> k;
 //    //v.resize(N);
 //
@@ -99,7 +99,7 @@ using namespace std;
 //        else cout << "No" << endl;
 //    }
 //}
-//// 64 Î»Êä³öÇëÓÃ printf("%lld")
+//// 64 ä½è¾“å‡ºè¯·ç”¨ printf("%lld")
 //
 //
 //
@@ -114,8 +114,8 @@ using namespace std;
 //vector<vector<int>> ans(N, vector<int>(2));
 //// bool dfs(int x, int y, int pos)
 //// {
-////     // ¼ì²éÎ»ÖÃÊÇ·ñºÏ·¨
-////     // ÏÈ¼ì²éĞĞ
+////     // æ£€æŸ¥ä½ç½®æ˜¯å¦åˆæ³•
+////     // å…ˆæ£€æŸ¥è¡Œ
 ////     // [x, y]
 ////     for(int i = 1; i < N; i++)
 ////     {
@@ -127,7 +127,7 @@ using namespace std;
 ////         if(v[i][y] < pos) return false;
 ////     }
 //
-////     // ¼ì²é45¶È£¬ÏÈ¼ì²éÉÏÃæ
+////     // æ£€æŸ¥45åº¦ï¼Œå…ˆæ£€æŸ¥ä¸Šé¢
 ////     for(int i = x - 1, j = y - 1; i >= 1 && j >= 1; i--, j--)
 ////     {
 ////         if(v[i][j] < pos) return false;
@@ -138,7 +138,7 @@ using namespace std;
 ////         if(v[i][j] < pos) return false;
 ////     }
 //
-////     // 135¶È
+////     // 135åº¦
 ////     for(int i = x + 1, j = y - 1; i < 1 && j >= 1; i--, j++)
 ////     {
 ////         if(v[i][j] < pos) return false;
@@ -158,10 +158,10 @@ using namespace std;
 //    for (int i = 1; i < pos; i++)
 //    {
 //        int a = ans[i][0], b = ans[i][1];
-//        // ²é¿´x,y Óë a,b ÊÇ·ñ»¥Ïà¹¥»÷
+//        // æŸ¥çœ‹x,y ä¸ a,b æ˜¯å¦äº’ç›¸æ”»å‡»
 //        if (x == a || y == b) return false;
 //
-//        // ¶Ô½ÇÏß
+//        // å¯¹è§’çº¿
 //        if (x - a == y - b) return false;
 //        if (x - a == -(y - b)) return false;
 //    }
@@ -169,7 +169,7 @@ using namespace std;
 //}
 //
 //int main() {
-//    // ÖØµãÊÇ·ÅÖÃµÚi¸ö»Êºóºó£¬²»ÊÇÕûÌå
+//    // é‡ç‚¹æ˜¯æ”¾ç½®ç¬¬iä¸ªçš‡ååï¼Œä¸æ˜¯æ•´ä½“
 //    cin >> k;
 //    //v.resize(N);
 //    mem.resize(false);
@@ -205,7 +205,7 @@ using namespace std;
 //        else cout << "No" << endl;
 //    }
 //}
-//// 64 Î»Êä³öÇëÓÃ printf("%lld")
+//// 64 ä½è¾“å‡ºè¯·ç”¨ printf("%lld")
 
 
 
@@ -213,15 +213,15 @@ using namespace std;
 //class Solution {
 //public:
 //    /**
-//     * ´úÂëÖĞµÄÀàÃû¡¢·½·¨Ãû¡¢²ÎÊıÃûÒÑ¾­Ö¸¶¨£¬ÇëÎğĞŞ¸Ä£¬Ö±½Ó·µ»Ø·½·¨¹æ¶¨µÄÖµ¼´¿É
+//     * ä»£ç ä¸­çš„ç±»åã€æ–¹æ³•åã€å‚æ•°åå·²ç»æŒ‡å®šï¼Œè¯·å‹¿ä¿®æ”¹ï¼Œç›´æ¥è¿”å›æ–¹æ³•è§„å®šçš„å€¼å³å¯
 //     *
 //     *
-//     * @param coins intÕûĞÍvector
-//     * @return intÕûĞÍ
+//     * @param coins intæ•´å‹vector
+//     * @return intæ•´å‹
 //     */
 //    int getCoins(vector<int>& coins) {
 //        // write code here
-//        // ÓÅÏÈÈ¡Ğ¡µÄ£¬×îºóÔÙÈ¡±ß½ç
+//        // ä¼˜å…ˆå–å°çš„ï¼Œæœ€åå†å–è¾¹ç•Œ
 //        int n = coins.size();
 //        priority_queue<int, vector<int>, greater<int>> q;
 //        for (int i = 1; i < n - 1; i++) q.push(coins[i]);
@@ -240,7 +240,7 @@ using namespace std;
 //            ret += sum;
 //            cout << sum << endl;
 //        }
-//        // Ê£ÓàÁ©±ß½ç
+//        // å‰©ä½™ä¿©è¾¹ç•Œ
 //        int t = coins[0] * coins[n - 1];
 //        ret += t;
 //        if (coins[0] < coins[n - 1]) coins[0] = coins[n - 1];
@@ -264,15 +264,15 @@ using namespace std;
 //class Solution {
 //public:
 //    /**
-//     * ´úÂëÖĞµÄÀàÃû¡¢·½·¨Ãû¡¢²ÎÊıÃûÒÑ¾­Ö¸¶¨£¬ÇëÎğĞŞ¸Ä£¬Ö±½Ó·µ»Ø·½·¨¹æ¶¨µÄÖµ¼´¿É
+//     * ä»£ç ä¸­çš„ç±»åã€æ–¹æ³•åã€å‚æ•°åå·²ç»æŒ‡å®šï¼Œè¯·å‹¿ä¿®æ”¹ï¼Œç›´æ¥è¿”å›æ–¹æ³•è§„å®šçš„å€¼å³å¯
 //     *
 //     *
-//     * @param coins intÕûĞÍvector
-//     * @return intÕûĞÍ
+//     * @param coins intæ•´å‹vector
+//     * @return intæ•´å‹
 //     */
 //    int getCoins(vector<int>& coins) {
 //        // write code here
-//        // ÓÅÏÈÈ¡Ğ¡µÄ£¬×îºóÔÙÈ¡±ß½ç
+//        // ä¼˜å…ˆå–å°çš„ï¼Œæœ€åå†å–è¾¹ç•Œ
 //        int n = coins.size();
 //        priority_queue<int, vector<int>, greater<int>> q;
 //        for (int i = 1; i < n - 1; i++) q.push(coins[i]);
@@ -315,7 +315,7 @@ using namespace std;
 //            ret += sum;
 //            cout << sum << endl;
 //        }
-//        // Ê£ÓàÁ©±ß½ç
+//        // å‰©ä½™ä¿©è¾¹ç•Œ
 //        int t = coins[0] * coins[n - 1];
 //        ret += t;
 //        if (coins[0] < coins[n - 1]) coins[0] = coins[n - 1];
@@ -330,23 +330,23 @@ using namespace std;
 //class Solution {
 //public:
 //    /**
-//     * ´úÂëÖĞµÄÀàÃû¡¢·½·¨Ãû¡¢²ÎÊıÃûÒÑ¾­Ö¸¶¨£¬ÇëÎğĞŞ¸Ä£¬Ö±½Ó·µ»Ø·½·¨¹æ¶¨µÄÖµ¼´¿É
+//     * ä»£ç ä¸­çš„ç±»åã€æ–¹æ³•åã€å‚æ•°åå·²ç»æŒ‡å®šï¼Œè¯·å‹¿ä¿®æ”¹ï¼Œç›´æ¥è¿”å›æ–¹æ³•è§„å®šçš„å€¼å³å¯
 //     *
 //     *
-//     * @param coins intÕûĞÍvector
-//     * @return intÕûĞÍ
+//     * @param coins intæ•´å‹vector
+//     * @return intæ•´å‹
 //     */
 //    int getCoins(vector<int>& coins) {
 //        // write code here
 //        int n = coins.size();
-//        int dp[n + 2][n + 2]; // dp[i][j] ±íÊ¾Ñ¡È¡Çø¼ä[i,j]µÃµ½µÄ×î´ó»ı·Ö
+//        int dp[n + 2][n + 2]; // dp[i][j] è¡¨ç¤ºé€‰å–åŒºé—´[i,j]å¾—åˆ°çš„æœ€å¤§ç§¯åˆ†
 //        for (int i = 0; i < n + 2; i++)
 //            for (int j = 0; j < n + 2; j++)
 //                dp[i][j] = 0;
 //
 //        coins.insert(coins.begin(), 1);
 //        coins.push_back(1);
-//        // Ìî±í´ÓÏÂÍùÉÏ£¬´Ó×óÍùÓÒ
+//        // å¡«è¡¨ä»ä¸‹å¾€ä¸Šï¼Œä»å·¦å¾€å³
 //        for (int i = n; i >= 1; i--)
 //        {
 //            for (int j = i; j <= n; j++)
@@ -372,20 +372,20 @@ using namespace std;
 //    cin >> k;
 //    int ret = 1e5 + 10;
 //
-//    // ÓÃÓÚ¸ú×ÙÒÑ·ÅÖÃ»ÊºóµÄĞÅÏ¢
+//    // ç”¨äºè·Ÿè¸ªå·²æ”¾ç½®çš‡åçš„ä¿¡æ¯
 //    unordered_set<int> usedRows, usedCols, usedDiag1, usedDiag2;
 //
 //    for (int i = 1; i <= k; i++) {
 //        int x, y;
 //        cin >> x >> y;
 //        if (ret != 1e5 + 10) continue;
-//        // ¼ì²éµ±Ç°»ÊºóÊÇ·ñÓëÖ®Ç°»Êºó³åÍ»
+//        // æ£€æŸ¥å½“å‰çš‡åæ˜¯å¦ä¸ä¹‹å‰çš‡åå†²çª
 //        if (usedRows.count(x) || usedCols.count(y) ||
 //            usedDiag1.count(x - y) || usedDiag2.count(x + y)) {
 //            ret = i;
 //        }
 //
-//        // ½«µ±Ç°»ÊºóµÄĞÅÏ¢¼ÓÈë¼¯ºÏ£¨ÎŞÂÛÊÇ·ñÓĞ³åÍ»¶¼Òª¼ÓÈë£©
+//        // å°†å½“å‰çš‡åçš„ä¿¡æ¯åŠ å…¥é›†åˆï¼ˆæ— è®ºæ˜¯å¦æœ‰å†²çªéƒ½è¦åŠ å…¥ï¼‰
 //        usedRows.insert(x);
 //        usedCols.insert(y);
 //        usedDiag1.insert(x - y);
@@ -407,7 +407,7 @@ using namespace std;
 
 //
 //int na, nb, nc, nd, m;
-//int func(int n, int k) // ¼ÆËãCnk
+//int func(int n, int k) // è®¡ç®—Cnk
 //{
 //    int t = k;
 //    int sum = 1;
@@ -428,24 +428,24 @@ using namespace std;
 //int main() {
 //    //cin >> na >> nb >> nc >> nd >> m;
 //
-//    // Èç¹ûmÎª0£¬ÄÇÃ´¾ÍÊÇÅÅÁĞ×éºÏ
+//    // å¦‚æœmä¸º0ï¼Œé‚£ä¹ˆå°±æ˜¯æ’åˆ—ç»„åˆ
 //
 //    int ret = func(3, 1);
 //    cout << ret << endl;
 //
 //}
-//// 64 Î»Êä³öÇëÓÃ printf("%lld")
+//// 64 ä½è¾“å‡ºè¯·ç”¨ printf("%lld")
 
 
 
 //class Solution {
 //public:
 //    /**
-//     * ´úÂëÖĞµÄÀàÃû¡¢·½·¨Ãû¡¢²ÎÊıÃûÒÑ¾­Ö¸¶¨£¬ÇëÎğĞŞ¸Ä£¬Ö±½Ó·µ»Ø·½·¨¹æ¶¨µÄÖµ¼´¿É
+//     * ä»£ç ä¸­çš„ç±»åã€æ–¹æ³•åã€å‚æ•°åå·²ç»æŒ‡å®šï¼Œè¯·å‹¿ä¿®æ”¹ï¼Œç›´æ¥è¿”å›æ–¹æ³•è§„å®šçš„å€¼å³å¯
 //     *
 //     * max water
-//     * @param arr intÕûĞÍvector the array
-//     * @return long³¤ÕûĞÍ
+//     * @param arr intæ•´å‹vector the array
+//     * @return longé•¿æ•´å‹
 //     */
 //    long long maxWater(vector<int>& arr) {
 //        // write code here
@@ -516,7 +516,7 @@ using namespace std;
 //class Solution {
 //public:
 //    vector<vector<int>> combinationSum3(int k, int n) {
-//        // ºÍÎªn  ¸öÊıÎªk
+//        // å’Œä¸ºn  ä¸ªæ•°ä¸ºk
 //        vector<vector<int>> result;
 //        vector<int> current;
 //        backtrack(0, n, 1, current, result, k);
@@ -549,7 +549,7 @@ using namespace std;
 //class Solution {
 //public:
 //    vector<vector<int>> combine(int n, int k) {
-//        // ×éºÏ¸öÊıÎªk
+//        // ç»„åˆä¸ªæ•°ä¸ºk
 //        vector<vector<int>> result;
 //        vector<int> current;
 //        backtrack(n, 1, k, 0, current, result);
@@ -646,7 +646,7 @@ using namespace std;
 //            }
 //        }
 //
-//        // ´¦ÀíÄ©Î²µ¥´Ê
+//        // å¤„ç†æœ«å°¾å•è¯
 //        if (flag) ret++;
 //
 //        return ret;
@@ -656,7 +656,7 @@ using namespace std;
 
 //class Solution {
 //public:
-//    int binary_l(vector<int>& nums, int target) // µÚÒ»¸ö´óÓÚµÈÓÚ target µÄÎ»ÖÃ
+//    int binary_l(vector<int>& nums, int target) // ç¬¬ä¸€ä¸ªå¤§äºç­‰äº target çš„ä½ç½®
 //    {
 //        int left = 0, right = nums.size() - 1;
 //        while (left < right)
@@ -674,7 +674,7 @@ using namespace std;
 //        return left;
 //    }
 //
-//    int binary_r(vector<int>& nums, int target) // µÚÒ»¸ö´óÓÚ target µÄÎ»ÖÃ
+//    int binary_r(vector<int>& nums, int target) // ç¬¬ä¸€ä¸ªå¤§äº target çš„ä½ç½®
 //    {
 //        int left = 0, right = nums.size();
 //        while (left < right)
@@ -696,7 +696,7 @@ using namespace std;
 //        if (nums.empty()) return { -1, -1 };
 //
 //        int left_idx = binary_l(nums, target);
-//        // ¼ì²éÊÇ·ñÕÒµ½target
+//        // æ£€æŸ¥æ˜¯å¦æ‰¾åˆ°target
 //        if (nums[left_idx] != target) {
 //            return { -1, -1 };
 //        }
@@ -711,12 +711,12 @@ using namespace std;
 //class Solution {
 //public:
 //    vector<vector<int>> generateMatrix(int n) {
-//        // ½øĞĞÄ£Äâ
+//        // è¿›è¡Œæ¨¡æ‹Ÿ
 //        vector<vector<int>> v(n, vector<int>(n));
-//        // ÏÈ³õÊ¼»¯Îª0£¬È»ºó±ß½çÅĞ¶ÏÌõ¼ş¾ÍÎª0»òÊıÖµ±ß½ç
+//        // å…ˆåˆå§‹åŒ–ä¸º0ï¼Œç„¶åè¾¹ç•Œåˆ¤æ–­æ¡ä»¶å°±ä¸º0æˆ–æ•°å€¼è¾¹ç•Œ
 //        int maxNum = n * n;
 //        int curNum = 1;
-//        int dx[4] = { 0, 1, 0, -1 }; int dy[4] = { 1, 0, -1, 0 }; // ÓÒÏÂ×óÉÏ
+//        int dx[4] = { 0, 1, 0, -1 }; int dy[4] = { 1, 0, -1, 0 }; // å³ä¸‹å·¦ä¸Š
 //        int x = 0, y = 0;
 //        int dir = 0;
 //        while (curNum <= maxNum)
@@ -739,8 +739,8 @@ using namespace std;
 //public:
 //    bool canJump(vector<int>& nums) {
 //        int maxstep = 0;
-//        // ¼ÙÉèÒ»²½Ò»²½×ß£¬È»ºó¿´Êµ¼ÊÇé¿öÏÂÊÇ·ñ¿ÉÒÔ¸ù¾İnums×ßµ½ÕâÀï£¬×ß²»µ½¾Ífalse
-//        // ¿ÉÒÔÒ»²½Ò»²½×ßÍê£¬ÄÇÃ´¾Ítrue
+//        // å‡è®¾ä¸€æ­¥ä¸€æ­¥èµ°ï¼Œç„¶åçœ‹å®é™…æƒ…å†µä¸‹æ˜¯å¦å¯ä»¥æ ¹æ®numsèµ°åˆ°è¿™é‡Œï¼Œèµ°ä¸åˆ°å°±false
+//        // å¯ä»¥ä¸€æ­¥ä¸€æ­¥èµ°å®Œï¼Œé‚£ä¹ˆå°±true
 //        for (int i = 0; i < nums.size(); i++)
 //        {
 //            if (i > maxstep) return false;
@@ -754,25 +754,25 @@ using namespace std;
 
 //class NumberContainers {
 //public:
-//    // ÈİÆ÷ÖĞ´æ´¢µÄÊı×ÖÈ«ÎªÕıÕûÊı
+//    // å®¹å™¨ä¸­å­˜å‚¨çš„æ•°å­—å…¨ä¸ºæ­£æ•´æ•°
 //
-//    // ÈİÆ÷Ò²¿ÉÒÔÉèÖÃÎªÒ»¸ö¹şÏ£
-//    // find¿ÉÒÔÉè¼ÆÒ»¸ö¹şÏ£
-//    unordered_map<int, int> hash1; // ÏÂ±ê - ÊıÖµ
-//    unordered_map<int, set<int>> hash2; // ÊıÖµ - ÏÂ±ê
+//    // å®¹å™¨ä¹Ÿå¯ä»¥è®¾ç½®ä¸ºä¸€ä¸ªå“ˆå¸Œ
+//    // findå¯ä»¥è®¾è®¡ä¸€ä¸ªå“ˆå¸Œ
+//    unordered_map<int, int> hash1; // ä¸‹æ ‡ - æ•°å€¼
+//    unordered_map<int, set<int>> hash2; // æ•°å€¼ - ä¸‹æ ‡
 //    NumberContainers() {
 //    }
 //
 //    void change(int index, int number) {
 //        auto it = hash1.find(index);
 //
-//        // Ìæ»»
+//        // æ›¿æ¢
 //        if (it != hash1.end())
 //        {
 //            hash2[it->second].erase(index);
 //        }
 //
-//        // ²åÈë
+//        // æ’å…¥
 //        hash1[index] = number;
 //        hash2[number].insert(index);
 //    }
@@ -828,12 +828,12 @@ using namespace std;
 //    unordered_map<int, pair<int, int>> taskInfo;
 //    priority_queue<pair<int, int>> heap;
 //public:
-//    // ¹şÏ£ + ¶Ñ
+//    // å“ˆå¸Œ + å †
 //    TaskManager(vector<vector<int>>& tasks) {
 //        for (auto& task : tasks)
 //        {
 //            int userId = task[0], taskId = task[1], priority = task[2];
-//            // ¸ø userId Ìí¼ÓÒ»¸öÓÅÏÈ¼¶Îª priority µÄÈÎÎñ taskId
+//            // ç»™ userId æ·»åŠ ä¸€ä¸ªä¼˜å…ˆçº§ä¸º priority çš„ä»»åŠ¡ taskId
 //            taskInfo[taskId] = { priority, userId };
 //            heap.push({ priority, taskId });
 //        }
@@ -855,7 +855,7 @@ using namespace std;
 //
 //    int execTop()
 //    {
-//        // Ö»É¾³ıÒ»¸ö
+//        // åªåˆ é™¤ä¸€ä¸ª
 //        while (!heap.empty())
 //        {
 //            auto [priority, taskId] = heap.top();
@@ -884,31 +884,68 @@ using namespace std;
 
 
 
-class Solution {
-public:
-    int minimumTotal(vector<vector<int>>& triangle) {
-        // dp
-        // i-1 i
-        int n = triangle.size();
-        vector<int> dp(n, 0);
-        dp[0] = triangle[0][0];
-        // ´ÓÉÏµ½ÏÂ ´ÓÓÒµ½×ó
-        for (int i = 1; i < n; i++)
-        {
-            // ´¦Àí×îºóÒ»Î»
-            dp[i] = dp[i - 1] + triangle[i][i];
-            for (int j = i - 1; j > 0; j--)
-            {
-                dp[j] = min(dp[j], dp[j - 1]) + triangle[i][j];
-            }
-            // ´¦ÀíµÚÒ»Î»
-            dp[0] += triangle[i][0];
-        }
+//class Solution {
+//public:
+//    int minimumTotal(vector<vector<int>>& triangle) {
+//        // dp
+//        // i-1 i
+//        int n = triangle.size();
+//        vector<int> dp(n, 0);
+//        dp[0] = triangle[0][0];
+//        // ä»ä¸Šåˆ°ä¸‹ ä»å³åˆ°å·¦
+//        for (int i = 1; i < n; i++)
+//        {
+//            // å¤„ç†æœ€åä¸€ä½
+//            dp[i] = dp[i - 1] + triangle[i][i];
+//            for (int j = i - 1; j > 0; j--)
+//            {
+//                dp[j] = min(dp[j], dp[j - 1]) + triangle[i][j];
+//            }
+//            // å¤„ç†ç¬¬ä¸€ä½
+//            dp[0] += triangle[i][0];
+//        }
+//
+//
+//        int ret = INT_MAX;
+//        for (int i = 0; i < n; i++) ret = min(ret, dp[i]);
+//
+//        return ret;
+//    }
+//};
 
 
-        int ret = INT_MAX;
-        for (int i = 0; i < n; i++) ret = min(ret, dp[i]);
 
-        return ret;
-    }
-};
+//class Solution {
+//public:
+//    void rotate(vector<vector<int>>& matrix) {
+//        // è½¬ç½® + æ°´å¹³é•œåƒ
+//        int n = matrix.size();
+//
+//        // è½¬ç½®
+//        for (int i = 0; i < n; i++)
+//        {
+//            for (int j = 0; j < i; j++)
+//            {
+//                swap(matrix[i][j], matrix[j][i]);
+//            }
+//        }
+//
+//        // æ°´å¹³é•œåƒ
+//        for (int i = 0; i < n / 2; i++)
+//        {
+//            for (int j = 0; j < n; j++)
+//            {
+//                swap(matrix[j][i], matrix[j][n - i - 1]);
+//            }
+//        }
+//    }
+//};
+
+
+//çŸ©é˜µè½¬ç½®:matrix[i][j] â†” matrix[j][i]
+//çŸ©é˜µæ°´å¹³é•œåƒ : matrix[i][j] â†” matrix[i][n - 1 - j]
+//çŸ©é˜µå‚ç›´é•œåƒ : matrix[i][j] â†” matrix[m - 1 - i][j]
+//çŸ©é˜µé¡ºæ—¶é’ˆæ—‹è½¬90åº¦ï¼Œ new_matrix[j][n - 1 - i] = matrix[i][j], å°±ç›¸å½“äºå‚ç›´é•œåƒ + è½¬ç½®
+//çŸ©é˜µé¡ºæ—¶é’ˆæ—‹è½¬180åº¦ï¼Œnew_matrix[n - 1 - i][n - 1 - j] = matrix[i][j], å°±ç›¸å½“äºæ°´å¹³é•œåƒ + å‚ç›´é•œåƒ
+//çŸ©é˜µé€†æ—¶é’ˆæ—‹è½¬90åº¦ï¼Œnew_matrix[n - 1 - j][i] = matrix[i][j], å°±ç›¸å½“äºæ°´å¹³é•œåƒ + è½¬ç½®
+//matrix[:] = [list(row) for row in zip(*matrix[:: - 1])]
