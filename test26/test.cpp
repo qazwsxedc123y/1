@@ -821,3 +821,94 @@ using namespace std;
 //        return ret;
 //    }
 //};
+
+
+//class TaskManager
+//{
+//    unordered_map<int, pair<int, int>> taskInfo;
+//    priority_queue<pair<int, int>> heap;
+//public:
+//    // 哈希 + 堆
+//    TaskManager(vector<vector<int>>& tasks) {
+//        for (auto& task : tasks)
+//        {
+//            int userId = task[0], taskId = task[1], priority = task[2];
+//            // 给 userId 添加一个优先级为 priority 的任务 taskId
+//            taskInfo[taskId] = { priority, userId };
+//            heap.push({ priority, taskId });
+//        }
+//    }
+//
+//    void add(int userId, int taskId, int priority) {
+//        taskInfo[taskId] = { priority, userId };
+//        heap.push({ priority, taskId });
+//    }
+//
+//    void edit(int taskId, int newPriority) {
+//        taskInfo[taskId].first = newPriority;
+//        heap.push({ newPriority, taskId });
+//    }
+//
+//    void rmv(int taskId) {
+//        taskInfo.erase(taskId);
+//    }
+//
+//    int execTop()
+//    {
+//        // 只删除一个
+//        while (!heap.empty())
+//        {
+//            auto [priority, taskId] = heap.top();
+//            heap.pop();
+//
+//            if (taskInfo.find(taskId) != taskInfo.end() &&
+//                taskInfo[taskId].first == priority)
+//            {
+//                int userId = taskInfo[taskId].second;
+//                taskInfo.erase(taskId);
+//                return userId;
+//            }
+//        }
+//        return -1;
+//    }
+//};
+//
+///**
+// * Your TaskManager object will be instantiated and called as such:
+// * TaskManager* obj = new TaskManager(tasks);
+// * obj->add(userId,taskId,priority);
+// * obj->edit(taskId,newPriority);
+// * obj->rmv(taskId);
+// * int param_4 = obj->execTop();
+// */
+
+
+
+class Solution {
+public:
+    int minimumTotal(vector<vector<int>>& triangle) {
+        // dp
+        // i-1 i
+        int n = triangle.size();
+        vector<int> dp(n, 0);
+        dp[0] = triangle[0][0];
+        // 从上到下 从右到左
+        for (int i = 1; i < n; i++)
+        {
+            // 处理最后一位
+            dp[i] = dp[i - 1] + triangle[i][i];
+            for (int j = i - 1; j > 0; j--)
+            {
+                dp[j] = min(dp[j], dp[j - 1]) + triangle[i][j];
+            }
+            // 处理第一位
+            dp[0] += triangle[i][0];
+        }
+
+
+        int ret = INT_MAX;
+        for (int i = 0; i < n; i++) ret = min(ret, dp[i]);
+
+        return ret;
+    }
+};
