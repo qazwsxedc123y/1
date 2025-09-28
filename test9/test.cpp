@@ -167,6 +167,47 @@ using namespace std;
 //};
 
 
+//class Solution {
+//public:
+//    int largestPerimeter(vector<int>& nums) {
+//        // 排序后，只需保证两边之和大于第三边即可
+//        sort(nums.begin(), nums.end(), greater<int>());
+//        int n = nums.size();
+//        int ret = 0;
+//        for (int i = 0; i < n; i++) // 最大
+//        {
+//            for (int j = i + 1; j < n; j++)
+//            {
+//                if (j != i + 1) break;
+//                for (int m = j + 1; m < n; m++)
+//                {
+//                    if (nums[i] < nums[j] + nums[m])
+//                    {
+//                        return nums[i] + nums[j] + nums[m];
+//                    }
+//                    else break;
+//                }
+//            }
+//        }
+//        return 0;
+//    }
+//};
+
+
+//class Solution {
+//public:
+//    int largestPerimeter(vector<int>& nums) {
+//        // 排序后，只需保证两边之和大于第三边即可
+//        sort(nums.begin(), nums.end(), greater<int>());
+//        int n = nums.size();
+//        int ret = 0;
+//        for (int i = 0; i < n - 2; i++) // 最大
+//        {
+//            if (nums[i] < nums[i + 1] + nums[i + 2]) return nums[i] + nums[i + 1] + nums[i + 2];
+//        }
+//        return 0;
+//    }
+//};
 
 int main()
 {
