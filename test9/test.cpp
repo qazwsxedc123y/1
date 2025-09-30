@@ -231,10 +231,26 @@ using namespace std;
 //};
 
 
+//class Solution {
+//public:
+//    int triangularSum(vector<int>& nums) {
+//        int n = nums.size();
+//        for (int i = 0; i < n - 1; i++) // n - 1´ÎÑ­»·
+//        {
+//            for (int j = 0; j < n - 1 - i; j++)
+//            {
+//                nums[j] += nums[j + 1];
+//                nums[j] %= 10;
+//            }
+//        }
+//        return nums[0];
+//    }
+//};
+
 int main()
 {
-    //Solution s;
-    //string str = "/a/./b/../../c/";
-    //s.simplifyPath(str);
+    Solution s;
+    vector<int> v{ 1,2,3,4,5 };
+    s.triangularSum(v);
 	return 0;
 }
