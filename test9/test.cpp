@@ -247,10 +247,123 @@ using namespace std;
 //    }
 //};
 
+
+//class Solution {
+//public:
+//    bool is_0(int num)
+//    {
+//        while (num != 0) {
+//            if (num % 10 == 0) return true;
+//            num /= 10;
+//        }
+//        return false;
+//    }
+//    long long countNoZeroPairs(long long n) {
+//        int ret = 0;
+//        for (int i = 1; i <= n / 2; i++) {
+//            int e1 = i, e2 = n - i;
+//            if (is_0(e1) && is_0(e2)) {
+//                // º¬ÓÐ0
+//                cout << e1 << " " << e2 << endl;
+//                continue;
+//            }
+//            else
+//            {
+//                if (e1 == e2) ret += 1;
+//                else ret += 2;
+//            }
+//        }
+//        return ret;
+//    }
+//};
+
+//class Solution {
+//public:
+//    int alternatingSum(vector<int>& nums) {
+//        int ret = 0;
+//        for (int i = 0; i < nums.size(); i++)
+//        {
+//            if (i % 2 == 0)
+//            {
+//                ret += nums[i];
+//            }
+//            else ret -= nums[i];
+//        }
+//        return ret;
+//    }
+//};
+
+
+//class Solution {
+//public:
+//    int longestSubsequence(vector<int>& nums) {
+//        int n = nums.size();
+//        int total = 0;
+//        bool flag = true;
+//        for (auto e : nums) {
+//            total ^= e;
+//            if (e != 0) flag = false;
+//        }
+//
+//
+//        if (total != 0)
+//            return n;
+//
+//        // Îª0
+//        if (flag) return 0;
+//        else return n - 1;
+//    }
+//};
+
+
+class Solution {
+public:
+    string removeSubstring(string s, int k) {
+        vector<pair<char, int>> stack;
+
+        for (char c : s) {
+            if (!stack.empty() && stack.back().first == c) {
+                stack.back().second++;
+            }
+            else {
+                stack.emplace_back(c, 1);
+            }
+
+            while (stack.size() >= 2) {
+                auto& close = stack.back();
+                auto& open = stack[stack.size() - 2];
+
+                if (open.first == '(' && close.first == ')' &&
+                    open.second >= k && close.second >= k) {
+
+                    open.second -= k;
+                    close.second -= k;
+                    if (open.second == 0) {
+                        stack.erase(stack.end() - 2);
+                    }
+                    if (close.second == 0) {
+                        stack.pop_back();
+                    }
+                }
+                else {
+                    break;
+                }
+            }
+        }
+
+        string result;
+        for (auto& [c, count] : stack) {
+            result.append(count, c);
+        }
+
+        return result;
+    }
+};
+
 int main()
 {
     Solution s;
     vector<int> v{ 1,2,3,4,5 };
-    s.triangularSum(v);
+    s.countNoZeroPairs(11);
 	return 0;
 }
