@@ -316,54 +316,89 @@ using namespace std;
 //};
 
 
+//class Solution {
+//public:
+//    string removeSubstring(string s, int k) {
+//        vector<pair<char, int>> stack;
+//
+//        for (char c : s) {
+//            if (!stack.empty() && stack.back().first == c) {
+//                stack.back().second++;
+//            }
+//            else {
+//                stack.emplace_back(c, 1);
+//            }
+//
+//            while (stack.size() >= 2) {
+//                auto& close = stack.back();
+//                auto& open = stack[stack.size() - 2];
+//
+//                if (open.first == '(' && close.first == ')' &&
+//                    open.second >= k && close.second >= k) {
+//
+//                    open.second -= k;
+//                    close.second -= k;
+//                    if (open.second == 0) {
+//                        stack.erase(stack.end() - 2);
+//                    }
+//                    if (close.second == 0) {
+//                        stack.pop_back();
+//                    }
+//                }
+//                else {
+//                    break;
+//                }
+//            }
+//        }
+//
+//        string result;
+//        for (auto& [c, count] : stack) {
+//            result.append(count, c);
+//        }
+//
+//        return result;
+//    }
+//};
+
+
 class Solution {
 public:
-    string removeSubstring(string s, int k) {
-        vector<pair<char, int>> stack;
-
-        for (char c : s) {
-            if (!stack.empty() && stack.back().first == c) {
-                stack.back().second++;
-            }
-            else {
-                stack.emplace_back(c, 1);
-            }
-
-            while (stack.size() >= 2) {
-                auto& close = stack.back();
-                auto& open = stack[stack.size() - 2];
-
-                if (open.first == '(' && close.first == ')' &&
-                    open.second >= k && close.second >= k) {
-
-                    open.second -= k;
-                    close.second -= k;
-                    if (open.second == 0) {
-                        stack.erase(stack.end() - 2);
-                    }
-                    if (close.second == 0) {
-                        stack.pop_back();
-                    }
-                }
-                else {
+    bool hasIncreasingSubarrays(vector<int>& nums, int k) {
+        int n = nums.size();
+        if (k == 1) return true;
+        for (int i = 0; i <= n - 2 * k; i++)
+        {
+            bool flag = true;
+            for (int j = 1; j < k; j++)
+            {
+                if (nums[j + i] <= nums[j + i - 1])
+                {
+                    flag = false;
                     break;
                 }
             }
-        }
+            if (flag == false) continue;
 
-        string result;
-        for (auto& [c, count] : stack) {
-            result.append(count, c);
+            for (int j = 1; j < k; j++)
+            {
+                if (nums[j + i + k] <= nums[j + i + k - 1])
+                {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag == false) continue;
+            return true;
         }
-
-        return result;
+        return false;
     }
 };
+
 
 int main()
 {
     Solution s;
-    vector<int> v{ 1,2,3,4,5 };
-    s.countNoZeroPairs(11);
+    vector<int> v{ 1,2,3,4,4,4,4,5,6,7 };
+    s.hasIncreasingSubarrays(v, 5);
 	return 0;
 }
