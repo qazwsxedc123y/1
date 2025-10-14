@@ -361,44 +361,96 @@ using namespace std;
 //};
 
 
-class Solution {
-public:
-    bool hasIncreasingSubarrays(vector<int>& nums, int k) {
-        int n = nums.size();
-        if (k == 1) return true;
-        for (int i = 0; i <= n - 2 * k; i++)
-        {
-            bool flag = true;
-            for (int j = 1; j < k; j++)
-            {
-                if (nums[j + i] <= nums[j + i - 1])
-                {
-                    flag = false;
-                    break;
-                }
-            }
-            if (flag == false) continue;
+//class Solution {
+//public:
+//    bool hasIncreasingSubarrays(vector<int>& nums, int k) {
+//        int n = nums.size();
+//        if (k == 1) return true;
+//        for (int i = 0; i <= n - 2 * k; i++)
+//        {
+//            bool flag = true;
+//            for (int j = 1; j < k; j++)
+//            {
+//                if (nums[j + i] <= nums[j + i - 1])
+//                {
+//                    flag = false;
+//                    break;
+//                }
+//            }
+//            if (flag == false) continue;
+//
+//            for (int j = 1; j < k; j++)
+//            {
+//                if (nums[j + i + k] <= nums[j + i + k - 1])
+//                {
+//                    flag = false;
+//                    break;
+//                }
+//            }
+//            if (flag == false) continue;
+//            return true;
+//        }
+//        return false;
+//    }
+//};
 
-            for (int j = 1; j < k; j++)
-            {
-                if (nums[j + i + k] <= nums[j + i + k - 1])
-                {
-                    flag = false;
-                    break;
-                }
-            }
-            if (flag == false) continue;
-            return true;
-        }
-        return false;
-    }
-};
+
+//class Solution {
+//public:
+//    int longestBalanced(string s) {
+//        int ret = 0;
+//        int n = s.size();
+//        for (int i = 0; i < n; i++) {
+//            int cnt[26] = { 0 };
+//            int count = 0;
+//            for (int j = i; j < n; j++) {
+//                int ans = cnt[s[j] - 'a']++;
+//                bool flag = true;
+//                for (int m = 0; m < 26; m++) {
+//                    if (ans != cnt[m]) {
+//                        flag = false;
+//                        break;
+//                    }
+//                }
+//                if (flag) ret = max(ret, j - i + 1);
+//            }
+//        }
+//        return ret;
+//    }
+//};
+
+
+//class Solution {
+//public:
+//    int longestBalanced(string s) {
+//        int ret = 0;
+//        int n = s.size();
+//        for (int i = 0; i < n; i++) {
+//            int cnt[26] = { 0 };
+//            int count = 0;
+//            for (int j = i; j < n; j++) {
+//                int ans = ++cnt[s[j] - 'a'];
+//                bool flag = true;
+//                for (int m = 0; m < 26; m++) {
+//                    if (ans != cnt[m] && cnt[m] != 0) {
+//                        flag = false;
+//                        break;
+//                    }
+//                }
+//                if (flag) ret = max(ret, j - i + 1);
+//            }
+//        }
+//        return ret;
+//    }
+//};
+
 
 
 int main()
 {
     Solution s;
-    vector<int> v{ 1,2,3,4,4,4,4,5,6,7 };
-    s.hasIncreasingSubarrays(v, 5);
+    string str = "abbac";
+    s.longestBalanced(str);
 	return 0;
 }
+
