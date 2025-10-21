@@ -7,6 +7,7 @@
 #include <functional>
 #include <queue>
 #include <unordered_set>
+#include <algorithm>
 using namespace std;
 
 //class Solution {
@@ -444,13 +445,110 @@ using namespace std;
 //    }
 //};
 
+class Solution {
+public:
+    int maxFrequency(vector<int>& nums, int k, int numOperations) {
+        sort(nums.begin(), nums.end());
+        int _max = k * numOperations;
+        int n = nums.size();
+        int ret = 0;
+        int sum[4];
 
+        sum[0] = 0;
+        for (int i = 1; i <= n; i++) sum[i] = sum[i - 1] + nums[i - 1];
+
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = i; j < n; j++)
+            {
+                // int cost = sum_cost(nums, i, j);
+                int mid = (i + j) / 2;
+                int cost = (mid - i) * nums[mid] - (sum[mid] - sum[i])
+                    + sum[j + 1] - sum[mid + 1] - (j - mid) * nums[mid];
+                if (cost > _max) break;
+                else
+                {
+                    ret = max(ret, j - i + 1);
+                }
+            }
+        }
+
+        return ret;
+    }
+};
+
+//int main()
+//{
+//    Solution s;
+//    vector<int> v({ 1,4,5 });
+//
+//    s.maxFrequency(v, 1, 2);
+//	return 0;
+//}
+//
+
+
+
+typedef long long LL;
+
+const int N = 1e5 + 10;
+
+LL n, k;
+LL nums[N];
+LL sum[N];
+
+LL cal(int i, int j)
+{
+    LL mid = (i + j) / 2;
+    LL cost = (mid - i) * nums[mid] - (sum[mid - 1] - sum[i - 1])
+        + sum[j] - sum[mid] - (j - mid) * nums[mid];
+    return cost;
+}
 
 int main()
 {
-    Solution s;
-    string str = "abbac";
-    s.longestBalanced(str);
-	return 0;
-}
+    cin >> n >> k;
+    for (int i = 1; i <= n; i++) cin >> nums[i];
 
+    sort(nums + 1, nums + n + 1);
+
+    // 先计算前缀和  --  优化一
+    sum[0] = 0;
+    for (int i = 1; i <= n; i++) sum[i] = nums[i] + sum[i - 1];
+
+    int ret = 1;
+
+    // 优化二 -- 使用滑动窗口
+    int l = 1, r = 1;
+    while (r <= n)
+    {
+        LL cost = cal(l, r);
+        while (cost > k)
+        {
+            l++;
+            cost = cal(l, r);
+        }
+        // 更新结果
+        ret = max(ret, r - l + 1);
+        r++;
+    }
+
+    //     for(int i = 1; i <= n; i++)
+    //     {
+    //         for(int j = i; j <= n; j++)
+    //         {
+    //             // int cost = sum_cost(nums, i, j);
+    //             int mid = (i + j) / 2;
+    //             int cost = (mid - i) * nums[mid] - (sum[mid] - sum[i]) 
+    //                 + sum[j + 1] - sum[mid + 1] - (j - mid) * nums[mid];
+    //             if(cost > k) break;
+    //             else 
+    //             {
+    //                 ret = max(ret, j - i + 1);
+    //             }
+    //         }
+    //     }
+
+    cout << ret << endl;
+    return 0;
+}
