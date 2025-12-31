@@ -31,53 +31,40 @@
 #include <vector>
 
 using namespace std;
-
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
 class Solution {
 public:
-    string multiply(string num1, string num2) {
-        int n = num1.size(), m = num2.size();
-        reverse(num1.begin(), num1.end());
-        reverse(num2.begin(), num2.end());
-        vector<int> tmp(n + m - 1);
-
-        for (int i = 0; i < n; i++)
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        // 快慢指针
+        ListNode* fast = head;
+        while (n--)
         {
-            for (int j = 0; j < m; j++)
-            {
-                tmp[i + j] += ((num1[i] - '0') * (num2[j] - '0'));
-            }
+            fast = fast->next;
         }
-
-        // for(int i = 0; i < tmp.size(); i++) cout << tmp[i];
-
-        // 调整进位
-        int cur = 0, array = 0;
-        string ret;
-        while (cur < n + m - 1)
+        ListNode* slow = head, * pre = nullptr;
+        while (fast)
         {
-            tmp[cur] += array;
-            ret.push_back(tmp[cur] % 10 + '0');
-            array = tmp[cur] / 10;
-            cur++;
+            pre = slow;
+            fast = fast->next;
+            slow = slow->next;
         }
-        if (array != 0)
+        if (pre == nullptr) // 要删除头位
         {
-            ret.push_back(array + '0');
+            head = head->next;
         }
-
-        // 处理前导0
-        while (ret.size() > 1 && ret.back() == '0') ret.pop_back();
-
-        reverse(ret.begin(), ret.end());
-
-        return ret;
+        else
+        {
+            pre->next = slow->next;
+        }
+        return head;
     }
 };
-int main()
-{
-    Solution s;
-    string s1 = "123";
-    string s2 = "456";
-    s.multiply(s1, s2);
-    return 0;
-}
