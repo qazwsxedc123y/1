@@ -30,41 +30,47 @@
 #include <string>
 #include <vector>
 
-using namespace std;
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode() : val(0), next(nullptr) {}
- *     ListNode(int x) : val(x), next(nullptr) {}
- *     ListNode(int x, ListNode *next) : val(x), next(next) {}
- * };
- */
 class Solution {
 public:
-    ListNode* removeNthFromEnd(ListNode* head, int n) {
-        // 快慢指针
-        ListNode* fast = head;
-        while (n--)
+    int subarraySum(vector<int>& nums, int k) {
+        // 滑动窗口，但存在负数得情况，滑动窗口不行
+        // 前缀和
+        int n = nums.size();
+        int ret = 0;
+        int dp[n + 1];
+        dp[0] = 0;
+        dp[1] = nums[0];
+        for (int i = 2; i <= n; i++) dp[i] = dp[i - 1] + nums[i - 1];
+        for (int i = 0; i <= n; i++) // 右边界
         {
-            fast = fast->next;
+            for (int j = 0; j < i; j++)
+            {
+                if (dp[i] - dp[j] == k) ret++;
+            }
         }
-        ListNode* slow = head, * pre = nullptr;
-        while (fast)
+        return ret;
+    }
+};
+
+
+class Solution {
+public:
+    int subarraySum(vector<int>& nums, int k) {
+        // 滑动窗口，但存在负数得情况，滑动窗口不行
+        // 前缀和
+        int n = nums.size();
+        int ret = 0;
+        int dp[n + 1];
+        dp[0] = 0;
+        dp[1] = nums[0];
+        for (int i = 2; i <= n; i++) dp[i] = dp[i - 1] + nums[i - 1];
+        unordered_map<int, int> cnt;
+
+        for (int i = 0; i <= n; i++) // 右边界
         {
-            pre = slow;
-            fast = fast->next;
-            slow = slow->next;
+            if (cnt.find(dp[i] - k) != cnt.end()) ret += cnt[dp[i] - k];
+            cnt[dp[i]]++;
         }
-        if (pre == nullptr) // 要删除头位
-        {
-            head = head->next;
-        }
-        else
-        {
-            pre->next = slow->next;
-        }
-        return head;
+        return ret;
     }
 };
