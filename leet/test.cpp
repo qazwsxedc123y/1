@@ -1,76 +1,57 @@
-#define  _CRT_SECURE_NO_WARNINGS
-//
-//class Solution {
-//    vector<int> ret;
-//public:
-//    void dfs(int pos, int num, int n, int k)
-//    {
-//        if (pos == n)
-//        {
-//            ret.push_back(num);
-//            return;
-//        }
-//
-//        for (int i = 0; i <= 9; i++)
-//        {
-//            int ans = num % 10;
-//            if (i - ans == k || ans - i == k)
-//            {
-//                dfs(pos + 1, num * 10 + i, n, k);
-//            }
-//        }
-//    }
-//    vector<int> numsSameConsecDiff(int n, int k) {
-//        // 可以采用dfs
-//        for (int i = 1; i <= 9; i++) dfs(1, i, n, k);
-//        return ret;
-//    }
-//};
-#include <iostream>
-#include <string>
-#include <vector>
-
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
 class Solution {
 public:
-    int subarraySum(vector<int>& nums, int k) {
-        // 滑动窗口，但存在负数得情况，滑动窗口不行
-        // 前缀和
-        int n = nums.size();
-        int ret = 0;
-        int dp[n + 1];
-        dp[0] = 0;
-        dp[1] = nums[0];
-        for (int i = 2; i <= n; i++) dp[i] = dp[i - 1] + nums[i - 1];
-        for (int i = 0; i <= n; i++) // 右边界
+    ListNode* get_i(ListNode* head, int i)
+    {
+        while (i--)
         {
-            for (int j = 0; j < i; j++)
-            {
-                if (dp[i] - dp[j] == k) ret++;
-            }
+            head = head->next;
         }
-        return ret;
+        return head;
     }
-};
-
-
-class Solution {
-public:
-    int subarraySum(vector<int>& nums, int k) {
-        // 滑动窗口，但存在负数得情况，滑动窗口不行
-        // 前缀和
-        int n = nums.size();
-        int ret = 0;
-        int dp[n + 1];
-        dp[0] = 0;
-        dp[1] = nums[0];
-        for (int i = 2; i <= n; i++) dp[i] = dp[i - 1] + nums[i - 1];
-        unordered_map<int, int> cnt;
-
-        for (int i = 0; i <= n; i++) // 右边界
-        {
-            if (cnt.find(dp[i] - k) != cnt.end()) ret += cnt[dp[i] - k];
-            cnt[dp[i]]++;
+    ListNode* sortList(ListNode* head) {
+        if (head == nullptr || head->next == nullptr) {
+            return head;
         }
-        return ret;
+        int n = 0;
+        ListNode* tail = head;
+        while (tail)
+        {
+            tail = tail->next;
+            n++;
+        }
+
+        for (int i = 1; i < n; i++)
+        {
+            ListNode* key_node = get_i(head, i);
+            int key_val = key_node->val;
+
+            int j = i - 1;
+            ListNode* prev_node = get_i(head, j);
+
+            while (j >= 0 && prev_node->val > key_val)
+            {
+                ListNode* curr_node = get_i(head, j + 1);
+                curr_node->val = prev_node->val;
+
+                j--;
+                if (j >= 0) {
+                    prev_node = get_i(head, j);
+                }
+            }
+
+            ListNode* insert_node = get_i(head, j + 1);
+            insert_node->val = key_val;
+        }
+        return head;
     }
 };
