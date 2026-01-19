@@ -1,51 +1,32 @@
 class Solution {
 public:
-    int binary_l(vector<int>& nums, int target) // 第一个大于等于 target 的位置
-    {
-        int left = 0, right = nums.size() - 1;
-        while (left < right)
+    string convert(string s, int numRows) {
+        if (numRows == 1) return s;
+        string ret;
+        // 创建numrows个，然后拼接到一起
+        vector<string> tmp(numRows);
+        int ans = 0, dir = 0;// dir - 0向下 - 1向上
+        for (int i = 0; i < s.size(); i++)
         {
-            int mid = left + (right - left) / 2;
-            if (nums[mid] < target)
+            tmp[ans].push_back(s[i]);
+            if (dir == 0) ans++; a
+            else ans--;
+            if (ans == numRows)
             {
-                left = mid + 1;
+                dir = 1;
+                ans -= 2;
             }
-            else
+            if (ans == -1)
             {
-                right = mid;
+                dir = 0;
+                ans += 2;
             }
         }
-        return left;
-    }
 
-    int binary_r(vector<int>& nums, int target) // 第一个大于 target 的位置
-    {
-        int left = 0, right = nums.size();
-        while (left < right)
+        for (int i = 0; i < numRows; i++)
         {
-            int mid = left + (right - left) / 2;
-            if (nums[mid] <= target)
-            {
-                left = mid + 1;
-            }
-            else
-            {
-                right = mid;
-            }
+            ret += tmp[i];
         }
-        return left;
-    }
-
-    vector<int> searchRange(vector<int>& nums, int target) {
-        if (nums.empty()) return { -1, -1 };
-
-        int left_idx = binary_l(nums, target);
-        // 检查是否找到target
-        if (nums[left_idx] != target) {
-            return { -1, -1 };
-        }
-
-        int right_idx = binary_r(nums, target) - 1;
-        return { left_idx, right_idx };
+        return ret;
     }
 };
