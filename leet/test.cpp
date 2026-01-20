@@ -1,32 +1,41 @@
-class Solution {
+class MyStack {
 public:
-    string convert(string s, int numRows) {
-        if (numRows == 1) return s;
-        string ret;
-        // 创建numrows个，然后拼接到一起
-        vector<string> tmp(numRows);
-        int ans = 0, dir = 0;// dir - 0向下 - 1向上
-        for (int i = 0; i < s.size(); i++)
-        {
-            tmp[ans].push_back(s[i]);
-            if (dir == 0) ans++; a
-            else ans--;
-            if (ans == numRows)
-            {
-                dir = 1;
-                ans -= 2;
-            }
-            if (ans == -1)
-            {
-                dir = 0;
-                ans += 2;
-            }
-        }
+    queue<int> q1, q2;
+    // q2入  q1出
+    MyStack() {
 
-        for (int i = 0; i < numRows; i++)
+    }
+
+    void push(int x) {
+        q2.push(x);
+        while (!q1.empty())
         {
-            ret += tmp[i];
+            q2.push(q1.front());
+            q1.pop();
         }
-        return ret;
+        swap(q1, q2);
+    }
+
+    int pop() {
+        int r = q1.front();
+        q1.pop();
+        return r;
+    }
+
+    int top() {
+        return q1.front();
+    }
+
+    bool empty() {
+        return q1.empty();
     }
 };
+
+/**
+ * Your MyStack object will be instantiated and called as such:
+ * MyStack* obj = new MyStack();
+ * obj->push(x);
+ * int param_2 = obj->pop();
+ * int param_3 = obj->top();
+ * bool param_4 = obj->empty();
+ */
