@@ -1,61 +1,46 @@
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode() : val(0), next(nullptr) {}
- *     ListNode(int x) : val(x), next(nullptr) {}
- *     ListNode(int x, ListNode *next) : val(x), next(next) {}
- * };
- */
+#include <iostream>
+#include <vector>
+using namespace std;
+
 class Solution {
+    vector<vector<int>> ret;
+    vector<int> tmp;
 public:
-    void reorderList(ListNode* head) {
-        if (head == nullptr || head->next == nullptr)
-        {
-            return;
-        }
-        // 先将后半段进行翻转
-        ListNode* mid = mid_node(head);
-        ListNode* tmp = mid;
-        mid = reverse_node(mid->next);
-        tmp->next = nullptr;
-        // 将进行按序插入
-        sort_node(head, mid);
-    }
-    void sort_node(ListNode* node1, ListNode* node2)
-    {
-        ListNode* node1_tmp = node1, * node2_tmp = node2;
-        while (node1 != nullptr && node2 != nullptr)
-        {
-            node1_tmp = node1->next;
-            node2_tmp = node2->next;
+    vector<vector<int>> findSubsequences(vector<int>& nums) {
 
-            // 修改
-            node1->next = node2;
-            node1 = node1_tmp;
-
-            node2->next = node1;
-            node2 = node2_tmp;
-        }
-    }
-    ListNode* mid_node(ListNode* head)
-    {
-        ListNode* fast = head, * slow = head;
-        while (fast != nullptr && fast->next != nullptr)
-        {
-            fast = fast->next->next;
-            slow = slow->next;
-        }
-        return slow;
-    }
-    ListNode* reverse_node(ListNode* head)
-    {
-        // 将head为头，然后的全部翻转
-        if (head == nullptr || head->next == nullptr) return head;
-        ListNode* ret = reverse_node(head->next);
-        head->next->next = head;
-        head->next = nullptr;
+        // 可以采用dfs遍历的方法
+        dfs(0, -101, nums);
         return ret;
     }
+    void dfs(int cur, int _end, vector<int>& nums)
+    {
+        if (cur == nums.size())
+        {
+            if (tmp.size() >= 2)
+            {
+                ret.push_back(tmp);
+                // cout << "1" << endl;
+            }
+            return;
+        }
+        if (nums[cur] >= _end)
+        {
+            // 入
+            tmp.push_back(nums[cur]);
+            dfs(cur + 1, nums[cur], nums);
+            tmp.pop_back();
+        }
+        // 剩下的即不符合要求
+        // 但也要往前走
+        if (nums[cur] != _end) dfs(cur + 1, _end, nums);
+
+    }
 };
+
+int main()
+{
+    vector<int> ans{ 4,6,7,7 };
+    Solution s;
+    s.findSubsequences(ans);
+    return 0;
+}
