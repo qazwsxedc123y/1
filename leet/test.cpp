@@ -3,37 +3,22 @@
 using namespace std;
 
 class Solution {
-    vector<vector<int>> ret;
-    vector<int> tmp;
 public:
-    vector<vector<int>> findSubsequences(vector<int>& nums) {
+    int findUnsortedSubarray(vector<int>& nums) {
+        int ret = 0;
+        // 和已升序的进行对比，找到最大区间不同的两边界
+        vector<int> tmp;
+        tmp = nums;
+        sort(tmp.begin(), tmp.end());
+        // for(int i = 0; i < tmp.size(); i++) cout << tmp[i] << " ";
+        int _begin = 0, _end = tmp.size() - 1;
+        while (_begin < _end && tmp[_begin] == nums[_begin]) _begin++; // 1
 
-        // 可以采用dfs遍历的方法
-        dfs(0, -101, nums);
+        if (_begin == _end) return 0;
+
+        while (_end >= 0 && tmp[_end] == nums[_end]) _end--; // 5
+        ret = _end - _begin + 1;
         return ret;
-    }
-    void dfs(int cur, int _end, vector<int>& nums)
-    {
-        if (cur == nums.size())
-        {
-            if (tmp.size() >= 2)
-            {
-                ret.push_back(tmp);
-                // cout << "1" << endl;
-            }
-            return;
-        }
-        if (nums[cur] >= _end)
-        {
-            // 入
-            tmp.push_back(nums[cur]);
-            dfs(cur + 1, nums[cur], nums);
-            tmp.pop_back();
-        }
-        // 剩下的即不符合要求
-        // 但也要往前走
-        if (nums[cur] != _end) dfs(cur + 1, _end, nums);
-
     }
 };
 
