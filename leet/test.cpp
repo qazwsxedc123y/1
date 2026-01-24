@@ -2,23 +2,74 @@
 #include <vector>
 using namespace std;
 
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
 class Solution {
 public:
-    int findUnsortedSubarray(vector<int>& nums) {
-        int ret = 0;
-        // 和已升序的进行对比，找到最大区间不同的两边界
-        vector<int> tmp;
-        tmp = nums;
-        sort(tmp.begin(), tmp.end());
-        // for(int i = 0; i < tmp.size(); i++) cout << tmp[i] << " ";
-        int _begin = 0, _end = tmp.size() - 1;
-        while (_begin < _end && tmp[_begin] == nums[_begin]) _begin++; // 1
+    ListNode* removeElements(ListNode* head, int val) {
+        ListNode* per = nullptr;
+        ListNode* cur = head;
+        while (cur != nullptr)
+        {
+            if (cur->val == val)
+            {
+                if (per)
+                {
+                    per->next = cur->next;
+                    cur = per->next;
+                }
+                else
+                {
+                    cur = head->next;
+                    head = cur;
+                }
+            }
+            else
+            {
+                per = cur;
+                cur = cur->next;
+            }
+        }
+        return head;
+    }
+};
 
-        if (_begin == _end) return 0;
 
-        while (_end >= 0 && tmp[_end] == nums[_end]) _end--; // 5
-        ret = _end - _begin + 1;
-        return ret;
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeElements(ListNode* head, int val) {
+        if (head == nullptr)
+        {
+            return head;
+        }
+        head->next = removeElements(head->next, val);
+        if (head->val == val)
+        {
+            return head->next;
+        }
+        else
+        {
+            return head;
+        }
+
     }
 };
 
