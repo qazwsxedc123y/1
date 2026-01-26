@@ -13,6 +13,18 @@ using namespace std;
 //    where dept_emp.dept_no = dept_manager.dept_no) t1 where emp_no <> manager;
 
 
+//# Write your MySQL query statement below
+//select s1.score score, (select count(distinct s2.score) from Scores s2 where s1.score <= s2.score) 'rank'
+//from Scores s1 order by s1.score desc;
+
+
+//select s1.score score, count(distinct s2.score) 'rank'
+//from Scores s1
+//inner join Scores s2
+//on  s1.score <= s2.score
+//group by s1.id, s1.score
+//order by s1.score desc;
+
 int main()
 {
     vector<int> ans{ 4,6,7,7 };
