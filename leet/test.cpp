@@ -2,18 +2,21 @@
 #include <vector>
 using namespace std;
 
-class Solution {
+class RecentCounter {
+    queue<int> q;
 public:
-    string removeDuplicates(string s) {
-        string ret;
-        for (int i = 0; i < s.size(); i++)
-        {
-            if (!ret.empty() && ret.back() == s[i]) ret.pop_back();
-            else ret.push_back(s[i]);
+    RecentCounter() {}
+
+    int ping(int t) {
+        q.push(t);
+        while (q.front() < t - 3000) {
+            q.pop();
         }
-        return ret;
+        return q.size();
     }
 };
+
+
 int main()
 {
     MyCircularQueue s(3);
