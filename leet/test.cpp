@@ -122,57 +122,152 @@ using namespace std;
 //    }
 //};
 
-class Solution {
-public:
-    int largestRectangleArea(vector<int>& heights) {
-        // 每个位置向前勾勒
-        int n = heights.size();
-        if (n == 1) return heights[0];
-        stack<int> st;
-        int ret = 0;
-        for (int i = 0; i < n; i++)
-        {
-            int t = heights[i];
-            while (!st.empty() && t <= heights[st.top()])
-            {
-                int h_pos = st.top();
-                st.pop();
-                int left = st.top();
-                st.pop();
-                ret = max(ret, heights[h_pos] * (i - left - 1));
-            }
-            st.push(i);
-        }
-        return ret;
-    }
-};
+//class Solution {
+//public:
+//    int largestRectangleArea(vector<int>& heights) {
+//        // 每个位置向前勾勒
+//        int n = heights.size();
+//        if (n == 1) return heights[0];
+//        stack<int> st;
+//        int ret = 0;
+//        for (int i = 0; i < n; i++)
+//        {
+//            int t = heights[i];
+//            while (!st.empty() && t <= heights[st.top()])
+//            {
+//                int h_pos = st.top();
+//                st.pop();
+//                int left = st.top();
+//                st.pop();
+//                ret = max(ret, heights[h_pos] * (i - left - 1));
+//            }
+//            st.push(i);
+//        }
+//        return ret;
+//    }
+//};
 
 
-class Solution {
-public:
-    int lengthOfLongestSubstring(string s) {
-        unordered_map<char, int> occ;
-        int n = s.size();
-        if (n == 0) return 0;
-        int ret = -1, l = 0;
-        for (int r = 0; r < n; r++)
-        {
-            occ[s[r]]++;
-            while (l < r && occ[s[r]] > 1)
-            {
-                occ[s[l]]--;
-                if (occ[s[l]] <= 0) occ.erase(s[l]);
-                l++;
-            }
-            ret = max(ret, r - l + 1);
-        }
-        return ret;
-    }
-};
+//class Solution {
+//public:
+//    int largestRectangleArea(vector<int>& heights) {
+//        heights.push_back(-1); // 最后大火收汁，用 -1 把栈清空
+//        stack<int> st;
+//        st.push(-1); // 在栈中只有一个数的时候，栈顶的「下面那个数」是 -1，对应 left[i] = -1 的情况
+//        int ans = 0;
+//        for (int right = 0; right < heights.size(); right++) {
+//            int h = heights[right];
+//            while (st.size() > 1 && heights[st.top()] >= h) {
+//                int i = st.top(); // 矩形的高（的下标）
+//                st.pop();
+//                int left = st.top(); // 栈顶下面那个数就是 left
+//                ans = max(ans, heights[i] * (right - left - 1));
+//            }
+//            st.push(right);
+//        }
+//        return ans;
+//    }
+//};
+
+
+//class Solution {
+//public:
+//    int largestRectangleArea(vector<int>& heights) {
+//        // 每个位置向前勾勒
+//        int n = heights.size();
+//        if (n == 1) return heights[0];
+//        heights.push_back(-1);
+//        stack<int> st;
+//        int ret = 0;
+//        for (int i = 0; i < n; i++)
+//        {
+//            while (!st.empty() && heights[i] <= heights[st.top()])
+//            {
+//                int h_pos = st.top();
+//                st.pop();
+//                int left = st.top();
+//                ret = max(ret, heights[h_pos] * (i - left - 1));
+//            }
+//            st.push(i);
+//        }
+//        return ret;
+//    }
+//};  
+//
+//class Solution {
+//public:
+//    int largestRectangleArea(vector<int>& heights) {
+//        // 每个位置向前勾勒
+//        int n = heights.size();
+//        if (n == 1) return heights[0];
+//        heights.push_back(-1); // 防止 2，4
+//        n += 1;
+//        stack<int> st;
+//        int ret = 0;
+//        for (int i = 0; i < n; i++)
+//        {
+//            while (!st.empty() && heights[i] <= heights[st.top()])
+//            {
+//                int h_pos = st.top();
+//                st.pop();
+//                int left = -1;
+//                if (!st.empty()) left = st.top();
+//                ret = max(ret, heights[h_pos] * (i - left - 1));
+//            }
+//            st.push(i);
+//        }
+//        return ret;
+//    }
+//};
+
+
+//class Solution {
+//public:
+//    int largestRectangleArea(vector<int>& heights) {
+//        // 每个位置向前勾勒
+//        int n = heights.size();
+//        if (n == 1)
+//            return heights[0];
+//        heights.push_back(-1); // 防止 2，4
+//        n += 1;
+//        stack<int> st;
+//        int ret = 0;
+//        for (int i = 0; i < n; i++) {
+//            while (!st.empty() && heights[i] <= heights[st.top()]) {
+//                int h_pos = st.top();
+//                st.pop();
+//                int left = -1;
+//                if (!st.empty())
+//                    left = st.top();
+//                ret = max(ret, heights[h_pos] * (i - left - 1));
+//            }
+//            st.push(i);
+//        }
+//        return ret;
+//    }
+//    int maximalRectangle(vector<vector<char>>& matrix) {
+//        int n = matrix.size(), m = matrix[0].size();
+//        vector<int> heights(m);
+//        int ans = 0;
+//        for (int i = 0; i < n; i++)
+//        {
+//            for (int j = 0; j < m; j++)
+//            {
+//                if (matrix[i][j] == '0')
+//                {
+//                    heights[j] = 0;
+//                }
+//                else heights[j]++;
+//            }
+//            ans = max(ans, largestRectangleArea(heights));
+//        }
+//        return ans;
+//    }
+//};
 
 int main()
 {
-    vector<int> v({ 5,6 });
+    vector<int> v({ 5,6,2 });
     Solution s;
     s.largestRectangleArea(v);
     return 0;
