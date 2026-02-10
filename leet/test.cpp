@@ -3,268 +3,30 @@
 #include <stack>
 using namespace std;
 
-//class Solution {
-//public:
-//    int lastStoneWeight(vector<int>& stones) {
-//        // 使用大堆来写
-//        priority_queue<int> q;
-//        for (auto c : stones) q.push(c);
-//
-//        while (q.size() > 1)
-//        {
-//            int x = q.top();
-//            q.pop();
-//            int y = q.top();
-//            q.pop();
-//            // x >= y
-//            int ans = x - y;
-//            if (ans != 0) q.push(ans);
-//        }
-//
-//        return q.empty() ? 0 : q.top();
-//    }
-//};
-//
-//class Solution {
-//public:
-//    vector<int> dailyTemperatures(vector<int>& temperatures) {
-//        int n = temperatures.size();
-//        vector<int> ret(n), pos(101, INT_MAX);
-//        for (int i = n - 1; i >= 0; i--)
-//        {
-//            int ans = INT_MAX;
-//            for (int j = temperatures[i] + 1; j <= 100; j++)
-//            {
-//                ans = min(pos[j], ans);
-//            }
-//            if (ans != INT_MAX)
-//            {
-//                ret[i] = ans - i;
-//            }
-//            pos[temperatures[i]] = i;
-//        }
-//        return ret;
-//    }
-//};
-//
-//
-//class Solution {
-//public:
-//    vector<int> dailyTemperatures(vector<int>& temperatures) {
-//        // 尝试使用单调栈
-//        // 从右往左
-//        int n = temperatures.size();
-//        stack<int> st;
-//        vector<int> ans(n);
-//        for (int i = n - 1; i >= 0; i--)
-//        {
-//            while (!st.empty() && temperatures[st.top()] <= temperatures[i])
-//            {
-//                st.pop();
-//            }
-//            if (!st.empty())
-//            {
-//                ans[i] = st.top() - i;
-//            }
-//            st.push(i);
-//        }
-//
-//        return ans;
-//    }
-//};
-//
-//
-//class Solution {
-//public:
-//    vector<int> dailyTemperatures(vector<int>& temperatures) {
-//        // 尝试使用单调栈
-//        // 从左往右
-//        int n = temperatures.size();
-//        stack<int> st;
-//        vector<int> ans(n);
-//        for (int i = 0; i < n; i++)
-//        {
-//            while (!st.empty() && temperatures[st.top()] < temperatures[i])
-//            {
-//                int t = st.top();
-//                ans[t] = i - t;
-//                st.pop();
-//            }
-//            st.push(i);
-//        }
-//
-//        return ans;
-//    }
-//};
-// grid = [[1,3,1],[1,5,1],[4,2,1]]
-
-//class Solution {
-//public:
-//    int trap(vector<int>& height) {
-//        // 使用单调栈，假装填充的是水泥
-//        int n = height.size();
-//        int ret = 0;
-//        stack<int> st;
-//        for (int i = 0; i < n; i++)
-//        {
-//            while (!st.empty() && height[st.top()] <= height[i])
-//            {
-//                int t = height[st.top()];
-//                st.pop();
-//                if (st.empty()) break;
-//                int left = st.top();
-//                int h = min(height[i], height[left]) - t;
-//                ret += h * (i - left - 1);
-//            }
-//            st.push(i);
-//        }
-//        return ret;
-//    }
-//};
-
-//class Solution {
-//public:
-//    int largestRectangleArea(vector<int>& heights) {
-//        // 每个位置向前勾勒
-//        int n = heights.size();
-//        if (n == 1) return heights[0];
-//        stack<int> st;
-//        int ret = 0;
-//        for (int i = 0; i < n; i++)
-//        {
-//            int t = heights[i];
-//            while (!st.empty() && t <= heights[st.top()])
-//            {
-//                int h_pos = st.top();
-//                st.pop();
-//                int left = st.top();
-//                st.pop();
-//                ret = max(ret, heights[h_pos] * (i - left - 1));
-//            }
-//            st.push(i);
-//        }
-//        return ret;
-//    }
-//};
-
-
-//class Solution {
-//public:
-//    int largestRectangleArea(vector<int>& heights) {
-//        heights.push_back(-1); // 最后大火收汁，用 -1 把栈清空
-//        stack<int> st;
-//        st.push(-1); // 在栈中只有一个数的时候，栈顶的「下面那个数」是 -1，对应 left[i] = -1 的情况
-//        int ans = 0;
-//        for (int right = 0; right < heights.size(); right++) {
-//            int h = heights[right];
-//            while (st.size() > 1 && heights[st.top()] >= h) {
-//                int i = st.top(); // 矩形的高（的下标）
-//                st.pop();
-//                int left = st.top(); // 栈顶下面那个数就是 left
-//                ans = max(ans, heights[i] * (right - left - 1));
-//            }
-//            st.push(right);
-//        }
-//        return ans;
-//    }
-//};
-
-
-//class Solution {
-//public:
-//    int largestRectangleArea(vector<int>& heights) {
-//        // 每个位置向前勾勒
-//        int n = heights.size();
-//        if (n == 1) return heights[0];
-//        heights.push_back(-1);
-//        stack<int> st;
-//        int ret = 0;
-//        for (int i = 0; i < n; i++)
-//        {
-//            while (!st.empty() && heights[i] <= heights[st.top()])
-//            {
-//                int h_pos = st.top();
-//                st.pop();
-//                int left = st.top();
-//                ret = max(ret, heights[h_pos] * (i - left - 1));
-//            }
-//            st.push(i);
-//        }
-//        return ret;
-//    }
-//};  
-//
-//class Solution {
-//public:
-//    int largestRectangleArea(vector<int>& heights) {
-//        // 每个位置向前勾勒
-//        int n = heights.size();
-//        if (n == 1) return heights[0];
-//        heights.push_back(-1); // 防止 2，4
-//        n += 1;
-//        stack<int> st;
-//        int ret = 0;
-//        for (int i = 0; i < n; i++)
-//        {
-//            while (!st.empty() && heights[i] <= heights[st.top()])
-//            {
-//                int h_pos = st.top();
-//                st.pop();
-//                int left = -1;
-//                if (!st.empty()) left = st.top();
-//                ret = max(ret, heights[h_pos] * (i - left - 1));
-//            }
-//            st.push(i);
-//        }
-//        return ret;
-//    }
-//};
-
-
-//class Solution {
-//public:
-//    int largestRectangleArea(vector<int>& heights) {
-//        // 每个位置向前勾勒
-//        int n = heights.size();
-//        if (n == 1)
-//            return heights[0];
-//        heights.push_back(-1); // 防止 2，4
-//        n += 1;
-//        stack<int> st;
-//        int ret = 0;
-//        for (int i = 0; i < n; i++) {
-//            while (!st.empty() && heights[i] <= heights[st.top()]) {
-//                int h_pos = st.top();
-//                st.pop();
-//                int left = -1;
-//                if (!st.empty())
-//                    left = st.top();
-//                ret = max(ret, heights[h_pos] * (i - left - 1));
-//            }
-//            st.push(i);
-//        }
-//        return ret;
-//    }
-//    int maximalRectangle(vector<vector<char>>& matrix) {
-//        int n = matrix.size(), m = matrix[0].size();
-//        vector<int> heights(m);
-//        int ans = 0;
-//        for (int i = 0; i < n; i++)
-//        {
-//            for (int j = 0; j < m; j++)
-//            {
-//                if (matrix[i][j] == '0')
-//                {
-//                    heights[j] = 0;
-//                }
-//                else heights[j]++;
-//            }
-//            ans = max(ans, largestRectangleArea(heights));
-//        }
-//        return ans;
-//    }
-//};
-
+class Solution {
+public:
+    string addBinary(string a, string b) {
+        // 模拟
+        int n1 = a.size(), n2 = b.size();
+        reverse(a.begin(), a.end());
+        reverse(b.begin(), b.end());
+        int n = max(n1, n2);
+        int carry = 0;
+        string ret;
+        for (int i = 0; i < n; i++)
+        {
+            int x = i < n1 ? (a[i] - '0') : 0;
+            int y = i < n2 ? (b[i] - '0') : 0;
+            int t = x + y + carry;
+            carry = t / 2;
+            t %= 2;
+            ret.push_back(t + '0');
+        }
+        if (carry) ret.push_back('1');
+        reverse(ret.begin(), ret.end());
+        return ret;
+    }
+};
 int main()
 {
     vector<int> v({ 5,6,2 });
