@@ -1,37 +1,68 @@
 #include <iostream>
 #include <vector>
+#include <unordered_map>
 #include <stack>
+#include <algorithm>
 using namespace std;
 
 class Solution {
 public:
-    string addBinary(string a, string b) {
-        // 模拟
-        int n1 = a.size(), n2 = b.size();
-        reverse(a.begin(), a.end());
-        reverse(b.begin(), b.end());
-        int n = max(n1, n2);
-        int carry = 0;
-        string ret;
-        for (int i = 0; i < n; i++)
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        // 可以先把所有的string排序后，在进行比对
+        // 在将其插入到对应的哈希内
+        unordered_map<string, vector<int>> hash1; // 排好后的 + 数组
+        vector<vector<string>> ret;
+        for (int i = 0; i < strs.size(); i++)
         {
-            int x = i < n1 ? (a[i] - '0') : 0;
-            int y = i < n2 ? (b[i] - '0') : 0;
-            int t = x + y + carry;
-            carry = t / 2;
-            t %= 2;
-            ret.push_back(t + '0');
+            string t = strs[i];
+            sort(t.begin(), t.end());
+            hash1[t].push_back(i);
         }
-        if (carry) ret.push_back('1');
-        reverse(ret.begin(), ret.end());
+
+        for (auto& pair : hash1)
+        {
+            string t = pair.first;
+            vector<int> value = pair.second;
+            vector<string> str;
+            for (int i = 0; i < value.size(); i++)
+            {
+                str.push_back(strs[value[i]]);
+            }
+            ret.push_back(str);
+        }
+
         return ret;
     }
 };
+
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        // 可以先把所有的string排序后，在进行比对
+        // 在将其插入到对应的哈希内
+        unordered_map<string, vector<string>> hash1; // 排好后的 + 数组
+        vector<vector<string>> ret;
+        for (int i = 0; i < strs.size(); i++)
+        {
+            string t = strs[i];
+            sort(t.begin(), t.end());
+            hash1[t].push_back(strs[i]);
+        }
+
+        for (auto& pair : hash1)
+        {
+            ret.push_back(pair.second);
+        }
+
+        return ret;
+    }
+};
+
 int main()
 {
-    vector<int> v({ 5,6,2 });
+    vector<string> v({ "eat", "tea", "tan", "ate", "nat", "bat" });
     Solution s;
-    s.largestRectangleArea(v);
+    s.groupAnagrams(v);
     return 0;
 }
 
