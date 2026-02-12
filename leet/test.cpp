@@ -5,64 +5,84 @@
 #include <algorithm>
 using namespace std;
 
+//class Solution {
+//public:
+//    int longestValidParentheses(string s) {
+//        // 使用栈
+//        int ret = 0, ans = -1;
+//        stack<int> st; // 只入 ( 的
+//        st.push(-1);
+//        int n = s.size();
+//        for (int i = 0; i < n; i++)
+//        {
+//            if (s[i] == '(') // 直接入栈
+//            {
+//                st.push(i);
+//            }
+//            else // 看看是否匹配，进行出栈
+//            {
+//                st.pop();
+//                if (st.empty())
+//                {
+//                    // 去除的是 -1，栈内无匹配
+//                    st.push(-1);
+//                    ans = i;
+//                }
+//                else
+//                {
+//                    ret = max(ret, i - ans);
+//                }
+//            }
+//        }
+//
+//        return ret;
+//    }
+//};
+
+
 class Solution {
 public:
-    vector<vector<string>> groupAnagrams(vector<string>& strs) {
-        // 可以先把所有的string排序后，在进行比对
-        // 在将其插入到对应的哈希内
-        unordered_map<string, vector<int>> hash1; // 排好后的 + 数组
-        vector<vector<string>> ret;
-        for (int i = 0; i < strs.size(); i++)
+    int longestValidParentheses(string s) {
+        // 动态规划
+        // dp[i]表示以下标 i 字符结尾的最长有效括号的长度
+        int ret = 0, n = s.size();
+        vector<int> dp(n, 0);
+        // 初始化，dp[0] = 0;
+        for (int i = 1; i < n; i++)
         {
-            string t = strs[i];
-            sort(t.begin(), t.end());
-            hash1[t].push_back(i);
-        }
-
-        for (auto& pair : hash1)
-        {
-            string t = pair.first;
-            vector<int> value = pair.second;
-            vector<string> str;
-            for (int i = 0; i < value.size(); i++)
+            if (s[i] == ')')
             {
-                str.push_back(strs[value[i]]);
+                if (s[i - 1] == '(')
+                {
+                    if (i >= 2) dp[i] = dp[i - 2] + 2;
+                    else dp[i] = 2;
+                }
+                else
+                {
+                    // "()(())"
+                    // 前有dp[i-1]个配对
+                    int ans = i - dp[i - 1] - 1; // 看与s[ans]是否配对
+                    // "(())(())"
+                    if (ans >= 0 && s[ans] == '(')
+                    {
+                        if (ans - 1 >= 0 && dp[ans - 1] != 0) dp[i] = dp[ans - 1] + dp[i - 1] + 2;
+                        else dp[i] = dp[i - 1] + 2;
+                    }
+                }
+                ret = max(ret, dp[i]);
             }
-            ret.push_back(str);
         }
-
         return ret;
     }
 };
 
-class Solution {
-public:
-    vector<vector<string>> groupAnagrams(vector<string>& strs) {
-        // 可以先把所有的string排序后，在进行比对
-        // 在将其插入到对应的哈希内
-        unordered_map<string, vector<string>> hash1; // 排好后的 + 数组
-        vector<vector<string>> ret;
-        for (int i = 0; i < strs.size(); i++)
-        {
-            string t = strs[i];
-            sort(t.begin(), t.end());
-            hash1[t].push_back(strs[i]);
-        }
-
-        for (auto& pair : hash1)
-        {
-            ret.push_back(pair.second);
-        }
-
-        return ret;
-    }
-};
 
 int main()
 {
     vector<string> v({ "eat", "tea", "tan", "ate", "nat", "bat" });
+    string str("(())(())");
     Solution s;
-    s.groupAnagrams(v);
+    s.longestValidParentheses(str);
     return 0;
 }
 
