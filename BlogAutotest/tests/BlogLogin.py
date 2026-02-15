@@ -25,6 +25,10 @@ class BlogLogin:
         # 检查方式是查看是否有昵称
         time.sleep(2)
         self.driver.find_element(By.CSS_SELECTOR, "body > div.container > div.left > div > h3")
+
+        # 添加屏幕截图
+        # BlogDriver.getScreeShot()
+
         # 返回到登陆页面
         self.driver.back()
 
@@ -36,10 +40,13 @@ class BlogLogin:
         self.driver.find_element(By.CSS_SELECTOR, "#username").send_keys("xixi")
         self.driver.find_element(By.CSS_SELECTOR, "#password").send_keys("123456")
         self.driver.find_element(By.CSS_SELECTOR, "#submit").click()
-        time.sleep(1)
+        time.sleep(2)
+
         # 出现弹窗
         alter = self.driver.switch_to.alert
         alter.accept()
+        # 屏幕截图
+        BlogDriver.getScreeShot()
 
         # 正确账号 错误密码
         self.driver.find_element(By.CSS_SELECTOR, "#username").clear()
@@ -75,11 +82,10 @@ class BlogLogin:
         # 实际没有发布成功
         # 发现小bug
         # 登录状态下查看以下
+
         # 暂时不知怎末查看
+        # BlogDriver.getScreeShot()
+
         self.driver.back()
 
-login = BlogLogin()
-login.LoginSucTest()
-login.LoginFailTest()
-login.LoginWriteTest()
 
