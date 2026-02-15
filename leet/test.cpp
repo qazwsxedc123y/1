@@ -5,55 +5,55 @@
 #include <algorithm>
 using namespace std;
 
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
 class Solution {
 public:
-    int countNodes(TreeNode* root) {
-        if (root == nullptr) return 0;
-        int d1 = 0, d2 = 0;
-        TreeNode* left = root->left, * right = root->right;
-
-        while (left)
+    int trap(vector<int>& height) {
+        // 单调栈
+        int n = height.size(), ret = 0;
+        stack<int> st;
+        for (int i = 0; i < n; i++)
         {
-            d1++;
-            left = left->left;
+            while (!st.empty() && height[st.top()] <= height[i])
+            {
+                // 假装是水泥，然后进行填充
+                int t = height[st.top()];
+                st.pop();
+                if (st.empty()) break;
+                int left = st.top();
+                int h = min(height[i], height[left]) - t;
+                ret += h * (i - left - 1);
+            }
+            st.push(i);
         }
-        while (right)
-        {
-            d2++;
-            right = right->right;
-        }
-        if (d1 == d2) return pow(2, d1 + 1) - 1;
 
-        return 1 + countNodes(root->left) + countNodes(root->right);
+        return ret;
     }
 };
 
 
 class Solution {
 public:
-    bool searchMatrix(vector<vector<int>>& matrix, int target) {
-        int m = matrix.size(), n = matrix[0].size();
-        int left = -1, right = m * n;
-        while (left + 1 < right) {
-            int mid = left + (right - left) / 2;
-            int x = matrix[mid / n][mid % n];
-            if (x == target) {
-                return true;
+    int coinChange(vector<int>& coins, int amount) {
+        // 并不可用贪心
+        // 使用动态规划
+        // 背包问题
+        // dp[i][j] 表示 表示从前i个硬币凑，钱数为j，所使用的最少张数
+        int n = coins.size();
+        int dp[14][10050];
+        memset(dp, 0x3f, sizeof(dp));
+        for (int i = 0; i <= n; i++) dp[i][0] = 0;
+
+        for (int i = 1; i <= n; i++)
+        {
+            for (int j = 0; j <= amount; j++)
+            {
+                dp[i][j] = dp[i - 1][j];
+                if (j >= coins[i - 1])
+                    dp[i][j] = min(dp[i][j], dp[i][j - coins[i - 1]] + 1);
             }
-            (x < target ? left : right) = mid;
         }
-        return false;
+
+        return dp[n][amount] == 0x3f3f3f3f ? -1 : dp[n][amount];
     }
 };
 
