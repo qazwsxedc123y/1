@@ -5,65 +5,137 @@
 #include <algorithm>
 using namespace std;
 
+///**
+// * Definition for singly-linked list.
+// * struct ListNode {
+// *     int val;
+// *     ListNode *next;
+// *     ListNode() : val(0), next(nullptr) {}
+// *     ListNode(int x) : val(x), next(nullptr) {}
+// *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+// * };
+// */
+//class Solution {
+//public:
+//    ListNode* removeNthFromEnd(ListNode* head, int n) {
+//        // 快慢指针
+//        ListNode* s = head, * f = head, * p = nullptr;
+//        while (n--)
+//        {
+//            f = f->next;
+//        }
+//        while (f)
+//        {
+//            p = s;
+//            s = s->next;
+//            f = f->next;
+//        }
+//        // 删除s
+//        if (p) p->next = s->next;
+//        else head = head->next;
+//        return head;
+//    }
+//};
+//
+//
+//class Solution {
+//public:
+//    void setZeroes(vector<vector<int>>& matrix) {
+//        // 暴力
+//        int n = matrix.size(), m = matrix[0].size();
+//        // 统计需要修改的行与列
+//        unordered_set<int> ans_x, ans_y;
+//        for (int i = 0; i < n; i++)
+//        {
+//            for (int j = 0; j < m; j++)
+//            {
+//                if (matrix[i][j] == 0)
+//                {
+//                    ans_x.insert(i);
+//                    ans_y.insert(j);
+//                }
+//            }
+//        }
+//
+//        // 进行修改
+//        for (auto e : ans_x)
+//        {
+//            for (int x = 0; x < m; x++)
+//            {
+//                matrix[e][x] = 0;
+//            }
+//        }
+//        for (auto e : ans_y)
+//        {
+//            for (int y = 0; y < n; y++)
+//            {
+//                matrix[y][e] = 0;
+//            }
+//        }
+//    }
+//};
+
+
 class Solution {
 public:
-    int trap(vector<int>& height) {
-        // 单调栈
-        int n = height.size(), ret = 0;
-        stack<int> st;
+    void setZeroes(vector<vector<int>>& matrix) {
+        // 暴力 + 优化(优化空间复杂度)
+        int n = matrix.size(), m = matrix[0].size();
+        // 统计需要修改的行与列
+        // unordered_set<int> ans_x, ans_y; // 反正早晚要修改，那么直接用第一行与第一列
+        bool ans_x = false, ans_y = false;
         for (int i = 0; i < n; i++)
         {
-            while (!st.empty() && height[st.top()] <= height[i])
-            {
-                // 假装是水泥，然后进行填充
-                int t = height[st.top()];
-                st.pop();
-                if (st.empty()) break;
-                int left = st.top();
-                int h = min(height[i], height[left]) - t;
-                ret += h * (i - left - 1);
-            }
-            st.push(i);
+            if (matrix[i][0] == 0) ans_x = true;
         }
-
-        return ret;
-    }
-};
-
-
-class Solution {
-public:
-    int coinChange(vector<int>& coins, int amount) {
-        // 并不可用贪心
-        // 使用动态规划
-        // 背包问题
-        // dp[i][j] 表示 表示从前i个硬币凑，钱数为j，所使用的最少张数
-        int n = coins.size();
-        int dp[14][10050];
-        memset(dp, 0x3f, sizeof(dp));
-        for (int i = 0; i <= n; i++) dp[i][0] = 0;
-
-        for (int i = 1; i <= n; i++)
+        for (int j = 0; j < m; j++)
         {
-            for (int j = 0; j <= amount; j++)
+            if (matrix[0][j] == 0) ans_y = true;
+        }
+
+        for (int i = 1; i < n; i++)
+        {
+            for (int j = 1; j < m; j++)
             {
-                dp[i][j] = dp[i - 1][j];
-                if (j >= coins[i - 1])
-                    dp[i][j] = min(dp[i][j], dp[i][j - coins[i - 1]] + 1);
+                if (matrix[i][j] == 0)
+                {
+                    matrix[i][0] = matrix[0][j] = 0;
+                }
             }
         }
 
-        return dp[n][amount] == 0x3f3f3f3f ? -1 : dp[n][amount];
+        // 进行修改
+        for (int i = 1; i < n; i++)
+        {
+            for (int j = 1; j < m; j++)
+            {
+                if (matrix[i][0] == 0 || matrix[0][j] == 0)
+                {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+
+        if (ans_x)
+        {
+            for (int i = 0; i < n; i++) matrix[i][0] = 0;
+        }
+        if (ans_y)
+        {
+            for (int j = 0; j < m; j++) matrix[0][j] = 0;
+        }
     }
 };
-
 
 int main()
 {
-    vector<string> v({ "eat", "tea", "tan", "ate", "nat", "bat" });
-    string str("(())(())");
+    vector<vector<int>> v;
+    v.push_back({ 1,1,1 });
+    v.push_back({ 1,0,1 });
+    v.push_back({ 1,1,1 });
+    // [1,1,1],[1,0,1],[1,1,1]
     Solution s;
-    s.longestValidParentheses(str);
+    s.setZeroes(v);
     return 0;
 }
 
