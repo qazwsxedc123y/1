@@ -5,127 +5,63 @@
 #include <algorithm>
 using namespace std;
 
-///**
-// * Definition for singly-linked list.
-// * struct ListNode {
-// *     int val;
-// *     ListNode *next;
-// *     ListNode() : val(0), next(nullptr) {}
-// *     ListNode(int x) : val(x), next(nullptr) {}
-// *     ListNode(int x, ListNode *next) : val(x), next(next) {}
-// * };
-// */
+
 //class Solution {
 //public:
-//    ListNode* removeNthFromEnd(ListNode* head, int n) {
-//        // 快慢指针
-//        ListNode* s = head, * f = head, * p = nullptr;
-//        while (n--)
+//    int lengthOfLIS(vector<int>& nums) {
+//        // 使用动态规划
+//        int n = nums.size();
+//        vector<int> dp(n, 1); // dp[i]表示区间[0,i]之间最大递增子序列长度
+//        for (int i = 1; i < n; i++)
 //        {
-//            f = f->next;
-//        }
-//        while (f)
-//        {
-//            p = s;
-//            s = s->next;
-//            f = f->next;
-//        }
-//        // 删除s
-//        if (p) p->next = s->next;
-//        else head = head->next;
-//        return head;
-//    }
-//};
-//
-//
-//class Solution {
-//public:
-//    void setZeroes(vector<vector<int>>& matrix) {
-//        // 暴力
-//        int n = matrix.size(), m = matrix[0].size();
-//        // 统计需要修改的行与列
-//        unordered_set<int> ans_x, ans_y;
-//        for (int i = 0; i < n; i++)
-//        {
-//            for (int j = 0; j < m; j++)
+//            for (int j = 0; j < i; j++)
 //            {
-//                if (matrix[i][j] == 0)
+//                if (nums[i] > nums[j])
 //                {
-//                    ans_x.insert(i);
-//                    ans_y.insert(j);
+//                    dp[i] = max(dp[i], dp[j] + 1);
 //                }
 //            }
 //        }
-//
-//        // 进行修改
-//        for (auto e : ans_x)
-//        {
-//            for (int x = 0; x < m; x++)
-//            {
-//                matrix[e][x] = 0;
-//            }
-//        }
-//        for (auto e : ans_y)
-//        {
-//            for (int y = 0; y < n; y++)
-//            {
-//                matrix[y][e] = 0;
-//            }
-//        }
+//        int ret = 0;
+//        for (int i = 0; i < n; i++) ret = max(ret, dp[i]);
+//        return ret;
 //    }
 //};
 
 
 class Solution {
 public:
-    void setZeroes(vector<vector<int>>& matrix) {
-        // 暴力 + 优化(优化空间复杂度)
-        int n = matrix.size(), m = matrix[0].size();
-        // 统计需要修改的行与列
-        // unordered_set<int> ans_x, ans_y; // 反正早晚要修改，那么直接用第一行与第一列
-        bool ans_x = false, ans_y = false;
-        for (int i = 0; i < n; i++)
-        {
-            if (matrix[i][0] == 0) ans_x = true;
-        }
-        for (int j = 0; j < m; j++)
-        {
-            if (matrix[0][j] == 0) ans_y = true;
-        }
-
+    int findNumberOfLIS(vector<int>& nums) {
+        // 使用动态规划
+        int n = nums.size();
+        vector<int> dp(n, 1); // dp[i]表示区间[0,i]之间最大递增子序列长度
+        vector<int> count(n, 1); // count[i]表示区间[0,i]之间最大递增子序列长度的个数
+        int ret = 1, max_len = 1;
         for (int i = 1; i < n; i++)
         {
-            for (int j = 1; j < m; j++)
+            for (int j = 0; j < i; j++)
             {
-                if (matrix[i][j] == 0)
+                if (nums[i] > nums[j])
                 {
-                    matrix[i][0] = matrix[0][j] = 0;
+                    if (dp[i] == dp[j] + 1) count[i] += count[j];
+                    else if (dp[i] < dp[j] + 1) count[i] = count[j];
+                    dp[i] = max(dp[i], dp[j] + 1);
                 }
             }
-        }
-
-        // 进行修改
-        for (int i = 1; i < n; i++)
-        {
-            for (int j = 1; j < m; j++)
+            if (max_len < dp[i])
             {
-                if (matrix[i][0] == 0 || matrix[0][j] == 0)
-                {
-                    matrix[i][j] = 0;
-                }
+                max_len = dp[i];
+                ret = count[i];
+            }
+            else if (max_len == dp[i])
+            {
+                ret += count[i];
             }
         }
-
-        if (ans_x)
-        {
-            for (int i = 0; i < n; i++) matrix[i][0] = 0;
-        }
-        if (ans_y)
-        {
-            for (int j = 0; j < m; j++) matrix[0][j] = 0;
-        }
+        return ret;
     }
 };
+
 
 int main()
 {
