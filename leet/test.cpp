@@ -7,40 +7,27 @@ using namespace std;
 
 
 //class Solution {
+//    const int N = 1e5 + 7;
 //public:
-//    string multiply(string num1, string num2) {
-//        // 先乘，然后再考虑进位
-//        int n = num1.size(), m = num2.size();
-//        reverse(num1.begin(), num1.end());
-//        reverse(num2.begin(), num2.end());
-//        vector<int> tmp(n + m);
-//        // 最多n + m位
-//        for (int i = 0; i < n; i++)
+//    int minPathSum(vector<vector<int>>& grid) {
+//        // 只能向下 或 右
+//        // 使用动态规划
+//        int m = grid.size(), n = grid[0].size();
+//        vector<vector<int>> dp(m + 1, vector<int>(n + 1)); // dp[i][j] 表示到达[i-1,j-1]的最小路径和
+//        // 初始化
+//        dp[0][1] = dp[1][0] = 0;
+//        for (int i = 2; i <= n; i++) dp[0][i] = N;
+//        for (int i = 2; i <= m; i++) dp[i][0] = N;
+//
+//        for (int i = 1; i <= m; i++)
 //        {
-//            for (int j = 0; j < m; j++)
+//            for (int j = 1; j <= n; j++)
 //            {
-//                tmp[i + j] += ((num1[i] - '0') * (num2[j] - '0'));
+//                dp[i][j] = grid[i - 1][j - 1] + min(dp[i - 1][j], dp[i][j - 1]);
 //            }
 //        }
 //
-//        //for(int i = 0; i < n+m; i++) cout << tmp[i] << " ";
-//
-//        // 调整进位
-//        int array = 0;
-//        string ret;
-//        for (int i = 0; i < n + m; i++)
-//        {
-//            tmp[i] += array;
-//            ret.push_back(tmp[i] % 10 + '0');
-//            array = tmp[i] / 10;
-//        }
-//        // 处理前导0
-//        while (ret.size() > 1 && ret.back() == '0') ret.pop_back();
-//
-//        reverse(ret.begin(), ret.end());
-//
-//        return ret;
-//
+//        return dp[m][n];
 //    }
 //};
 
