@@ -10,72 +10,57 @@ using namespace std;
 #include <vector>
 class Solution {
 public:
-    vector<vector<int>> merge(vector<vector<int>>& intervals) {
-        // 先排序，再合并
-        sort(intervals.begin(), intervals.end());
-        int n = intervals.size();
-        vector<vector<int>> ret;
-        for (int i = 0; i < n; i++)
+    string decodeString(string s) {
+        // 感觉可以用栈
+        int n = s.size(), i = 0;
+        stack<int> st1;
+        stack<string> st2;
+        st2.push(""); // 避免为空的情况，即全为普通串
+        while (i < n)
         {
-            int l = intervals[i][0], r = intervals[i][1];
-            if (ret.empty() || ret.back()[1] < l)
+            cout << i << " ";
+            if (s[i] == '[')
             {
-                ret.push_back({ l, r });
+                i++;
+                string tmp;
+                while (s[i] >= 'a' && s[i] <= 'z')
+                {
+                    tmp += s[i++];
+                }
+                st2.push(tmp);
+            }
+            else if (s[i] == ']')
+            {
+                // 统计，然后入栈
+                int ans = st1.top();
+                st1.pop();
+                string tmp = st2.top();
+                st2.pop();
+                while (ans)
+                {
+                    st2.top() += tmp;
+                    ans--;
+                }
+                i++;
+            }
+            else if (s[i] >= '0' && s[i] <= '9')
+            {
+                int ans = 0;
+                while (s[i] >= '0' && s[i] <= '9')
+                {
+                    ans = ans * 10 + s[i] - '0';
+                    i++;
+                }
+                st1.push(ans);
             }
             else
             {
-                ret.back()[1] = max(ret.back()[1], r);
+                st2.top() += s[i++];
             }
         }
-        return ret;
+        return st2.top();
     }
 };
-
-
-class Solution {
-public:
-    int largestRectangleArea(vector<int>& heights)
-    {
-        int n = heights.size();
-        if (n == 1) return heights[0];
-
-        heights.push_back(-1);
-        n += 1;
-        stack<int> st;
-        int ret = 0;
-        for (int i = 0; i < n; i++)
-        {
-            while (!st.empty() && heights[i] <= heights[st.top()])
-            {
-                int h_pos = st.top();
-                st.pop();
-                int left = -1;
-                if (!st.empty()) left = st.top();
-
-                ret = max(ret, heights[h_pos] * (i - left - 1));
-            }
-            st.push(i);
-        }
-        return ret;
-    }
-    int maximalRectangle(vector<vector<char>>& matrix) {
-        // 考的是单调栈
-        int n = matrix.size(), m = matrix[0].size();
-        vector<int> h(m);
-        int ans = 0;
-        for (int i = 0; i < n; i++)
-        {
-            for (int j = 0; j < m; j++)
-            {
-                if (matrix[i][j] == '0') h[j] = 0;
-                else h[j]++;
-            }
-            ans = max(ans, largestRectangleArea(h));
-        }
-        return ans;
-    }
-};
-
 int main()
 {
 	cout << (int)'6' << endl;
