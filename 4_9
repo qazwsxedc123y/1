@@ -1,0 +1,81 @@
+class Solution {
+public:
+    string decodeString(string s) {
+        string ret;
+        int n = s.size(), i = 0;
+        stack<int> st1;
+        stack<string> st2;
+        st2.push("");
+        while(i < n)
+        {
+            if(s[i] >= '0' && s[i] <= '9')
+            {
+                int tmp = 0;
+                while(s[i] >= '0' && s[i] <= '9')
+                {
+                    int t = s[i++] - '0';
+                    tmp = tmp * 10 + t;
+                }
+                st1.push(tmp);
+            }
+            else if(s[i] == '[')
+            {
+                string tmp;
+                i++;
+                while(s[i] >= 'a' && s[i] <= 'z') tmp += s[i++];
+                st2.push(tmp);
+            }
+            else if(s[i] == ']')
+            {
+                int ans1 = st1.top();
+                st1.pop();
+                string ans2 = st2.top();
+                st2.pop();
+                while(ans1)
+                {
+                    st2.top() += ans2;
+                    ans1--;
+                }
+                i++;
+            }
+            else
+            {
+                string tmp;
+                while(s[i] >= 'a' && s[i] <= 'z') tmp += s[i++];
+                st2.top() += tmp;
+            }
+        }
+        return st2.top();
+    }
+};
+
+class Solution {
+public:
+    int countStudents(vector<int>& students, vector<int>& sandwiches) {
+        int n = students.size();
+        int m = sandwiches.size();
+        int ans0 = 0, ans1 = 0;
+        for(int i = 0; i < m; i++)
+        {
+            if(students[i] == 0) ans0++;
+            else ans1++;
+        }
+
+        for(int i = 0; i < n; i++)
+        {
+            if(sandwiches[i] == 0)
+            {
+                if(ans0 == 0) break;
+                ans0--;
+            }
+            else
+            {
+                if(ans1 == 0) break;
+                ans1--;
+            }
+            //cout << ans0 << " " << ans1 << endl;
+        }
+
+        return ans0 + ans1;
+    }
+};
