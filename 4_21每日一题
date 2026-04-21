@@ -1,0 +1,45 @@
+class Solution {
+vector<vector<int>> ret;
+vector<int> ans;
+vector<bool> vis;
+public:
+    void dfs(vector<int>& nums, int pos, int n){
+        if(pos == n)
+        {
+            ret.push_back(ans);
+            return ;
+        }
+
+        for(int i = 0; i < n; i++)
+        {
+            if(vis[i] == false)
+            {
+                vis[i] = true;
+                ans.push_back(nums[i]);
+                dfs(nums, pos + 1, n);
+                vis[i] = false;
+                ans.pop_back();
+            }
+        }
+    }
+    vector<vector<int>> permute(vector<int>& nums) {
+        int n = nums.size();
+        vis.resize(10);
+        dfs(nums, 0, n);
+        return ret;
+    }
+};
+
+class Solution {
+public:
+    bool canConstruct(string ransomNote, string magazine) {
+        int ans[32];
+        for(int i = 0; i < magazine.size(); i++) ans[magazine[i] - 'a']++;
+        
+        for(int i = 0 ; i < ransomNote.size(); i++)
+        {
+            if(--ans[ransomNote[i] - 'a'] < 0) return false;
+        }
+        return true;
+    }
+};
