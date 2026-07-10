@@ -1,0 +1,67 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode* head = nullptr, *cur = nullptr;
+        int array = 0;
+        while(l1 || l2 || array)
+        {
+            int a = (l1 == nullptr ? 0 : l1->val);
+            int b = (l2 == nullptr ? 0 : l2->val);
+            int ans = a + b + array;
+            array = ans / 10;
+            ans %= 10;
+            if(head == nullptr)
+            {
+                head = cur = new ListNode(ans);
+            }
+            else
+            {
+                ListNode* tmp = new ListNode(ans);
+                cur->next = tmp;
+                cur = tmp;
+            }
+            if(l1 != nullptr) l1 = l1->next;
+            if(l2 != nullptr) l2 = l2->next;
+        }
+        return head;
+    }
+};
+
+
+
+
+class Solution {
+public:
+    int maxSubarraySumCircular(vector<int>& nums) {
+        int _sum = 0, ret = INT_MIN, n = nums.size();
+
+        for(auto e : nums) _sum += e;
+        
+        int max_ans = INT_MIN, min_ans = 0;
+        int max_f = 0, min_g = 0; // 模拟dp数组
+        for(int i = 1; i <= n; i++)
+        {
+            max_f = max(max_f, 0) + nums[i-1];
+            max_ans = max(max_f, max_ans);
+            min_g = min(min_g, 0) + nums[i-1];
+            min_ans = min(min_g, min_ans);
+            ret = max(ret, max_ans);
+            if(min_ans != _sum) 
+            {  
+                // 不能取整个数组
+                ret = max(ret, _sum - min_ans);
+            }
+        }
+        return ret;
+    }
+};

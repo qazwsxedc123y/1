@@ -1,0 +1,59 @@
+class Solution {
+public:
+    int reverse(int s) {
+        // 处理后置零
+        long long ret = 0;
+        if(s == 0) return 0;
+        int flag=1;
+        long long x = s;
+        if(x<0)
+        {
+            flag=-1;
+            x *= -1;
+        }
+        while(1)
+        {
+            int t = x % 10;
+            if(t != 0) break;
+            x /= 10;
+        }
+
+        while(x)
+        {
+            int t = x % 10;
+            x /= 10;
+            ret = ret * 10 + t;
+        }
+        ret *= flag;
+        if (ret > INT_MAX || ret < INT_MIN) {
+            return 0;
+        }
+        return (int)ret;
+    }
+};
+
+class Solution {
+unordered_map<char, string> ph {
+    {'2', "abc"}, {'3', "def"}, {'4', "ghi"}, {'5', "jkl"}, {'6', "mno"},
+    {'7', "pqrs"}, {'8', "tuv"},{'9', "wxyz"}
+};
+vector<string> ret;
+string path;
+public:
+    void dfs(string& digits, int pos){
+        if(pos == digits.size()){
+            ret.push_back(path);
+            return ;
+        }
+        for(int i = 0; i < ph[digits[pos]].size(); i++){
+            path.push_back(ph[digits[pos]][i]);
+            dfs(digits, pos + 1);
+            path.pop_back();
+        }
+    }
+    vector<string> letterCombinations(string digits) {
+        if(digits.size() == 0) return ret;
+        dfs(digits, 0);
+        return ret;
+    }
+};

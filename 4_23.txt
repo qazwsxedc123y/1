@@ -1,0 +1,94 @@
+class Solution {
+public:
+    int jump(vector<int>& nums) {
+        int n = nums.size();
+        int dp[10004]; // dp[i] 表示到达下标为i所用最小步数
+        // 初始化
+        dp[0] = 0;
+        for(int i = 1; i < n; i++) dp[i] = INT_MAX;
+        for(int i = 0; i < n; i++) //当前i位置
+        {
+            
+
+            // 贪心优化,找该范围内,最大跳跃步数
+            // int t = nums[i];
+            // for(int j = 1; j <= t && i + j < n; j++) // 跳j步
+            // {
+            //     dp[i + j] = min(dp[i + j], dp[i] + 1);
+            // }
+        }
+        return dp[n - 1];
+    }
+};
+
+
+class Solution {
+public:
+    int jump(vector<int>& nums) {
+        int n = nums.size();
+        int ans = 0;
+        int cur_right = 0; // 已建造的桥的右端点
+        int next_right = 0; // 下一座桥的右端点的最大值
+        for(int i = 0; i < n - 1; i++)
+        {
+            // 遍历的过程中，记录下一座桥的最远点
+            next_right = max(next_right, i + nums[i]);
+            if(i == cur_right) // 无路可走，必须建桥
+            {
+                cur_right = next_right;
+                ans++;
+            }
+        }
+        return ans;
+    }
+};
+
+
+class Solution {
+public:
+    bool canPartition(vector<int>& nums) {
+        // 01背包
+        int n = nums.size(), ans = 0;
+        for(int i = 0; i < n; i++) ans += nums[i];
+        if(ans % 2 != 0) return false;
+        ans /= 2;
+        vector<vector<bool>> dp(n + 1, vector<bool>(ans + 1, false)); // 从前i个组合和为j
+        // 初始化
+        for(int i = 0; i <= n; i++) dp[i][0] = true;
+        for(int i = 1; i <= n; i++)
+        {
+            for(int j = 0; j <= ans; j++)
+            {
+                // 选
+                dp[i][j] = dp[i-1][j];
+                // 不选
+                if(j >= nums[i-1]) dp[i][j] = dp[i][j] || dp[i-1][j-nums[i-1]];
+            }
+        }
+        return dp[n][ans];
+    }
+};
+
+class Solution {
+public:
+    bool canPartition(vector<int>& nums) {
+        // 01背包
+        int n = nums.size(), ans = 0;
+        for(int i = 0; i < n; i++) ans += nums[i];
+        if(ans % 2 != 0) return false;
+
+        ans /= 2;
+        vector<bool>dp(ans + 1, false); // 组合和为j
+
+        // 初始化
+        dp[0] = true;
+        for(int i = 1; i <= n; i++)
+        {
+            for(int j = ans; j >= nums[i-1]; j--) // 倒序
+            {
+                dp[j] = dp[j] || dp[j-nums[i-1]];
+            }
+        }
+        return dp[ans];
+    }
+};

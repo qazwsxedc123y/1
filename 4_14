@@ -1,0 +1,32 @@
+class Solution {
+public:
+    bool containsDuplicate(vector<int>& nums) {
+        unordered_set<int> hash;
+        for(auto num:nums)
+        {
+            if(hash.count(num)) return true;
+            hash.insert(num);
+        }
+        return false;
+    }
+};
+
+
+class Solution {
+public:
+    int deleteGreatestValue(vector<vector<int>>& grid) {
+        int m = grid.size(), n = grid[0].size(), ret = 0;
+        for(auto &e : grid) sort(e.begin(), e.end());
+        for(int i = 0; i < n; i++) // n次
+        {
+            int cur = 0;
+            for(int j = 0; j < m; j++)
+            {
+                int t = grid[j][i];
+                cur = max(cur, t);
+            }
+            ret += cur;
+        }
+        return ret;
+    }
+};
