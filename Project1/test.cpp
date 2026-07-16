@@ -1,116 +1,97 @@
 #include <iostream>
+#include <string>
+#include <algorithm>
 using namespace std;
-int func(int a, int b)
-{
-    int c = 0;
-    while (1)
-    {
-        if (a < b) swap(a, b);
-        c = a - b;
-        if (b == c || c == 0) return b;
-        a = b;
-        b = c;
-    }
-    return 1;
-}
+
 int main() {
-    int a, b;
-    cin >> a >> b;
-    // a * b * 最小公因数
-    int ans = func(a, b);
-    long long ret = a * b / ans;
-    cout << ret << endl; // 大数相乘
+    int n;
+    cin >> n;
+    string s;
+    while (n)
+    {
+        int t = n % 10;
+        n /= 10;
+        s.push_back(t + '0');
+    }
+    reverse(s.begin(), s.end());
+    string ret;
+    int sz = s.size();
+    int ans = 0;
+    for (int i = sz - 1; i >= 0; i--)
+    {
+        if (ans == 3)
+        {
+            ret.push_back(',');
+            ans = 0;
+        }
+        ret.push_back(s[i]);
+        ans++;
+    }
+    reverse(ret.begin(), ret.end());
+    cout << ret << endl;
 }
 // 64 位输出请用 printf("%lld")
 
+#include <iostream>
+using namespace std;
 
-#include <queue>
+int main() {
+    int n;
+    cin >> n;
+    int a = 1, b = 2;
+    if (n == 1)
+    {
+        cout << a << endl;
+    }
+    else if (n == 2)
+    {
+        cout << b << endl;
+    }
+    else
+    {
+        int c = 3;
+        for (int i = 3; i <= n; i++)
+        {
+            c = a + b;
+            a = b;
+            b = c;
+        }
+        cout << c << endl;
+    }
+
+}
+// 64 位输出请用 printf("%lld")
+
 class Solution {
 public:
     /**
      * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
      *
-     * max increasing subsequence
-     * @param arr int整型vector the array
-     * @return int整型
+     *
+     * @param numbers int整型vector
+     * @return bool布尔型
      */
-    int MLS(vector<int>& arr) {
+    bool IsContinuous(vector<int>& numbers) {
         // write code here
-        int ret = 0;
-        priority_queue<int> q;
-        for (auto e : arr)
+        sort(numbers.begin(), numbers.end());
+        // 先统计有几个0
+        int ans = 0;
+        for (int i = 0; i < numbers.size(); i++)
         {
-            q.push(e);
+            if (numbers[i] == 0) ans++;
         }
-        int ans = q.top();
-        q.pop();
-        int len = 1;
-        while (!q.empty())
+        int t = numbers[ans];
+        for (int i = ans + 1; i < numbers.size(); i++)
         {
-            int t = q.top();
-            q.pop();
-            // cout << ans << " " << t << " " << len << endl;
-            if (t == ans - 1)
+            int a = abs(t - numbers[i]);
+            if (a != 1 && ans >= a - 1 && a != 0)
             {
-                len++;
+                cout << ans << endl;
+                ans -= a - 1;
             }
-            else if (t == ans)
-            {
-                continue;
-            }
-            else
-            {
-                ret = max(ret, len);
-                len = 1;
-            }
-            ans = t;
+            else if (a != 1 || a == 0) return false;
+            t = numbers[i];
         }
-        ret = max(ret, len);
-        return ret;
+        return true;
     }
 };
-
-
-#include <iostream>
-#include <vector>
-using namespace std;
-const int N = 510;
-int main() {
-    int n, m;
-    cin >> n >> m;
-    int dp[N][N]; // dp[i + 1][j + 1] 表示到达i,j处最多得分
-    vector<vector<char>> v(N, vector<char>(N));
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < m; j++)
-        {
-            cin >> v[i][j];
-        }
-    }
-
-    int t;
-    if (v[0][0] == 'l') t = 4;
-    else if (v[0][0] == 'o') t = 3;
-    else if (v[0][0] == 'v') t = 2;
-    else if (v[0][0] == 'e') t = 1;
-    dp[1][1] = t;
-
-
-    for (int i = 1; i <= n; i++)
-    {
-        for (int j = 1; j <= m; j++)
-        {
-            if (i == 1 && j == 1) continue;
-            int t = 0;
-            if (v[i - 1][j - 1] == 'l') t = 4;
-            else if (v[i - 1][j - 1] == 'o') t = 3;
-            else if (v[i - 1][j - 1] == 'v') t = 2;
-            else if (v[i - 1][j - 1] == 'e') t = 1;
-
-            dp[i][j] = t + max(dp[i - 1][j], dp[i][j - 1]);
-        }
-    }
-    cout << dp[n][m] << endl;
-    return 0;
-}
-// 64 位输出请用 printf("%lld")2 3
