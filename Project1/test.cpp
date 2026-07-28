@@ -1,119 +1,124 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <unordered_set>
+using namespace std;
+const int N = 105;
+int main() {
+    int t;
+    cin >> t;
+    while (t--)
+    {
+        int n;
+        cin >> n;
+        if (n == 1)
+        {
+            cout << "Yes" << endl;
+            continue;
+        }
+        vector<unordered_set<char>> str(N);
+        for (int i = 0; i < n; i++)
+        {
+            string s;
+            cin >> s;
+            for (int j = 0; j < s.size(); j++)
+            {
+                str[i].insert(s[j]);
+            }
+        }
+
+        int l = 0, r = n - 1;
+        bool fg = true;
+        while (l < r)
+        {
+            bool f = false;
+            for (int i = 0; i < 32; i++)
+            {
+                char ans = 'a' + i;
+                if (str[l].find(ans) != str[l].end() && str[r].find(ans) != str[r].end())
+                {
+                    f = true;
+                    break;
+                }
+            }
+            if (f == false) {
+                fg = false;
+                break;
+            }
+            l++;
+            r--;
+        }
+        if (fg) cout << "Yes" << endl;
+        else cout << "No" << endl;
+    }
+}
+// 64 位输出请用 printf("%lld")
+
+
+
+
+
 class Solution {
 public:
     /**
      * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
      *
      *
-     * @param A string字符串
+     * @param grid int整型vector<vector<>>
      * @return int整型
      */
-    bool func(int begin, int end, string& A)
-    {
-        while (begin <= end)
-        {
-            if (A[begin++] != A[end--])
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-    int getLongestPalindrome(string A) {
+    int m, n;
+    const int N = 202;
+    int maxValue(vector<vector<int> >& grid) {
         // write code here
-        // 动态规划- 空间复杂度n2
-        // 暴力
-        int n = A.size();
-        int ret = 0;
-        for (int i = 0; i < n; i++) // i开头
+        int m = grid.size();
+        int n = grid[0].size();
+        long long dp[N][N]; // dp[i][j] 表示到达[i-1,j-1]最大值
+        // dp[1][1]  = grid[0][0];
+        for (int i = 1; i <= m; i++)
         {
-            for (int j = i; j < n; j++) // j结尾
+            for (int j = 1; j <= n; j++)
             {
-                if (func(i, j, A))
-                {
-                    ret = max(ret, j - i + 1);
-                }
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]) + grid[i - 1][j - 1];
             }
         }
-        return ret;
-
+        return dp[m][n];
     }
 };
 
 
-#include <iostream>
-#include <vector>
-using namespace std;
-
-int main() {
-    int n = 0;
-    cin >> n;
-    vector<int> prices(n);
-    for (int i = 0; i < n; i++) cin >> prices[i];
-    // 无手续费
-    vector<int> f(n + 1); // f[i]表示当天有，最大利润
-    auto g = f; // g[i]表示当天无，最大利润
-    f[0] = -prices[0];
-    g[0] = 0;
-    for (int i = 1; i < n; i++)
-    {
-        g[i] = max(g[i - 1], f[i - 1] + prices[i]);
-        f[i] = max(f[i - 1], g[i - 1] - prices[i]);
-    }
-    cout << max(f[n - 1], g[n - 1]);
-}
-// 64 位输出请用 printf("%lld")
-
 
 #include <iostream>
-#include <vector>
 #include <algorithm>
-#include <cmath>
 using namespace std;
-const int N = 1e5 + 10;
+int func(int a, int b)
+{
+    if (a < b) swap(a, b);
+    int c = 0;
+    while (1)
+    {
+        c = a % b;
+        if (c == 0) return b;
+        a = b;
+        b = c;
+    }
+    return 1;
+}
 int main() {
-    int n = 0;
-    cin >> n;
-    vector<int> prices(n);
-    for (int i = 0; i < n; i++) cin >> prices[i];
-    // 无手续费
-    int a = N, b = 0;
+    long long n, x, t;
+    cin >> n >> x;
     for (int i = 0; i < n; i++)
     {
-        b = max(b, prices[i] - a);
-        a = min(a, prices[i]);
-    }
-    cout << b;
-}
-// 64 位输出请用 printf("%lld")
-
-
-#include <iostream>
-#include <algorithm>
-#include <cmath>
-using namespace std;
-int n, m, x, y;
-// 下 右
-int dx[2] = { 1, 0 };
-int dy[2] = { 0, 1 };
-const int N = 21;
-// int mx[8] = {2, 1, -1, -2, -2, -1, 1, 2};
-// int my[8] = {1, 2, 2, 1, -1, -2, -2, -1};
-int main() {
-    cin >> n >> m >> x >> y;
-    // 动态规划
-    int dp[N][N]; // dp[i-1][j-1] 到达i,j的条数
-    dp[1][1] = 1;
-    for (int i = 1; i <= n; i++) // x
-    {
-        for (int j = 1; j <= m; j++) // y
+        cin >> t;
+        if (t <= x)
         {
-            if (i == 1 && j == 1) continue;
-            else if (abs(x - i) + abs(y - j) == 3 && x != i && y != j) dp[i][j] = 0;
-            else dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
-            cout << dp[i][j] << " ";
+            x += t;
         }
-        cout << endl;
+        else
+        {
+            x += func(x, t);
+        }
     }
-    cout << dp[n][m] << endl;
+    cout << x << endl;
 }
 // 64 位输出请用 printf("%lld")
