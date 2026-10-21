@@ -1,30 +1,35 @@
 #define  _CRT_SECURE_NO_WARNINGS
 class Solution {
 public:
-    bool func(string s, int n)
-    {
-        for (int i = 1; i < n; i++)
-        {
-            if (s[i - 1] > s[i]) return false;
-        }
-        return true;
-    }
-    int minOperations(string s) {
-        int n = s.size();
-        if (n == 2 && s[0] > s[1]) return -1;
-        char ans1 = s[0], ans2 = s[0];
+    bool wordPattern(string pattern, string s) {
+        unordered_map<char, vector<int>> str;
+        int n = pattern.size();
         for (int i = 0; i < n; i++)
         {
-            if (s[i] < ans1) ans1 = s[i];
-            if (s[i] > ans2) ans2 = s[i];
+            str[pattern[i]].push_back(i);
         }
-        if (func(s, n)) return 0;
-        if (ans2 == s[n - 1] || s[0] == ans1) return 1;
-        // if((ans1 != s[n - 1] && ans1 != s[0]) || (ans2 != s[n - 1] && ans2 != s[0])) return 2; // jgg
-        for (int i = 1; i < n - 1; i++)
+        // ²ð·Ös
+        vector<string> words;
+        for (int i = 0; i < s.size(); i++)
         {
-            if (s[i] == ans1 || s[i] == ans2) return 2;
+            string t;
+            while (i < s.size() && s[i] != ' ')
+            {
+                t += s[i++];
+            }
+            words.push_back(t);
+            // cout << t << endl;
         }
-        return 3;
+        int m = words.size();
+        if (n != m) return false;
+        unordered_set<string> used;
+        for (auto& [c, pos] : str)
+        {
+            string t = words[pos[0]];
+            for (int i : pos) if (words[i] != t) return false;
+            if (used.find(t) != used.end()) return false;
+            used.insert(t);
+        }
+        return true;
     }
 };
