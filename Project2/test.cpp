@@ -1,38 +1,43 @@
 #define  _CRT_SECURE_NO_WARNINGS
-
-
-# Write your MySQL query statement below
-select firstName, lastName, city, state
-from Person left join Address
-on Person.PersonId = Address.PersonId;
-
-# Write your MySQL query statement below
-select a.name as Employee from Employee as a
-join Employee as b on a.managerId = b.id and a.salary > b.salary;
-
-
-# Write your MySQL query statement below
-select name as Customers from Customers
-where Customers.id not in
-(select customerId from Orders);
-
-
-# Write your MySQL query statement below
-select name as Customers from Customers as a
-left join Orders as b
-on a.Id = b.customerId
-where b.customerId is null;
-
-
-# Write your MySQL query statement below
-DELETE p1 FROM Person p1, Person p2
-WHERE p1.Email = p2.Email AND p1.Id > p2.Id
-
-
-# Write your MySQL query statement below
-select a.id as Id from Weather as a, Weather as b
-where a.Temperature > b.Temperature and TIMESTAMPDIFF(DAY, a.recordDate, b.recordDate) = -1;
-
-# Write your MySQL query statement below
-select a.id as Id from Weather as a join Weather as b
-on a.Temperature > b.Temperature and TIMESTAMPDIFF(DAY, a.recordDate, b.recordDate) = -1;
+class Solution {
+public:
+    bool func(string s, int n)
+    {
+        for (int i = 1; i < n; i++)
+        {
+            if (s[i - 1] > s[i]) return false;
+        }
+        return true;
+    }
+    int func1(string s, int n)
+    {
+        char ans1 = s[0], ans2 = s[0];
+        for (int i = 1; i < n - 1; i++)
+        {
+            if (s[i] < ans1) ans1 = s[i];
+            if (s[i] > ans2) ans2 = s[i];
+        }
+        if (ans2 <= s[n - 1]) return 1;
+        else if (ans1 > s[n - 1]) return 3;
+        else return 2;
+    }
+    int func2(string s, int n)
+    {
+        int ans1 = s[1], ans2 = s[1];
+        for (int i = 2; i < n; i++)
+        {
+            if (s[i] < ans1) ans1 = s[i];
+            if (s[i] > ans2) ans2 = s[i];
+        }
+        if (ans1 >= s[0]) return 1;
+        else if (ans2 < s[0]) return 3;
+        else return 2;
+    }
+    int minOperations(string s) {
+        int n = s.size();
+        if (n == 2 && s[0] > s[1]) return -1;
+        if (func(s, n)) return 0;
+        int ret = min(func1(s, n), func2(s, n));
+        return ret;
+    }
+};
