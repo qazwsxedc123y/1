@@ -1,35 +1,25 @@
 #define  _CRT_SECURE_NO_WARNINGS
 class Solution {
 public:
-    bool wordPattern(string pattern, string s) {
-        unordered_map<char, vector<int>> str;
-        int n = pattern.size();
-        for (int i = 0; i < n; i++)
+    int func(int n)
+    {
+        int ret = 0;
+        while (n)
         {
-            str[pattern[i]].push_back(i);
+            if (n % 2) ret++;
+            n /= 2;
         }
-        // ²ð·Ös
-        vector<string> words;
-        for (int i = 0; i < s.size(); i++)
-        {
-            string t;
-            while (i < s.size() && s[i] != ' ')
-            {
-                t += s[i++];
+        return ret;
+    }
+    vector<string> readBinaryWatch(int turnedOn) {
+        vector<string> ans;
+        for (int h = 0; h < 12; ++h) {
+            for (int m = 0; m < 60; ++m) {
+                if (func(h) + func(m) == turnedOn) {
+                    ans.push_back(to_string(h) + ":" + (m < 10 ? "0" : "") + to_string(m));
+                }
             }
-            words.push_back(t);
-            // cout << t << endl;
         }
-        int m = words.size();
-        if (n != m) return false;
-        unordered_set<string> used;
-        for (auto& [c, pos] : str)
-        {
-            string t = words[pos[0]];
-            for (int i : pos) if (words[i] != t) return false;
-            if (used.find(t) != used.end()) return false;
-            used.insert(t);
-        }
-        return true;
+        return ans;
     }
 };
