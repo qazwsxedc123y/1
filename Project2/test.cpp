@@ -1,24 +1,38 @@
 #define  _CRT_SECURE_NO_WARNINGS
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
 class Solution {
 public:
-    vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
-        intervals.push_back(newInterval);
-        sort(intervals.begin(), intervals.end());
-        int n = intervals.size();
-        vector<vector<int>> ret;
-        for (int i = 0; i < n; i++)
+    ListNode* rotateRight(ListNode* head, int k) {
+        if (k == 0 || head == nullptr || head->next == nullptr) return head;
+        int n = 0;
+        ListNode* list = head;
+        while (list)
         {
-            int l = intervals[i][0], r = intervals[i][1];
-            // гажиЕў
-            if (ret.empty() || ret.back()[1] < l)
-            {
-                ret.push_back({ l, r });
-            }
-            else
-            {
-                ret.back()[1] = max(ret.back()[1], r);
-            }
+            list = list->next;
+            n++;
         }
-        return ret;
+        k %= n;
+        while (k--)
+        {
+            ListNode* _nnext = head, * _next = head;
+            while (_next->next)
+            {
+                _nnext = _next;
+                _next = _next->next;
+            }
+            _next->next = head;
+            head = _next;
+            _nnext->next = nullptr;
+        }
+        return head;
     }
 };
