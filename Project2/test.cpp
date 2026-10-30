@@ -1,38 +1,39 @@
 #define  _CRT_SECURE_NO_WARNINGS
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode() : val(0), next(nullptr) {}
- *     ListNode(int x) : val(x), next(nullptr) {}
- *     ListNode(int x, ListNode *next) : val(x), next(next) {}
- * };
- */
+#include <iostream>
+#include <vector>
+using namespace std;
 class Solution {
 public:
-    ListNode* rotateRight(ListNode* head, int k) {
-        if (k == 0 || head == nullptr || head->next == nullptr) return head;
-        int n = 0;
-        ListNode* list = head;
-        while (list)
+    int removeDuplicates(vector<int>& nums) {
+        int ans = INT_MAX, cnt = 0;
+        for (auto it = nums.begin(); it != nums.end(); )
         {
-            list = list->next;
-            n++;
-        }
-        k %= n;
-        while (k--)
-        {
-            ListNode* _nnext = head, * _next = head;
-            while (_next->next)
+            if (ans == *it && cnt == 2)
             {
-                _nnext = _next;
-                _next = _next->next;
+                it = nums.erase(it);
             }
-            _next->next = head;
-            head = _next;
-            _nnext->next = nullptr;
+            else if (ans != *it)
+            {
+                ans = *it;
+                cnt = 1;
+                it++;
+            }
+            else if (ans == *it)
+            {
+                cnt++;
+                it++;
+            }
         }
-        return head;
+        int n = nums.size();
+        return n;
     }
 };
+
+
+int main()
+{
+    Solution s;
+    vector<int> v{ 0,0,1,1,1,1,2,3,3 };
+    s.removeDuplicates(v);
+    return 0;
+}
